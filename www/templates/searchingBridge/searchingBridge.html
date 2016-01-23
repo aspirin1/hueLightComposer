@@ -1,0 +1,28 @@
+<ion-view view-title="Searching bridge">
+    <ion-nav-bar class="bar-positive"></ion-nav-bar>
+    <ion-content ng-controller="SearchBridgeCtrl">
+
+        <div class="row" ng-show="searchingBridge">
+            <div class="card">
+                <div class="item item-text-wrap">
+                    Searching bridge ...
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="!searchingBridge">
+            <div class="card">
+                <div class="item item-image">
+                    <img src="img/hueIcons/pushLink/pushlink_bridgev2.svg">
+                </div>
+
+                <div class="item item-text-wrap pressBridgeText">
+                    <p>
+                        Please tap bridge button ...
+                        <span>{{trialCount}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

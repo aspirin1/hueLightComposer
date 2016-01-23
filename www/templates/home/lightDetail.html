@@ -1,0 +1,80 @@
+<ion-view view-title="{{light.name}}" ng-controller="LightDetailCtrl">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content>
+        <!--
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        </ion-refresher>
+-->
+        <div class="row">
+            <div class="col col-33">
+                <hue-image template="{{light.image}}" light='light'></hue-image>
+            </div>
+            <div class="col">
+
+                <ul class="list">
+                    <li class="item item-toggle">
+                        On/Off
+                        <label class="toggle toggle-assertive">
+                            <input type="checkbox" ng-model="light.state.on" ng-change="toggleLightOnOff()">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <li class="item item-toggle">
+                        Colorloop
+                        <label class="toggle toggle-assertive">
+                            <input type="checkbox" ng-model="light.state.effect" ng-true-value="'colorloop'" ng-change="toggleColorloop()">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <li class="item">
+                        Brightness: {{getBrightnessPercentage()}}
+                    </li>
+
+                    <li class="item">
+                        Saturation: {{getSaturationPercentage()}}
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="row"><span class="input-label">Brightness</span></div>
+        <div class="row">
+            <div class="col">
+                <div class="range range-positive">
+                    <input type="range" min="1" max="254" step="1" ng-model="light.state.bri" ng-change="brightnessChanged()" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row"><span class="input-label">Saturation</span></div>
+        <div class="row">
+            <div class="col">
+                <div class="range range-positive">
+                    <input type="range" min="1" max="254" step="1" ng-model="light.state.sat" ng-change="saturationChanged()" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row"><span class="input-label">Hue</span></div>
+        <div class="row">
+            <div class="col">
+                <div class="range range-positive">
+                    <input type="range" min="0" max="65535" step="500" ng-model="light.state.hue" ng-change="hueChanged()" />
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

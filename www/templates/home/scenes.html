@@ -1,0 +1,14 @@
+<ion-view title="Scenes">
+    <ion-content has-header="true" has-tabs="true">
+        <ul class="list">
+
+
+            <li ng-repeat="(sceneId,scene) in allScenes" class="item item-button-right">
+                {{scene.name}}
+                <button class="button" ng-click="activateScene(sceneId)">
+                    On
+                </button>
+            </li>
+        </ul>
+    </ion-content>
+</ion-view>

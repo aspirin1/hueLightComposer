@@ -1,0 +1,33 @@
+<ion-view view-title="Hue lights">
+    <ion-content has-header="true" has-tabs="true">
+        <!--
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        </ion-refresher>
+-->
+        <ul class="list">
+
+            <li ng-repeat="(lightId,light) in allLights" class="item item-button-right">
+                <a href="{{light.state.reachable ? getPathToLight(lightId): ' '}}">
+                    <div class="hueListIcon">
+                        <hue-image template="{{light.image}}" light='light '></hue-image>
+                        <i class="fa fa-bolt lightNotReachable" ng-hide="{{light.state.reachable}}"></i>
+                    </div>
+
+                    <div class="hueListContent">
+                        <h2>{{light.name}}</h2>
+                        <p>Brightness: {{getBrightnessPercentage(light)}} - Saturation: {{getSaturationPercentage(light)}}</p>
+                    </div>
+                </a>
+                <div class="hueListContentRight2">
+                    <label class="toggle toggle-positive">
+                        <input type="checkbox" ng-model="light.state.on" ng-change="toggleLightOnOff(lightId,light)" ng-disabled="!light.state.reachable">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </div>
+            </li>
+        </ul>
+
+    </ion-content>
+</ion-view>

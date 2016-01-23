@@ -1,0 +1,20 @@
+<ion-view title="Groups">
+    <ion-content has-header="true" has-tabs="true">
+        <ul class="list">
+
+            <li class="item item-button-right">
+                All Lights
+                <button class="button" ng-show="atLeastOneLightOn" ng-click="changeOnOffGroup0(false)">
+                    Off
+                </button>
+                <button class="button" ng-show="!atLeastOneLightOn" ng-click="changeOnOffGroup0(true)">
+                    On
+                </button>
+            </li>
+
+            <li ng-repeat="(groupId,group) in allGroups" class="item item-button-right">
+                {{group.name}}
+            </li>
+        </ul>
+    </ion-content>
+</ion-view>
