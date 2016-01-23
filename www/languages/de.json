@@ -1,0 +1,37 @@
+{
+    "SINGLE_Search": "Suche",
+    "SINGLE_Brightness": "Helligkeit",
+    "SINGLE_Saturation": "Sättigung",
+    "SINGLE_Hue": "Farbe",
+    "SINGLE_On": "An",
+    "SINGLE_Off": "Aus",
+    "SINGLE_Colorloop": "Farbwechsel",
+    "SINGLE_Back": "Zurück",
+
+    "Layout_Home_Tab_Lights": "Lichter",
+    "Layout_Home_Tab_Groups": "Gruppen",
+    "Layout_Home_Tab_Scenes": "Szenen",
+
+    "Layout_Main_LeftMenu_Title": "Menü",
+    "Layout_Main_LeftMenu_Link_Home": "Start",
+    "Layout_Main_LeftMenu_Link_Settings": "Einstellungen",
+    "Layout_Main_LeftMenu_Link_Category": "Kategorie",
+
+    "SearchingBridge_Title": "Suche Bridge",
+    "SearchingBridge_SearchingBridge": "Suche Bridge ...",
+    "SearchingBridge_TapBridge": "Bitte den Knopf auf der Bridge drücken ...",
+
+    "Settings_Title": "Einstellungen",
+    "Settings_Language": "Sprache",
+    "Settings_En": "Englisch",
+    "Settings_De": "Deutsch",
+    "Settings_Design": "Design",
+    "Settings_Dark": "Dunkel",
+    "Settings_Light": "Hell",
+
+    "Home_Groups_Title": "Gruppen",
+    "Home_Groups_AllLights": "Alle Lampen",
+    "Home_Scenes_Title": "Szenen",
+    "Home_LightList_Title": "Hue Lampen"
+
+}

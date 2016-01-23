@@ -1,6 +1,7 @@
 <ion-view view-title="{{light.name}}" ng-controller="LightDetailCtrl">
     <ion-nav-bar class="bar-positive">
-        <ion-nav-back-button>
+        <ion-nav-back-button class="button-clear">
+            <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
         </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content>
@@ -16,7 +17,7 @@
 
                 <ul class="list">
                     <li class="item item-toggle">
-                        On/Off
+                        {{'SINGLE_On' | translate}}/{{'SINGLE_Off' | translate}}
                         <label class="toggle toggle-assertive">
                             <input type="checkbox" ng-model="light.state.on" ng-change="toggleLightOnOff()">
                             <div class="track">
@@ -26,7 +27,7 @@
                     </li>
 
                     <li class="item item-toggle">
-                        Colorloop
+                        {{'SINGLE_Colorloop' | translate}}
                         <label class="toggle toggle-assertive">
                             <input type="checkbox" ng-model="light.state.effect" ng-true-value="'colorloop'" ng-change="toggleColorloop()">
                             <div class="track">
@@ -36,18 +37,18 @@
                     </li>
 
                     <li class="item">
-                        Brightness: {{getBrightnessPercentage()}}
+                        {{'SINGLE_Brightness' | translate}}: {{getBrightnessPercentage()}}
                     </li>
 
                     <li class="item">
-                        Saturation: {{getSaturationPercentage()}}
+                        {{'SINGLE_Saturation' | translate}}: {{getSaturationPercentage()}}
                     </li>
 
                 </ul>
             </div>
         </div>
 
-        <div class="row"><span class="input-label">Brightness</span></div>
+        <div class="row"><span class="input-label">{{'SINGLE_Brightness' | translate}}</span></div>
         <div class="row">
             <div class="col">
                 <div class="range range-positive">
@@ -57,7 +58,7 @@
         </div>
 
 
-        <div class="row"><span class="input-label">Saturation</span></div>
+        <div class="row"><span class="input-label">{{'SINGLE_Saturation' | translate}}</span></div>
         <div class="row">
             <div class="col">
                 <div class="range range-positive">
@@ -67,7 +68,7 @@
         </div>
 
 
-        <div class="row"><span class="input-label">Hue</span></div>
+        <div class="row"><span class="input-label">{{'SINGLE_Hue' | translate}}</span></div>
         <div class="row">
             <div class="col">
                 <div class="range range-positive">

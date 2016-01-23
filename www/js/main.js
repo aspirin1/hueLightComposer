@@ -8,7 +8,9 @@ require.config({
         angularLocalStorage: '../bower_components/angular-local-storage/dist/angular-local-storage.min',
         uiRouter: '../bower_components/angular-ui-router/release/angular-ui-router.min',
         ionic: '../bower_components/ionic/release/js/ionic.min',
-        ionicAngular: '../bower_components/ionic/release/js/ionic-angular.min'
+        ionicAngular: '../bower_components/ionic/release/js/ionic-angular.min',
+        angularTranslate: '../bower_components/angular-translate/angular-translate.min',
+        angularTranslateLoaderStaticFile: '../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min'
     },
     shim: {
         angular: {
@@ -26,8 +28,14 @@ require.config({
         uiRouter: {
             deps: ['angular']
         },
+        angularTranslate: {
+            deps: ['angular']
+        },
+        angularTranslateLoaderStaticFile: {
+            deps: ['angularTranslate']
+        },
         ionic: {
-            deps: ['angular'],
+            deps: ['angular', 'angularLocalStorage'],
             exports: 'ionic'
         },
         ionicAngular: {
@@ -36,6 +44,7 @@ require.config({
     },
     priority: [
         'angular',
+        'angularLocalStorage',
         'ionic',
     ],
     deps: [

@@ -1,13 +1,15 @@
 /*global define, require, console, cordova, navigator, document */
 define(['angular',
         'angularLocalStorage',
-        'uiRouter',
+        'providers/providers',
         'config',
+        'uiRouter',
         'filters/filters',
         'services/services',
         'directives/directives',
         'controllers/controllers',
         'ionicAngular',
+        'angularTranslateLoaderStaticFile'
        ],
 
     function (angular, uiRouter, angularLocalStorage) {
@@ -15,16 +17,16 @@ define(['angular',
 
         var app = angular.module('app', [
             'ionic',
+            'LocalStorageModule',
             'app.controllers',
             'app.filters',
             'app.services',
             'app.directives',
             'app.config',
+            'app.providers',
             'ui.router',
-            'LocalStorageModule',
+            'pascalprecht.translate',
         ]);
-
-
 
         return app;
 

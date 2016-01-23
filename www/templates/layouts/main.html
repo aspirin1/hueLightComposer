@@ -1,6 +1,6 @@
 <ion-side-menus>
     <ion-side-menu-content edge-drag-threshold="50">
-        <ion-nav-bar class="bar-positive" ng-controller="NavMenuCtrl">
+        <ion-nav-bar class="bar-main" ng-controller="NavMenuCtrl">
             <ion-nav-buttons side="left">
                 <!-- Toggle left side menu -->
                 <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="toggleLeftSideMenu()"></button>
@@ -12,16 +12,16 @@
 
     <!-- Left menu -->
     <ion-side-menu side="left" has-header="true">
-        <ion-header-bar class="bar-dark">
-            <h1 class="title">Menu</h1>
+        <ion-header-bar class="bar-menu">
+            <h1 class="title">{{'Layout_Main_LeftMenu_Title'|translate}}</h1>
         </ion-header-bar>
         <ion-content>
             <ion-list>
-                <ion-item menu-close href="#/main/home_tab/lightList">Home</ion-item>
-                <ion-item menu-close href="#/main/settings">Settings</ion-item>
-                <ion-item>Test</ion-item>
-                <ion-item>Test 2</ion-item>
-                <ion-item>Test 3</ion-item>
+                <ion-item menu-close href="#/main/home_tab/lightList">{{'Layout_Main_LeftMenu_Link_Home'|translate}}</ion-item>
+                <ion-item menu-close href="#/main/settings">{{'Layout_Main_LeftMenu_Link_Settings'|translate}}</ion-item>
+                <ion-item>{{'Layout_Main_LeftMenu_Link_Category'|translate}} 1</ion-item>
+                <ion-item>{{'Layout_Main_LeftMenu_Link_Category'|translate}} 2</ion-item>
+                <ion-item>{{'Layout_Main_LeftMenu_Link_Category'|translate}} 3</ion-item>
             </ion-list>
         </ion-content>
     </ion-side-menu>

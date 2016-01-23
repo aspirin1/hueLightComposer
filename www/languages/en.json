@@ -1,0 +1,37 @@
+{
+    "SINGLE_Search": "Search",
+    "SINGLE_Brightness": "Brightness",
+    "SINGLE_Saturation": "Saturation",
+    "SINGLE_Hue": "Hue",
+    "SINGLE_On": "On",
+    "SINGLE_Off": "Off",
+    "SINGLE_Colorloop": "Colorloop",
+    "SINGLE_Back": "Back",
+
+    "Layout_Home_Tab_Lights": "Lights",
+    "Layout_Home_Tab_Groups": "Groups",
+    "Layout_Home_Tab_Scenes": "Scenes",
+
+    "Layout_Main_LeftMenu_Title": "Menu",
+    "Layout_Main_LeftMenu_Link_Home": "Home",
+    "Layout_Main_LeftMenu_Link_Settings": "Settings",
+    "Layout_Main_LeftMenu_Link_Category": "Category",
+
+    "SearchingBridge_Title": "Searching bridge",
+    "SearchingBridge_SearchingBridge": "Searching bridge ...",
+    "SearchingBridge_TapBridge": "Please tap bridge button ...",
+
+    "Settings_Title": "Settings",
+    "Settings_Language": "Language",
+    "Settings_En": "English",
+    "Settings_De": "German",
+    "Settings_Design": "Design",
+    "Settings_Dark": "Dark",
+    "Settings_Light": "Light",
+
+    "Home_Groups_Title": "Groups",
+    "Home_Groups_AllLights": "All Lights",
+    "Home_Scenes_Title": "Scenes",
+    "Home_LightList_Title": "Hue lights"
+
+}

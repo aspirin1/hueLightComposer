@@ -3,14 +3,37 @@
 define(['app'], function (app) {
     'use strict';
 
+    app.config(['$translateProvider', function ($translateProvider) {
 
-    app.config(['$ionicConfigProvider', '$stateProvider', '$urlRouterProvider',
+        $translateProvider.useStaticFilesLoader({
+                prefix: 'languages/',
+                suffix: '.json'
+            })
+            .registerAvailableLanguageKeys(['en', 'de'], {
+                'en*': 'en',
+                'de*': 'de',
+            })
+            .determinePreferredLanguage()
+            .fallbackLanguage('en');
 
-        function ($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
-            //$ionicConfigProvider.views.forwardCache(false);
-            //$ionicConfigProvider.views.maxCache(0);
-            $ionicConfigProvider.tabs.position("bottom");
+        var lang = window.localStorage['ls.language'];
+        if (typeof (lang) !== 'undefined') {
+            $translateProvider.preferredLanguage(JSON.parse(lang));
+        }
+        //$translateProvider.useSanitizeValueStrategy('sanitize');
 
+                    }]);
+
+    app.config(['$ionicConfigProvider', function ($ionicConfigProvider) {
+
+        //$ionicConfigProvider.views.forwardCache(false);
+        //$ionicConfigProvider.views.maxCache(0);
+        $ionicConfigProvider.tabs.position("bottom");
+    }]);
+
+    app.config(['$stateProvider', '$urlRouterProvider',
+
+        function ($stateProvider, $urlRouterProvider) {
 
             //single pages - no common layout
             $stateProvider.state('searchingBridge', {
@@ -79,6 +102,7 @@ define(['app'], function (app) {
             $stateProvider.state('main.settings', {
                 url: '/settings',
                 templateUrl: 'templates/settings/settings.html',
+                controller: 'SettingsCtrl'
             });
 
             $urlRouterProvider.otherwise("main/home_tab/lightList");

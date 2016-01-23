@@ -1,4 +1,4 @@
-<ion-view view-title="Hue lights">
+<ion-view view-title="{{'Home_LightList_Title' | translate }}">
     <ion-content has-header="true" has-tabs="true">
         <!--
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
@@ -15,7 +15,7 @@
 
                     <div class="hueListContent">
                         <h2>{{light.name}}</h2>
-                        <p>Brightness: {{getBrightnessPercentage(light)}} - Saturation: {{getSaturationPercentage(light)}}</p>
+                        <p>{{'SINGLE_Brightness '|translate}}: {{getBrightnessPercentage(light)}} - {{'SINGLE_Saturation '|translate}}: {{getSaturationPercentage(light)}}</p>
                     </div>
                 </a>
                 <div class="hueListContentRight2">

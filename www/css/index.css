@@ -1,9 +1,19 @@
-.ionic-logo {
-    display: block;
-    margin: 15px auto;
-    width: 96px;
-    height: 96px;
+.app-light {}
+
+
+/*
+body.app-dark,
+.app-dark .pane,
+.app-dark .view {
+    color: #fff;
+    background-color: #000;
 }
+
+.app-dark .item {
+    border-color: #ddd;
+    background-color: #000;
+    color: #444;
+}*/
 
 .hueListIcon .lightNotReachable {
     font-size: 27px;

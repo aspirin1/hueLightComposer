@@ -1,14 +1,14 @@
-<ion-view title="Groups">
+<ion-view title="{{'Home_Groups_Title' |translate}}">
     <ion-content has-header="true" has-tabs="true">
         <ul class="list">
 
             <li class="item item-button-right">
-                All Lights
+                {{'Home_Groups_AllLights' |translate}}
                 <button class="button" ng-show="atLeastOneLightOn" ng-click="changeOnOffGroup0(false)">
-                    Off
+                    {{'SINGLE_Off' |translate}}
                 </button>
                 <button class="button" ng-show="!atLeastOneLightOn" ng-click="changeOnOffGroup0(true)">
-                    On
+                    {{'SINGLE_On' |translate}}
                 </button>
             </li>
 

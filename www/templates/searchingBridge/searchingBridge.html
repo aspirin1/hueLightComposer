@@ -1,11 +1,11 @@
-<ion-view view-title="Searching bridge">
-    <ion-nav-bar class="bar-positive"></ion-nav-bar>
+<ion-view view-title="{{'SearchingBridge_Title' | translate}}">
+    <ion-nav-bar class="bar-main"></ion-nav-bar>
     <ion-content ng-controller="SearchBridgeCtrl">
 
         <div class="row" ng-show="searchingBridge">
             <div class="card">
                 <div class="item item-text-wrap">
-                    Searching bridge ...
+                    {{'SearchingBridge_SearchingBridge' | translate}}
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
 
                 <div class="item item-text-wrap pressBridgeText">
                     <p>
-                        Please tap bridge button ...
+                        {{'SearchingBridge_TapBridge' | translate}}
                         <span>{{trialCount}}</span>
                     </p>
                 </div>
