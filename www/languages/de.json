@@ -7,6 +7,8 @@
     "SINGLE_Off": "Aus",
     "SINGLE_Colorloop": "Farbwechsel",
     "SINGLE_Back": "Zurück",
+    "SINGLE_Cancel": "Abbrechen",
+    "SINGLE_Change": "Ändern",
 
     "Layout_Home_Tab_Lights": "Lichter",
     "Layout_Home_Tab_Groups": "Gruppen",
@@ -32,6 +34,8 @@
     "Home_Groups_Title": "Gruppen",
     "Home_Groups_AllLights": "Alle Lampen",
     "Home_Scenes_Title": "Szenen",
-    "Home_LightList_Title": "Hue Lampen"
+    "Home_LightList_Title": "Hue Lampen",
+    "Home_LightList_Detail_RenameLight_Title": "Lampe umbenennen",
+    "Home_LightList_Detail_RenameLight_NewName": "Neuer Name"
 
 }

@@ -8,9 +8,9 @@
                     <input type="text" placeholder="{{'SINGLE_Search' |translate}}" ng-model="searchFilter">
                 </label>
             </li>
-            <li ng-repeat="(sceneId,scene) in allScenes" class="item item-button-right">
+            <li ng-repeat="scene in allScenes | filter:{name:searchFilter}" class="item item-button-right">
                 {{scene.name}}
-                <button class="button" ng-click="activateScene(sceneId)">
+                <button class="button" ng-click="activateScene(scene.id)">
                     {{'SINGLE_On' |translate}}
                 </button>
             </li>

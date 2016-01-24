@@ -7,6 +7,8 @@
     "SINGLE_Off": "Off",
     "SINGLE_Colorloop": "Colorloop",
     "SINGLE_Back": "Back",
+    "SINGLE_Cancel": "Cancel",
+    "SINGLE_Change": "Change",
 
     "Layout_Home_Tab_Lights": "Lights",
     "Layout_Home_Tab_Groups": "Groups",
@@ -32,6 +34,8 @@
     "Home_Groups_Title": "Groups",
     "Home_Groups_AllLights": "All Lights",
     "Home_Scenes_Title": "Scenes",
-    "Home_LightList_Title": "Hue lights"
+    "Home_LightList_Title": "Hue lights",
+    "Home_LightList_Detail_RenameLight_Title": "Rename light",
+    "Home_LightList_Detail_RenameLight_NewName": "New name"
 
 }

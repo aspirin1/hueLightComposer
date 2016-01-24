@@ -1,13 +1,19 @@
 <ion-view view-title="{{light.name}}" ng-controller="LightDetailCtrl">
-    <ion-nav-bar class="bar-positive">
+    <ion-nav-bar class="bar-main">
         <ion-nav-back-button class="button-clear">
             <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
         </ion-nav-back-button>
+        <ion-nav-buttons side="secondary">
+            <button class="button button-light" ng-click="openModal()">
+                <i class="fa fa-pencil"></i>
+            </button>
+        </ion-nav-buttons>
+
     </ion-nav-bar>
     <ion-content>
         <!--
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
-        </ion-refresher>
+        </ion-refresher>ion-compose
 -->
         <div class="row">
             <div class="col col-33">
@@ -78,4 +84,25 @@
         </div>
 
     </ion-content>
+
+    <script id="my-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">{{'Home_LightList_Detail_RenameLight_Title' | translate}}</h1>
+            </ion-header-bar>
+            <ion-content>
+                <div class="list">
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">{{'Home_LightList_Detail_RenameLight_NewName' | translate}}</span>
+                        <input type="text" placeholder="{{light.name}}" ng-model="newLightName">
+                    </label>
+                </div>
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
+                    <button class="button button-positive" ng-click="changeLightName(newLightName)">{{'SINGLE_Change' | translate}}</button>
+                </div>
+
+            </ion-content>
+        </ion-modal-view>
+    </script>
 </ion-view>

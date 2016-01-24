@@ -1,4 +1,4 @@
-/*global define, console, window*/
+/*global angular, define, console, window*/
 
 define(function () {
     'use strict';
@@ -14,7 +14,12 @@ define(function () {
 
         HueService.getAllScenes().then(function (data) {
                 console.log(data);
-                $scope.allScenes = data;
+                var ret = [];
+                angular.forEach(data, function (value, key) {
+                    value.id = key;
+                    ret.push(value);
+                });
+                $scope.allScenes = ret;
             })
             .finally(function () {
                 $ionicLoading.hide();

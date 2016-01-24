@@ -2,7 +2,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $interval, $ionicLoading, DataService, HueService, UtilityService) {
+    function ctrl($scope, $state, $interval, $ionicLoading, $ionicModal, DataService, HueService, UtilityService) {
         console.info("HueLightDetailsCtrl init", $scope.lightId);
 
         var refreshLightInfo = function () {
@@ -77,12 +77,44 @@ define(function () {
         };
 
 
+        $ionicModal.fromTemplateUrl('my-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+        $scope.openModal = function () {
+            $scope.modal.show();
+        };
+        $scope.closeModal = function () {
+            $scope.modal.hide();
+        };
+        $scope.changeLightName = function (newName) {
+            HueService.renameLight($scope.lightId, newName).then(function (data) {
+                $scope.light.name = newName;
+                $scope.modal.hide();
+            });
+        };
+        //Cleanup the modal when we're done with it!
+        $scope.$on('$destroy', function () {
+            $scope.modal.remove();
+        });
+        // Execute action on hide modal
+        $scope.$on('modal.hidden', function () {
+            // Execute action
+        });
+        // Execute action on remove modal
+        $scope.$on('modal.removed', function () {
+            // Execute action
+        });
+
+
         //        $scope.$on("$destroy", function () {
         //            $interval.cancel(interval);
         //        });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', '$ionicModal', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

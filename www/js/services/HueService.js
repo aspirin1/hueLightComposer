@@ -57,6 +57,17 @@ define(['angular'], function (angular) {
                 });
         };
 
+        this.changeLightAttribute = function (lightId, newState) {
+            var url = getBaseApiUrl() + '/lights/' + lightId;
+            var cmd = JSON.stringify(newState);
+            console.info(url, cmd);
+            return $http.put(url, cmd)
+                .then(function (result) {
+                    console.log(result);
+                    return result.data;
+                });
+        };
+
         this.turnLightOnOff = function (lightId, newState) {
             var obj = {
                 on: newState
@@ -96,6 +107,13 @@ define(['angular'], function (angular) {
                 effect: cmd
             };
             return this.changeLightState(lightId, obj);
+        };
+
+        this.renameLight = function (lightId, newName) {
+            var obj = {
+                name: newName
+            };
+            return this.changeLightAttribute(lightId, obj);
         };
 
         this.getAllGroups = function () {
