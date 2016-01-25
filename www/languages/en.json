@@ -9,6 +9,9 @@
     "SINGLE_Back": "Back",
     "SINGLE_Cancel": "Cancel",
     "SINGLE_Change": "Change",
+    "SINGLE_Create": "Create",
+    "SINGLE_Name": "Name",
+    "SINGLE_Delete": "Delete",
 
     "Layout_Home_Tab_Lights": "Lights",
     "Layout_Home_Tab_Groups": "Groups",
@@ -35,6 +38,8 @@
     "Home_Groups_AllLights": "All Lights",
     "Home_Scenes_Title": "Scenes",
     "Home_LightList_Title": "Hue lights",
+    "Home_LightList_CreateScene": "Create new scene",
+    "Home_LightList_Detail_CopyTo": "Copy to",
     "Home_LightList_Detail_RenameLight_Title": "Rename light",
     "Home_LightList_Detail_RenameLight_NewName": "New name"
 

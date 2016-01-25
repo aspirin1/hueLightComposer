@@ -5,14 +5,21 @@
             <li class="list list-inset">
                 <label class="item item-input">
                     <i class="icon ion-search placeholder-icon"></i>
-                    <input type="text" placeholder="{{'SINGLE_Search' |translate}}" ng-model="searchFilter">
+                    <input type="search" placeholder="{{'SINGLE_Search' |translate}}" ng-model="searchFilter">
+                    <button ng-click="searchFilter = ''" class="button ion-android-close input-button button-small" ng-show="searchFilter.length">Clear
+                    </button>
                 </label>
             </li>
             <li ng-repeat="scene in allScenes | filter:{name:searchFilter}" class="item item-button-right">
                 {{scene.name}}
-                <button class="button" ng-click="activateScene(scene.id)">
-                    {{'SINGLE_On' |translate}}
-                </button>
+                <div class="buttons">
+                    <button class="button" ng-click="deleteScene(scene.id)">
+                        {{'SINGLE_Delete' |translate}}
+                    </button>
+                    <button class="button" ng-click="activateScene(scene.id)">
+                        {{'SINGLE_On' |translate}}
+                    </button>
+                </div>
             </li>
         </ul>
     </ion-content>

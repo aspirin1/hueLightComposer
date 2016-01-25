@@ -84,8 +84,13 @@
         </div>
 
     </ion-content>
+    <ion-footer-bar class="bar-light">
+        <div class="buttons button-clear pull-right">
+            <button class="button button-outline button-light" ng-click="openCopyToModal()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
+        </div>
+    </ion-footer-bar>
 
-    <script id="my-modal.html" type="text/ng-template">
+    <script id="rename-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar>
                 <h1 class="title">{{'Home_LightList_Detail_RenameLight_Title' | translate}}</h1>
@@ -101,7 +106,23 @@
                     <button class="button button-calm" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
                     <button class="button button-positive" ng-click="changeLightName(newLightName)">{{'SINGLE_Change' | translate}}</button>
                 </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
 
+    <script id="copyto-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">{{'Home_LightList_Detail_CopyTo' | translate}}</h1>
+            </ion-header-bar>
+            <ion-content>
+                <ul class="list">
+                    <ion-checkbox ng-repeat="light in allLightsExceptCurrent" ng-model="copySelection[light.id]">{{light.name}}</ion-checkbox>
+                </ul>
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>
+                    <button class="button button-positive" ng-click="copyToSelection()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
+                </div>
             </ion-content>
         </ion-modal-view>
     </script>

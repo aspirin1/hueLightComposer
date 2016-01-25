@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $interval, $ionicLoading, DataService, HueService, UtilityService) {
+    function ctrl($scope, $state, $interval, $ionicLoading, $ionicModal, DataService, HueService, UtilityService) {
         console.info("HueLightListCtrl init");
 
 
@@ -50,12 +50,47 @@ define(function () {
             return UtilityService.calculateFormattedPercentage(maxSat, lightBri);
         };
 
+        $ionicModal.fromTemplateUrl('createScene-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.createSceneModal = modal;
+        });
+
+        $scope.openCreateSceneModal = function () {
+            $scope.createSceneSelection = {};
+            $scope.newScene = {};
+            $scope.newScene.name = '';
+            $scope.createSceneModal.show();
+        };
+        $scope.closeCreateSceneModal = function () {
+            $scope.createSceneModal.hide();
+        };
+
+        $scope.createScene = function () {
+            var tmp = [];
+
+            angular.forEach($scope.createSceneSelection, function (value, key) {
+                if (value === true) {
+                    tmp.push(key);
+                }
+            });
+
+            if (tmp.length > 0 && $scope.newScene.name.length > 0) {
+                HueService.createScene($scope.newScene.name, tmp).then(function (data) {
+                    $scope.closeCreateSceneModal();
+                });
+            } else {
+                $scope.closeCreateSceneModal();
+            }
+        };
+
         //        $scope.$on("$destroy", function () {
         //            $interval.cancel(interval);
         //        });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', '$ionicModal', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

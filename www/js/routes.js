@@ -27,7 +27,7 @@ define(['app'], function (app) {
     app.config(['$ionicConfigProvider', function ($ionicConfigProvider) {
 
         //$ionicConfigProvider.views.forwardCache(false);
-        //$ionicConfigProvider.views.maxCache(0);
+        $ionicConfigProvider.views.maxCache(0);
         $ionicConfigProvider.tabs.position("bottom");
     }]);
 

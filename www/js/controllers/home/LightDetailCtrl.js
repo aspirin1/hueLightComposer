@@ -1,4 +1,4 @@
-/*global define, console, window*/
+/*global angular, define, console, window*/
 define(function () {
     'use strict';
 
@@ -19,6 +19,17 @@ define(function () {
         //        var interval = $interval(function () {
         //            refreshLightInfo();
         //        }, 5000);
+
+        DataService.getEnrichedLightInfos().then(function (data) {
+            var tmp = [];
+            angular.forEach(data, function (value, key) {
+                if (key !== $scope.lightId) {
+                    value.id = key;
+                    tmp.push(value);
+                }
+            });
+            $scope.allLightsExceptCurrent = tmp;
+        });
 
         $scope.doRefresh = function () {
             refreshLightInfo();
@@ -77,17 +88,18 @@ define(function () {
         };
 
 
-        $ionicModal.fromTemplateUrl('my-modal.html', {
+        $ionicModal.fromTemplateUrl('rename-modal.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {
-            $scope.modal = modal;
+            $scope.renameModal = modal;
         });
+
         $scope.openModal = function () {
-            $scope.modal.show();
+            $scope.renameModal.show();
         };
         $scope.closeModal = function () {
-            $scope.modal.hide();
+            $scope.renameModal.hide();
         };
         $scope.changeLightName = function (newName) {
             HueService.renameLight($scope.lightId, newName).then(function (data) {
@@ -95,19 +107,39 @@ define(function () {
                 $scope.modal.hide();
             });
         };
-        //Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function () {
-            $scope.modal.remove();
-        });
-        // Execute action on hide modal
-        $scope.$on('modal.hidden', function () {
-            // Execute action
-        });
-        // Execute action on remove modal
-        $scope.$on('modal.removed', function () {
-            // Execute action
+            $scope.renameModal.remove();
+            $scope.copyToModal.remove();
         });
 
+
+        $scope.copySelection = {};
+        $ionicModal.fromTemplateUrl('copyto-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.copyToModal = modal;
+        });
+
+        $scope.openCopyToModal = function () {
+            $scope.copyToModal.show();
+        };
+        $scope.closeCopyToModal = function () {
+            $scope.copyToModal.hide();
+        };
+
+        $scope.copyToSelection = function () {
+            angular.forEach($scope.copySelection, function (value, key) {
+                if (value === true) {
+                    HueService.changeLightState(key, {
+                        bri: parseInt($scope.light.state.bri),
+                        sat: parseInt($scope.light.state.sat),
+                        hue: parseInt($scope.light.state.hue),
+                    });
+                }
+            });
+            $scope.closeCopyToModal();
+        };
 
         //        $scope.$on("$destroy", function () {
         //            $interval.cancel(interval);

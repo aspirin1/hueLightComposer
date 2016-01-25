@@ -159,6 +159,37 @@ define(['angular'], function (angular) {
             return this.changeGroupState(0, obj);
         };
 
+        this.getScene = function (sceneId) {
+            var url = getBaseApiUrl() + '/scenes/' + sceneId;
+            console.log(url);
+            return $http.get(url)
+                .then(function (result) {
+                    return result.data;
+                });
+        };
+
+        this.createScene = function (sceneName, lightsArray) {
+            var url = getBaseApiUrl() + '/scenes/';
+            var cmd = JSON.stringify({
+                name: sceneName,
+                lights: lightsArray
+            });
+            console.info(url, cmd);
+            return $http.post(url, cmd)
+                .then(function (result) {
+                    return result.data;
+                });
+        };
+
+        this.deleteScene = function (sceneId) {
+            var url = getBaseApiUrl() + '/scenes/' + sceneId;
+            console.info(url);
+            return $http.delete(url)
+                .then(function (result) {
+                    return result.data;
+                });
+        };
+
         return this;
     };
 

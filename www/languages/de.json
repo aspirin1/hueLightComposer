@@ -9,6 +9,9 @@
     "SINGLE_Back": "Zurück",
     "SINGLE_Cancel": "Abbrechen",
     "SINGLE_Change": "Ändern",
+    "SINGLE_Create": "Anlegen",
+    "SINGLE_Name": "Name",
+    "SINGLE_Delete": "Löschen",
 
     "Layout_Home_Tab_Lights": "Lichter",
     "Layout_Home_Tab_Groups": "Gruppen",
@@ -35,6 +38,8 @@
     "Home_Groups_AllLights": "Alle Lampen",
     "Home_Scenes_Title": "Szenen",
     "Home_LightList_Title": "Hue Lampen",
+    "Home_LightList_CreateScene": "Neue Szene anlegen",
+    "Home_LightList_Detail_CopyTo": "Kopieren nach",
     "Home_LightList_Detail_RenameLight_Title": "Lampe umbenennen",
     "Home_LightList_Detail_RenameLight_NewName": "Neuer Name"
 
