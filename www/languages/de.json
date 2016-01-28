@@ -12,10 +12,12 @@
     "SINGLE_Create": "Anlegen",
     "SINGLE_Name": "Name",
     "SINGLE_Delete": "Löschen",
+    "SINGLE_Ok": "Ok",
 
     "Layout_Home_Tab_Lights": "Lichter",
     "Layout_Home_Tab_Groups": "Gruppen",
     "Layout_Home_Tab_Scenes": "Szenen",
+    "Layout_Home_Tab_Colors": "Farben",
 
     "Layout_Main_LeftMenu_Title": "Menü",
     "Layout_Main_LeftMenu_Link_Home": "Start",
@@ -37,9 +39,13 @@
     "Home_Groups_Title": "Gruppen",
     "Home_Groups_AllLights": "Alle Lampen",
     "Home_Scenes_Title": "Szenen",
+    "Home_Colors_Title": "Farben",
     "Home_LightList_Title": "Hue Lampen",
     "Home_LightList_CreateScene": "Neue Szene anlegen",
     "Home_LightList_Detail_CopyTo": "Kopieren nach",
+    "Home_LightList_Detail_SaveColor": "Farbe speichern",
+    "Home_LightList_Detail_SaveColor_Prompt_Title": "Farbe speichern",
+    "Home_LightList_Detail_SaveColor_Prompt_Text": "Bitte Name oder Beschreibung eingeben",
     "Home_LightList_Detail_RenameLight_Title": "Lampe umbenennen",
     "Home_LightList_Detail_RenameLight_NewName": "Neuer Name"
 

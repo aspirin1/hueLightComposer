@@ -1,5 +1,10 @@
 <ion-view view-title="{{'Home_LightList_Title' | translate }}">
-    <ion-nav-bar class="bar-main">
+
+    <ion-nav-bar class="bar-main" ng-controller="NavMenuCtrl">
+        <ion-nav-buttons side="left">
+            <!-- Toggle left side menu -->
+            <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="toggleLeftSideMenu()"></button>
+        </ion-nav-buttons>
         <ion-nav-buttons side="secondary">
             <button class="button button-light" ng-click="openCreateSceneModal()">
                 <i class="fa fa-camera"></i>

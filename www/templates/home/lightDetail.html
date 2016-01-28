@@ -85,8 +85,13 @@
 
     </ion-content>
     <ion-footer-bar class="bar-light">
+        <div class="buttons button-clear pull-left">
+            <input type="number" min="1" max="100" step="500" ng-model="customLoopTime" />
+            <button class="button button-outline button-positive" ng-click="toggleCustomLoop()">{{customLoopStateBtnText}}</button>
+        </div>
         <div class="buttons button-clear pull-right">
-            <button class="button button-outline button-light" ng-click="openCopyToModal()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
+            <button class="button button-outline button-positive" ng-click="openCopyToModal()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
+            <button class="button button-outline button-positive" ng-click="saveColor()">{{'Home_LightList_Detail_SaveColor' | translate}}</button>
         </div>
     </ion-footer-bar>
 

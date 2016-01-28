@@ -3,11 +3,33 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function (HueService, $q, $timeout, ColorService) {
-
+    var factory = function (HueService, $q, $interval, $timeout, ColorService, localStorageService) {
+        var self = this;
+        var loopState = {};
         var enrichedLightInfos = null;
 
-        var getImageFromModelId = function (modelid) {
+        this.getCustomColors = function () {
+            var tmp = localStorageService.get('customColors');
+            return tmp;
+        };
+
+        this.addCustomColor = function (name, bri, sat, hue, hexColor) {
+            var tmp = localStorageService.get('customColors');
+            console.log(tmp);
+            if (tmp === null)
+                tmp = [];
+            var newColor = {
+                name: name,
+                hue: hue,
+                sat: sat,
+                bri: bri,
+                hexColor: hexColor
+            };
+            tmp.push(newColor);
+            localStorageService.set('customColors', tmp);
+        };
+
+        this.getImageFromModelId = function (modelid) {
             if (typeof (modelid) === 'undefined' || modelid === null) {
                 return "white_and_color_e27";
             }
@@ -36,7 +58,7 @@ define(['angular'], function (angular) {
             }
         };
 
-        var getGamutMode = function (modelid) {
+        this.getGamutMode = function (modelid) {
             if (typeof (modelid) === 'undefined' || modelid === null) {
                 return "X";
             }
@@ -67,19 +89,17 @@ define(['angular'], function (angular) {
             return "X";
         };
 
-        var getHexColor = function (gamut, xy, bri) {
+        this.getHexColor = function (gamut, xy, bri) {
             return "#" + ColorService.CIE1931ToHex(gamut, xy[0], xy[1], bri);
-
-
         };
 
         var getRefreshedLightInfos = function () {
             var deferred = $q.defer();
             HueService.getAllLights().then(function (lightInfos) {
                 angular.forEach(lightInfos, function (value, key) {
-                    value.image = getImageFromModelId(value.modelid);
-                    value.gamut = getGamutMode(value.modelid);
-                    value.hexColor = getHexColor(value.gamut, value.state.xy, value.state.bri);
+                    value.image = self.getImageFromModelId(value.modelid);
+                    value.gamut = self.getGamutMode(value.modelid);
+                    value.hexColor = self.getHexColor(value.gamut, value.state.xy, value.state.bri);
                 });
                 console.log(lightInfos);
                 deferred.resolve(lightInfos);
@@ -93,9 +113,9 @@ define(['angular'], function (angular) {
             var deferred = $q.defer();
 
             HueService.getLightInfo(lightId).then(function (lightInfos) {
-                lightInfos.image = getImageFromModelId(lightInfos.modelid);
-                lightInfos.gamut = getGamutMode(lightInfos.modelid);
-                lightInfos.hexColor = getHexColor(lightInfos.gamut, lightInfos.state.xy, lightInfos.state.bri);
+                lightInfos.image = self.getImageFromModelId(lightInfos.modelid);
+                lightInfos.gamut = self.getGamutMode(lightInfos.modelid);
+                lightInfos.hexColor = self.getHexColor(lightInfos.gamut, lightInfos.state.xy, lightInfos.state.bri);
                 deferred.resolve(lightInfos);
             });
 
@@ -129,9 +149,23 @@ define(['angular'], function (angular) {
             return deferred.promise;
         };
 
+        this.isLightLooping = function (lightId) {
+            return (lightId in loopState);
+        };
+
+        this.stopLightLooping = function (lightId) {
+            var q = $interval.cancel(loopState[lightId]);
+            delete loopState[lightId];
+            return q;
+        };
+
+        this.setLightLooping = function (lightId, interval) {
+            loopState[lightId] = interval;
+        };
+
         return this;
     };
 
-    factory.$inject = ['HueService', '$q', '$timeout', 'ColorService'];
+    factory.$inject = ['HueService', '$q', '$interval', '$timeout', 'ColorService', 'localStorageService'];
     return factory;
 });

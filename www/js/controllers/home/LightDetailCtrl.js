@@ -1,8 +1,8 @@
-/*global angular, define, console, window*/
+/*global angular, define, console, window,navigator,alert*/
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $interval, $ionicLoading, $ionicModal, DataService, HueService, UtilityService) {
+    function ctrl($scope, $state, $interval, $ionicLoading, $ionicModal, $filter, DataService, HueService, UtilityService) {
         console.info("HueLightDetailsCtrl init", $scope.lightId);
 
         var refreshLightInfo = function () {
@@ -141,12 +141,68 @@ define(function () {
             $scope.closeCopyToModal();
         };
 
+
+        $scope.customLoopTime = 1;
+        var getCustomLoopStateBtnText = function () {
+            if (DataService.isLightLooping($scope.lightId)) {
+                $scope.customLoopStateBtnText = "Stop";
+            } else {
+                $scope.customLoopStateBtnText = "Start";
+            }
+        };
+        getCustomLoopStateBtnText();
+
+        $scope.toggleCustomLoop = function () {
+            if (DataService.isLightLooping($scope.lightId)) {
+                HueService.changeLightState($scope.lightId, {
+                    hue_inc: 0,
+                    transitiontime: 0
+                }).then(function (data) {
+                    console.info("stopped custom loop", data);
+                });
+                DataService.stopLightLooping($scope.lightId);
+            } else {
+                var timeInMs = $scope.customLoopTime * 1000;
+                var customLoop = function () {
+                    HueService.changeLightState($scope.lightId, {
+                        hue_inc: 60000,
+                        transitiontime: parseInt(timeInMs / 100)
+                    }).then(function (data) {
+                        console.log("started custom loop", data);
+                    });
+                };
+                customLoop();
+                DataService.setLightLooping($scope.lightId, $interval(customLoop, timeInMs));
+            }
+            getCustomLoopStateBtnText();
+        };
+
+        $scope.saveColor = function () {
+            navigator.notification.prompt(
+                $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Text'), // message
+                onPrompt, // callback to invoke
+                $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Title'), // title
+                [$filter('translate')('SINGLE_Ok'), $filter('translate')('SINGLE_Cancel')] // buttonLabels
+            );
+        };
+
+
+        function onPrompt(results) {
+            //OK
+            if (results.buttonIndex === 1) {
+                var colorName = results.input1;
+                var gamut = DataService.getGamutMode($scope.light.modelid);
+                var hexColor = DataService.getHexColor(gamut, $scope.light.state.xy, $scope.light.state.bri);
+                DataService.addCustomColor(colorName, $scope.light.state.bri, $scope.light.state.sat, $scope.light.state.hue, hexColor);
+            }
+        }
+
         //        $scope.$on("$destroy", function () {
         //            $interval.cancel(interval);
         //        });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', '$ionicModal', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', '$ionicModal', '$filter', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

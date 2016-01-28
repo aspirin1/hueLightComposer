@@ -1,4 +1,4 @@
-/*global define, require, console */
+/*global define, require, console,window */
 
 define(['app'], function (app) {
     'use strict';
@@ -94,6 +94,15 @@ define(['app'], function (app) {
                         'scenes-tab': {
                             templateUrl: 'templates/home/scenes.html',
                             controller: 'ScenesCtrl'
+                        }
+                    }
+                })
+                .state('main.home_tab.colors', {
+                    url: '/colors',
+                    views: {
+                        'colors-tab': {
+                            templateUrl: 'templates/home/colors.html',
+                            controller: 'ColorsCtrl'
                         }
                     }
                 });
