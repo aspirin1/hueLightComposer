@@ -3,14 +3,24 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function (HueService, $q, $interval, $timeout, ColorService, localStorageService) {
+    var factory = function (HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
         var self = this;
         var loopState = {};
         var enrichedLightInfos = null;
 
         this.getCustomColors = function () {
-            var tmp = localStorageService.get('customColors');
-            return tmp;
+            var colors = ColorDataService.getColors();
+            var testColor = colors[0];
+            var gamutAxy = ColorService.rgbArrayToCIE1931("A", testColor.rgb);
+            var gamutBxy = ColorService.rgbArrayToCIE1931("B", testColor.rgb);
+            var gamutCxy = ColorService.rgbArrayToCIE1931("C", testColor.rgb);
+
+            //console.log(testColor);
+            console.log(gamutAxy, gamutBxy, gamutCxy);
+
+            //var tmp = localStorageService.get('customColors');
+            //return tmp;
+            return colors;
         };
 
         this.addCustomColor = function (name, bri, sat, hue, hexColor) {
@@ -166,6 +176,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['HueService', '$q', '$interval', '$timeout', 'ColorService', 'localStorageService'];
+    factory.$inject = ['HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService'];
     return factory;
 });

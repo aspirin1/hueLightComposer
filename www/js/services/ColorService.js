@@ -230,17 +230,22 @@ define(['angular'], function (angular) {
              * @return {XYPoint} CIE 1931 XY coordinates, corrected for reproducibility.
              */
             getXYPointFromRGB = function (red, green, blue) {
-                var r = (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92),
-                    g = (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92),
-                    b = (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92),
+                red = (red / 255.0);
+                green = (green / 255.0);
+                blue = (blue / 255.0);
 
-                    X = r * 0.4360747 + g * 0.3850649 + b * 0.0930804,
-                    Y = r * 0.2225045 + g * 0.7168786 + b * 0.0406169,
-                    Z = r * 0.0139322 + g * 0.0971045 + b * 0.7141733,
 
-                    cx = X / (X + Y + Z),
-                    cy = Y / (X + Y + Z);
+                var r = (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92);
+                var g = (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92);
+                var b = (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92);
 
+                var X = r * 0.664511 + g * 0.154324 + b * 0.162028;
+                var Y = r * 0.283881 + g * 0.668433 + b * 0.047685;
+                var Z = r * 0.000088 + g * 0.072310 + b * 0.986039;
+
+                var cx = X / (X + Y + Z);
+                var cy = Y / (X + Y + Z);
+                console.log(new XYPoint(cx, cy));
                 cx = isNaN(cx) ? 0.0 : cx;
                 cy = isNaN(cy) ? 0.0 : cy;
 
@@ -256,7 +261,9 @@ define(['angular'], function (angular) {
 
                 return new XYPoint(cx, cy);
             },
-
+            round = function (value, decimals) {
+                return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+            },
             /**
              * Returns a rgb array for given x, y values. Not actually an inverse of
              * getXYPointFromRGB. Implementation of the instructions found on the
@@ -355,9 +362,24 @@ define(['angular'], function (angular) {
              * @param {Number} blue Integer in the 0-255 range.
              * @return {Array{Number}} Approximate CIE 1931 x,y coordinates.
              */
-            rgbToCIE1931: function (red, green, blue) {
+            rgbToCIE1931: function (gamut, red, green, blue) {
+                if (gamut === "A") {
+                    initGamutA();
+                } else if (gamut === "B") {
+                    initGamutB();
+                } else if (gamut === "C") {
+                    initGamutC();
+                } else {
+                    initGamutX();
+                }
+
                 var point = getXYPointFromRGB(red, green, blue);
-                return [point.x, point.y];
+                return [round(point.x, 4), round(point.y, 4)];
+                //return [point.x, point.y];
+            },
+
+            rgbArrayToCIE1931: function (gamut, rgb) {
+                return this.rgbToCIE1931(gamut, rgb[0], rgb[1], rgb[2]);
             },
 
             /**
@@ -368,7 +390,17 @@ define(['angular'], function (angular) {
              * @param {String} hexColor String representing a hexidecimal color value.
              * @return {Array{Number}} Approximate CIE 1931 x,y coordinates.
              */
-            getCIEColor: function (hexColor) {
+            getCIEColor: function (gamut, hexColor) {
+                if (gamut === "A") {
+                    initGamutA();
+                } else if (gamut === "B") {
+                    initGamutB();
+                } else if (gamut === "C") {
+                    initGamutC();
+                } else {
+                    initGamutX();
+                }
+
                 var hex = hexColor || null,
                     xy = [];
                 if (null !== hex) {

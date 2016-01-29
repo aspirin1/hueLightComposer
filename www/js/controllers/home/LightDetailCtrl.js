@@ -36,7 +36,6 @@ define(function () {
         };
 
         $scope.toggleLightOnOff = function () {
-            //$ionicLoading.show();
             HueService.turnLightOnOff($scope.lightId, $scope.light.state.on).then(function (data) {
                 refreshLightInfo();
             });
@@ -163,10 +162,11 @@ define(function () {
                 DataService.stopLightLooping($scope.lightId);
             } else {
                 var timeInMs = $scope.customLoopTime * 1000;
+                var transitionTime = $scope.customLoopTime * 10;
                 var customLoop = function () {
                     HueService.changeLightState($scope.lightId, {
-                        hue_inc: 60000,
-                        transitiontime: parseInt(timeInMs / 100)
+                        hue_inc: 65533,
+                        transitiontime: parseInt(transitionTime)
                     }).then(function (data) {
                         console.log("started custom loop", data);
                     });
@@ -190,10 +190,15 @@ define(function () {
         function onPrompt(results) {
             //OK
             if (results.buttonIndex === 1) {
-                var colorName = results.input1;
-                var gamut = DataService.getGamutMode($scope.light.modelid);
-                var hexColor = DataService.getHexColor(gamut, $scope.light.state.xy, $scope.light.state.bri);
-                DataService.addCustomColor(colorName, $scope.light.state.bri, $scope.light.state.sat, $scope.light.state.hue, hexColor);
+                DataService.getEnrichedLightInfo($scope.lightId).then(function (data) {
+                    $scope.light = data;
+                    var colorName = results.input1;
+
+                    //var gamut = DataService.getGamutMode(light.modelid);
+                    //var hexColor = DataService.getHexColor(gamut, $scope.light.state.xy, $scope.light.state.bri);
+
+                    DataService.addCustomColor(colorName, $scope.light.state.bri, $scope.light.state.sat, $scope.light.state.hue, $scope.light.hexColor);
+                });
             }
         }
 

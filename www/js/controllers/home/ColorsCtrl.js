@@ -38,16 +38,31 @@ define(function () {
             $scope.copyToModal.hide();
         };
 
+        function getLightById(key) {
+            for (var i = 0; i < $scope.allLights.length; i++) {
+                if ($scope.allLights[i].id === key) {
+                    return $scope.allLights[i];
+                }
+            }
+        }
+
         $scope.copyToSelection = function () {
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var mc = $scope.modalColor;
+                    var light = getLightById(key);
+                    var gamutXy = mc["gamut" + light.gamut];
+                    console.log(light, mc, gamutXy);
                     HueService.changeLightState(key, {
                         on: true,
-                        bri: parseInt(mc.bri),
-                        sat: parseInt(mc.sat),
-                        hue: parseInt(mc.hue),
+                        xy: gamutXy
                     });
+                    //                    HueService.changeLightState(key.id, {
+                    //                        on: true,
+                    //                        bri: parseInt(mc.bri),
+                    //                        sat: parseInt(mc.sat),
+                    //                        hue: parseInt(mc.hue),
+                    //                    });
                 }
             });
             $scope.closeCopyToModal();
