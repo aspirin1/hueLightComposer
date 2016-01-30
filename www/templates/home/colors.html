@@ -3,6 +3,9 @@
         <div class="list">
             <a ng-repeat="color in colors" class="item  item-avatar" href="#" ng-click="openCopyToModal(color)">
                 <img ng-style="getBackgroundStyle(color.hexColor)" /> {{color.name}}
+                <span ng-show="color.isReachableByGamutA">A</span>
+                <span ng-show="color.isReachableByGamutB">B</span>
+                <span ng-show="color.isReachableByGamutC">C</span>
             </a>
         </div>
     </ion-content>

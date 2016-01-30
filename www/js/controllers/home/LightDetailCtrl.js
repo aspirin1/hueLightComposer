@@ -163,13 +163,16 @@ define(function () {
             } else {
                 var timeInMs = $scope.customLoopTime * 1000;
                 var transitionTime = $scope.customLoopTime * 10;
+                console.log(timeInMs, transitionTime);
+                var goToMax = true;
                 var customLoop = function () {
                     HueService.changeLightState($scope.lightId, {
-                        hue_inc: 65533,
+                        hue_inc: 5000,
                         transitiontime: parseInt(transitionTime)
                     }).then(function (data) {
                         console.log("started custom loop", data);
                     });
+                    goToMax = !goToMax;
                 };
                 customLoop();
                 DataService.setLightLooping($scope.lightId, $interval(customLoop, timeInMs));

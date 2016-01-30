@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function () {
+    var factory = function (ColorService) {
 
         var colors = [{
             "name": "Alice Blue",
@@ -54,13 +54,6 @@ define(['angular'], function (angular) {
             "gamutB": [0.3806, 0.3576],
             "gamutC": [0.3806, 0.3576],
             "hexColor": "#ffe2c4"
-        }, {
-            "name": "Black",
-            "rgb": [0, 0, 0],
-            "gamutA": [0.139, 0.081],
-            "gamutB": [0.168, 0.041],
-            "gamutC": [0.153, 0.048],
-            "hexColor": "#000000"
         }, {
             "name": "Blanched Almond",
             "rgb": [255, 234, 204],
@@ -1036,14 +1029,18 @@ define(['angular'], function (angular) {
         }
 
         this.getColors = function () {
-            //            angular.forEach(colors, function (value) {
-            //                value.hexColor = rgbArrayToHex(value.rgb);
-            //            });
+            angular.forEach(colors, function (value) {
+                //value.hexColor = rgbArrayToHex(value.rgb);
+                var rawxy = ColorService.getRawXYPointFromRGB(value.rgb);
+                value.isReachableByGamutA = ColorService.checkPointInLampsReach("A", rawxy);
+                value.isReachableByGamutB = ColorService.checkPointInLampsReach("B", rawxy);
+                value.isReachableByGamutC = ColorService.checkPointInLampsReach("C", rawxy);
+            });
             return colors;
         };
         return this;
     };
 
-    factory.$inject = [];
+    factory.$inject = ['ColorService'];
     return factory;
 });

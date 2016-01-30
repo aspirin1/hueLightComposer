@@ -219,17 +219,7 @@ define(['angular'], function (angular) {
 
                 return Math.sqrt(dx * dx + dy * dy);
             },
-
-            /**
-             * Returns an XYPoint object containing the closest available CIE 1931
-             * coordinates based on the RGB input values.
-             *
-             * @param {Number} RGB red value, integer between 0 and 255.
-             * @param {Number} RGB green value, integer between 0 and 255.
-             * @param {Number} RGB blue value, integer between 0 and 255.
-             * @return {XYPoint} CIE 1931 XY coordinates, corrected for reproducibility.
-             */
-            getXYPointFromRGB = function (red, green, blue) {
+            getRawXYPointFromRGB = function (red, green, blue) {
                 red = (red / 255.0);
                 green = (green / 255.0);
                 blue = (blue / 255.0);
@@ -245,24 +235,46 @@ define(['angular'], function (angular) {
 
                 var cx = X / (X + Y + Z);
                 var cy = Y / (X + Y + Z);
-                console.log(new XYPoint(cx, cy));
-                cx = isNaN(cx) ? 0.0 : cx;
-                cy = isNaN(cy) ? 0.0 : cy;
 
+                cx = isNaN(cx) ? 0.0 : cx; //black for example
+                cy = isNaN(cy) ? 0.0 : cy;
+                return new XYPoint(cx, cy);
+            },
+            /**
+             * Returns an XYPoint object containing the closest available CIE 1931
+             * coordinates based on the RGB input values.
+             *
+             * @param {Number} RGB red value, integer between 0 and 255.
+             * @param {Number} RGB green value, integer between 0 and 255.
+             * @param {Number} RGB blue value, integer between 0 and 255.
+             * @return {XYPoint} CIE 1931 XY coordinates, corrected for reproducibility.
+             */
+            getXYPointFromRGB = function (red, green, blue) {
                 //Check if the given XY value is within the colourreach of our lamps.
-                var xyPoint = new XYPoint(cx, cy),
+                var xyPoint = getRawXYPointFromRGB(red, green, blue),
                     inReachOfLamps = checkPointInLampsReach(xyPoint);
 
                 if (!inReachOfLamps) {
                     var closestPoint = getClosestPointToPoint(xyPoint);
-                    cx = closestPoint.x;
-                    cy = closestPoint.y;
+                    xyPoint.x = closestPoint.x;
+                    xyPoint.y = closestPoint.y;
                 }
 
-                return new XYPoint(cx, cy);
+                return new XYPoint(xyPoint.x, xyPoint.y);
             },
             round = function (value, decimals) {
                 return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+            },
+            initGamut = function (gamut) {
+                if (gamut === "A") {
+                    initGamutA();
+                } else if (gamut === "B") {
+                    initGamutB();
+                } else if (gamut === "C") {
+                    initGamutC();
+                } else {
+                    initGamutX();
+                }
             },
             /**
              * Returns a rgb array for given x, y values. Not actually an inverse of
@@ -363,15 +375,7 @@ define(['angular'], function (angular) {
              * @return {Array{Number}} Approximate CIE 1931 x,y coordinates.
              */
             rgbToCIE1931: function (gamut, red, green, blue) {
-                if (gamut === "A") {
-                    initGamutA();
-                } else if (gamut === "B") {
-                    initGamutB();
-                } else if (gamut === "C") {
-                    initGamutC();
-                } else {
-                    initGamutX();
-                }
+                initGamut(gamut);
 
                 var point = getXYPointFromRGB(red, green, blue);
                 return [round(point.x, 4), round(point.y, 4)];
@@ -382,6 +386,14 @@ define(['angular'], function (angular) {
                 return this.rgbToCIE1931(gamut, rgb[0], rgb[1], rgb[2]);
             },
 
+            checkPointInLampsReach: function (gamut, xy) {
+                initGamut(gamut);
+                return checkPointInLampsReach(new XYPoint(xy[0], xy[1]));
+            },
+            getRawXYPointFromRGB: function (rgb) {
+                var xyPoint = getRawXYPointFromRGB(rgb[0], rgb[1], rgb[2]);
+                return [xyPoint.x, xyPoint.y];
+            },
             /**
              * Returns the approximate CIE 1931 x,y coordinates represented by the
              * supplied hexColor parameter, or of a random color if the parameter
@@ -391,15 +403,7 @@ define(['angular'], function (angular) {
              * @return {Array{Number}} Approximate CIE 1931 x,y coordinates.
              */
             getCIEColor: function (gamut, hexColor) {
-                if (gamut === "A") {
-                    initGamutA();
-                } else if (gamut === "B") {
-                    initGamutB();
-                } else if (gamut === "C") {
-                    initGamutC();
-                } else {
-                    initGamutX();
-                }
+                initGamut(gamut);
 
                 var hex = hexColor || null,
                     xy = [];
@@ -425,15 +429,7 @@ define(['angular'], function (angular) {
              * @return {String} hex color string.
              */
             CIE1931ToHex: function (gamut, x, y, bri) {
-                if (gamut === "A") {
-                    initGamutA();
-                } else if (gamut === "B") {
-                    initGamutB();
-                } else if (gamut === "C") {
-                    initGamutC();
-                } else {
-                    initGamutX();
-                }
+                initGamut(gamut);
                 if (bri === undefined) {
                     bri = 1;
                 }
