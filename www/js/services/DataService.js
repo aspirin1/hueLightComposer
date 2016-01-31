@@ -209,6 +209,7 @@ define(['angular'], function (angular) {
         };
 
         this.setEffect = function (lightId, effectName, interval) {
+            console.log("starting effect: " + effectName);
             effectState[parseInt(lightId)] = {
                 type: "single",
                 lightId: parseInt(lightId),

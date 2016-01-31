@@ -2,7 +2,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $interval, $ionicLoading, $ionicModal, $filter, DataService, HueService, UtilityService) {
+    function ctrl($scope, $state, $interval, $timeout, $ionicLoading, $ionicModal, $filter, DataService, HueService, UtilityService, EffectService) {
         console.info("HueLightDetailsCtrl init", $scope.lightId);
 
         var refreshLightInfo = function () {
@@ -182,6 +182,38 @@ define(function () {
             );
         };
 
+        //
+        //        $scope.test = function () {
+        //            HueService.changeLightState($scope.lightId, {
+        //                hue_inc: 0,
+        //                transitiontime: 0,
+        //            }).then(function (data) {
+        //                DataService.getEnrichedLightInfo($scope.lightId).then(function (lightData) {
+        //                    console.info("alert:" + lightData.state.alert + " bri:" + lightData.state.bri + " xy:" + lightData.state.xy[0] + "," + lightData.state.xy[1] + " hue:" + lightData.state.hue + " sat:" + lightData.state.sat);
+        //                });
+        //            });
+        //        };
+
+        $scope.startCandle = function () {
+            var lightId = $scope.lightId;
+            if (DataService.isLightExecutingEffect(lightId)) {
+                HueService.changeLightState(lightId, {
+                    hue_inc: 0,
+                    transitiontime: 0
+                }).then(function (data) {
+
+                });
+                DataService.stopEffect(lightId);
+            } else {
+                HueService.changeLightState(lightId, {
+                    on: true,
+                    bri: 42,
+                    xy: [0.5676, 0.3877],
+                });
+
+                DataService.setEffect(lightId, "candle", $interval(EffectService.candleEffect, 2000, 0, false, lightId));
+            }
+        };
 
         function onPrompt(results) {
             //OK
@@ -199,11 +231,11 @@ define(function () {
         }
 
         //        $scope.$on("$destroy", function () {
-        //            $interval.cancel(interval);
+        //            $interval.cancel(candle);
         //        });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', '$ionicModal', '$filter', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$state', '$interval', '$timeout', '$ionicLoading', '$ionicModal', '$filter', 'DataService', 'HueService', 'UtilityService', 'EffectService'];
     return ctrl;
 
 });

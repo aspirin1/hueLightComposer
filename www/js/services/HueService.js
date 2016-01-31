@@ -39,7 +39,7 @@ define(['angular'], function (angular) {
 
         this.getLightInfo = function (lightId) {
             var url = getBaseApiUrl() + '/lights/' + lightId;
-            console.log(url);
+            //console.log(url);
             return $http.get(url)
                 .then(function (result) {
                     return result.data;
@@ -49,10 +49,10 @@ define(['angular'], function (angular) {
         this.changeLightState = function (lightId, newState) {
             var url = getBaseApiUrl() + '/lights/' + lightId + '/state';
             var cmd = JSON.stringify(newState);
-            console.info(url, cmd);
+            //console.info(url, cmd);
             return $http.put(url, cmd)
                 .then(function (result) {
-                    console.log(result);
+                    //console.log(result);
                     return result.data;
                 });
         };

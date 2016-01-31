@@ -22,6 +22,7 @@
     "Layout_Main_LeftMenu_Title": "Menu",
     "Layout_Main_LeftMenu_Link_Home": "Home",
     "Layout_Main_LeftMenu_Link_Settings": "Settings",
+    "Layout_Main_LeftMenu_Link_Effects": "Effects",
     "Layout_Main_LeftMenu_Link_Category": "Category",
 
     "SearchingBridge_Title": "Searching bridge",
@@ -35,6 +36,9 @@
     "Settings_Design": "Design",
     "Settings_Dark": "Dark",
     "Settings_Light": "Light",
+
+    "Effects_Title": "Effects",
+
 
     "Home_Groups_Title": "Groups",
     "Home_Groups_AllLights": "All Lights",

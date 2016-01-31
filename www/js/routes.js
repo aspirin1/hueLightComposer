@@ -114,6 +114,30 @@ define(['app'], function (app) {
                 controller: 'SettingsCtrl'
             });
 
+            $stateProvider.state('main.effects', {
+                url: '/effects',
+                abstract: true,
+                templateUrl: 'templates/effects/effects.html',
+            });
+            $stateProvider.state('main.effects.list', {
+                url: '/list',
+                views: {
+                    'effectsList': {
+                        templateUrl: 'templates/effects/effectList.html',
+                        controller: 'EffectListCtrl'
+                    }
+                }
+            });
+            $stateProvider.state('main.effects.candle', {
+                url: '/candle',
+                views: {
+                    'effectsList': {
+                        templateUrl: 'templates/effects/candle.html',
+                        controller: 'CandleCtrl'
+                    }
+                }
+            });
+
             $urlRouterProvider.otherwise("main/home_tab/lightList");
 
             function authenticate($q, $state, $timeout, ConfigService) {

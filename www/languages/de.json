@@ -22,6 +22,7 @@
     "Layout_Main_LeftMenu_Title": "Menü",
     "Layout_Main_LeftMenu_Link_Home": "Start",
     "Layout_Main_LeftMenu_Link_Settings": "Einstellungen",
+    "Layout_Main_LeftMenu_Link_Effects": "Effekte",
     "Layout_Main_LeftMenu_Link_Category": "Kategorie",
 
     "SearchingBridge_Title": "Suche Bridge",
@@ -35,6 +36,9 @@
     "Settings_Design": "Design",
     "Settings_Dark": "Dunkel",
     "Settings_Light": "Hell",
+
+    "Effects_Title": "Effekte",
+
 
     "Home_Groups_Title": "Gruppen",
     "Home_Groups_AllLights": "Alle Lampen",
