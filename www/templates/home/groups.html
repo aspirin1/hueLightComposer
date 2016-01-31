@@ -1,0 +1,91 @@
+<ion-view title="{{'Home_Groups_Title' |translate}}">
+    <ion-nav-buttons side="secondary">
+        <button class="button button-light" ng-click="openCreateGroupModal()">
+            <i class="fa fa-camera"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-header="true" has-tabs="true">
+        <ul class="list">
+
+            <li class="item item-button-right">
+                {{'Home_Groups_AllLights' |translate}}
+                <button class="button" ng-show="atLeastOneLightOn" ng-click="changeOnOffGroup0(false)">
+                    {{'SINGLE_Off' |translate}}
+                </button>
+                <button class="button" ng-show="!atLeastOneLightOn" ng-click="changeOnOffGroup0(true)">
+                    {{'SINGLE_On' |translate}}
+                </button>
+            </li>
+
+            <li ng-repeat="(groupId,group) in allGroups" class="item item-button-right">
+                {{group.name}}
+                <div class="buttons">
+
+                    <button class="button" ng-click="testGroup(groupId,group)">
+                        {{'SINGLE_Test' |translate}}
+                    </button>
+
+                    <button class="button" ng-click="deleteGroup(groupId)">
+                        {{'SINGLE_Delete' |translate}}
+                    </button>
+                    <button class="button" ng-click="turnGroupOn(groupId)">
+                        {{'SINGLE_On' |translate}}
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </ion-content>
+
+
+    <script id="createGroup-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">{{'Home_Groups_Create_Title' | translate}}</h1>
+            </ion-header-bar>
+            <ion-content>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">{{'SINGLE_Name' | translate}}</span>
+                    <input type="text" ng-model="newGroup.name" name='sceneName' />
+                </label>
+                <label class="item item-input item-stacked-label item-select">
+                    <span class="input-label">{{'GroupType' | translate}}</span>
+                    <select ng-model="selectedGroupType">
+                        <option value="lightGroup">{{'LightGroup' |translate}}</option>
+                        <option value="room">{{'Room' |translate}}</option>
+                    </select>
+                </label>
+                <label class="item item-input item-stacked-label item-select" ng-show="selectedGroupType=='room'">
+                    <span class="input-label">{{'RoomType' | translate}}</span>
+                    <select ng-model="selectedRoomType">
+                        <option value="Living room">{{'LivingRoom' |translate}}</option>
+                        <option value="Kitchen">{{'Kitchen' |translate}}</option>
+                        <option value="Dining">{{'Dining' |translate}}</option>
+                        <option value="Bedroom">{{'Bedroom' |translate}}</option>
+                        <option value="Kids bedroom">{{'KidsBedroom' |translate}}</option>
+                        <option value="Bathroom">{{'Bathroom' |translate}}</option>
+                        <option value="Nursery">{{'Nursery' |translate}}</option>
+                        <option value="Recreation">{{'Recreation' |translate}}</option>
+                        <option value="Office">{{'Office' |translate}}</option>
+                        <option value="Gym">{{'Gym' |translate}}</option>
+                        <option value="Hallway">{{'Hallway' |translate}}</option>
+                        <option value="Toilet">{{'Toilet' |translate}}</option>
+                        <option value="Front door">{{'FrontDoor' |translate}}</option>
+                        <option value="Garage">{{'Garage' |translate}}</option>
+                        <option value="Terrace">{{'Terrace' |translate}}</option>
+                        <option value="Garden">{{'Garden' |translate}}</option>
+                        <option value="Driveway">{{'Driveway' |translate}}</option>
+                        <option value="Carport">{{'Carport' |translate}}</option>
+                        <option value="Other">{{'Other' |translate}}</option>
+                    </select>
+                </label>
+                <ul class="list">
+                    <ion-checkbox ng-repeat="(lightId,light) in allLights" ng-model="createGroupSelection[lightId]">{{light.name}}</ion-checkbox>
+                </ul>
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="closeCreateGroupModal()">{{'SINGLE_Cancel' | translate}}</button>
+                    <button class="button button-positive" ng-click="createGroup()">{{'SINGLE_Create' | translate}}</button>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>

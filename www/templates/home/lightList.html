@@ -1,0 +1,68 @@
+<ion-view view-title="{{'Home_LightList_Title' | translate }}">
+
+    <ion-nav-bar class="bar-main" ng-controller="NavMenuCtrl">
+        <ion-nav-buttons side="left">
+            <!-- Toggle left side menu -->
+            <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="toggleLeftSideMenu()"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="secondary">
+            <button class="button button-light" ng-click="openCreateSceneModal()">
+                <i class="fa fa-camera"></i>
+            </button>
+        </ion-nav-buttons>
+
+    </ion-nav-bar>
+    <ion-content has-header="true" has-tabs="true">
+        <!--
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        </ion-refresher>
+-->
+        <ul class="list">
+
+            <li ng-repeat="(lightId,light) in allLights" class="item item-button-right">
+                <a href="{{light.state.reachable ? getPathToLight(lightId): ' '}}">
+                    <div class="hueListIcon">
+                        <hue-image template="{{light.image}}" light='light '></hue-image>
+                        <i class="fa fa-bolt lightNotReachable" ng-hide="{{light.state.reachable}}"></i>
+                    </div>
+
+                    <div class="hueListContent">
+                        <h2>{{light.name}}</h2>
+                        <p>{{'SINGLE_Brightness '|translate}}: {{getBrightnessPercentage(light)}} - {{'SINGLE_Saturation '|translate}}: {{getSaturationPercentage(light)}}</p>
+                    </div>
+                </a>
+                <div class="hueListContentRight2">
+                    <label class="toggle toggle-positive">
+                        <input type="checkbox" ng-model="light.state.on" ng-change="toggleLightOnOff(lightId,light)" ng-disabled="!light.state.reachable">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </div>
+            </li>
+        </ul>
+
+    </ion-content>
+
+
+    <script id="createScene-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">{{'Home_LightList_CreateScene' | translate}}</h1>
+            </ion-header-bar>
+            <ion-content>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">{{'SINGLE_Name' | translate}}</span>
+                    <input type="text" ng-model="newScene.name" name='sceneName' />
+                </label>
+                <ul class="list">
+                    <ion-checkbox ng-repeat="(lightId,light) in allLights" ng-model="createSceneSelection[lightId]">{{light.name}}</ion-checkbox>
+                </ul>
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="closeCreateSceneModal()">{{'SINGLE_Cancel' | translate}}</button>
+                    <button class="button button-positive" ng-click="createScene()">{{'SINGLE_Create' | translate}}</button>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>

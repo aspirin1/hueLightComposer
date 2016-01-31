@@ -12,4 +12,11 @@
 !/.jscodehints
 !/app.json
 !/screenshot.png
+<<<<<<< HEAD
 !/icon.png
+=======
+!/icon.png
+!/bower.json
+/www/bower_components/
+/intelxdk.config.additions.xml
+>>>>>>> HueApp/master

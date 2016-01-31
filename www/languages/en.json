@@ -1,0 +1,58 @@
+{
+    "SINGLE_Search": "Search",
+    "SINGLE_Brightness": "Brightness",
+    "SINGLE_Saturation": "Saturation",
+    "SINGLE_Hue": "Hue",
+    "SINGLE_On": "On",
+    "SINGLE_Off": "Off",
+    "SINGLE_Colorloop": "Colorloop",
+    "SINGLE_Back": "Back",
+    "SINGLE_Cancel": "Cancel",
+    "SINGLE_Change": "Change",
+    "SINGLE_Create": "Create",
+    "SINGLE_Name": "Name",
+    "SINGLE_Delete": "Delete",
+    "SINGLE_Ok": "Ok",
+
+    "Layout_Home_Tab_Lights": "Lights",
+    "Layout_Home_Tab_Groups": "Groups",
+    "Layout_Home_Tab_Scenes": "Scenes",
+    "Layout_Home_Tab_Colors": "Colors",
+
+    "Layout_Main_LeftMenu_Title": "Menu",
+    "Layout_Main_LeftMenu_Link_Home": "Home",
+    "Layout_Main_LeftMenu_Link_Settings": "Settings",
+    "Layout_Main_LeftMenu_Link_Effects": "Effects",
+    "Layout_Main_LeftMenu_Link_Category": "Category",
+
+    "SearchingBridge_Title": "Searching bridge",
+    "SearchingBridge_SearchingBridge": "Searching bridge ...",
+    "SearchingBridge_TapBridge": "Please tap bridge button ...",
+
+    "Settings_Title": "Settings",
+    "Settings_Language": "Language",
+    "Settings_En": "English",
+    "Settings_De": "German",
+    "Settings_Design": "Design",
+    "Settings_Dark": "Dark",
+    "Settings_Light": "Light",
+
+    "Effects_Title": "Effects",
+
+
+    "Home_Groups_Title": "Groups",
+    "Home_Groups_AllLights": "All Lights",
+    "Home_Groups_Create_Title": "Create new group",
+    "Home_Scenes_Title": "Scenes",
+    "Home_Colors_Title": "Colors",
+    "Home_LightList_Title": "Hue lights",
+    "Home_LightList_CreateScene": "Create new scene",
+    "Home_LightList_Detail_CopyTo": "Copy to",
+    "Home_LightList_Detail_SaveColor": "Save color",
+    "Home_LightList_Detail_SaveColor_Prompt_Title": "Save color",
+    "Home_LightList_Detail_SaveColor_Prompt_Text": "Please enter a name or description",
+    "Home_LightList_Detail_RenameLight_Title": "Rename light",
+    "Home_LightList_Detail_RenameLight_NewName": "New name"
+
+
+}

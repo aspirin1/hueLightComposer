@@ -1,0 +1,28 @@
+<ion-view view-title="{{'SearchingBridge_Title' | translate}}">
+    <ion-nav-bar class="bar-main"></ion-nav-bar>
+    <ion-content ng-controller="SearchBridgeCtrl">
+
+        <div class="row" ng-show="searchingBridge">
+            <div class="card">
+                <div class="item item-text-wrap">
+                    {{'SearchingBridge_SearchingBridge' | translate}}
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="!searchingBridge">
+            <div class="card">
+                <div class="item item-image">
+                    <img src="img/hueIcons/pushLink/pushlink_bridgev2.svg">
+                </div>
+
+                <div class="item item-text-wrap pressBridgeText">
+                    <p>
+                        {{'SearchingBridge_TapBridge' | translate}}
+                        <span>{{trialCount}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

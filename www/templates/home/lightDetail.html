@@ -1,0 +1,136 @@
+<ion-view view-title="{{light.name}}" ng-controller="LightDetailCtrl">
+    <ion-nav-bar class="bar-main">
+        <ion-nav-back-button class="button-clear">
+            <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
+        </ion-nav-back-button>
+        <ion-nav-buttons side="secondary">
+            <button class="button button-light" ng-click="openModal()">
+                <i class="fa fa-pencil"></i>
+            </button>
+        </ion-nav-buttons>
+
+    </ion-nav-bar>
+    <ion-content>
+        <!--
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        </ion-refresher>ion-compose
+-->
+        <div class="row">
+            <div class="col col-33">
+                <hue-image template="{{light.image}}" light='light'></hue-image>
+            </div>
+            <div class="col">
+
+                <ul class="list">
+                    <li class="item item-toggle">
+                        {{'SINGLE_On' | translate}}/{{'SINGLE_Off' | translate}}
+                        <label class="toggle toggle-assertive">
+                            <input type="checkbox" ng-model="light.state.on" ng-change="toggleLightOnOff()">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <li class="item item-toggle">
+                        {{'SINGLE_Colorloop' | translate}}
+                        <label class="toggle toggle-assertive">
+                            <input type="checkbox" ng-model="light.state.effect" ng-true-value="'colorloop'" ng-change="toggleColorloop()">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <li class="item">
+                        {{'SINGLE_Brightness' | translate}}: {{getBrightnessPercentage()}}
+                    </li>
+
+                    <li class="item">
+                        {{'SINGLE_Saturation' | translate}}: {{getSaturationPercentage()}}
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="row"><span class="input-label">{{'SINGLE_Brightness' | translate}}</span></div>
+        <div class="row">
+            <div class="col">
+                <div class="range range-positive">
+                    <input type="range" min="1" max="254" step="1" ng-model="light.state.bri" ng-change="brightnessChanged()" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row"><span class="input-label">{{'SINGLE_Saturation' | translate}}</span></div>
+        <div class="row">
+            <div class="col">
+                <div class="range range-positive">
+                    <input type="range" min="1" max="254" step="1" ng-model="light.state.sat" ng-change="saturationChanged()" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row"><span class="input-label">{{'SINGLE_Hue' | translate}}</span></div>
+        <div class="row">
+            <div class="col">
+                <div class="range range-positive">
+                    <input type="range" min="0" max="65535" step="500" ng-model="light.state.hue" ng-change="hueChanged()" />
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <div class="buttons button-clear pull-left">
+            <input type="number" min="1" max="100" step="500" ng-model="customLoopTime" />
+            <button class="button button-outline button-positive" ng-click="toggleCustomLoop()">{{customLoopStateBtnText}}</button>
+        </div>
+        <div class="buttons button-clear pull-right">
+            <!--<button class="button button-outline button-positive" ng-click="test()">a</button>-->
+            <button class="button button-outline button-positive" ng-click="startCandle()">Candle</button>
+            <button class="button button-outline button-positive" ng-click="openCopyToModal()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
+            <button class="button button-outline button-positive" ng-click="saveColor()">{{'Home_LightList_Detail_SaveColor' | translate}}</button>
+        </div>
+    </ion-footer-bar>
+
+    <script id="rename-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">{{'Home_LightList_Detail_RenameLight_Title' | translate}}</h1>
+            </ion-header-bar>
+            <ion-content>
+                <div class="list">
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">{{'Home_LightList_Detail_RenameLight_NewName' | translate}}</span>
+                        <input type="text" placeholder="{{light.name}}" ng-model="newLightName">
+                    </label>
+                </div>
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
+                    <button class="button button-positive" ng-click="changeLightName(newLightName)">{{'SINGLE_Change' | translate}}</button>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+    <script id="copyto-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">{{'Home_LightList_Detail_CopyTo' | translate}}</h1>
+            </ion-header-bar>
+            <ion-content>
+                <ul class="list">
+                    <ion-checkbox ng-repeat="light in allLightsExceptCurrent" ng-model="copySelection[light.id]">{{light.name}}</ion-checkbox>
+                </ul>
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>
+                    <button class="button button-positive" ng-click="copyToSelection()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>
