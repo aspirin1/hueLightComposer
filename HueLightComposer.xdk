@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1454007517382,
+      "lastModifiedDate": 1454195625886,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -34,23 +34,6 @@
         "data": {},
         "dependedBy": [],
         "checksum": "b92cbbef"
-      },
-      {
-        "id": "cordova-plugin-device",
-        "version": "1.1.0",
-        "selectedState": "Included",
-        "data": {},
-        "paramvals": {},
-        "dependsOn": [],
-        "dependedBy": [],
-        "originType": "cordova.io",
-        "origin": "cordova-plugin-device",
-        "permissions": {},
-        "topLevel": true,
-        "gitref": "",
-        "name": "Device",
-        "description": "Cordova Device Plugin",
-        "checksum": "1eae5d64"
       },
       {
         "id": "cordova-plugin-splashscreen",
@@ -84,6 +67,24 @@
         "topLevel": true,
         "permissions": {},
         "description": "Cordova Notification Plugin",
+        "data": {},
+        "dependedBy": []
+      },
+      {
+        "id": "cordova-plugin-device",
+        "name": "Device",
+        "version": "1.1.0",
+        "originType": "cordova.io",
+        "origin": "cordova-plugin-device",
+        "gitref": "",
+        "paramvals": {},
+        "sourceLocation": "plugins/cordova-plugin-device",
+        "selectedState": "Included",
+        "checksum": "1eae5d64",
+        "dependsOn": [],
+        "topLevel": true,
+        "permissions": {},
+        "description": "Cordova Device Plugin",
         "data": {},
         "dependedBy": []
       }

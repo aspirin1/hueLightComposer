@@ -32,22 +32,12 @@ define(function () {
 
         var refresh = function () {
             HueService.getAllScenes().then(function (data) {
-                    console.log(data);
                     var ret = [];
                     angular.forEach(data, function (value, key) {
                         value.id = key;
                         ret.push(value);
                     });
                     $scope.allScenes = ret;
-                    /*
-                                    angular.forEach(ret, function (value) {
-                                        HueService.getScene(value.id).then(function (sceneData) {
-                                            var index = getIndexOf(ret, value.id, "id");
-                                            $scope.allScenes[index] = sceneData;
-                                            console.log(sceneData);
-                                        });
-                                    });
-                    */
                 })
                 .finally(function () {
                     $ionicLoading.hide();

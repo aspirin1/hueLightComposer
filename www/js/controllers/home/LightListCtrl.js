@@ -1,4 +1,4 @@
-/*global define, console, window*/
+/*global define, console, window, angular*/
 
 define(function () {
     'use strict';

@@ -5,7 +5,16 @@ define(['ionic', 'angular', 'app', 'routes'], function (ionic, angular, app) {
 
     var $html,
         onDeviceReady = function () {
+            //https://github.com/katzer/cordova-plugin-background-mode.git
+            //0.6.4
+            //            cordova.plugins.backgroundMode.enable();
+            //            cordova.plugins.backgroundMode.setDefaults({
+            //                title: "String",
+            //                ticker: "String",
+            //                text: "String"
+            //            });
             angular.bootstrap(document, [app.name]);
+
         };
 
     document.addEventListener("deviceready", onDeviceReady, false);

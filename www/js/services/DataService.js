@@ -153,7 +153,6 @@ define(['angular'], function (angular) {
                 angular.forEach(groups, function (value, key) {
 
                 });
-                console.log(groups);
                 deferred.resolve(groups);
             });
             return deferred.promise;

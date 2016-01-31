@@ -1,9 +1,9 @@
-/*global define, console, window*/
+/*global define, console, window, angular*/
 
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $interval, $ionicLoading, DataService, HueService, UtilityService) {
+    function ctrl($scope, $state, $interval, $ionicModal, DataService, HueService, UtilityService) {
         console.info("GroupsCtrl init");
 
         $scope.atLeastOneLightOn = false;
@@ -11,6 +11,34 @@ define(function () {
             HueService.turnGroupOnOff(0, newState).then(function (data) {
                 $scope.atLeastOneLightOn = newState;
             });
+        };
+        $scope.turnGroupOn = function (groupId) {
+            HueService.turnGroupOnOff(groupId, true).then(function (data) {
+
+            });
+        };
+        $scope.deleteGroup = function (groupId) {
+            HueService.deleteGroup(groupId, true).then(function (data) {
+                refreshLightList();
+            });
+        };
+        $scope.testGroup = function (groupId, group) {
+            var timeInMs = $scope.customLoopTime * 1000;
+            var transitionTime = $scope.customLoopTime * 10;
+            var customLoop = function (lightId) {
+                HueService.changeLightState(lightId, {
+                    hue_inc: 5000,
+                    transitiontime: 50
+                }).then(function (data) {
+
+                });
+            };
+            console.log(group);
+            angular.forEach(group.lights, function (value) {
+                customLoop(value);
+                DataService.setLightLooping(value, $interval(customLoop, timeInMs), 0, false, value);
+            });
+
         };
 
         var checkIfAtLeastOneLightIsOn = function () {
@@ -27,29 +55,65 @@ define(function () {
             });
         };
 
-        checkIfAtLeastOneLightIsOn();
-
         var refreshLightList = function () {
             DataService.getEnrichedGroupInfos().then(function (data) {
-                    console.log(data);
-                    $scope.allGroups = data;
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                    $scope.$broadcast('scroll.refreshComplete');
-                });
+                console.log(data);
+                $scope.allGroups = data;
+                window.setTimeout(checkIfAtLeastOneLightIsOn, 1000);
+            });
         };
+
         refreshLightList();
+        checkIfAtLeastOneLightIsOn();
 
 
-        //        var interval = $interval(function () {
-        //            refreshLightList();
-        //        }, 5000);
 
+        $ionicModal.fromTemplateUrl('createGroup-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.createGroupModal = modal;
+            $scope.selectedGroupType = "lightGroup";
+            $scope.newGroup = {};
+            $scope.newGroup.name = "";
+            $scope.createGroupSelection = {};
+            DataService.getEnrichedLightInfos(true).then(function (data) {
+                $scope.allLights = data;
+            });
+        });
 
+        $scope.openCreateGroupModal = function () {
+            $scope.createGroupModal.show();
+        };
+        $scope.closeCreateGroupModal = function () {
+            $scope.createGroupModal.hide();
+        };
+        $scope.createGroup = function () {
+            var lights = [];
+            angular.forEach($scope.createGroupSelection, function (value, key) {
+                if (value === true) {
+                    lights.push(key);
+                }
+            });
+
+            var groupType = $scope.selectedGroupType;
+            if (groupType === "lightGroup" && lights.length > 0 && $scope.newGroup.name.length > 0) {
+                HueService.createGroup($scope.newGroup.name, lights).then(function (data) {
+                    refreshLightList();
+                    $scope.closeCreateGroupModal();
+                });
+            } else if (groupType === "room" && $scope.newGroup.name.length > 0) {
+                HueService.createRoom($scope.newGroup.name, $scope.selectedRoomType, lights).then(function (data) {
+                    refreshLightList();
+                    $scope.closeCreateGroupModal();
+                });
+            } else {
+                $scope.closeCreateGroupModal();
+            }
+        };
     }
 
-    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicModal', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

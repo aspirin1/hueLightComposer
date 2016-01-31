@@ -136,6 +136,44 @@ define(['angular'], function (angular) {
                 });
         };
 
+        this.deleteGroup = function (groupId) {
+            var url = getBaseApiUrl() + '/groups/' + groupId;
+            console.info(url);
+            return $http.delete(url)
+                .then(function (result) {
+                    return result.data;
+                });
+        };
+
+        this.createGroup = function (groupName, lightsArray) {
+            var url = getBaseApiUrl() + '/groups/';
+            var cmd = JSON.stringify({
+                name: groupName,
+                type: "LightGroup",
+                lights: lightsArray
+            });
+            console.info(url, cmd);
+            return $http.post(url, cmd)
+                .then(function (result) {
+                    return result.data;
+                });
+        };
+
+        this.createRoom = function (groupName, roomType, lightsArray) {
+            var url = getBaseApiUrl() + '/groups/';
+            var cmd = JSON.stringify({
+                name: groupName,
+                type: "Room",
+                class: roomType,
+                lights: lightsArray
+            });
+            console.info(url, cmd);
+            return $http.post(url, cmd)
+                .then(function (result) {
+                    return result.data;
+                });
+        };
+
         this.turnGroupOnOff = function (groupId, newState) {
             var obj = {
                 on: newState

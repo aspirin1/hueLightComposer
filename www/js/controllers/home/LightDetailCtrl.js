@@ -7,12 +7,8 @@ define(function () {
 
         var refreshLightInfo = function () {
             DataService.getEnrichedLightInfo($scope.lightId).then(function (data) {
-                    console.log("refreshed!");
-                    $scope.light = data;
-                })
-                .finally(function () {
-                    $scope.$broadcast('scroll.refreshComplete');
-                });
+                $scope.light = data;
+            });
         };
         refreshLightInfo();
 
@@ -163,19 +159,16 @@ define(function () {
             } else {
                 var timeInMs = $scope.customLoopTime * 1000;
                 var transitionTime = $scope.customLoopTime * 10;
-                console.log(timeInMs, transitionTime);
-                var goToMax = true;
                 var customLoop = function () {
                     HueService.changeLightState($scope.lightId, {
                         hue_inc: 5000,
                         transitiontime: parseInt(transitionTime)
                     }).then(function (data) {
-                        console.log("started custom loop", data);
+
                     });
-                    goToMax = !goToMax;
                 };
                 customLoop();
-                DataService.setLightLooping($scope.lightId, $interval(customLoop, timeInMs));
+                DataService.setLightLooping($scope.lightId, $interval(customLoop, timeInMs), 0, false);
             }
             getCustomLoopStateBtnText();
         };

@@ -57,12 +57,6 @@ define(function () {
                         on: true,
                         xy: gamutXy
                     });
-                    //                    HueService.changeLightState(key.id, {
-                    //                        on: true,
-                    //                        bri: parseInt(mc.bri),
-                    //                        sat: parseInt(mc.sat),
-                    //                        hue: parseInt(mc.hue),
-                    //                    });
                 }
             });
             $scope.closeCopyToModal();
