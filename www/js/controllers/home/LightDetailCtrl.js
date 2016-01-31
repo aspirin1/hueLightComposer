@@ -139,7 +139,7 @@ define(function () {
 
         $scope.customLoopTime = 1;
         var getCustomLoopStateBtnText = function () {
-            if (DataService.isLightLooping($scope.lightId)) {
+            if (DataService.isLightExecutingEffect($scope.lightId)) {
                 $scope.customLoopStateBtnText = "Stop";
             } else {
                 $scope.customLoopStateBtnText = "Start";
@@ -148,14 +148,14 @@ define(function () {
         getCustomLoopStateBtnText();
 
         $scope.toggleCustomLoop = function () {
-            if (DataService.isLightLooping($scope.lightId)) {
+            if (DataService.isLightExecutingEffect($scope.lightId)) {
                 HueService.changeLightState($scope.lightId, {
                     hue_inc: 0,
                     transitiontime: 0
                 }).then(function (data) {
                     console.info("stopped custom loop", data);
                 });
-                DataService.stopLightLooping($scope.lightId);
+                DataService.stopEffect($scope.lightId);
             } else {
                 var timeInMs = $scope.customLoopTime * 1000;
                 var transitionTime = $scope.customLoopTime * 10;
@@ -168,7 +168,7 @@ define(function () {
                     });
                 };
                 customLoop();
-                DataService.setLightLooping($scope.lightId, $interval(customLoop, timeInMs), 0, false);
+                DataService.setEffect($scope.lightId, "singleLightColorLoop", $interval(customLoop, timeInMs), 0, false);
             }
             getCustomLoopStateBtnText();
         };

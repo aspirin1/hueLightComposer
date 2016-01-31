@@ -5,7 +5,8 @@ define(['angular'], function (angular) {
 
     var factory = function (HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
         var self = this;
-        var loopState = {};
+        var effectState = {};
+        var groupEffectState = {};
         var enrichedLightInfos = null;
 
         this.getCustomColors = function () {
@@ -158,20 +159,89 @@ define(['angular'], function (angular) {
             return deferred.promise;
         };
 
-        this.isLightLooping = function (lightId) {
-            return (lightId in loopState);
+
+        var findEffect = function (lightId) {
+            var tmp = [];
+            angular.forEach(effectState, function (effect) {
+                if (effect.lightId === parseInt(lightId)) {
+                    if (effect.type === "group") {
+                        angular.forEach(effect.lights, function (lightId) {
+                            tmp.push(effectState[lightId]);
+                        });
+                    } else {
+                        tmp.push(effectState[effect.lightId]);
+                    }
+                }
+            });
+            return tmp;
         };
 
-        this.stopLightLooping = function (lightId) {
-            var q = $interval.cancel(loopState[lightId]);
-            delete loopState[lightId];
+        this.isLightExecutingEffect = function (lightId) {
+            return (lightId in effectState);
+        };
+
+        this.isGroupExecutingEffect = function (groupId) {
+            return (groupId in groupEffectState);
+        };
+
+        this.stopEffect = function (lightId) {
+            var q;
+            angular.forEach(effectState, function (effect) {
+                if (effect.lightId === parseInt(lightId)) {
+                    if (effect.type === "group") {
+                        var groupId = parseInt(effect.groupId);
+                        var lights = effect.lights;
+                        q = $interval.cancel(groupEffectState[groupId].interval);
+                        delete groupEffectState[groupId];
+
+                        angular.forEach(effect.associatedLights, function (assocLightId) {
+                            delete effectState[parseInt(assocLightId)];
+                        });
+                    } else {
+                        q = $interval.cancel(effect.interval);
+                        delete effectState[parseInt(effect.lightId)];
+                    }
+                }
+            });
+            console.info("effectState", effectState);
+            console.info("groupEffectState", groupEffectState);
             return q;
         };
 
-        this.setLightLooping = function (lightId, interval) {
-            loopState[lightId] = interval;
+        this.setEffect = function (lightId, effectName, interval) {
+            effectState[parseInt(lightId)] = {
+                type: "single",
+                lightId: parseInt(lightId),
+                associatedLights: [],
+                effect: effectName,
+                interval: interval,
+            };
         };
 
+        this.setGroupEffect = function (groupId, lights, effectName, interval) {
+            angular.forEach(lights, function (lightId) {
+                effectState[parseInt(lightId)] = {
+                    type: "group",
+                    lightId: parseInt(lightId),
+                    groupId: parseInt(groupId),
+                    associatedLights: lights,
+                    effect: effectName,
+                };
+            });
+
+            groupEffectState[parseInt(groupId)] = {
+                groupId: parseInt(groupId),
+                associatedLights: lights,
+                effect: effectName,
+                interval: interval
+            };
+        };
+
+        this.setGroupLooping = function (lights, interval) {
+            angular.forEach(lights, function (lightId) {
+                effectState[lightId] = interval;
+            });
+        };
         return this;
     };
 

@@ -23,22 +23,20 @@ define(function () {
             });
         };
         $scope.testGroup = function (groupId, group) {
-            var timeInMs = $scope.customLoopTime * 1000;
-            var transitionTime = $scope.customLoopTime * 10;
-            var customLoop = function (lightId) {
-                HueService.changeLightState(lightId, {
-                    hue_inc: 5000,
-                    transitiontime: 50
+            var customLoopTime = 5;
+            var timeInMs = customLoopTime * 1000;
+            var transitionTime = customLoopTime * 10;
+            var customLoop = function (groupId) {
+                console.log(groupId);
+                HueService.changeGroupState(groupId, {
+                    hue_inc: 2500,
+                    transitiontime: transitionTime
                 }).then(function (data) {
 
                 });
             };
-            console.log(group);
-            angular.forEach(group.lights, function (value) {
-                customLoop(value);
-                DataService.setLightLooping(value, $interval(customLoop, timeInMs), 0, false, value);
-            });
-
+            customLoop(groupId);
+            DataService.setGroupEffect(groupId, group.lights, "groupLooping", $interval(customLoop, timeInMs, 0, false, groupId));
         };
 
         var checkIfAtLeastOneLightIsOn = function () {
