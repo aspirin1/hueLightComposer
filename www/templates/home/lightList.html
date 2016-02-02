@@ -7,7 +7,7 @@
         </ion-nav-buttons>
         <ion-nav-buttons side="secondary">
             <button class="button button-light" ng-click="openCreateSceneModal()">
-                <i class="fa fa-camera"></i>
+                <i class="fa fa-plus-square"></i>
             </button>
         </ion-nav-buttons>
 
@@ -17,10 +17,10 @@
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
         </ion-refresher>
 -->
-        <ul class="list">
+        <ul class="list lightList">
 
             <li ng-repeat="(lightId,light) in allLights" class="item item-button-right">
-                <a href="{{light.state.reachable ? getPathToLight(lightId): ' '}}">
+                <a href="{{light.state.reachable ? getPathToLight(lightId): ' '}}" class="lightLink">
                     <div class="hueListIcon">
                         <hue-image template="{{light.image}}" light='light '></hue-image>
                         <i class="fa fa-bolt lightNotReachable" ng-hide="{{light.state.reachable}}"></i>
@@ -28,7 +28,8 @@
 
                     <div class="hueListContent">
                         <h2>{{light.name}}</h2>
-                        <p>{{'SINGLE_Brightness '|translate}}: {{getBrightnessPercentage(light)}} - {{'SINGLE_Saturation '|translate}}: {{getSaturationPercentage(light)}}</p>
+                        <p>{{'SINGLE_Brightness '|translate}}: {{getBrightnessPercentage(light)}} </p>
+                        <p> {{'SINGLE_Saturation '|translate}}: {{getSaturationPercentage(light)}}</p>
                     </div>
                 </a>
                 <div class="hueListContentRight2">
