@@ -3,8 +3,8 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $translate, DataService, HueService, EffectService, $interval) {
-        console.log("CandleCtrl");
+    function ctrl($scope, $state, $translate, DataService, HueService, EffectService, LightCommandService, ColorService, $interval) {
+        console.log("ColorLoopCtrl");
 
         function getLightById(key) {
             for (var i = 0; i < $scope.allLights.length; i++) {
@@ -23,9 +23,10 @@ define(function () {
             $scope.allLights = tmp;
         });
 
+        $scope.customLoopTime = 10;
         $scope.copySelection = {};
         $scope.copyToSelection = function () {
-
+            var timeInMs = $scope.customLoopTime * 1000;
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var lightId = parseInt(getLightById(key).id);
@@ -33,17 +34,18 @@ define(function () {
 
                     HueService.changeLightState(lightId, {
                         on: true,
-                        bri: 42,
-                        xy: [0.5676, 0.3877],
                     });
 
-                    DataService.setEffect(lightId, "candle", $interval(EffectService.candleEffect, 2000, 0, false, lightId));
+                    LightCommandService.farbwechsel(lightId, 5000, timeInMs);
+                    DataService.setEffect(lightId, "ColorLoop", $interval(LightCommandService.farbwechsel, timeInMs, 0, false, lightId, 5000, timeInMs));
                 }
             });
         };
+
+
     }
 
-    ctrl.$inject = ['$scope', '$state', '$translate', 'DataService', 'HueService', 'EffectService', '$interval'];
+    ctrl.$inject = ['$scope', '$state', '$translate', 'DataService', 'HueService', 'EffectService', 'LightCommandService', 'ColorService', '$interval'];
     return ctrl;
 
 });

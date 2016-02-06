@@ -1,4 +1,4 @@
-<ion-view view-title="Candle">
+<ion-view view-title="ColorLoop">
     <ion-nav-bar class="bar-main">
         <ion-nav-back-button class="button-clear">
             <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
@@ -11,6 +11,7 @@
 
     </ion-nav-bar>
     <ion-content>
+        <input type="number" ng-model="customLoopTime" />
         <ul class="list">
             <ion-checkbox ng-repeat="light in allLights" ng-model="copySelection[light.id]">{{light.name}}</ion-checkbox>
         </ul>

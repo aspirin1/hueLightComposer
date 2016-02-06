@@ -54,6 +54,16 @@ define(['angular'], function (angular) {
             }, warten, false);
         };
 
+        this.farbwechsel = function (id, farbbereich, time) {
+            var customLoop = function () {
+                HueService.changeLightState(id, {
+                    hue_inc: farbbereich,
+                    transitiontime: msToTransitionTime(time)
+                });
+            };
+            customLoop();
+        };
+
         this.schnellesBlinken = function (id, bri, time) {
             var warten = 0;
 

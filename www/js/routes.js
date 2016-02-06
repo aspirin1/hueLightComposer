@@ -128,15 +128,15 @@ define(['app'], function (app) {
                     }
                 }
             });
-            //            $stateProvider.state('main.effects.candle', {
-            //                url: '/candle',
-            //                views: {
-            //                    'effectsList': {
-            //                        templateUrl: 'templates/effects/candle.html',
-            //                        controller: 'CandleCtrl'
-            //                    }
-            //                }
-            //            });
+            $stateProvider.state('main.effects.colorLoop', {
+                url: '/colorLoop',
+                views: {
+                    'effectsList': {
+                        templateUrl: 'templates/effects/colorLoop.html',
+                        controller: 'ColorLoopCtrl'
+                    }
+                }
+            });
             $stateProvider.state('main.effects.standard', {
                 url: '/standard/:effect',
                 views: {
