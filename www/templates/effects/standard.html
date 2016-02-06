@@ -3,16 +3,17 @@
         <ion-nav-back-button class="button-clear">
             <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
         </ion-nav-back-button>
-        <ion-nav-buttons side="secondary">
-            <button class="button button-light" ng-click="openModal()">
-                <i class="fa fa-pencil"></i>
-            </button>
-        </ion-nav-buttons>
-
     </ion-nav-bar>
     <ion-content>
         <ul class="list">
-            <ion-checkbox ng-repeat="light in allLights" ng-model="copySelection[light.id]">{{light.name}}</ion-checkbox>
+            <li class="item item-checkbox" ng-repeat="light in allLights">
+                <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="copySelection[light.id]">
+                </label>
+                <h2>{{light.name}}</h2>
+                <p>{{::getEffectRunning(light.id)}}</p>
+            </li>
         </ul>
         <div class="button-bar">
             <button class="button button-positive" ng-click="copyToSelection()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>

@@ -47,9 +47,13 @@ define(function () {
         };
 
         $scope.toggleLightOnOff = function (lightId, light) {
-            HueService.turnLightOnOff(lightId, light.state.on).then(function (data) {
-                //refreshLightList();
-            });
+            if (light.state.on === false) {
+                DataService.stopEffectAndTurnOffLight(lightId);
+            } else {
+                HueService.turnLightOnOff(lightId, light.state.on).then(function (data) {
+                    //refreshLightList();
+                });
+            }
         };
         $scope.getBrightnessPercentage = function (light) {
             var maxBri = 254.0;

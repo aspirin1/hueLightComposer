@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $translate, DataService, HueService, EffectService, LightCommandService, ColorService, $interval) {
+    function ctrl($scope, $filter, DataService, HueService, EffectService, LightCommandService, ColorService, $interval) {
         console.log("ColorLoopCtrl");
 
         function getLightById(key) {
@@ -22,6 +22,17 @@ define(function () {
             });
             $scope.allLights = tmp;
         });
+
+        $scope.getEffectRunning = function (lightId) {
+            if ($scope.allLights.length > 0) {
+                var eff = DataService.getEffect(lightId);
+                if (angular.isUndefined(eff)) {
+                    return $filter('translate')('NO_EFFECT_RUNNING');
+                } else {
+                    return eff.effect;
+                }
+            }
+        };
 
         $scope.customLoopTime = 10;
         $scope.copySelection = {};
@@ -45,7 +56,7 @@ define(function () {
 
     }
 
-    ctrl.$inject = ['$scope', '$state', '$translate', 'DataService', 'HueService', 'EffectService', 'LightCommandService', 'ColorService', '$interval'];
+    ctrl.$inject = ['$scope', '$filter', 'DataService', 'HueService', 'EffectService', 'LightCommandService', 'ColorService', '$interval'];
     return ctrl;
 
 });

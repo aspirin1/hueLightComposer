@@ -4,9 +4,15 @@
             <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
         </ion-nav-back-button>
         <ion-nav-buttons side="secondary">
+            <!--
             <button class="button button-light" ng-click="openModal()">
                 <i class="fa fa-pencil"></i>
             </button>
+-->
+            <div class="buttons">
+                <button class="button button-icon ion-more" ng-click="popover.show($event)">
+                </button>
+            </div>
         </ion-nav-buttons>
 
     </ion-nav-bar>
@@ -84,18 +90,6 @@
         </div>
 
     </ion-content>
-    <ion-footer-bar class="bar-light">
-        <div class="buttons button-clear pull-left">
-            <input type="number" min="1" max="100" step="500" ng-model="customLoopTime" />
-            <button class="button button-outline button-positive" ng-click="toggleCustomLoop()">{{customLoopStateBtnText}}</button>
-        </div>
-        <div class="buttons button-clear pull-right">
-            <!--<button class="button button-outline button-positive" ng-click="test()">a</button>-->
-            <button class="button button-outline button-positive" ng-click="startCandle()">Candle</button>
-            <button class="button button-outline button-positive" ng-click="openCopyToModal()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
-            <button class="button button-outline button-positive" ng-click="saveColor()">{{'Home_LightList_Detail_SaveColor' | translate}}</button>
-        </div>
-    </ion-footer-bar>
 
     <script id="rename-modal.html" type="text/ng-template">
         <ion-modal-view>
@@ -124,7 +118,14 @@
             </ion-header-bar>
             <ion-content>
                 <ul class="list">
-                    <ion-checkbox ng-repeat="light in allLightsExceptCurrent" ng-model="copySelection[light.id]">{{light.name}}</ion-checkbox>
+                    <li class="item item-checkbox" ng-repeat="light in allLightsExceptCurrent">
+                        <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="copySelection[light.id]">
+                        </label>
+                        <h2>{{light.name}}</h2>
+                        <p>&nbsp;</p>
+                    </li>
                 </ul>
                 <div class="button-bar">
                     <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>
@@ -132,5 +133,23 @@
                 </div>
             </ion-content>
         </ion-modal-view>
+    </script>
+
+    <script id="actions-popover.html" type="text/ng-template">
+        <ion-popover-view class="lightDetailPopover">
+            <ion-content scroll="false">
+                <div class="list">
+                    <a class="item" ng-click="openRenameModal()">
+              {{'Home_LightList_Detail_Rename' | translate}}
+            </a>
+                    <a class="item" ng-click="openCopyToModal()">
+              {{'Home_LightList_Detail_CopyTo' | translate}}
+            </a>
+                    <a class="item" ng-click="saveColor()">
+              {{'Home_LightList_Detail_SaveColor' | translate}}
+            </a>
+                </div>
+            </ion-content>
+        </ion-popover-view>
     </script>
 </ion-view>

@@ -1,4 +1,5 @@
 {
+    "NO_EFFECT_RUNNING": "Kein Effekt ausgeführt",
     "SINGLE_Search": "Suche",
     "SINGLE_Brightness": "Helligkeit",
     "SINGLE_Saturation": "Sättigung",
@@ -47,6 +48,7 @@
     "Home_Colors_Title": "Farben",
     "Home_LightList_Title": "Hue Lampen",
     "Home_LightList_CreateScene": "Neue Szene anlegen",
+    "Home_LightList_Detail_Rename": "Umbenennen",
     "Home_LightList_Detail_CopyTo": "Kopieren nach",
     "Home_LightList_Detail_SaveColor": "Farbe speichern",
     "Home_LightList_Detail_SaveColor_Prompt_Title": "Farbe speichern",
