@@ -9,6 +9,7 @@ require.config({
         uiRouter: '../bower_components/angular-ui-router/release/angular-ui-router.min',
         ionic: '../bower_components/ionic/release/js/ionic.min',
         ionicAngular: '../bower_components/ionic/release/js/ionic-angular.min',
+        ionicFilterbar: '../bower_components/ionic-filter-bar/dist/ionic.filter.bar.min',
         angularTranslate: '../bower_components/angular-translate/angular-translate.min',
         angularTranslateLoaderStaticFile: '../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min'
     },
@@ -40,7 +41,10 @@ require.config({
         },
         ionicAngular: {
             deps: ['angular', 'ionic', 'uiRouter', 'angularAnimate', 'angularSanitize']
-        }
+        },
+        ionicFilterbar: {
+            deps: ['ionic', 'angular']
+        },
     },
     priority: [
         'angular',

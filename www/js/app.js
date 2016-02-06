@@ -9,7 +9,8 @@ define(['angular',
         'directives/directives',
         'controllers/controllers',
         'ionicAngular',
-        'angularTranslateLoaderStaticFile'
+        'angularTranslateLoaderStaticFile',
+        'ionicFilterbar'
        ],
 
     function (angular, uiRouter, angularLocalStorage) {
@@ -26,6 +27,7 @@ define(['angular',
             'app.providers',
             'ui.router',
             'pascalprecht.translate',
+            'jett.ionic.filter.bar'
         ]);
 
         return app;
