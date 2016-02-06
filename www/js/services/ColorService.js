@@ -382,6 +382,24 @@ define(['angular'], function (angular) {
                 //return [point.x, point.y];
             },
 
+            getXysFromHex: function (hexColor) {
+                var hex = hexColor;
+                if (hex.length == 7) {
+                    hex = hex.substring(1, 7);
+                }
+                var rgb = hexToRGB(hex);
+                var gamutAxy = this.rgbArrayToCIE1931("A", rgb);
+                var gamutBxy = this.rgbArrayToCIE1931("B", rgb);
+                var gamutCxy = this.rgbArrayToCIE1931("C", rgb);
+                return {
+                    hexColor: hexColor,
+                    rgb: rgb,
+                    gamutAxy: gamutAxy,
+                    gamutBxy: gamutBxy,
+                    gamutCxy: gamutCxy,
+                };
+            },
+
             rgbArrayToCIE1931: function (gamut, rgb) {
                 return this.rgbToCIE1931(gamut, rgb[0], rgb[1], rgb[2]);
             },

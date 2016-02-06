@@ -128,12 +128,23 @@ define(['app'], function (app) {
                     }
                 }
             });
-            $stateProvider.state('main.effects.candle', {
-                url: '/candle',
+            //            $stateProvider.state('main.effects.candle', {
+            //                url: '/candle',
+            //                views: {
+            //                    'effectsList': {
+            //                        templateUrl: 'templates/effects/candle.html',
+            //                        controller: 'CandleCtrl'
+            //                    }
+            //                }
+            //            });
+            $stateProvider.state('main.effects.standard', {
+                url: '/standard/:effect',
                 views: {
                     'effectsList': {
-                        templateUrl: 'templates/effects/candle.html',
-                        controller: 'CandleCtrl'
+                        templateUrl: 'templates/effects/standard.html',
+                        controller: function ($scope, $stateParams) {
+                            $scope.effect = $stateParams.effect;
+                        }
                     }
                 }
             });

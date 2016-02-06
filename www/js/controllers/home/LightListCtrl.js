@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $interval, $ionicLoading, $ionicModal, DataService, HueService, UtilityService) {
+    function ctrl($scope, $state, $interval, $ionicLoading, $ionicModal, DataService, HueService, UtilityService, LightCommandService, ColorService) {
         console.info("HueLightListCtrl init");
 
 
@@ -23,7 +23,20 @@ define(function () {
         //            refreshLightList();
         //        }, 5000);
 
+        $scope.test = function (lightId) {
 
+            var dark_blue = ColorService.getXysFromHex("#1e228d");
+            for (var i = 1; i < 4; i++) {
+                LightCommandService.kurzesHellesAufleuchten(i, dark_blue.gamutCxy, 15000);
+                //LightCommandService.schnellesBlinken(lightId, 100, 5000);
+                //LightCommandService.farbverlaufUndZurück(lightId, 30000, 15000);
+                //LightCommandService.helligkeitsFlackernDunklerRegelmaessig(lightId, 70, 30000);
+                //LightCommandService.helligkeitsFlackernHellerRegelmaessig(lightId, 120, 10000);
+                //LightCommandService.helligkeitsFlackernDunklerMehrstufig(lightId, 70, 20000);
+                //LightCommandService.helligkeitsFlackernDunklerMehrstufigZufall(lightId, 80, 60000);
+                //LightCommandService.ausUndUnregelmaessigAufblitzen(i, 500, 7000, 60000);
+            }
+        };
 
         $scope.getPathToLight = function (lightId) {
             return "#/main/home_tab/lightDetail/" + lightId;
@@ -90,7 +103,7 @@ define(function () {
         //        });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', '$ionicModal', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', '$ionicModal', 'DataService', 'HueService', 'UtilityService', 'LightCommandService', 'ColorService'];
     return ctrl;
 
 });

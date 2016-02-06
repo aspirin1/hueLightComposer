@@ -23,6 +23,7 @@ define(function (require) {
 
     controllers.controller('EffectListCtrl', require('controllers/effects/EffectListCtrl'));
     controllers.controller('CandleCtrl', require('controllers/effects/CandleCtrl'));
+    controllers.controller('StandardEffectCtrl', require('controllers/effects/StandardEffectCtrl'));
 
 
 
