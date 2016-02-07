@@ -21,6 +21,13 @@
   min-height: 45px;
   min-width: 45px;
 }
+.tabs {
+  height: 60px;
+}
+.tabs .tab-item {
+  padding-top: 5px;
+  max-width: 100%;
+}
 .app-dark {
   color: #aaaaaa;
   background-color: #333333;
@@ -41,6 +48,7 @@
 }
 .app-dark .tabs {
   border-color: #333333;
+  background-color: #007799;
 }
 .app-dark .tabs .tab-item {
   color: #aaaaaa;
@@ -52,6 +60,7 @@
   color: #333333;
   border-color: #aaaaaa;
   background-color: #aaaaaa;
+  margin-top: 0px;
 }
 .app-dark .bar-main {
   border-color: #007799;
