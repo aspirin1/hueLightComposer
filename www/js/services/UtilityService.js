@@ -6,6 +6,14 @@ define(['angular'], function (angular) {
     var factory = function ($filter, $timeout, DataService) {
         var self = this;
 
+        this.getLightById = function (allLights, id) {
+            for (var i = 0; i < allLights.length; i++) {
+                if (allLights[i].id === id) {
+                    return allLights[i];
+                }
+            }
+        };
+
         this.round = function (value, decimals) {
             return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
         };

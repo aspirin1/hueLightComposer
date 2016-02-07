@@ -137,6 +137,15 @@ define(['app'], function (app) {
                     }
                 }
             });
+            $stateProvider.state('main.effects_tab.lightning', {
+                url: '/lightning',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/lightning.html',
+                        controller: 'LightningCtrl'
+                    }
+                }
+            });
             $stateProvider.state('main.effects_tab.standard', {
                 url: '/standard/:effect',
                 views: {

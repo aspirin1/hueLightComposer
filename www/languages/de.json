@@ -6,6 +6,7 @@
     "Effect_Pulse": "Pulsieren",
 
     "NO_EFFECT_RUNNING": "Kein Effekt ausgeführt",
+    "SINGLE_Speed": "Geschwindigkeit",
     "SINGLE_Search": "Suche",
     "SINGLE_Brightness": "Helligkeit",
     "SINGLE_Saturation": "Sättigung",
@@ -51,6 +52,7 @@
     "Effects_List_Title": "Effekte",
     "Effects_Status_Title": "Status",
     "Effects_Status_StopAll": "Alle beenden",
+    "Effects_Lightning_MaxTimeBetween": "Maximaler Zeit zwischen Blitzen",
 
     "Home_Groups_Title": "Gruppen",
     "Home_Groups_AllLights": "Alle Lampen",

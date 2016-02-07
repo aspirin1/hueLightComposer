@@ -4,15 +4,9 @@ define(function () {
     'use strict';
 
     function ctrl($scope, $filter, DataService, EffectService, UtilityService) {
-        console.log("ColorLoopCtrl");
+        console.log("LightningCtrl");
 
-        function getLightById(key) {
-            for (var i = 0; i < $scope.allLights.length; i++) {
-                if ($scope.allLights[i].id === key) {
-                    return $scope.allLights[i];
-                }
-            }
-        }
+
 
         DataService.getEnrichedLightInfos().then(function (data) {
             var tmp = [];
@@ -23,21 +17,20 @@ define(function () {
             $scope.allLights = tmp;
         });
 
-        $scope.effectName = $filter('translate')('Effect_ColorLoop');
+        $scope.effectName = $filter('translate')('Effect_Lightning');
         $scope.getEffectRunning = function (lightId) {
             return UtilityService.getEffectRunningText($scope.allLights, lightId);
         };
 
         $scope.test = {};
-        $scope.test.customLoopTime = 10;
+        $scope.test.maxTimeBetween = 10;
         $scope.copySelection = {};
         $scope.copyToSelection = function () {
-            var timeInMs = $scope.test.customLoopTime * 1000;
-            console.log(timeInMs);
+            var timeInMs = $scope.test.maxTimeBetween * 1000;
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
-                    var lightId = parseInt(getLightById(key).id);
-                    EffectService.startColorLoop(lightId, timeInMs);
+                    var lightId = parseInt(UtilityService.getLightById($scope.allLights, key).id);
+                    EffectService.startLightning(lightId, timeInMs);
                 }
             });
         };

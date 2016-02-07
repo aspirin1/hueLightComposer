@@ -53,7 +53,7 @@ define(['angular'], function (angular) {
             self.candleEffect(lightId);
         };
 
-        this.startLightning = function (lightId) {
+        this.startLightning = function (lightId, maxZeitZwischenBlitz) {
             DataService.stopEffect(lightId);
 
             HueService.changeLightState(lightId, {
@@ -63,6 +63,12 @@ define(['angular'], function (angular) {
             var effektDauer = 8000;
             var minZeitZwischenBlitzen = 500;
             var maxZeitZwischenBlitzen = 7000;
+
+            if (angular.isDefined(maxZeitZwischenBlitz)) {
+                maxZeitZwischenBlitzen = maxZeitZwischenBlitz;
+                effektDauer = maxZeitZwischenBlitz + 1000;
+            }
+            console.info(maxZeitZwischenBlitzen);
 
             var interval = $interval(
                 LightCommandService.ausUndUnregelmaessigAufblitzen,

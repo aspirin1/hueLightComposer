@@ -6,14 +6,6 @@ define(function () {
     function ctrl($scope, $filter, DataService, HueService, EffectService, LightCommandService, ColorService, $interval, UtilityService) {
         console.log("StandardEffectCtrl", $scope.effect);
 
-        function getLightById(key) {
-            for (var i = 0; i < $scope.allLights.length; i++) {
-                if ($scope.allLights[i].id === key) {
-                    return $scope.allLights[i];
-                }
-            }
-        }
-
         DataService.getEnrichedLightInfos().then(function (data) {
             var tmp = [];
             angular.forEach(data, function (value, key) {
@@ -32,7 +24,7 @@ define(function () {
         $scope.copyToSelection = function () {
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
-                    var lightId = parseInt(getLightById(key).id);
+                    var lightId = parseInt(UtilityService.getLightById($scope.allLights, key).id);
                     if ($scope.effect === "Aurora") {
                         EffectService.startAurora(lightId);
                     }

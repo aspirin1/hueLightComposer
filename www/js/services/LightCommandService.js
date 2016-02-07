@@ -300,16 +300,20 @@ define(['angular'], function (angular) {
                 blitzWarten += 200;
             };
 
+            console.info("neue runde");
             UtilityService.delayed(id, aus, warten);
             warten += 100;
 
             while (warten < time) {
-                UtilityService.delayed(id, blitz2, warten);
-                warten += 700;
-                UtilityService.delayed(id, aus, warten);
-                warten += UtilityService.getRandomInt(minWait, maxWait);
+                var randomWarten = UtilityService.getRandomInt(minWait, maxWait);
+                console.info("nächste blitz " + randomWarten + " warte: " + parseInt(warten + randomWarten));
+                warten += randomWarten;
+                if (warten <= time) {
+                    UtilityService.delayed(id, blitz2, warten);
+                    warten += 700;
+                    UtilityService.delayed(id, aus, warten);
+                }
             }
-            UtilityService.delayed(id, aus, warten);
         };
 
 

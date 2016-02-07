@@ -6,6 +6,7 @@
     "Effect_Pulse": "Pulse",
 
     "NO_EFFECT_RUNNING": "No effect running",
+    "SINGLE_Speed": "Speed",
     "SINGLE_Search": "Search",
     "SINGLE_Brightness": "Brightness",
     "SINGLE_Saturation": "Saturation",
@@ -51,6 +52,7 @@
     "Effects_List_Title": "Effects",
     "Effects_Status_Title": "Status",
     "Effects_Status_StopAll": "Stop all",
+    "Effects_Lightning_MaxTimeBetween": "Maximum time span between lightnings",
 
     "Home_Groups_Title": "Groups",
     "Home_Groups_AllLights": "All Lights",

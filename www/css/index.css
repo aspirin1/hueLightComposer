@@ -1,3 +1,34 @@
+.effectList .item {
+    height: 150px;
+    background-size: cover;
+}
+
+.item .innerText {
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.item.colorLoop {
+    background-image: url(./../img/effects/colorloop.jpg);
+}
+
+.item.candle {
+    background-image: url(./../img/effects/candle.jpg);
+}
+
+.item.aurora {
+    background-image: url(./../img/effects/aurora.jpg);
+}
+
+.item.lightning {
+    background-image: url(./../img/effects/lightning.jpg);
+}
+
+.item.pulse {
+    background-image: url(./../img/effects/pulse.jpg);
+}
+
 .app-light {}
 
 .hueImageInListRight {

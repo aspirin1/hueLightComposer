@@ -25,6 +25,7 @@ define(function (require) {
     controllers.controller('EffectStatusCtrl', require('controllers/effects/EffectStatusCtrl'));
     controllers.controller('StandardEffectCtrl', require('controllers/effects/StandardEffectCtrl'));
     controllers.controller('ColorLoopCtrl', require('controllers/effects/ColorLoopCtrl'));
+    controllers.controller('LightningCtrl', require('controllers/effects/LightningCtrl'));
 
 
     controllers.run(['$rootScope', function ($rootScope) {
