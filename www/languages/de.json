@@ -1,4 +1,10 @@
 {
+    "Effect_ColorLoop": "Farbwechsel",
+    "Effect_Aurora": "Aurora",
+    "Effect_Candle": "Kerze",
+    "Effect_Lightning": "Blitz",
+    "Effect_Pulse": "Pulsieren",
+
     "NO_EFFECT_RUNNING": "Kein Effekt ausgeführt",
     "SINGLE_Search": "Suche",
     "SINGLE_Brightness": "Helligkeit",

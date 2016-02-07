@@ -23,6 +23,7 @@ define(function () {
             $scope.allLights = tmp;
         });
 
+        $scope.effectName = $filter('translate')('Effect_ColorLoop');
         $scope.getEffectRunning = function (lightId) {
             if ($scope.allLights.length > 0) {
                 var eff = DataService.getEffect(lightId);
@@ -48,7 +49,9 @@ define(function () {
                     });
 
                     LightCommandService.farbwechsel(lightId, 5000, timeInMs);
-                    DataService.setEffect(lightId, "ColorLoop", $interval(LightCommandService.farbwechsel, timeInMs, 0, false, lightId, 5000, timeInMs));
+                    DataService.setEffect(lightId,
+                        $filter('translate')('Effect_ColorLoop'),
+                        $interval(LightCommandService.farbwechsel, timeInMs, 0, false, lightId, 5000, timeInMs));
                 }
             });
         };
