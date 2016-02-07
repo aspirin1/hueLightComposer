@@ -114,37 +114,47 @@ define(['app'], function (app) {
                 controller: 'SettingsCtrl'
             });
 
-            $stateProvider.state('main.effects', {
-                url: '/effects',
+            $stateProvider.state('main.effects_tab', {
+                url: '/effects_tab',
                 abstract: true,
-                templateUrl: 'templates/effects/effects.html',
+                templateUrl: 'templates/layouts/effects_tab.html',
             });
-            $stateProvider.state('main.effects.list', {
+            $stateProvider.state('main.effects_tab.list', {
                 url: '/list',
                 views: {
-                    'effectsList': {
+                    'effectList-tab': {
                         templateUrl: 'templates/effects/effectList.html',
                         controller: 'EffectListCtrl'
                     }
                 }
             });
-            $stateProvider.state('main.effects.colorLoop', {
+            $stateProvider.state('main.effects_tab.colorLoop', {
                 url: '/colorLoop',
                 views: {
-                    'effectsList': {
+                    'effectList-tab': {
                         templateUrl: 'templates/effects/colorLoop.html',
                         controller: 'ColorLoopCtrl'
                     }
                 }
             });
-            $stateProvider.state('main.effects.standard', {
+            $stateProvider.state('main.effects_tab.standard', {
                 url: '/standard/:effect',
                 views: {
-                    'effectsList': {
+                    'effectList-tab': {
                         templateUrl: 'templates/effects/standard.html',
                         controller: function ($scope, $stateParams) {
                             $scope.effect = $stateParams.effect;
                         }
+                    }
+                }
+            });
+
+            $stateProvider.state('main.effects_tab.status', {
+                url: '/status',
+                views: {
+                    'effectStatus-tab': {
+                        templateUrl: 'templates/effects/effectStatus.html',
+                        controller: 'EffectStatusCtrl'
                     }
                 }
             });
