@@ -1,4 +1,10 @@
 {
+    "Effect_ColorLoop": "Color loop",
+    "Effect_Aurora": "Aurora",
+    "Effect_Candle": "Candle",
+    "Effect_Lightning": "Lightning",
+    "Effect_Pulse": "Pulse",
+
     "NO_EFFECT_RUNNING": "No effect running",
     "SINGLE_Search": "Search",
     "SINGLE_Brightness": "Brightness",

@@ -23,6 +23,7 @@ define(function () {
             $scope.allLights = tmp;
         });
 
+        $scope.effectName = $filter('translate')('Effect_' + $scope.effect);
         $scope.getEffectRunning = function (lightId) {
             if ($scope.allLights.length > 0) {
                 var eff = DataService.getEffect(lightId);
@@ -51,7 +52,9 @@ define(function () {
                             transitiontime: 5
                         });
 
-                        DataService.setEffect(lightId, $scope.effect, $interval(EffectService.auroraEffect, 11000, 0, false, lightId, "C"));
+                        DataService.setEffect(lightId,
+                            $filter('translate')('Effect_' + $scope.effect),
+                            $interval(EffectService.auroraEffect, 11000, 0, false, lightId, "C"));
                     }
                     if ($scope.effect === "Candle") {
                         HueService.changeLightState(lightId, {
@@ -61,16 +64,31 @@ define(function () {
                         });
 
                         EffectService.candleEffect(lightId);
-                        DataService.setEffect(lightId, $scope.effect, $interval(EffectService.candleEffect, 2000, 0, false, lightId));
+                        DataService.setEffect(lightId,
+                            $filter('translate')('Effect_' + $scope.effect),
+                            $interval(EffectService.candleEffect, 2000, 0, false, lightId));
                     }
                     if ($scope.effect === "Lightning") {
                         HueService.changeLightState(lightId, {
                             on: false,
                         });
                         LightCommandService.ausUndUnregelmaessigAufblitzen(lightId, 500, 7000, 8000);
-                        DataService.setEffect(lightId, $scope.effect, $interval(
-                            LightCommandService.ausUndUnregelmaessigAufblitzen,
-                            8500, 0, false, lightId, 500, 7000, 8000));
+                        DataService.setEffect(lightId,
+                            $filter('translate')('Effect_' + $scope.effect),
+                            $interval(
+                                LightCommandService.ausUndUnregelmaessigAufblitzen,
+                                8500, 0, false, lightId, 500, 7000, 8000));
+                    }
+                    if ($scope.effect === "Pulse") {
+                        HueService.changeLightState(lightId, {
+                            on: false,
+                        });
+                        LightCommandService.kurzesHellesAufleuchten(lightId, 10000);
+                        DataService.setEffect(lightId,
+                            $filter('translate')('Effect_' + $scope.effect),
+                            $interval(
+                                LightCommandService.kurzesHellesAufleuchten,
+                                10500, 0, false, lightId, 10000));
                     }
                 }
             });

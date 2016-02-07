@@ -35,13 +35,12 @@ define(['angular'], function (angular) {
         var turquois = ColorService.getXysFromHex("#3cd5c0");
         var dark_blue = ColorService.getXysFromHex("#1e228d");
 
-        this.kurzesHellesAufleuchten = function (id, xy, time) {
+        this.kurzesHellesAufleuchten = function (id, time) {
             var warten = 0;
 
             var aufblenddauer = time / 2;
             HueService.changeLightState(id, {
                 bri: 254,
-                //xy: xy,
                 transitiontime: msToTransitionTime(aufblenddauer)
             });
             warten += aufblenddauer;
