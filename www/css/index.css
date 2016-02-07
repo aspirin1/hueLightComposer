@@ -1,5 +1,15 @@
 .app-light {}
 
+.hueImageInListRight {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    max-width: 40px;
+    max-height: 40px;
+    width: 100%;
+    height: 100%;
+}
+
 
 /*
 body.app-dark,
@@ -14,6 +24,10 @@ body.app-dark,
     background-color: #000;
     color: #444;
 }*/
+
+.lightDetailPopover.popover {
+    height: 174px;
+}
 
 .hueListIcon .lightNotReachable {
     font-size: 27px;

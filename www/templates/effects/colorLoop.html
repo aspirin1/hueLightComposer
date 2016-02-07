@@ -1,0 +1,23 @@
+<ion-view view-title="ColorLoop">
+    <ion-nav-bar class="bar-main">
+        <ion-nav-back-button class="button-clear">
+            <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content>
+        <input type="number" ng-model="customLoopTime" />
+        <ul class="list">
+            <li class="item item-checkbox" ng-repeat="light in allLights">
+                <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="copySelection[light.id]">
+                </label>
+                <h2>{{light.name}}</h2>
+                <p>{{::getEffectRunning(light.id)}}</p>
+            </li>
+        </ul>
+        <div class="button-bar">
+            <button class="button button-positive" ng-click="copyToSelection()">{{'SINGLE_Start' | translate}}</button>
+        </div>
+    </ion-content>
+</ion-view>

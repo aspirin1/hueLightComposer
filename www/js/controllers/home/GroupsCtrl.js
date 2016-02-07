@@ -8,6 +8,12 @@ define(function () {
 
         $scope.atLeastOneLightOn = false;
         $scope.changeOnOffGroup0 = function (newState) {
+            DataService.getEnrichedLightInfos(false).then(function (data) {
+                angular.forEach(data, function (value, key) {
+                    DataService.stopEffect(key);
+                });
+            });
+
             HueService.turnGroupOnOff(0, newState).then(function (data) {
                 $scope.atLeastOneLightOn = newState;
             });
@@ -21,22 +27,6 @@ define(function () {
             HueService.deleteGroup(groupId, true).then(function (data) {
                 refreshLightList();
             });
-        };
-        $scope.testGroup = function (groupId, group) {
-            var customLoopTime = 5;
-            var timeInMs = customLoopTime * 1000;
-            var transitionTime = customLoopTime * 10;
-            var customLoop = function (groupId) {
-                console.log(groupId);
-                HueService.changeGroupState(groupId, {
-                    hue_inc: 2500,
-                    transitiontime: transitionTime
-                }).then(function (data) {
-
-                });
-            };
-            customLoop(groupId);
-            DataService.setGroupEffect(groupId, group.lights, "groupLooping", $interval(customLoop, timeInMs, 0, false, groupId));
         };
 
         var checkIfAtLeastOneLightIsOn = function () {

@@ -1,4 +1,5 @@
 {
+    "NO_EFFECT_RUNNING": "No effect running",
     "SINGLE_Search": "Search",
     "SINGLE_Brightness": "Brightness",
     "SINGLE_Saturation": "Saturation",
@@ -13,6 +14,7 @@
     "SINGLE_Name": "Name",
     "SINGLE_Delete": "Delete",
     "SINGLE_Ok": "Ok",
+    "SINGLE_Start": "Start",
 
     "Layout_Home_Tab_Lights": "Lights",
     "Layout_Home_Tab_Groups": "Groups",
@@ -47,12 +49,12 @@
     "Home_Colors_Title": "Colors",
     "Home_LightList_Title": "Hue lights",
     "Home_LightList_CreateScene": "Create new scene",
+    "Home_LightList_Detail_Rename": "Rename",
     "Home_LightList_Detail_CopyTo": "Copy to",
     "Home_LightList_Detail_SaveColor": "Save color",
     "Home_LightList_Detail_SaveColor_Prompt_Title": "Save color",
     "Home_LightList_Detail_SaveColor_Prompt_Text": "Please enter a name or description",
     "Home_LightList_Detail_RenameLight_Title": "Rename light",
     "Home_LightList_Detail_RenameLight_NewName": "New name"
-
 
 }

@@ -2,7 +2,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $interval, $timeout, $ionicLoading, $ionicModal, $filter, DataService, HueService, UtilityService, EffectService) {
+    function ctrl($scope, $ionicModal, $ionicPopover, $filter, DataService, HueService, UtilityService) {
         console.info("HueLightDetailsCtrl init", $scope.lightId);
 
         var refreshLightInfo = function () {
@@ -12,9 +12,6 @@ define(function () {
         };
         refreshLightInfo();
 
-        //        var interval = $interval(function () {
-        //            refreshLightInfo();
-        //        }, 5000);
 
         DataService.getEnrichedLightInfos().then(function (data) {
             var tmp = [];
@@ -27,14 +24,14 @@ define(function () {
             $scope.allLightsExceptCurrent = tmp;
         });
 
-        $scope.doRefresh = function () {
-            refreshLightInfo();
-        };
-
         $scope.toggleLightOnOff = function () {
-            HueService.turnLightOnOff($scope.lightId, $scope.light.state.on).then(function (data) {
-                refreshLightInfo();
-            });
+            if ($scope.light.state.on === false) {
+                DataService.stopEffectAndTurnOffLight($scope.lightId);
+            } else {
+                HueService.turnLightOnOff($scope.lightId, $scope.light.state.on).then(function (data) {
+                    refreshLightInfo();
+                });
+            }
         };
 
         $scope.toggleColorloop = function () {
@@ -90,7 +87,7 @@ define(function () {
             $scope.renameModal = modal;
         });
 
-        $scope.openModal = function () {
+        $scope.openRenameModal = function () {
             $scope.renameModal.show();
         };
         $scope.closeModal = function () {
@@ -137,42 +134,6 @@ define(function () {
         };
 
 
-        $scope.customLoopTime = 1;
-        var getCustomLoopStateBtnText = function () {
-            if (DataService.isLightExecutingEffect($scope.lightId)) {
-                $scope.customLoopStateBtnText = "Stop";
-            } else {
-                $scope.customLoopStateBtnText = "Start";
-            }
-        };
-        getCustomLoopStateBtnText();
-
-        $scope.toggleCustomLoop = function () {
-            if (DataService.isLightExecutingEffect($scope.lightId)) {
-                HueService.changeLightState($scope.lightId, {
-                    hue_inc: 0,
-                    transitiontime: 0
-                }).then(function (data) {
-                    console.info("stopped custom loop", data);
-                });
-                DataService.stopEffect($scope.lightId);
-            } else {
-                var timeInMs = $scope.customLoopTime * 1000;
-                var transitionTime = $scope.customLoopTime * 10;
-                var customLoop = function () {
-                    HueService.changeLightState($scope.lightId, {
-                        hue_inc: 5000,
-                        transitiontime: parseInt(transitionTime)
-                    }).then(function (data) {
-
-                    });
-                };
-                customLoop();
-                DataService.setEffect($scope.lightId, "singleLightColorLoop", $interval(customLoop, timeInMs), 0, false);
-            }
-            getCustomLoopStateBtnText();
-        };
-
         $scope.saveColor = function () {
             navigator.notification.prompt(
                 $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Text'), // message
@@ -180,39 +141,6 @@ define(function () {
                 $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Title'), // title
                 [$filter('translate')('SINGLE_Ok'), $filter('translate')('SINGLE_Cancel')] // buttonLabels
             );
-        };
-
-        //
-        //        $scope.test = function () {
-        //            HueService.changeLightState($scope.lightId, {
-        //                hue_inc: 0,
-        //                transitiontime: 0,
-        //            }).then(function (data) {
-        //                DataService.getEnrichedLightInfo($scope.lightId).then(function (lightData) {
-        //                    console.info("alert:" + lightData.state.alert + " bri:" + lightData.state.bri + " xy:" + lightData.state.xy[0] + "," + lightData.state.xy[1] + " hue:" + lightData.state.hue + " sat:" + lightData.state.sat);
-        //                });
-        //            });
-        //        };
-
-        $scope.startCandle = function () {
-            var lightId = $scope.lightId;
-            if (DataService.isLightExecutingEffect(lightId)) {
-                HueService.changeLightState(lightId, {
-                    hue_inc: 0,
-                    transitiontime: 0
-                }).then(function (data) {
-
-                });
-                DataService.stopEffect(lightId);
-            } else {
-                HueService.changeLightState(lightId, {
-                    on: true,
-                    bri: 42,
-                    xy: [0.5676, 0.3877],
-                });
-
-                DataService.setEffect(lightId, "candle", $interval(EffectService.candleEffect, 2000, 0, false, lightId));
-            }
         };
 
         function onPrompt(results) {
@@ -230,12 +158,18 @@ define(function () {
             }
         }
 
+        $ionicPopover.fromTemplateUrl('actions-popover.html', {
+            scope: $scope,
+        }).then(function (popover) {
+            $scope.popover = popover;
+        });
+
         //        $scope.$on("$destroy", function () {
         //            $interval.cancel(candle);
         //        });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$interval', '$timeout', '$ionicLoading', '$ionicModal', '$filter', 'DataService', 'HueService', 'UtilityService', 'EffectService'];
+    ctrl.$inject = ['$scope', '$ionicModal', '$ionicPopover', '$filter', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

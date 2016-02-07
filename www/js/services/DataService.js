@@ -219,6 +219,10 @@ define(['angular'], function (angular) {
             };
         };
 
+        this.getEffect = function (lightId) {
+            return effectState[parseInt(lightId)];
+        };
+
         this.setGroupEffect = function (groupId, lights, effectName, interval) {
             angular.forEach(lights, function (lightId) {
                 effectState[parseInt(lightId)] = {
@@ -242,6 +246,11 @@ define(['angular'], function (angular) {
             angular.forEach(lights, function (lightId) {
                 effectState[lightId] = interval;
             });
+        };
+
+        this.stopEffectAndTurnOffLight = function (lightId) {
+            self.stopEffect(lightId);
+            HueService.turnLightOnOff(lightId);
         };
         return this;
     };

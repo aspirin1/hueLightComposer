@@ -52,7 +52,7 @@ define(['angular'], function (angular) {
             //console.info(url, cmd);
             return $http.put(url, cmd)
                 .then(function (result) {
-                    //console.log(result);
+                    console.log(result);
                     return result.data;
                 });
         };

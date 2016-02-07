@@ -3,8 +3,9 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $filter, $interval, $ionicLoading, DataService, HueService, UtilityService) {
+    function ctrl($scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService) {
         console.info("ScenesCtrl init");
+        var filterBarInstance;
 
         function getIndexOf(arr, val, prop) {
             var l = arr.length,
@@ -16,6 +17,16 @@ define(function () {
             }
             return false;
         }
+
+        $scope.showFilterBar = function () {
+            filterBarInstance = $ionicFilterBar.show({
+                items: $scope.allScenes,
+                update: function (filteredItems) {
+                    $scope.allScenes = filteredItems;
+                },
+                filterProperties: 'name'
+            });
+        };
 
         $scope.activateScene = function (sceneId) {
             HueService.recallScene(sceneId).then(function (data) {
@@ -48,7 +59,7 @@ define(function () {
         refresh();
     }
 
-    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicLoading', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

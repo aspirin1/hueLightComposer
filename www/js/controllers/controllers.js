@@ -22,8 +22,8 @@ define(function (require) {
     controllers.controller('SettingsCtrl', require('controllers/settings/SettingsCtrl'));
 
     controllers.controller('EffectListCtrl', require('controllers/effects/EffectListCtrl'));
-    controllers.controller('CandleCtrl', require('controllers/effects/CandleCtrl'));
-
+    controllers.controller('StandardEffectCtrl', require('controllers/effects/StandardEffectCtrl'));
+    controllers.controller('ColorLoopCtrl', require('controllers/effects/ColorLoopCtrl'));
 
 
     controllers.run(['$rootScope', function ($rootScope) {
