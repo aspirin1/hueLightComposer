@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $filter, DataService, HueService, EffectService, LightCommandService, ColorService, $interval) {
+    function ctrl($scope, $filter, DataService, EffectService, UtilityService) {
         console.log("ColorLoopCtrl");
 
         function getLightById(key) {
@@ -25,14 +25,7 @@ define(function () {
 
         $scope.effectName = $filter('translate')('Effect_ColorLoop');
         $scope.getEffectRunning = function (lightId) {
-            if ($scope.allLights.length > 0) {
-                var eff = DataService.getEffect(lightId);
-                if (angular.isUndefined(eff)) {
-                    return $filter('translate')('NO_EFFECT_RUNNING');
-                } else {
-                    return eff.effect;
-                }
-            }
+            return UtilityService.getEffectRunningText($scope.allLights, lightId);
         };
 
         $scope.customLoopTime = 10;
@@ -42,16 +35,7 @@ define(function () {
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var lightId = parseInt(getLightById(key).id);
-                    DataService.stopEffect(lightId);
-
-                    HueService.changeLightState(lightId, {
-                        on: true,
-                    });
-
-                    LightCommandService.farbwechsel(lightId, 5000, timeInMs);
-                    DataService.setEffect(lightId,
-                        $filter('translate')('Effect_ColorLoop'),
-                        $interval(LightCommandService.farbwechsel, timeInMs, 0, false, lightId, 5000, timeInMs));
+                    EffectService.startColorLoop(lightId, timeInMs);
                 }
             });
         };
@@ -59,7 +43,7 @@ define(function () {
 
     }
 
-    ctrl.$inject = ['$scope', '$filter', 'DataService', 'HueService', 'EffectService', 'LightCommandService', 'ColorService', '$interval'];
+    ctrl.$inject = ['$scope', '$filter', 'DataService', 'EffectService', 'UtilityService'];
     return ctrl;
 
 });

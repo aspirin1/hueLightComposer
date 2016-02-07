@@ -6,6 +6,7 @@ define(['angular'], function (angular) {
     var factory = function (HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
         var self = this;
         var effectState = {};
+        var isStoppingState = {};
         var groupEffectState = {};
         var enrichedLightInfos = null;
 
@@ -186,6 +187,8 @@ define(['angular'], function (angular) {
 
         this.stopEffect = function (lightId) {
             var q;
+            isStoppingState[parseInt(lightId)] = true;
+
             angular.forEach(effectState, function (effect) {
                 if (effect.lightId === parseInt(lightId)) {
                     if (effect.type === "group") {
@@ -198,11 +201,9 @@ define(['angular'], function (angular) {
                             delete effectState[parseInt(assocLightId)];
                         });
                     } else {
-                        console.log("stopping", effect.timeouts);
                         angular.forEach(effect.timeouts, function (promise) {
                             $timeout.cancel(promise);
                         });
-                        console.log("stopping", effect.timeouts);
                         q = $interval.cancel(effect.interval);
                         delete effectState[parseInt(effect.lightId)];
                     }
@@ -216,7 +217,6 @@ define(['angular'], function (angular) {
             var effect = effectState[parseInt(lightId)];
             if (angular.isDefined(effect)) {
                 effect.timeouts.push(promise);
-                console.log("pushed", effect.timeouts);
             }
         };
 
@@ -224,11 +224,16 @@ define(['angular'], function (angular) {
             var effect = effectState[parseInt(lightId)];
             if (angular.isDefined(effect)) {
                 effect.timeouts = [];
-                console.log("reset", effect.timeouts);
             }
         };
 
+        this.isStopped = function (lightId) {
+            return (lightId in isStoppingState);
+        };
+
         this.setEffect = function (lightId, effectName, interval) {
+            delete isStoppingState[lightId];
+
             effectState[parseInt(lightId)] = {
                 type: "single",
                 lightId: parseInt(lightId),

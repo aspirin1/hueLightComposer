@@ -20,7 +20,7 @@ define(function () {
                 if (angular.isUndefined(eff)) {
                     return $filter('translate')('NO_EFFECT_RUNNING');
                 } else {
-                    return eff.effect;
+                    return $filter('translate')('Effect_' + eff.effect);
                 }
             }
         };

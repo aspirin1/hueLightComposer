@@ -3,28 +3,96 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function ($timeout, HueService, ColorService) {
+    var factory = function ($interval, $timeout, HueService, ColorService, DataService, LightCommandService, UtilityService) {
+        var self = this;
+        var dark_red = ColorService.getXysFromHex("#54001c");
+        var dark_purple = ColorService.getXysFromHex("#2c1b3d");
+        var light_purple = ColorService.getXysFromHex("#902aaa");
+        var green = ColorService.getXysFromHex("#1f8a20");
+        var dark_blue_nightSky = ColorService.getXysFromHex("#1e228d");
+        var turquois = ColorService.getXysFromHex("#3cd5c0");
 
-        function round(value, decimals) {
-            return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
-        }
+        this.startColorLoop = function (lightId, timeInMs) {
+            DataService.stopEffect(lightId);
 
-        /**
-         * Returns a random number between min (inclusive) and max (exclusive)
-         */
-        function getRandomArbitrary(min, max) {
-            return round(Math.random() * (max - min) + min, 5);
-        }
+            HueService.changeLightState(lightId, {
+                on: true,
+            });
 
-        /**
-         * Returns a random integer between min (inclusive) and max (inclusive)
-         * Using Math.round() will give you a non-uniform distribution!
-         */
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+            var interval = $interval(LightCommandService.farbwechsel, timeInMs, 0, false, lightId, 5000, timeInMs);
+            DataService.setEffect(lightId, 'ColorLoop', interval);
+            LightCommandService.farbwechsel(lightId, 5000, timeInMs);
+        };
+
+        this.startAurora = function (lightId) {
+            DataService.stopEffect(lightId);
+
+            HueService.changeLightState(lightId, {
+                on: true,
+                bri: 40,
+                xy: dark_blue_nightSky.gamutCxy,
+                transitiontime: 5
+            });
+
+            var interval = $interval(self.auroraEffect, 11000, 0, false, lightId, "C");
+            DataService.setEffect(lightId, "Aurora", interval);
+            self.auroraEffect(lightId, "C");
+        };
+
+        this.startCandle = function (lightId) {
+            DataService.stopEffect(lightId);
+
+            HueService.changeLightState(lightId, {
+                on: true,
+                bri: 42,
+                xy: [0.5676, 0.3877],
+            });
+
+            var interval = $interval(self.candleEffect, 2000, 0, false, lightId);
+            DataService.setEffect(lightId, "Candle", interval);
+            self.candleEffect(lightId);
+        };
+
+        this.startLightning = function (lightId) {
+            DataService.stopEffect(lightId);
+
+            HueService.changeLightState(lightId, {
+                on: false,
+            });
+
+            var effektDauer = 8000;
+            var minZeitZwischenBlitzen = 500;
+            var maxZeitZwischenBlitzen = 7000;
+
+            var interval = $interval(
+                LightCommandService.ausUndUnregelmaessigAufblitzen,
+                effektDauer + 500, 0, false, lightId, minZeitZwischenBlitzen, maxZeitZwischenBlitzen, effektDauer);
+            DataService.setEffect(lightId, "Lightning", interval);
+            LightCommandService.ausUndUnregelmaessigAufblitzen(lightId, minZeitZwischenBlitzen, maxZeitZwischenBlitzen, effektDauer);
+        };
+
+        this.startPulse = function (lightId) {
+            DataService.stopEffect(lightId);
+
+            HueService.changeLightState(lightId, {
+                on: true,
+                bri: 40
+            });
+
+            var effektDauer = 10000;
+            var interval = $interval(
+                LightCommandService.kurzesHellesAufleuchten,
+                effektDauer + 500, 0, false, lightId, effektDauer);
+            DataService.setEffect(lightId, "Pulse", interval);
+            LightCommandService.kurzesHellesAufleuchten(lightId, effektDauer);
+        };
+
+
+
 
         this.candleEffect = function (lightId) {
+            UtilityService.resetTimeoutForId(lightId);
+
             var minBri = 36,
                 maxBri = 43,
                 minX = 0.56,
@@ -32,24 +100,17 @@ define(['angular'], function (angular) {
                 minY = 0.382,
                 maxY = 0.39;
 
-            var getRandomXy = function () {
-                var x = getRandomArbitrary(minX, maxX),
-                    y = getRandomArbitrary(minY, maxY);
-                return [x, y];
-            };
-
             var ausgangszustand = function () {
                 HueService.changeLightState(lightId, {
-                    bri: getRandomInt(38, 42),
-                    //xy: [0.5676, 0.3877],
-                    xy: getRandomXy(),
-                    transitiontime: getRandomInt(1, 3)
+                    bri: UtilityService.getRandomInt(38, 42),
+                    xy: UtilityService.getRandomXy(minX, maxX, minY, maxY),
+                    transitiontime: UtilityService.getRandomInt(1, 3)
                 });
             };
 
             var steilAbfallen = function (minBri, maxBri) {
                 HueService.changeLightState(lightId, {
-                    bri: getRandomInt(minBri, maxBri),
+                    bri: UtilityService.getRandomInt(minBri, maxBri),
                     transitiontime: 1
                 });
             };
@@ -63,87 +124,92 @@ define(['angular'], function (angular) {
 
             var dunklesFlackern = function () {
                 console.log('dunklesFlackern');
-                HueService.changeLightState(lightId, {
-                    bri: getRandomInt(34, 36),
-                    transitiontime: 1,
-                    xy: getRandomXy()
-                });
-                $timeout(ausgangszustand, 200, false);
+                var tmp = function () {
+                    HueService.changeLightState(lightId, {
+                        bri: UtilityService.getRandomInt(34, 36),
+                        transitiontime: 1,
+                        xy: UtilityService.getRandomXy(minX, maxX, minY, maxY)
+                    });
+                };
+                UtilityService.delayed(lightId, tmp, 0);
+                UtilityService.delayed(lightId, ausgangszustand, 200);
             };
 
             var hellerAusreisser = function () {
                 console.log('hellerAusreisser');
-                HueService.changeLightState(lightId, {
-                    bri: getRandomInt(43, 46),
-                    transitiontime: 4,
-                    xy: getRandomXy()
-                });
-                $timeout(ausgangszustand, 500, false);
+                var tmp = function () {
+                    HueService.changeLightState(lightId, {
+                        bri: UtilityService.getRandomInt(43, 46),
+                        transitiontime: 4,
+                        xy: UtilityService.getRandomXy(minX, maxX, minY, maxY)
+                    });
+                };
+                UtilityService.delayed(lightId, tmp, 0);
+                UtilityService.delayed(lightId, ausgangszustand, 500);
             };
 
             var doppeltesFlackern = function () {
                 console.log('doppeltesFlackern');
                 steilAbfallen(35, 35); //100ms
                 //+300ms warten
-                $timeout(aufBriWechseln, 400, false, 40, 3); //300ms
+                UtilityService.delayed(lightId, aufBriWechseln, 400, 40, 3); //300ms
                 //+100ms warten
-                $timeout(steilAbfallen, 800, false, 37, 37); //100ms
+                UtilityService.delayed(lightId, steilAbfallen, 800, 37, 37); //100ms
                 //+300ms warten
-                $timeout(ausgangszustand, 1200, false);
+                UtilityService.delayed(lightId, ausgangszustand, 1200);
             };
 
             var flimmern = function () {
                 console.log('flimmern');
-                aufBriWechseln(35, 0); //100ms
+                UtilityService.delayed(lightId, aufBriWechseln, 0, 35, 0); //100ms
                 //+200ms warten
-                $timeout(aufBriWechseln, 300, false, 38, 0); //100ms
+                UtilityService.delayed(lightId, aufBriWechseln, 300, 38, 0); //100ms
                 //+200ms warten
-                $timeout(aufBriWechseln, 600, false, 36, 0); //100ms
+                UtilityService.delayed(lightId, aufBriWechseln, 600, 36, 0); //100ms
                 //+200ms warten
-                $timeout(aufBriWechseln, 900, false, 39, 0); //100ms
+                UtilityService.delayed(lightId, aufBriWechseln, 900, 39, 0); //100ms
                 //+200ms warten
-                $timeout(ausgangszustand, 1200, false);
+                UtilityService.delayed(lightId, ausgangszustand, 1200);
             };
 
             var ganzSchnellesFlimmern = function () {
                 console.log('ganzSchnellesFlimmern');
                 var warten = 0;
 
-                aufBriWechseln(35, 0);
+                UtilityService.delayed(lightId, aufBriWechseln, warten, 35, 0);
                 //+100ms warten
                 warten += 100;
 
-                $timeout(aufBriWechseln, warten, false, 40, 1);
+                UtilityService.delayed(lightId, aufBriWechseln, warten, 40, 1);
                 //+100ms warten
                 warten += 100;
 
-                $timeout(aufBriWechseln, warten, false, 35, 0);
+                UtilityService.delayed(lightId, aufBriWechseln, warten, 35, 0);
                 //+100ms warten
                 warten += 100;
 
-                $timeout(aufBriWechseln, warten, false, 40, 1);
-                //+100ms warten
-                warten += 100;
-
-
-
-                $timeout(aufBriWechseln, warten, false, 35, 0);
-                //+100ms warten
-                warten += 100;
-
-                $timeout(aufBriWechseln, warten, false, 40, 1);
-                //+100ms warten
-                warten += 100;
-
-                $timeout(aufBriWechseln, warten, false, 35, 0);
+                UtilityService.delayed(lightId, aufBriWechseln, warten, 40, 1);
                 //+100ms warten
                 warten += 100;
 
 
-                $timeout(ausgangszustand, warten, false);
+                UtilityService.delayed(lightId, aufBriWechseln, warten, 35, 0);
+                //+100ms warten
+                warten += 100;
+
+                UtilityService.delayed(lightId, aufBriWechseln, warten, 40, 1);
+                //+100ms warten
+                warten += 100;
+
+                UtilityService.delayed(lightId, aufBriWechseln, warten, 35, 0);
+                //+100ms warten
+                warten += 100;
+
+
+                UtilityService.delayed(lightId, ausgangszustand, warten);
             };
 
-            var rand = getRandomInt(1, 10);
+            var rand = UtilityService.getRandomInt(1, 10);
             if (rand === 1)
                 dunklesFlackern();
             if (rand === 2)
@@ -156,223 +222,101 @@ define(['angular'], function (angular) {
                 ganzSchnellesFlimmern();
         };
 
-        var dark_red = ColorService.getXysFromHex("#54001c");
-        var dark_purple = ColorService.getXysFromHex("#2c1b3d");
-        var light_purple = ColorService.getXysFromHex("#902aaa");
-        var green = ColorService.getXysFromHex("#1f8a20");
-        var dark_blue_nightSky = ColorService.getXysFromHex("#1e228d");
-        var turquois = ColorService.getXysFromHex("#3cd5c0");
+
 
         this.auroraEffect = function (lightId, gamut) {
+            UtilityService.resetTimeoutForId(lightId);
+
             console.log("auroraEffect", lightId, gamut);
-            var ausgangszustand = function () {
-                HueService.changeLightState(lightId, {
-                    bri: getRandomInt(40, 55),
-                    xy: dark_blue_nightSky["gamut" + gamut + "xy"],
-                    transitiontime: getRandomInt(10)
-                });
-            };
 
-            var aufGruenWechseln = function () {
-                HueService.changeLightState(lightId, {
-                    bri: getRandomInt(40, 50),
-                    xy: green["gamut" + gamut + "xy"],
-                    transitiontime: getRandomInt(10, 30)
-                });
-            };
-
-            var aufDunklesLilaWechseln = function () {
-                HueService.changeLightState(lightId, {
-                    bri: getRandomInt(40, 50),
-                    xy: dark_purple["gamut" + gamut + "xy"],
-                    transitiontime: getRandomInt(10, 30)
-                });
-            };
-
-            var aufHellesLilaWechseln = function () {
-                HueService.changeLightState(lightId, {
-                    bri: getRandomInt(40, 50),
-                    xy: light_purple["gamut" + gamut + "xy"],
-                    transitiontime: getRandomInt(10, 30)
-                });
-            };
 
             var standard = function () {
-                console.log('standard');
                 var warten = 0;
-                HueService.changeLightState(lightId, {
-                    bri: 40,
-                    xy: dark_purple["gamut" + gamut + "xy"],
-                    transitiontime: 10
-                });
-                warten += 1000;
 
-                $timeout(function () {
+                var state1 = function () {
+                    HueService.changeLightState(lightId, {
+                        bri: 40,
+                        xy: dark_purple["gamut" + gamut + "xy"],
+                        transitiontime: 10
+                    });
+                };
+
+                var state2 = function () {
                     HueService.changeLightState(lightId, {
                         bri: 45,
                         xy: green["gamut" + gamut + "xy"],
                         transitiontime: 20
                     });
-                }, warten, false);
-                warten += 2000;
+                };
 
-                $timeout(function () {
+                var state3 = function () {
                     HueService.changeLightState(lightId, {
                         bri: 40,
                         hue_inc: -1000,
                         transitiontime: 10
                     });
-                }, warten, false);
-                warten += 1000;
+                };
 
-                $timeout(function () {
+                var state4 = function () {
                     HueService.changeLightState(lightId, {
                         bri: 35,
                         hue_inc: +1000,
                         transitiontime: 10
                     });
-                }, warten, false);
-                warten += 1000;
+                };
 
-                HueService.changeLightState(lightId, {
-                    bri: 40,
-                    xy: dark_purple["gamut" + gamut + "xy"],
-                    transitiontime: 20
-                });
-                warten += 2000;
-
-                $timeout(function () {
+                var state5 = function () {
                     HueService.changeLightState(lightId, {
                         bri: 35,
                         xy: dark_blue_nightSky["gamut" + gamut + "xy"],
                         transitiontime: 20
                     });
-                }, warten, false);
-                warten += 2000;
+                };
 
-                $timeout(function () {
+                var state6 = function () {
                     HueService.changeLightState(lightId, {
                         bri: 40,
                         hue_inc: -1000,
                         transitiontime: 10
                     });
-                }, warten, false);
-                warten += 1000;
+                };
 
-                $timeout(function () {
+                var state7 = function () {
                     HueService.changeLightState(lightId, {
                         bri: 42,
                         hue_inc: 1000,
                         transitiontime: 10
                     });
-                }, warten, false);
+                };
+
+                UtilityService.delayed(lightId, state1, warten);
                 warten += 1000;
-                console.log('standard finished in:' + warten + 'ms');
+
+                UtilityService.delayed(lightId, state2, warten);
+                warten += 2000;
+
+                UtilityService.delayed(lightId, state3, warten);
+                warten += 1000;
+
+                UtilityService.delayed(lightId, state4, warten);
+                warten += 1000;
+
+                UtilityService.delayed(lightId, state5, warten);
+                warten += 2000;
+
+                UtilityService.delayed(lightId, state6, warten);
+                warten += 1000;
+
+                UtilityService.delayed(lightId, state7, warten);
+                warten += 1000;
             };
 
-            //var rand = getRandomInt(1, 2);
-            //if (rand === 1)
             standard();
-        };
-
-        this.auroraFestEffect = function (lights, gamut) {
-            console.log("auroraFestEffect", lights, gamut);
-
-
-
-            var lilaAni = function (lichtId, warten) {
-                $timeout(function () {
-                    HueService.changeLightState(lichtId, {
-                        bri: 35,
-                        xy: dark_purple["gamut" + gamut + "xy"],
-                        transitiontime: 50
-                    });
-                }, warten, false);
-                warten += 5000;
-
-                $timeout(function () {
-                    HueService.changeLightState(lichtId, {
-                        bri: 40,
-                        transitiontime: 40
-                    });
-                }, warten, false);
-                warten += 4000;
-
-                $timeout(function () {
-                    HueService.changeLightState(lichtId, {
-                        bri: 35,
-                        hue_inc: 2000,
-                        transitiontime: 30
-                    });
-                }, warten, false);
-                warten += 3000;
-
-                $timeout(function () {
-                    HueService.changeLightState(lichtId, {
-                        bri: 35,
-                        hue_inc: -2000,
-                        transitiontime: 30
-                    });
-                }, warten, false);
-                warten += 3000;
-            };
-
-            var blauAni = function (lichtId, warten) {
-                $timeout(function () {
-                    HueService.changeLightState(lichtId, {
-                        bri: 35,
-                        xy: dark_blue_nightSky["gamut" + gamut + "xy"],
-                        transitiontime: 50
-                    });
-                }, warten, false);
-                warten += 5000;
-
-                $timeout(function () {
-                    HueService.changeLightState(lichtId, {
-                        bri: 40,
-                        xy: dark_blue_nightSky["gamut" + gamut + "xy"],
-                        transitiontime: 40
-                    });
-                }, warten, false);
-                warten += 4000;
-
-                $timeout(function () {
-                    HueService.changeLightState(lichtId, {
-                        bri: 35,
-                        hue_inc: 2000,
-                        transitiontime: 30
-                    });
-                }, warten, false);
-                warten += 3000;
-
-                $timeout(function () {
-                    HueService.changeLightState(lichtId, {
-                        bri: 35,
-                        hue_inc: -2000,
-                        transitiontime: 30
-                    });
-                }, warten, false);
-                warten += 3000;
-            };
-
-            var lilaZuBlau = function (lichtId) {
-                lilaAni(lichtId, 0);
-                blauAni(lichtId, 15000);
-            };
-
-            var blauZuLila2 = function (lichtId) {
-                blauAni(lichtId, 0);
-                lilaAni(lichtId, 15000);
-            };
-
-            blauZuLila2(lights[0]);
-            lilaZuBlau(lights[1]);
-            blauZuLila2(lights[2]);
         };
 
         return this;
     };
 
-    factory.$inject = ['$timeout', 'HueService', 'ColorService'];
+    factory.$inject = ['$interval', '$timeout', 'HueService', 'ColorService', 'DataService', 'LightCommandService', 'UtilityService'];
     return factory;
 });
