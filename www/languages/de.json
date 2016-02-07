@@ -27,6 +27,9 @@
     "Layout_Main_LeftMenu_Link_Effects": "Effekte",
     "Layout_Main_LeftMenu_Link_Category": "Kategorie",
 
+    "Layout_Effects_Tab_Effects": "Effekte",
+    "Layout_Effects_Tab_Status": "Status",
+
     "SearchingBridge_Title": "Suche Bridge",
     "SearchingBridge_SearchingBridge": "Suche Bridge ...",
     "SearchingBridge_TapBridge": "Bitte den Knopf auf der Bridge drücken ...",
@@ -39,8 +42,9 @@
     "Settings_Dark": "Dunkel",
     "Settings_Light": "Hell",
 
-    "Effects_Title": "Effekte",
-
+    "Effects_List_Title": "Effekte",
+    "Effects_Status_Title": "Status",
+    "Effects_Status_StopAll": "Alle beenden",
 
     "Home_Groups_Title": "Gruppen",
     "Home_Groups_AllLights": "Alle Lampen",

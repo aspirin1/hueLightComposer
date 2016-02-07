@@ -27,6 +27,9 @@
     "Layout_Main_LeftMenu_Link_Effects": "Effects",
     "Layout_Main_LeftMenu_Link_Category": "Category",
 
+    "Layout_Effects_Tab_Effects": "Effects",
+    "Layout_Effects_Tab_Status": "Status",
+
     "SearchingBridge_Title": "Searching bridge",
     "SearchingBridge_SearchingBridge": "Searching bridge ...",
     "SearchingBridge_TapBridge": "Please tap bridge button ...",
@@ -39,8 +42,9 @@
     "Settings_Dark": "Dark",
     "Settings_Light": "Light",
 
-    "Effects_Title": "Effects",
-
+    "Effects_List_Title": "Effects",
+    "Effects_Status_Title": "Status",
+    "Effects_Status_StopAll": "Stop all",
 
     "Home_Groups_Title": "Groups",
     "Home_Groups_AllLights": "All Lights",
