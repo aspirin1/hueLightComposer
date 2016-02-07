@@ -7,6 +7,8 @@
     "font-awesome": "4.5.0",
     "angular-translate": "2.8.1",
     "angular-translate-loader-static-files": "2.8.1",
-    "ionic-filter-bar": "1.1.1"
+    "ionic-filter-bar": "1.1.1",
+    "icomoon": "0.1.0",
+    "material-design-iconic-font": "2.2.0"
   }
 }

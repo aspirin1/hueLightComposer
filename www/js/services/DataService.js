@@ -198,24 +198,44 @@ define(['angular'], function (angular) {
                             delete effectState[parseInt(assocLightId)];
                         });
                     } else {
+                        console.log("stopping", effect.timeouts);
+                        angular.forEach(effect.timeouts, function (promise) {
+                            $timeout.cancel(promise);
+                        });
+                        console.log("stopping", effect.timeouts);
                         q = $interval.cancel(effect.interval);
                         delete effectState[parseInt(effect.lightId)];
                     }
                 }
             });
-            console.info("effectState", effectState);
-            console.info("groupEffectState", groupEffectState);
+
             return q;
         };
 
+        this.pushTimeout = function (lightId, promise) {
+            var effect = effectState[parseInt(lightId)];
+            if (angular.isDefined(effect)) {
+                effect.timeouts.push(promise);
+                console.log("pushed", effect.timeouts);
+            }
+        };
+
+        this.resetTimeouts = function (lightId) {
+            var effect = effectState[parseInt(lightId)];
+            if (angular.isDefined(effect)) {
+                effect.timeouts = [];
+                console.log("reset", effect.timeouts);
+            }
+        };
+
         this.setEffect = function (lightId, effectName, interval) {
-            console.log("starting effect: " + effectName);
             effectState[parseInt(lightId)] = {
                 type: "single",
                 lightId: parseInt(lightId),
                 associatedLights: [],
                 effect: effectName,
                 interval: interval,
+                timeouts: []
             };
         };
 
@@ -250,7 +270,7 @@ define(['angular'], function (angular) {
 
         this.stopEffectAndTurnOffLight = function (lightId) {
             self.stopEffect(lightId);
-            HueService.turnLightOnOff(lightId);
+            HueService.turnLightOnOff(lightId, false);
         };
         return this;
     };

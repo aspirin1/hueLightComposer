@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function ($timeout, HueService, ColorService) {
+    var factory = function ($timeout, HueService, ColorService, DataService) {
 
         function round(value, decimals) {
             return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
@@ -26,6 +26,14 @@ define(['angular'], function (angular) {
 
         function msToTransitionTime(time) {
             return parseInt(time / 100);
+        }
+
+        function delayed(lightId, func, delay, arg0, arg1, arg2, arg3, arg4, arg5) {
+            DataService.pushTimeout(lightId, $timeout(func, delay, false, arg0, arg1, arg2, arg3, arg4, arg5));
+        }
+
+        function resetTimeoutForId(lightId) {
+            DataService.resetTimeouts(lightId);
         }
 
         var dark_red = ColorService.getXysFromHex("#54001c");
@@ -242,6 +250,8 @@ define(['angular'], function (angular) {
         };
 
         this.ausUndUnregelmaessigAufblitzen = function (id, blitzMin, blitzMax, time) {
+            resetTimeoutForId(id);
+
             var self = this;
             var warten = 0;
             var minWait = parseInt(blitzMin),
@@ -277,14 +287,14 @@ define(['angular'], function (angular) {
             var vorblitzEffekt = function () {
                 var blitzWarten = 0;
 
-                $timeout(vorblitz, blitzWarten, false, 100);
+                delayed(id, vorblitz, blitzWarten, 100);
                 blitzWarten += 50;
-                $timeout(aus, warten, false);
+                delayed(id, aus, warten);
                 blitzWarten += 50;
 
-                $timeout(vorblitz, blitzWarten, false, 50);
+                delayed(id, vorblitz, blitzWarten, 50);
                 blitzWarten += 50;
-                $timeout(aus, warten, false);
+                delayed(id, aus, warten);
                 blitzWarten += 200;
 
                 return blitzWarten;
@@ -293,20 +303,20 @@ define(['angular'], function (angular) {
             //550ms
             var blitz2 = function () {
                 var blitzWarten = vorblitzEffekt();
-                $timeout(blitz, blitzWarten, false);
+                delayed(id, blitz, blitzWarten);
                 blitzWarten += 200;
             };
 
-            $timeout(aus, warten, false);
+            delayed(id, aus, warten);
             warten += 100;
 
             while (warten < time) {
-                $timeout(blitz2, warten, false);
+                delayed(id, blitz2, warten);
                 warten += 700;
-                $timeout(aus, warten, false);
+                delayed(id, aus, warten);
                 warten += getRandomInt(minWait, maxWait);
             }
-            $timeout(aus, warten, false);
+            delayed(id, aus, warten);
         };
 
 
@@ -314,6 +324,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['$timeout', 'HueService', 'ColorService'];
+    factory.$inject = ['$timeout', 'HueService', 'ColorService', 'DataService'];
     return factory;
 });
