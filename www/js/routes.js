@@ -146,6 +146,15 @@ define(['app'], function (app) {
                     }
                 }
             });
+            $stateProvider.state('main.effects_tab.pulse', {
+                url: '/pulse',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/pulse.html',
+                        controller: 'PulseCtrl'
+                    }
+                }
+            });
             $stateProvider.state('main.effects_tab.standard', {
                 url: '/standard/:effect',
                 views: {

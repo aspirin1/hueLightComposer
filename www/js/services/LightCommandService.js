@@ -35,6 +35,98 @@ define(['angular'], function (angular) {
             UtilityService.delayed(id, abdunkeln, warten);
         };
 
+        this.pulsierenMitFarbwechsel1 = function (id, time, xyHell, xyDunkel, minBri, maxBri) {
+            UtilityService.resetTimeoutForId(id);
+            var warten = 0;
+            var aufblenddauer = time / 2;
+
+            var usedMinBri = 40,
+                usedMaxBri = 254;
+
+            if (angular.isDefined(minBri)) {
+                usedMinBri = minBri;
+            }
+            if (angular.isDefined(maxBri)) {
+                usedMaxBri = maxBri;
+            }
+            console.info(usedMaxBri);
+
+            var hellAufblenden = function () {
+                HueService.changeLightState(id, {
+                    bri: usedMinBri,
+                    transitiontime: UtilityService.msToTransitionTime(aufblenddauer),
+                    xy: xyHell
+                });
+            };
+            var abdunkeln = function () {
+                HueService.changeLightState(id, {
+                    bri: usedMaxBri,
+                    transitiontime: UtilityService.msToTransitionTime(aufblenddauer),
+                    xy: xyDunkel
+                });
+            };
+
+            UtilityService.delayed(id, hellAufblenden, warten);
+            warten += aufblenddauer;
+
+            UtilityService.delayed(id, abdunkeln, warten);
+        };
+
+        this.pulsierenMitFarbwechsel2 = function (id, time, xyHell, xyDunkel, minBri, maxBri) {
+            UtilityService.resetTimeoutForId(id);
+            var warten = 0;
+            var aufblenddauer = time / 4;
+
+            var usedMinBri = 40,
+                usedMaxBri = 254;
+
+            if (angular.isDefined(minBri)) {
+                usedMinBri = minBri;
+            }
+            if (angular.isDefined(maxBri)) {
+                usedMaxBri = maxBri;
+            }
+
+            var xy1Aufblenden = function () {
+                HueService.changeLightState(id, {
+                    bri: usedMinBri,
+                    transitiontime: UtilityService.msToTransitionTime(aufblenddauer),
+                    xy: xyHell
+                });
+            };
+            var xy1Abdunkeln = function () {
+                HueService.changeLightState(id, {
+                    bri: usedMaxBri,
+                    transitiontime: UtilityService.msToTransitionTime(aufblenddauer),
+                });
+            };
+
+            var xy2Aufblenden = function () {
+                HueService.changeLightState(id, {
+                    bri: usedMinBri,
+                    transitiontime: UtilityService.msToTransitionTime(aufblenddauer),
+                    xy: xyDunkel
+                });
+            };
+            var xy2Abdunkeln = function () {
+                HueService.changeLightState(id, {
+                    bri: usedMaxBri,
+                    transitiontime: UtilityService.msToTransitionTime(aufblenddauer),
+                });
+            };
+
+            UtilityService.delayed(id, xy1Aufblenden, warten);
+            warten += aufblenddauer;
+
+            UtilityService.delayed(id, xy1Abdunkeln, warten);
+            warten += aufblenddauer;
+
+            UtilityService.delayed(id, xy2Aufblenden, warten);
+            warten += aufblenddauer;
+
+            UtilityService.delayed(id, xy2Abdunkeln, warten);
+        };
+
         this.farbwechsel = function (id, farbbereich, time) {
             UtilityService.resetTimeoutForId(id);
 

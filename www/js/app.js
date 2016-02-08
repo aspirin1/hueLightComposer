@@ -10,7 +10,8 @@ define(['angular',
         'controllers/controllers',
         'ionicAngular',
         'angularTranslateLoaderStaticFile',
-        'ionicFilterbar'
+        'ionicFilterbar',
+        'noUiSliderAngular'
        ],
 
     function (angular, uiRouter, angularLocalStorage) {
@@ -27,7 +28,8 @@ define(['angular',
             'app.providers',
             'ui.router',
             'pascalprecht.translate',
-            'jett.ionic.filter.bar'
+            'jett.ionic.filter.bar',
+            'ya.nouislider'
         ]);
 
         return app;

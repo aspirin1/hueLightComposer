@@ -11,7 +11,9 @@ require.config({
         ionicAngular: '../bower_components/ionic/release/js/ionic-angular.min',
         ionicFilterbar: '../bower_components/ionic-filter-bar/dist/ionic.filter.bar.min',
         angularTranslate: '../bower_components/angular-translate/angular-translate.min',
-        angularTranslateLoaderStaticFile: '../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min'
+        angularTranslateLoaderStaticFile: '../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min',
+        noUiSlider: '../bower_components/nouislider/distribute/nouislider.min',
+        noUiSliderAngular: '../res/nouislider-angular-master/nouislider.min'
     },
     shim: {
         angular: {
@@ -44,6 +46,9 @@ require.config({
         },
         ionicFilterbar: {
             deps: ['ionic', 'angular']
+        },
+        noUiSliderAngular: {
+            deps: ['noUiSlider']
         },
     },
     priority: [

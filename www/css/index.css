@@ -1,3 +1,9 @@
+.effectSlider {
+    width: 91%;
+    margin-top: 12px;
+    margin-bottom: 14px;
+}
+
 .effectList .item {
     height: 150px;
     background-size: cover;
