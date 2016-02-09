@@ -147,11 +147,13 @@ define(['app'], function (app) {
                 }
             });
             $stateProvider.state('main.effects_tab.pulse', {
-                url: '/pulse',
+                url: '/pulse/:effect',
                 views: {
                     'effectList-tab': {
                         templateUrl: 'templates/effects/pulse.html',
-                        controller: 'PulseCtrl'
+                        controller: function ($scope, $stateParams) {
+                            $scope.effect = $stateParams.effect;
+                        }
                     }
                 }
             });

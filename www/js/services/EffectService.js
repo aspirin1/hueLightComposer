@@ -77,7 +77,7 @@ define(['angular'], function (angular) {
             LightCommandService.ausUndUnregelmaessigAufblitzen(lightId, minZeitZwischenBlitzen, maxZeitZwischenBlitzen, effektDauer);
         };
 
-        this.startPulse = function (lightId) {
+        this.startPulse = function (lightId, duration, minBri, maxBri) {
             DataService.stopEffect(lightId);
 
             HueService.changeLightState(lightId, {
@@ -85,12 +85,24 @@ define(['angular'], function (angular) {
                 bri: 40
             });
 
-            var effektDauer = 10000;
+            var effektDauer = 10000,
+                usedMinBri = 40,
+                usedMaxBri = 254;
+            if (angular.isDefined(duration)) {
+                effektDauer = duration;
+            }
+            if (angular.isDefined(minBri)) {
+                usedMinBri = minBri;
+            }
+            if (angular.isDefined(maxBri)) {
+                usedMaxBri = maxBri;
+            }
+
             var interval = $interval(
                 LightCommandService.kurzesHellesAufleuchten,
-                effektDauer + 500, 0, false, lightId, effektDauer);
+                effektDauer + 1500, 0, false, lightId, effektDauer, usedMinBri, usedMaxBri);
             DataService.setEffect(lightId, "Pulse", interval);
-            LightCommandService.kurzesHellesAufleuchten(lightId, effektDauer);
+            LightCommandService.kurzesHellesAufleuchten(lightId, effektDauer, usedMinBri, usedMaxBri);
         };
 
         this.startPulsierenMitFarbwechsel1 = function (lightId, duration, minBri, maxBri) {
@@ -116,7 +128,7 @@ define(['angular'], function (angular) {
 
             var interval = $interval(
                 LightCommandService.pulsierenMitFarbwechsel1,
-                effektDauer + 500, 0, false, lightId, effektDauer, [0.2725, 0.1096], [0.2703, 0.1398], usedMinBri, usedMaxBri); //[0.2703, 0.1398]
+                effektDauer + 1500, 0, false, lightId, effektDauer, [0.2725, 0.1096], [0.2703, 0.1398], usedMinBri, usedMaxBri); //[0.2703, 0.1398]
             DataService.setEffect(lightId, "PulsierenMitFarbwechsel1", interval);
             LightCommandService.pulsierenMitFarbwechsel1(lightId, effektDauer, [0.2725, 0.1096], [0.2703, 0.1398], usedMinBri, usedMaxBri);
         };
@@ -145,7 +157,7 @@ define(['angular'], function (angular) {
 
             var interval = $interval(
                 LightCommandService.pulsierenMitFarbwechsel2,
-                effektDauer + 500, 0, false, lightId, effektDauer, [0.2725, 0.1096], [0.2703, 0.1398], usedMinBri, usedMaxBri);
+                effektDauer + 2500, 0, false, lightId, effektDauer, [0.2725, 0.1096], [0.2703, 0.1398], usedMinBri, usedMaxBri);
             DataService.setEffect(lightId, "PulsierenMitFarbwechsel2", interval);
             LightCommandService.pulsierenMitFarbwechsel2(lightId, effektDauer, [0.2725, 0.1096], [0.2703, 0.1398], usedMinBri, usedMaxBri);
         };

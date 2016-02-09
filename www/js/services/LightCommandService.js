@@ -11,26 +11,36 @@ define(['angular'], function (angular) {
         var turquois = ColorService.getXysFromHex("#3cd5c0");
         var dark_blue = ColorService.getXysFromHex("#1e228d");
 
-        this.kurzesHellesAufleuchten = function (id, time) {
+        this.kurzesHellesAufleuchten = function (id, time, minBri, maxBri) {
             UtilityService.resetTimeoutForId(id);
             var warten = 0;
             var aufblenddauer = time / 2;
+            var usedMinBri = 40,
+                usedMaxBri = 254;
+
+            if (angular.isDefined(minBri)) {
+                usedMinBri = minBri;
+            }
+            if (angular.isDefined(maxBri)) {
+                usedMaxBri = maxBri;
+            }
 
             var hellAufblenden = function () {
                 HueService.changeLightState(id, {
-                    bri: 254,
+                    bri: usedMaxBri,
                     transitiontime: UtilityService.msToTransitionTime(aufblenddauer)
                 });
             };
             var abdunkeln = function () {
                 HueService.changeLightState(id, {
-                    bri: 40,
+                    bri: usedMinBri,
                     transitiontime: UtilityService.msToTransitionTime(aufblenddauer)
                 });
             };
 
             UtilityService.delayed(id, hellAufblenden, warten);
             warten += aufblenddauer;
+            warten += 1000;
 
             UtilityService.delayed(id, abdunkeln, warten);
         };
@@ -68,6 +78,7 @@ define(['angular'], function (angular) {
 
             UtilityService.delayed(id, hellAufblenden, warten);
             warten += aufblenddauer;
+            warten += 1000;
 
             UtilityService.delayed(id, abdunkeln, warten);
         };
@@ -120,6 +131,7 @@ define(['angular'], function (angular) {
 
             UtilityService.delayed(id, xy1Abdunkeln, warten);
             warten += aufblenddauer;
+            warten += 1000;
 
             UtilityService.delayed(id, xy2Aufblenden, warten);
             warten += aufblenddauer;

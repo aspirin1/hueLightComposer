@@ -1,4 +1,4 @@
-<ion-view view-title="{{effectName}}">
+<ion-view view-title="{{effectName}}" ng-controller="PulseCtrl">
     <ion-nav-bar class="bar-main">
         <ion-nav-back-button class="button-clear">
             <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
@@ -6,7 +6,6 @@
     </ion-nav-bar>
     <ion-content>
 
-        <!--<input type="number" ng-model="customLoopTime" />-->
 
         <label class="item item-input item-stacked-label">
             <span class="input-label">{{'SINGLE_Speed' | translate}} {{speedOptions.start[0]}}s</span>
@@ -14,9 +13,20 @@
         </label>
 
         <label class="item item-input item-stacked-label">
-            <span class="input-label">{{'SINGLE_Speed' | translate}}</span>
+            <span class="input-label">{{'SINGLE_Brightness' | translate}}</span>
             <div ya-no-ui-slider='briOptions' class="effectSlider"></div>
         </label>
+
+        <div class="item" ng-show="showColors">
+            <div class="row">
+                <div class="col col-50">
+                    <ngjs-color-picker selected="selectedColor1" options="optionsColumn1" customColors="colors1"></ngjs-color-picker>
+                </div>
+                <div class="col col-50">
+                    <ngjs-color-picker selected="selectedColor2" options="optionsColumn2"></ngjs-color-picker>
+                </div>
+            </div>
+        </div>
 
         <ul class="list">
             <li class="item item-checkbox" ng-repeat="light in allLights">
@@ -30,7 +40,6 @@
         </ul>
         <div class="button-bar">
             <button class="button button-positive" ng-click="copyToSelection()">{{'SINGLE_Start' | translate}}</button>
-            <button class="button button-positive" ng-click="copyToSelection2()">{{'SINGLE_Start' | translate}}2</button>
         </div>
     </ion-content>
 </ion-view>

@@ -4,6 +4,8 @@
     "Effect_Candle": "Candle",
     "Effect_Lightning": "Lightning",
     "Effect_Pulse": "Pulse",
+    "Effect_PulseColorTransition": "Pulse color change",
+    "Effect_PulseChangingColors": "Pulse different colors",
 
     "NO_EFFECT_RUNNING": "No effect running",
     "SINGLE_Speed": "Speed",
