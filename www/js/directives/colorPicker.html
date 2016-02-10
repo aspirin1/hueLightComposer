@@ -1,0 +1,6 @@
+<div class="colorPicker">
+    <div class="row" data-ng-repeat="row in rows">
+        <div class="col" data-ng-repeat="col in cols" ng-style="getStyle(colors[$parent.$index * options.columns + $index])" ng-click="pick(colors[$parent.$index * options.columns + $index])">
+        </div>
+    </div>
+</div>

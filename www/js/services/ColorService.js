@@ -400,6 +400,15 @@ define(['angular'], function (angular) {
                 };
             },
 
+            getGamutXyFromHex: function (gamut, hexColor) {
+                var hex = hexColor;
+                if (hex.length == 7) {
+                    hex = hex.substring(1, 7);
+                }
+                var rgb = hexToRGB(hex);
+                return this.rgbArrayToCIE1931(gamut, rgb);
+            },
+
             rgbArrayToCIE1931: function (gamut, rgb) {
                 return this.rgbToCIE1931(gamut, rgb[0], rgb[1], rgb[2]);
             },

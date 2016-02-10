@@ -12,5 +12,6 @@ define(function (require) {
     directives.directive('clearableInput', require('directives/ClearableInputDirective'));
     directives.directive('hueImage', require('directives/HueImageDirective'));
     directives.directive('appVersion', require('directives/VersionDirective'));
+    directives.directive('colorPicker', require('directives/ColorPickerDirective'));
     return directives;
 });
