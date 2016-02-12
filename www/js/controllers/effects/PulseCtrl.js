@@ -34,23 +34,6 @@ define(function () {
             }
         };
 
-        $scope.optionsColumn1 = {
-            size: 30,
-            columns: 4,
-            roundCorners: true,
-            customColors: ["#7bd148", "#5484ed", "#a4bdfc", "#46d6db", "#7ae7bf", "#51b749", "#fbd75b", "#ffb878"]
-        };
-
-        $scope.optionsColumn2 = {
-            size: 30,
-            columns: 4,
-            roundCorners: true,
-            customColors: ['#fbd75b', '#ffb878', '#ff887c', '#dc2127', '#dbadff', '#e1e1e1', "#fbd75c", "#ffbe78"]
-        };
-
-
-        $scope.colors1 = {};
-
         DataService.getEnrichedLightInfos().then(function (data) {
             var tmp = [];
             angular.forEach(data, function (value, key) {
@@ -63,6 +46,15 @@ define(function () {
         $scope.effectName = $filter('translate')('Effect_' + $scope.effect);
         $scope.getEffectRunning = function (lightId) {
             return UtilityService.getEffectRunningText($scope.allLights, lightId);
+        };
+
+        $scope.anythingSelected = function () {
+            var retVal = false;
+            angular.forEach($scope.copySelection, function (value, key) {
+                if (value === true)
+                    retVal = true;
+            });
+            return retVal;
         };
 
         $scope.test = {};
@@ -88,8 +80,9 @@ define(function () {
                     if (color2 != "#000000") {
                         color2xy = ColorService.getGamutXyFromHex(light.gamut, color2);
                     }
+
                     if ($scope.effect === "Pulse") {
-                        EffectService.startPulse(lightId, timeInMs, minBri, maxBri);
+                        EffectService.startPulse(lightId, timeInMs, minBri, maxBri, color1xy);
                     } else if ($scope.effect === "PulseColorTransition") {
                         EffectService.startPulsierenMitFarbwechsel1(lightId, timeInMs, minBri, maxBri, color1xy, color2xy);
                     } else if ($scope.effect === "PulseChangingColors") {

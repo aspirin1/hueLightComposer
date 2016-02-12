@@ -9,9 +9,8 @@ define(function (require) {
         directives = angular.module('app.directives', ['app.services']);
 
     directives.directive('svgImage', require('directives/SvgImageDirective'));
-    directives.directive('clearableInput', require('directives/ClearableInputDirective'));
     directives.directive('hueImage', require('directives/HueImageDirective'));
-    directives.directive('appVersion', require('directives/VersionDirective'));
-    directives.directive('colorPicker', require('directives/ColorPickerDirective'));
+    directives.directive('colorPicker', require('directives/colorPicker/ColorPickerDirective'));
+    directives.directive('colorScroll', require('directives/colorScroll/ColorScrollDirective'));
     return directives;
 });

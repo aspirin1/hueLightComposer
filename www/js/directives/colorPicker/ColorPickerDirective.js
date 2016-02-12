@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, document, console*/
 
 define(['angular'], function (angular) {
     "use strict";
@@ -71,7 +71,7 @@ define(['angular'], function (angular) {
                 });
 
             },
-            templateUrl: 'js/directives/colorPicker.html'
+            templateUrl: 'js/directives/colorPicker/colorPicker.html'
         };
     };
 

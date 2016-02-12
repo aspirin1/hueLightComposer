@@ -77,7 +77,7 @@ define(['angular'], function (angular) {
             LightCommandService.ausUndUnregelmaessigAufblitzen(lightId, minZeitZwischenBlitzen, maxZeitZwischenBlitzen, effektDauer);
         };
 
-        this.startPulse = function (lightId, duration, minBri, maxBri) {
+        this.startPulse = function (lightId, duration, minBri, maxBri, xy1) {
             DataService.stopEffect(lightId);
 
             HueService.changeLightState(lightId, {
@@ -87,7 +87,8 @@ define(['angular'], function (angular) {
 
             var effektDauer = 10000,
                 usedMinBri = 40,
-                usedMaxBri = 254;
+                usedMaxBri = 254,
+                usedXy1;
             if (angular.isDefined(duration)) {
                 effektDauer = duration;
             }
@@ -97,12 +98,15 @@ define(['angular'], function (angular) {
             if (angular.isDefined(maxBri)) {
                 usedMaxBri = maxBri;
             }
+            if (angular.isDefined(xy1)) {
+                usedXy1 = xy1;
+            }
 
             var interval = $interval(
                 LightCommandService.kurzesHellesAufleuchten,
-                effektDauer + 1500, 0, false, lightId, effektDauer, usedMinBri, usedMaxBri);
+                effektDauer + 1500, 0, false, lightId, effektDauer, usedMinBri, usedMaxBri, usedXy1);
             DataService.setEffect(lightId, "Pulse", interval);
-            LightCommandService.kurzesHellesAufleuchten(lightId, effektDauer, usedMinBri, usedMaxBri);
+            LightCommandService.kurzesHellesAufleuchten(lightId, effektDauer, usedMinBri, usedMaxBri, usedXy1);
         };
 
         this.startPulsierenMitFarbwechsel1 = function (lightId, duration, minBri, maxBri, xy1, xy2) {

@@ -12,8 +12,8 @@ require.config({
         ionicFilterbar: '../bower_components/ionic-filter-bar/dist/ionic.filter.bar.min',
         angularTranslate: '../bower_components/angular-translate/angular-translate.min',
         angularTranslateLoaderStaticFile: '../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min',
-        noUiSliderAngular: '../res/nouislider-angular-master/nouislider.min',
-        colorPicker: '../bower_components/ngjs-color-picker/js/ngjs-color-picker',
+        noUiSliderAngular: '../res/nouislider-angular-master/nouislider',
+        //noUiSlider: '../bower_components/nouislider/distribute/nouislider.min',
     },
     shim: {
         angular: {
@@ -47,12 +47,18 @@ require.config({
         ionicFilterbar: {
             deps: ['ionic', 'angular']
         },
+        noUiSliderAngular: {
+            deps: ['angular']
+        },
     },
-    priority: [
-        'angular',
-        'angularLocalStorage',
-        'ionic',
-    ],
+    //
+    //    priority: [
+    //        'angular',
+    //        'angularLocalStorage',
+    //        'ionic',
+    //        'noUiSlider',
+    //        'noUiSliderAngular'
+    //    ],
     deps: [
         'bootstrap'
     ]

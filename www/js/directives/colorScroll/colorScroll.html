@@ -1,0 +1,11 @@
+<i class="icon ion-arrow-left-c"></i>
+<ion-content ng-style="getContainerStyle()">
+
+    <ion-scroll direction="x">
+        <div style="width: -webkit-max-content;width: max-content;">
+            <div class="item" ng-style="getStyle(color)" ng-click="pick(color)" ng-repeat="color in colors"> </div>
+        </div>
+    </ion-scroll>
+
+</ion-content>
+<i class="icon ion-arrow-right-c" style="float:right;"></i>

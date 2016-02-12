@@ -3,6 +3,11 @@
         <ion-nav-back-button class="button-clear">
             <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
         </ion-nav-back-button>
+        <ion-nav-buttons side="secondary">
+            <button class="button button-light" ng-click="copyToSelection()" ng-show="anythingSelected()">
+                <i class="icon ion-checkmark"></i>
+            </button>
+        </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
 
@@ -17,19 +22,17 @@
             <div ya-no-ui-slider='briOptions' class="effectSlider"></div>
         </label>
 
+        <div class="item" style="height:50px;" ng-hide="showColors">
+            <color-scroll selected="selectedColor1"></color-scroll>
+        </div>
+
         <div class="item" ng-show="showColors">
             <div class="row">
                 <div class="col col-50">
                     <color-picker selected="selectedColor1"></color-picker>
-                    <!--
-                    <ngjs-color-picker selected="selectedColor1" options="optionsColumn1" customColors="colors1"></ngjs-color-picker>
--->
                 </div>
                 <div class="col col-50">
                     <color-picker selected="selectedColor2"></color-picker>
-                    <!--
-                    <ngjs-color-picker selected="selectedColor2" options="optionsColumn2"></ngjs-color-picker>
--->
                 </div>
             </div>
         </div>
@@ -44,8 +47,5 @@
                 <p>{{::getEffectRunning(light.id)}}</p>
             </li>
         </ul>
-        <div class="button-bar">
-            <button class="button button-positive" ng-click="copyToSelection()">{{'SINGLE_Start' | translate}}</button>
-        </div>
     </ion-content>
 </ion-view>

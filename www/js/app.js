@@ -12,10 +12,9 @@ define(['angular',
         'angularTranslateLoaderStaticFile',
         'ionicFilterbar',
         'noUiSliderAngular',
-        'colorPicker'
        ],
 
-    function (angular, uiRouter, angularLocalStorage) {
+    function (angular) {
         'use strict';
 
         var app = angular.module('app', [
@@ -31,7 +30,6 @@ define(['angular',
             'pascalprecht.translate',
             'jett.ionic.filter.bar',
             'ya.nouislider',
-            'ngjsColorPicker'
         ]);
 
         return app;

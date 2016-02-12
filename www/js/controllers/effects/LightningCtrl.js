@@ -17,6 +17,14 @@ define(function () {
             $scope.allLights = tmp;
         });
 
+        $scope.anythingSelected = function () {
+            var retVal = false;
+            angular.forEach($scope.copySelection, function (value, key) {
+                if (value === true)
+                    retVal = true;
+            });
+            return retVal;
+        };
         $scope.effectName = $filter('translate')('Effect_Lightning');
         $scope.getEffectRunning = function (lightId) {
             return UtilityService.getEffectRunningText($scope.allLights, lightId);

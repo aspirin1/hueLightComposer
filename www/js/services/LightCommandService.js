@@ -11,7 +11,7 @@ define(['angular'], function (angular) {
         var turquois = ColorService.getXysFromHex("#3cd5c0");
         var dark_blue = ColorService.getXysFromHex("#1e228d");
 
-        this.kurzesHellesAufleuchten = function (id, time, minBri, maxBri) {
+        this.kurzesHellesAufleuchten = function (id, time, minBri, maxBri, xy) {
             UtilityService.resetTimeoutForId(id);
             var warten = 0;
             var aufblenddauer = time / 2;
@@ -26,10 +26,19 @@ define(['angular'], function (angular) {
             }
 
             var hellAufblenden = function () {
-                HueService.changeLightState(id, {
+                var obj = {
                     bri: usedMaxBri,
                     transitiontime: UtilityService.msToTransitionTime(aufblenddauer)
-                });
+                };
+                if (angular.isDefined(xy)) {
+                    obj = {
+                        bri: usedMaxBri,
+                        transitiontime: UtilityService.msToTransitionTime(aufblenddauer),
+                        xy: xy
+                    };
+                }
+
+                HueService.changeLightState(id, obj);
             };
             var abdunkeln = function () {
                 HueService.changeLightState(id, {
@@ -37,6 +46,7 @@ define(['angular'], function (angular) {
                     transitiontime: UtilityService.msToTransitionTime(aufblenddauer)
                 });
             };
+
 
             UtilityService.delayed(id, hellAufblenden, warten);
             warten += aufblenddauer;

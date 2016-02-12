@@ -3,6 +3,11 @@
         <ion-nav-back-button class="button-clear">
             <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
         </ion-nav-back-button>
+        <ion-nav-buttons side="secondary">
+            <button class="button button-light" ng-click="copyToSelection()" ng-show="anythingSelected()">
+                <i class="icon ion-checkmark"></i>
+            </button>
+        </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
         <!--<input type="number" ng-model="customLoopTime" />-->
@@ -23,8 +28,5 @@
                 <p>{{::getEffectRunning(light.id)}}</p>
             </li>
         </ul>
-        <div class="button-bar">
-            <button class="button button-positive" ng-click="copyToSelection()">{{'SINGLE_Start' | translate}}</button>
-        </div>
     </ion-content>
 </ion-view>
