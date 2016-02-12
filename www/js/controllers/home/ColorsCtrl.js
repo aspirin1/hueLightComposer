@@ -3,8 +3,14 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $filter, $interval, $ionicModal, DataService, HueService, UtilityService) {
+    function ctrl($scope, $state, $filter, $interval, $ionicModal, $ionicPopover, DataService, HueService, UtilityService) {
         console.info("ColorsCtrl init");
+        $scope.filter = {
+            'showFavorites': false,
+            'a': false,
+            'b': false,
+            'c': false
+        };
         $scope.colors = DataService.getCustomColors();
 
         DataService.getEnrichedLightInfos().then(function (data) {
@@ -15,6 +21,27 @@ define(function () {
             });
             $scope.allLights = tmp;
         });
+
+        $scope.listFilter = function (color) {
+            if ($scope.filter.showFavorites && !color.isFavorite) {
+                return false;
+            }
+            if ($scope.filter.a && !color.isReachableByGamutA) {
+                return false;
+            }
+            if ($scope.filter.b && !color.isReachableByGamutB) {
+                return false;
+            }
+            if ($scope.filter.c && !color.isReachableByGamutC) {
+                return false;
+            }
+            return true;
+        };
+
+        $scope.toggleFavorite = function (color) {
+            color.isFavorite = !color.isFavorite;
+            DataService.toggleFavorite(color.hexColor);
+        };
 
         $scope.getBackgroundStyle = function (hexColor) {
             return {
@@ -61,9 +88,15 @@ define(function () {
             });
             $scope.closeCopyToModal();
         };
+
+        $ionicPopover.fromTemplateUrl('filter-popover.html', {
+            scope: $scope,
+        }).then(function (popover) {
+            $scope.popover = popover;
+        });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicModal', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicModal', '$ionicPopover', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

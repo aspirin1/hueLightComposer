@@ -4,7 +4,7 @@ define(['angular'], function (angular) {
     "use strict";
 
     var factory = function (ColorService) {
-
+        var self = this;
         var colors = [{
             "name": "Alice Blue",
             "rgb": [239, 247, 255],
@@ -1014,6 +1014,49 @@ define(['angular'], function (angular) {
             "gamutC": [0.3517, 0.5618],
             "hexColor": "#99cc33"
         }];
+        /**
+         * Parses a valid hex color string and returns the Red RGB integer value.
+         *
+         * @param {String} Hex color string.
+         * @return {Number} Red integer value.
+         */
+        var hexToRed = function (hex) {
+                return parseInt(hex.substring(0, 2), 16);
+            },
+
+            /**
+             * Parses a valid hex color string and returns the Green RGB integer value.
+             *
+             * @param {String} Hex color string.
+             * @return {Number} Green integer value.
+             */
+            hexToGreen = function (hex) {
+                return parseInt(hex.substring(2, 4), 16);
+            },
+
+            /**
+             * Parses a valid hex color string and returns the Blue RGB integer value.
+             *
+             * @param {String} Hex color string.
+             * @return {Number} Blue integer value.
+             */
+            hexToBlue = function (hex) {
+                return parseInt(hex.substring(4, 6), 16);
+            },
+
+            /**
+             * Converts a valid hex color string to an RGB array.
+             *
+             * @param {String} Hex color String (e.g. FF00FF)
+             * @return {Array} Array containing R, G, B values
+             */
+            hexToRGB = function (h) {
+                var tmp = h;
+                if (h.length > 6)
+                    tmp = h.substr(1, 6);
+                var rgb = [hexToRed(tmp), hexToGreen(tmp), hexToBlue(tmp)];
+                return rgb;
+            };
 
         function componentToHex(c) {
             var hex = c.toString(16);
@@ -1038,6 +1081,52 @@ define(['angular'], function (angular) {
             });
             return colors;
         };
+
+        this.getRandomHexColor = function () {
+            return '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
+        };
+
+        //gamut == A || B || C || AB || AC || BC || ABC
+        this.getRandomHexColorForGamut = function (gamut) {
+
+        };
+
+        this.getRandomHexColorForGamutA = function () {
+            var color = self.getRandomHexColor();
+            while (!color.isReachableByGamutA) {
+                color = self.getRandomHexColor();
+            }
+            return color;
+        };
+
+        this.getRandomHexColorForGamutB = function () {
+            var color = self.getRandomHexColor();
+            while (!color.isReachableByGamutB) {
+                color = self.getRandomHexColor();
+            }
+            return color;
+        };
+
+        this.getRandomHexColorForGamutC = function () {
+            var color = self.getRandomHexColor();
+            while (!color.isReachableByGamutC) {
+                color = self.getRandomHexColor();
+            }
+            return color;
+        };
+
+        this.getRandomHexColorForGamutABC = function () {
+            var color;
+            var rawxy;
+            do {
+                color = self.getRandomHexColor();
+                var rgb = hexToRGB(color);
+                rawxy = ColorService.getRawXYPointFromRGB(rgb);
+            } while (!ColorService.checkPointInLampsReach("B", rawxy) && !ColorService.checkPointInLampsReach("A", rawxy) && !ColorService.checkPointInLampsReach("C", rawxy));
+
+            return color;
+        };
+
         return this;
     };
 

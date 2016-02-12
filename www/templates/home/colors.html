@@ -1,12 +1,26 @@
 <ion-view title="{{'Home_Colors_Title' |translate}}">
+    <ion-nav-buttons side="secondary">
+        <div class="buttons">
+            <button class="button button-icon ion-more" ng-click="popover.show($event)">
+            </button>
+        </div>
+    </ion-nav-buttons>
+
     <ion-content has-header="true" has-tabs="true">
         <div class="list">
-            <a ng-repeat="color in colors" class="item  item-avatar" href="#" ng-click="openCopyToModal(color)">
-                <img ng-style="getBackgroundStyle(color.hexColor)" /> {{color.name}}
-                <span ng-show="color.isReachableByGamutA">A</span>
-                <span ng-show="color.isReachableByGamutB">B</span>
-                <span ng-show="color.isReachableByGamutC">C</span>
-            </a>
+            <div ng-repeat="color in colors | filter:listFilter" class="item item-avatar item-button-right">
+                <img ng-style="getBackgroundStyle(color.hexColor)" />
+                <div ng-click="openCopyToModal(color)">
+                    {{color.name}}
+                    <span ng-show="color.isReachableByGamutA">A</span>
+                    <span ng-show="color.isReachableByGamutB">B</span>
+                    <span ng-show="color.isReachableByGamutC">C</span>
+                </div>
+                <button class="button button-clear" ng-click="toggleFavorite(color)">
+                    <i class="icon ion-android-star-outline" ng-show="!color.isFavorite"></i>
+                    <i class="icon ion-android-star" ng-show="color.isFavorite"></i>
+                </button>
+            </div>
         </div>
     </ion-content>
 
@@ -25,5 +39,19 @@
                 </div>
             </ion-content>
         </ion-modal-view>
+    </script>
+
+
+    <script id="filter-popover.html" type="text/ng-template">
+        <ion-popover-view>
+            <ion-content scroll="false">
+                <div class="list">
+                    <ion-checkbox ng-model="filter.showFavorites">Favorites</ion-checkbox>
+                    <ion-checkbox ng-model="filter.a">A</ion-checkbox>
+                    <ion-checkbox ng-model="filter.b">B</ion-checkbox>
+                    <ion-checkbox ng-model="filter.c">C</ion-checkbox>
+                </div>
+            </ion-content>
+        </ion-popover-view>
     </script>
 </ion-view>

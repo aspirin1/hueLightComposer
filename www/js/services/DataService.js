@@ -9,16 +9,54 @@ define(['angular'], function (angular) {
         var isStoppingState = {};
         var groupEffectState = {};
         var enrichedLightInfos = null;
+        var favoriteColorsKey = "favoriteColors";
+
+        this.isColorFavorite = function (hexColor) {
+            var tmp = localStorageService.get(favoriteColorsKey);
+            if (tmp === null)
+                tmp = {};
+            return angular.isDefined(tmp[hexColor]);
+        };
+
+        this.getFavorites = function () {
+            var tmp = localStorageService.get(favoriteColorsKey);
+            if (tmp === null)
+                tmp = {};
+
+            var ret = [];
+            angular.forEach(tmp, function (value, key) {
+                ret.push(key);
+            });
+            return ret;
+        };
+
+        this.toggleFavorite = function (hexColor) {
+            var tmp = localStorageService.get(favoriteColorsKey);
+            if (tmp === null)
+                tmp = {};
+
+            if (angular.isDefined(tmp[hexColor])) {
+                delete tmp[hexColor];
+            } else {
+                tmp[hexColor] = hexColor;
+            }
+
+            localStorageService.set(favoriteColorsKey, tmp);
+        };
 
         this.getCustomColors = function () {
             var colors = ColorDataService.getColors();
-            var testColor = colors[0];
-            var gamutAxy = ColorService.rgbArrayToCIE1931("A", testColor.rgb);
-            var gamutBxy = ColorService.rgbArrayToCIE1931("B", testColor.rgb);
-            var gamutCxy = ColorService.rgbArrayToCIE1931("C", testColor.rgb);
+            //var testColor = colors[0];
+            //var gamutAxy = ColorService.rgbArrayToCIE1931("A", testColor.rgb);
+            //var gamutBxy = ColorService.rgbArrayToCIE1931("B", testColor.rgb);
+            //var gamutCxy = ColorService.rgbArrayToCIE1931("C", testColor.rgb);
+
+            angular.forEach(colors, function (color) {
+                color.isFavorite = self.isColorFavorite(color.hexColor);
+            });
 
             //console.log(testColor);
-            console.log(gamutAxy, gamutBxy, gamutCxy);
+            //console.log(gamutAxy, gamutBxy, gamutCxy);
 
             //var tmp = localStorageService.get('customColors');
             //return tmp;
