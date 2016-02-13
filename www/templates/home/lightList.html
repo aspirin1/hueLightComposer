@@ -13,29 +13,28 @@
 
     </ion-nav-bar>
     <ion-content has-header="true" has-tabs="true">
-        <!--
-        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
-        </ion-refresher>
--->
         <ul class="list lightList">
 
-            <li ng-repeat="(lightId,light) in allLights" class="item item-button-right">
-                <a href="{{light.state.reachable ? getPathToLight(lightId): ' '}}" class="lightLink">
+            <li ng-repeat="light in allLights" class="item item-button-right">
+                <a href="{{light.state.reachable ? getPathToLight(light.id): ' '}}" class="lightLink">
                     <div class="hueListIcon">
                         <hue-image template="{{light.image}}" light='light '></hue-image>
                         <i class="fa fa-bolt lightNotReachable" ng-hide="{{light.state.reachable}}"></i>
                     </div>
 
                     <div class="hueListContent">
-                        <!--<button class="button button-positive" ng-click="test(lightId)">test</button>-->
                         <h2>{{light.name}}</h2>
                         <p>{{'SINGLE_Brightness '|translate}}: {{getBrightnessPercentage(light)}} </p>
                         <p> {{'SINGLE_Saturation '|translate}}: {{getSaturationPercentage(light)}}</p>
                     </div>
                 </a>
+                <p ng-show="isEffectRunning(light.id)">
+                    <a class="button button-icon icon ion-power" ng-click="stopEffect(light.id)"></a>
+                    {{getEffectRunning(light.id)}}
+                </p>
                 <div class="hueListContentRight2">
                     <label class="toggle toggle-positive">
-                        <input type="checkbox" ng-model="light.state.on" ng-change="toggleLightOnOff(lightId,light)" ng-disabled="!light.state.reachable">
+                        <input type="checkbox" ng-model="light.state.on" ng-change="toggleLightOnOff(light.id,light)" ng-disabled="!light.state.reachable">
                         <div class="track">
                             <div class="handle"></div>
                         </div>
@@ -58,7 +57,7 @@
                     <input type="text" ng-model="newScene.name" name='sceneName' />
                 </label>
                 <ul class="list">
-                    <ion-checkbox ng-repeat="(lightId,light) in allLights" ng-model="createSceneSelection[lightId]">{{light.name}}</ion-checkbox>
+                    <ion-checkbox ng-repeat="light in allLights" ng-model="createSceneSelection[light.id]">{{light.name}}</ion-checkbox>
                 </ul>
                 <div class="button-bar">
                     <button class="button button-calm" ng-click="closeCreateSceneModal()">{{'SINGLE_Cancel' | translate}}</button>

@@ -2,7 +2,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $ionicModal, $ionicPopover, $filter, DataService, HueService, UtilityService) {
+    function ctrl($rootScope, $scope, $ionicModal, $ionicPopover, $filter, DataService, HueService, UtilityService) {
         console.info("HueLightDetailsCtrl init", $scope.lightId);
 
         var refreshLightInfo = function () {
@@ -23,6 +23,35 @@ define(function () {
             });
             $scope.allLightsExceptCurrent = tmp;
         });
+
+        $scope.isEffectRunning = function () {
+            var retVal = false;
+
+            var eff = DataService.getEffect($scope.lightId);
+            if (angular.isDefined(eff)) {
+                retVal = true;
+            }
+
+            return retVal;
+        };
+
+        $rootScope.$on('ColorChanged', function (event, color) {
+            console.log(color);
+            HueService.changeLightToHexColor($scope.lightId, $scope.light.gamut, color);
+        });
+
+        $scope.getEffectRunning = function () {
+            var eff = DataService.getEffect($scope.lightId);
+            if (angular.isUndefined(eff)) {
+                return $filter('translate')('NO_EFFECT_RUNNING');
+            } else {
+                return $filter('translate')('Effect_' + eff.effect);
+            }
+        };
+
+        $scope.stopEffect = function () {
+            DataService.stopEffect($scope.lightId);
+        };
 
         $scope.toggleLightOnOff = function () {
             if ($scope.light.state.on === false) {
@@ -169,7 +198,7 @@ define(function () {
         //        });
     }
 
-    ctrl.$inject = ['$scope', '$ionicModal', '$ionicPopover', '$filter', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$rootScope', '$scope', '$ionicModal', '$ionicPopover', '$filter', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

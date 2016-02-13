@@ -107,6 +107,58 @@ define(['app'], function (app) {
                     }
                 });
 
+
+            $stateProvider.state('main.home_tab.effectList', {
+                url: '/effectList',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/effectList.html',
+                        controller: 'EffectListCtrl'
+                    }
+                }
+            });
+            $stateProvider.state('main.home_tab.colorLoop', {
+                url: '/colorLoop',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/colorLoop.html',
+                        controller: 'ColorLoopCtrl'
+                    }
+                }
+            });
+            $stateProvider.state('main.home_tab.lightning', {
+                url: '/lightning',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/lightning.html',
+                        controller: 'LightningCtrl'
+                    }
+                }
+            });
+            $stateProvider.state('main.home_tab.pulse', {
+                url: '/pulse/:effect',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/pulse.html',
+                        controller: function ($scope, $stateParams) {
+                            $scope.effect = $stateParams.effect;
+                        }
+                    }
+                }
+            });
+            $stateProvider.state('main.home_tab.standard', {
+                url: '/standard/:effect',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/standard.html',
+                        controller: function ($scope, $stateParams) {
+                            $scope.effect = $stateParams.effect;
+                        }
+                    }
+                }
+            });
+
+
             //using main layout pages
             $stateProvider.state('main.settings', {
                 url: '/settings',
@@ -119,55 +171,7 @@ define(['app'], function (app) {
                 abstract: true,
                 templateUrl: 'templates/layouts/effects_tab.html',
             });
-            $stateProvider.state('main.effects_tab.list', {
-                url: '/list',
-                views: {
-                    'effectList-tab': {
-                        templateUrl: 'templates/effects/effectList.html',
-                        controller: 'EffectListCtrl'
-                    }
-                }
-            });
-            $stateProvider.state('main.effects_tab.colorLoop', {
-                url: '/colorLoop',
-                views: {
-                    'effectList-tab': {
-                        templateUrl: 'templates/effects/colorLoop.html',
-                        controller: 'ColorLoopCtrl'
-                    }
-                }
-            });
-            $stateProvider.state('main.effects_tab.lightning', {
-                url: '/lightning',
-                views: {
-                    'effectList-tab': {
-                        templateUrl: 'templates/effects/lightning.html',
-                        controller: 'LightningCtrl'
-                    }
-                }
-            });
-            $stateProvider.state('main.effects_tab.pulse', {
-                url: '/pulse/:effect',
-                views: {
-                    'effectList-tab': {
-                        templateUrl: 'templates/effects/pulse.html',
-                        controller: function ($scope, $stateParams) {
-                            $scope.effect = $stateParams.effect;
-                        }
-                    }
-                }
-            });
-            $stateProvider.state('main.effects_tab.standard', {
-                url: '/standard/:effect',
-                views: {
-                    'effectList-tab': {
-                        templateUrl: 'templates/effects/standard.html',
-                        controller: function ($scope, $stateParams) {
-                            $scope.effect = $stateParams.effect;
-                        }
-                    }
-                }
-            });
+
 
             $stateProvider.state('main.effects_tab.status', {
                 url: '/status',

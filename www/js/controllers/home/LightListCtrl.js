@@ -3,25 +3,24 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $interval, $ionicLoading, $ionicModal, DataService, HueService, UtilityService, LightCommandService, ColorService) {
+    function ctrl($filter, $scope, $ionicModal, DataService, HueService, UtilityService, LightCommandService, ColorService) {
         console.info("HueLightListCtrl init");
 
 
         var refreshLightList = function () {
             DataService.getEnrichedLightInfos(true).then(function (data) {
-                    $scope.allLights = data;
+                    var tmp = [];
+                    angular.forEach(data, function (value, key) {
+                        value.id = key;
+                        tmp.push(value);
+                    });
+                    $scope.allLights = tmp;
                 })
                 .finally(function () {
-                    $ionicLoading.hide();
                     $scope.$broadcast('scroll.refreshComplete');
                 });
         };
         refreshLightList();
-
-
-        //        var interval = $interval(function () {
-        //            refreshLightList();
-        //        }, 5000);
 
         $scope.test = function (lightId) {
 
@@ -36,6 +35,33 @@ define(function () {
                 //LightCommandService.helligkeitsFlackernDunklerMehrstufigZufall(lightId, 80, 60000);
                 //LightCommandService.ausUndUnregelmaessigAufblitzen(i, 500, 7000, 60000);
             }
+        };
+        $scope.isEffectRunning = function (lightId) {
+            var retVal = false;
+
+            if ($scope.allLights.length > 0) {
+                var eff = DataService.getEffect(lightId);
+                if (angular.isDefined(eff)) {
+                    retVal = true;
+                }
+            }
+
+            return retVal;
+        };
+
+        $scope.getEffectRunning = function (lightId) {
+            if ($scope.allLights.length > 0) {
+                var eff = DataService.getEffect(lightId);
+                if (angular.isUndefined(eff)) {
+                    return $filter('translate')('NO_EFFECT_RUNNING');
+                } else {
+                    return $filter('translate')('Effect_' + eff.effect);
+                }
+            }
+        };
+
+        $scope.stopEffect = function (lightId) {
+            DataService.stopEffect(lightId);
         };
 
         $scope.getPathToLight = function (lightId) {
@@ -107,7 +133,7 @@ define(function () {
         //        });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicLoading', '$ionicModal', 'DataService', 'HueService', 'UtilityService', 'LightCommandService', 'ColorService'];
+    ctrl.$inject = ['$filter', '$scope', '$ionicModal', 'DataService', 'HueService', 'UtilityService', 'LightCommandService', 'ColorService'];
     return ctrl;
 
 });

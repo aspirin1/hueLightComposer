@@ -30,14 +30,9 @@
                         </label>
                     </li>
 
-                    <li class="item item-toggle">
-                        {{'SINGLE_Colorloop' | translate}}
-                        <label class="toggle toggle-assertive">
-                            <input type="checkbox" ng-model="light.state.effect" ng-true-value="'colorloop'" ng-change="toggleColorloop()">
-                            <div class="track">
-                                <div class="handle"></div>
-                            </div>
-                        </label>
+                    <li class="item" ng-show="isEffectRunning()">
+                        {{getEffectRunning(light.id)}}
+                        <a class="button button-icon icon ion-power pull-right" ng-click="stopEffect()"></a>
                     </li>
 
                     <li class="item">
@@ -61,6 +56,15 @@
             </div>
         </div>
 
+
+
+        <div class="row">
+            <div class="col">
+                <div class="colorScrollContainer" style="height:50px;">
+                    <color-scroll selected="selectedColor1" change="changeColorFromPicker(color)"></color-scroll>
+                </div>
+            </div>
+        </div>
 
         <div class="row"><span class="input-label">{{'SINGLE_Saturation' | translate}}</span></div>
         <div class="row">

@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function ($http, ConfigService) {
+    var factory = function ($http, ConfigService, ColorService) {
 
         var getBaseApiUrl = function () {
             return ConfigService.getBridgeUrl() + '/api/' + ConfigService.getUserId();
@@ -92,6 +92,14 @@ define(['angular'], function (angular) {
         this.changeHue = function (lightId, newState) {
             var obj = {
                 hue: parseInt(newState)
+            };
+            return this.changeLightState(lightId, obj);
+        };
+
+        this.changeLightToHexColor = function (lightId, gamut, hexColor) {
+            var xy = ColorService.getGamutXyFromHex(gamut, hexColor);
+            var obj = {
+                xy: xy
             };
             return this.changeLightState(lightId, obj);
         };
@@ -231,6 +239,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['$http', 'ConfigService'];
+    factory.$inject = ['$http', 'ConfigService', 'ColorService'];
     return factory;
 });

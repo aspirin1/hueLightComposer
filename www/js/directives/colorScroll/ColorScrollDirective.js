@@ -2,13 +2,14 @@
 
 define(['angular'], function (angular) {
     "use strict";
-    var directive = function (ColorDataService, DataService) {
+    var directive = function (ColorDataService, DataService, $rootScope) {
         return {
             restrict: 'E',
             scope: {
                 colors: "=",
                 options: "=",
-                selected: "="
+                selected: "=",
+                changed: "&"
             },
             link: function (scope, element, attrs) {
                 scope.options = scope.options || {
@@ -17,21 +18,25 @@ define(['angular'], function (angular) {
                 };
 
                 var getDefaultColors = function () {
-                    var ret = ['#000000'];
-                    for (var i = 1; i < scope.options.limit; i++) {
+                    var ret = [
+                        //'#000000'
+                    ];
+                    for (var i = 0; i < scope.options.limit; i++) {
                         ret.push(ColorDataService.getRandomHexColorForGamutABC());
                     }
                     return ret;
                 };
 
                 var getFavorites = function () {
-                    var ret = ['#000000'];
+                    var ret = [
+                        //'#000000'
+                    ];
                     var favorites = DataService.getFavorites();
-                    for (var i = 0; i <= scope.options.limit && i < favorites.length; i++) {
+                    for (var i = 0; i < scope.options.limit && i < favorites.length; i++) {
                         ret.push(favorites[i]);
                     }
 
-                    if (ret.length === 1)
+                    if (ret.length === 0)
                         return undefined;
                     return ret;
                 };
@@ -89,6 +94,7 @@ define(['angular'], function (angular) {
 
                 scope.pick = function (color) {
                     scope.selected.color = color;
+                    $rootScope.$broadcast('ColorChanged', color);
                 };
 
 
@@ -97,6 +103,6 @@ define(['angular'], function (angular) {
         };
     };
 
-    directive.$inject = ['ColorDataService', 'DataService'];
+    directive.$inject = ['ColorDataService', 'DataService', '$rootScope'];
     return directive;
 });
