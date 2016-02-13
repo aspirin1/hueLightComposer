@@ -49,18 +49,21 @@ define(function () {
             };
         };
 
-        $scope.copySelection = {};
-        $ionicModal.fromTemplateUrl('copyto-modal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.copyToModal = modal;
-        });
+
+
 
         $scope.openCopyToModal = function (color) {
-            $scope.copyToModal.show();
             $scope.modalColor = color;
+
+            $ionicModal.fromTemplateUrl('copyto-modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.copyToModal = modal;
+                $scope.copyToModal.show();
+            });
         };
+
         $scope.closeCopyToModal = function () {
             $scope.copyToModal.hide();
         };
@@ -73,13 +76,21 @@ define(function () {
             }
         }
 
+        $scope.getCopyToSelectedColorStyle = function () {
+            if (!angular.isDefined($scope.modalColor))
+                return {};
+            return {
+                'background-color': $scope.modalColor.hexColor
+            };
+        };
+
+        $scope.copySelection = {};
         $scope.copyToSelection = function () {
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var mc = $scope.modalColor;
                     var light = getLightById(key);
                     var gamutXy = mc["gamut" + light.gamut];
-                    console.log(light, mc, gamutXy);
                     HueService.changeLightState(key, {
                         on: true,
                         xy: gamutXy

@@ -1,0 +1,14 @@
+<ul class="list">
+    <li class="item item-checkbox" ng-repeat="light in lights">
+        <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
+        <label class="checkbox">
+            <input type="checkbox" ng-model="selectedLights[light.id]">
+        </label>
+        <h2>{{light.name}}</h2>
+        <p ng-show="showColorSupported(light)">
+            <i class="icon ion-ios-lightbulb-outline"></i>
+            <span>{{getColorSupportedText(light)}}</span>
+        </p>
+        <p>&nbsp;</p>
+    </li>
+</ul>

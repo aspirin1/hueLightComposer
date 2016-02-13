@@ -25,6 +25,9 @@
     "SINGLE_Ok": "Ok",
     "SINGLE_Start": "Start",
 
+    "LightSelection_LightCanNotBeDisplayedCorrectly": "Color may not be displayed correctly",
+    "LightSelection_LightCanBeDisplayedCorrectly": "Color should be displayed correctly",
+
     "Layout_Home_Tab_Lights": "Lights",
     "Layout_Home_Tab_Groups": "Groups",
     "Layout_Home_Tab_Scenes": "Scenes",

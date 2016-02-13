@@ -79,7 +79,10 @@ define(['angular'], function (angular) {
              * @return {Array} Array containing R, G, B values
              */
             hexToRGB = function (h) {
-                var rgb = [hexToRed(h), hexToGreen(h), hexToBlue(h)];
+                var tmp = h;
+                if (h.length > 6)
+                    tmp = h.substr(1, 6);
+                var rgb = [hexToRed(tmp), hexToGreen(tmp), hexToBlue(tmp)];
                 return rgb;
             },
 

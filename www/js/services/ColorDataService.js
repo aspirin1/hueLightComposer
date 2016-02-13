@@ -314,13 +314,6 @@ define(['angular'], function (angular) {
             "gamutC": [0.1984, 0.6746],
             "hexColor": "#218c21"
         }, {
-            "name": "Fuchsia",
-            "rgb": [255, 0, 255],
-            "gamutA": [0.3787, 0.1724],
-            "gamutB": [0.3824, 0.1601],
-            "gamutC": [0.3833, 0.1591],
-            "hexColor": "#ff00ff"
-        }, {
             "name": "Gainsboro",
             "rgb": [219, 219, 219],
             "gamutA": [0.3227, 0.329],
@@ -1122,9 +1115,15 @@ define(['angular'], function (angular) {
                 color = self.getRandomHexColor();
                 var rgb = hexToRGB(color);
                 rawxy = ColorService.getRawXYPointFromRGB(rgb);
-            } while (!ColorService.checkPointInLampsReach("B", rawxy) && !ColorService.checkPointInLampsReach("A", rawxy) && !ColorService.checkPointInLampsReach("C", rawxy));
+            } while (!ColorService.checkPointInLampsReach("B", rawxy) || !ColorService.checkPointInLampsReach("A", rawxy) || !ColorService.checkPointInLampsReach("C", rawxy));
 
             return color;
+        };
+
+        this.isColorReachableByGamut = function (hexColor, gamut) {
+            var rgb = hexToRGB(hexColor);
+            var rawxy = ColorService.getRawXYPointFromRGB(rgb);
+            return ColorService.checkPointInLampsReach(gamut, rawxy);
         };
 
         return this;

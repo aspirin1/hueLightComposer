@@ -12,9 +12,11 @@
                 <img ng-style="getBackgroundStyle(color.hexColor)" />
                 <div ng-click="openCopyToModal(color)">
                     {{color.name}}
+                    <!--
                     <span ng-show="color.isReachableByGamutA">A</span>
                     <span ng-show="color.isReachableByGamutB">B</span>
                     <span ng-show="color.isReachableByGamutC">C</span>
+-->
                 </div>
                 <button class="button button-clear" ng-click="toggleFavorite(color)">
                     <i class="icon ion-android-star-outline" ng-show="!color.isFavorite"></i>
@@ -28,11 +30,10 @@
         <ion-modal-view>
             <ion-header-bar>
                 <h1 class="title">{{'Home_LightList_Detail_CopyTo' | translate}}</h1>
+                <div class="copyColorModalColorPreview" ng-style="getCopyToSelectedColorStyle()"></div>
             </ion-header-bar>
             <ion-content>
-                <ul class="list">
-                    <ion-checkbox ng-repeat="light in allLights" ng-model="copySelection[light.id]">{{light.name}}</ion-checkbox>
-                </ul>
+                <light-selection color-supported="{{modalColor.hexColor}}" selected-lights="copySelection" refresh="true"></light-selection>
                 <div class="button-bar">
                     <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>
                     <button class="button button-positive" ng-click="copyToSelection()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>

@@ -4,11 +4,6 @@
             <i class="ion-arrow-left-c"></i> {{'SINGLE_Back' | translate}}
         </ion-nav-back-button>
         <ion-nav-buttons side="secondary">
-            <!--
-            <button class="button button-light" ng-click="openModal()">
-                <i class="fa fa-pencil"></i>
-            </button>
--->
             <div class="buttons">
                 <button class="button button-icon ion-more" ng-click="popover.show($event)">
                 </button>
@@ -17,10 +12,7 @@
 
     </ion-nav-bar>
     <ion-content>
-        <!--
-        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
-        </ion-refresher>ion-compose
--->
+
         <div class="row">
             <div class="col col-33">
                 <hue-image template="{{light.image}}" light='light'></hue-image>
