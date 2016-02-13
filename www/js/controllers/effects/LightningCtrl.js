@@ -6,7 +6,15 @@ define(function () {
     function ctrl($scope, $filter, DataService, EffectService, UtilityService) {
         console.log("LightningCtrl");
 
-
+        $scope.sliderOptions = {
+            start: [10],
+            connect: 'lower',
+            step: 1,
+            range: {
+                'min': 1,
+                'max': 30
+            }
+        };
 
         DataService.getEnrichedLightInfos().then(function (data) {
             var tmp = [];
@@ -30,11 +38,9 @@ define(function () {
             return UtilityService.getEffectRunningText($scope.allLights, lightId);
         };
 
-        $scope.test = {};
-        $scope.test.maxTimeBetween = 10;
         $scope.copySelection = {};
         $scope.copyToSelection = function () {
-            var timeInMs = $scope.test.maxTimeBetween * 1000;
+            var timeInMs = parseInt($scope.sliderOptions.start[0]) * 1000;
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var lightId = parseInt(UtilityService.getLightById($scope.allLights, key).id);

@@ -1,0 +1,101 @@
+@light: #fff !default;
+@stable: #f8f8f8 !default;
+@positive: #387ef5 !default;
+@calm: #11c1f3 !default;
+@balanced: #33cd5f !default;
+@energized: #ffc900 !default;
+@assertive: #ef473a !default;
+@royal: #886aea !default;
+@dark: #444 !default;
+@colorPrimary: @positive;
+[ya-no-ui-slider] {
+    flex: 1;
+    height: 24px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+    background-color: transparent;
+    .noUi-base {
+        margin-left: 17px;
+        margin-right: 13px;
+        width: auto;
+    }
+    .noUi-origin:first-child &:before {
+        content: '';
+        background: @colorPrimary;
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .noUi-origin:last-child &:before {
+        content: '';
+        background: lightness(black, 80%);
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .noUi-handle {
+        top: -3px;
+        height: 29px;
+        width: 29px;
+        border-radius: 100%;
+        border: 0;
+        background: white;
+        box-shadow: 0 0 2px 0 alpha(black, .3), 0 2px 5px 0 alpha(black, .2);
+        &:after,
+        &:before {
+            display: none
+        }
+    }
+    &:before {
+        content: '';
+        background: lightness(black, 80%);
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+&.light [ya-no-ui-slider] .noUi-origin:first-child:before {
+    background-color: @light
+}
+
+&.stable [ya-no-ui-slider] .noUi-origin:first-child:before {
+    background-color: @stable
+}
+
+&.positive [ya-no-ui-slider] .noUi-origin:first-child:before {
+    background-color: @positive
+}
+
+&.calm [ya-no-ui-slider] .noUi-origin:first-child:before {
+    background-color: @calm
+}
+
+&.balanced [ya-no-ui-slider] .noUi-origin:first-child:before {
+    background-color: @balanced
+}
+
+&.energized [ya-no-ui-slider] .noUi-origin:first-child:before {
+    background-color: @energized
+}
+
+&.assertive [ya-no-ui-slider] .noUi-origin:first-child:before {
+    background-color: @assertive
+}
+
+&.royal [ya-no-ui-slider] .noUi-origin:first-child:before {
+    background-color: @royal
+}
+
+&.dark [ya-no-ui-slider] .noUi-origin:first-child:before {
+    background-color: @dark
+}

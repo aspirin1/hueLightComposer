@@ -14,6 +14,16 @@ define(function () {
             }
         }
 
+        $scope.sliderOptions = {
+            start: [10],
+            connect: 'lower',
+            step: 1,
+            range: {
+                'min': 1,
+                'max': 30
+            }
+        };
+
         DataService.getEnrichedLightInfos().then(function (data) {
             var tmp = [];
             angular.forEach(data, function (value, key) {
@@ -40,8 +50,7 @@ define(function () {
         $scope.test.customLoopTime = 10;
         $scope.copySelection = {};
         $scope.copyToSelection = function () {
-            var timeInMs = $scope.test.customLoopTime * 1000;
-            console.log(timeInMs);
+            var timeInMs = parseInt($scope.sliderOptions.start[0]) * 1000;
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var lightId = parseInt(getLightById(key).id);

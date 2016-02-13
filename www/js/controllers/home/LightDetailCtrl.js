@@ -8,10 +8,61 @@ define(function () {
         var refreshLightInfo = function () {
             DataService.getEnrichedLightInfo($scope.lightId).then(function (data) {
                 $scope.light = data;
+
+                $scope.brightnessOptions = {
+                    start: [$scope.light.state.bri],
+                    connect: 'lower',
+                    step: 1,
+                    range: {
+                        'min': 1,
+                        'max': 254
+                    }
+                };
+
+                $scope.saturationOptions = {
+                    start: [$scope.light.state.sat],
+                    connect: 'lower',
+                    step: 1,
+                    range: {
+                        'min': 1,
+                        'max': 254
+                    }
+                };
+
+                $scope.hueOptions = {
+                    start: [$scope.light.state.hue],
+                    connect: 'lower',
+                    step: 500,
+                    range: {
+                        'min': 0,
+                        'max': 65535
+                    }
+                };
             });
         };
         refreshLightInfo();
 
+
+        $scope.brightnessSliderEvents = {
+            change: function (values, handle, unencoded) {
+                var bri = parseInt(values[0][0]);
+                HueService.changeBrightness($scope.lightId, bri).then(refreshLightInfo);
+            }
+        };
+
+        $scope.saturationSliderEvents = {
+            change: function (values, handle, unencoded) {
+                var sat = parseInt(values[0][0]);
+                HueService.changeSaturation($scope.lightId, sat).then(refreshLightInfo);
+            }
+        };
+
+        $scope.hueSliderEvents = {
+            change: function (values, handle, unencoded) {
+                var hue = parseInt(values[0][0]);
+                HueService.changeHue($scope.lightId, hue).then(refreshLightInfo);
+            }
+        };
 
         DataService.getEnrichedLightInfos().then(function (data) {
             var tmp = [];
@@ -61,14 +112,6 @@ define(function () {
                     refreshLightInfo();
                 });
             }
-        };
-
-        $scope.toggleColorloop = function () {
-            var doColorLoop = $scope.light.state.effect === "colorloop";
-            $scope.light.state.on = true;
-            HueService.toggleColorloop($scope.lightId, doColorLoop).then(function (data) {
-                //refreshLightList();
-            });
         };
 
         $scope.getBrightnessPercentage = function (light) {

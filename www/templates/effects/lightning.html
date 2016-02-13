@@ -12,10 +12,8 @@
     <ion-content>
         <!--<input type="number" ng-model="customLoopTime" />-->
         <label class="item item-input item-stacked-label">
-            <span class="input-label">{{'Effects_Lightning_MaxTimeBetween' | translate}} {{test.maxTimeBetween}}s</span>
-            <div class="range range-positive">
-                <input type="range" min="5" max="30" step="1" ng-model="test.maxTimeBetween" />
-            </div>
+            <span class="input-label">{{'Effects_Lightning_MaxTimeBetween' | translate}} {{sliderOptions.start[0]}}s</span>
+            <div class="nouislider" ya-no-ui-slider="sliderOptions"></div>
         </label>
 
         <ul class="list">
