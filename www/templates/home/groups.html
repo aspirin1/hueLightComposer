@@ -17,13 +17,31 @@
                 </button>
             </li>
 
-            <li ng-repeat="(groupId,group) in allGroups" class="item item-button-right">
+            <div class="item item-divider">
+                Rooms
+            </div>
+            <li ng-repeat="group in rooms" class="item item-button-right">
                 {{group.name}}
                 <div class="buttons">
-                    <button class="button" ng-click="deleteGroup(groupId)">
+                    <button class="button" ng-click="deleteGroup(group.id)">
                         {{'SINGLE_Delete' |translate}}
                     </button>
-                    <button class="button" ng-click="turnGroupOn(groupId)">
+                    <button class="button" ng-click="turnGroupOn(group.id)">
+                        {{'SINGLE_On' |translate}}
+                    </button>
+                </div>
+            </li>
+
+            <div class="item item-divider">
+                Light Groups
+            </div>
+            <li ng-repeat="group in lightGroups" class="item item-button-right">
+                {{group.name}}
+                <div class="buttons">
+                    <button class="button" ng-click="deleteGroup(group.id)">
+                        {{'SINGLE_Delete' |translate}}
+                    </button>
+                    <button class="button" ng-click="turnGroupOn(group.id)">
                         {{'SINGLE_On' |translate}}
                     </button>
                 </div>
@@ -44,12 +62,12 @@
                 </label>
                 <label class="item item-input item-stacked-label item-select">
                     <span class="input-label">{{'GroupType' | translate}}</span>
-                    <select ng-model="selectedGroupType">
+                    <select ng-model="newGroup.selectedGroupType">
                         <option value="lightGroup">{{'LightGroup' |translate}}</option>
                         <option value="room">{{'Room' |translate}}</option>
                     </select>
                 </label>
-                <label class="item item-input item-stacked-label item-select" ng-show="selectedGroupType=='room'">
+                <label class="item item-input item-stacked-label item-select" ng-show="newGroup.selectedGroupType=='room'">
                     <span class="input-label">{{'RoomType' | translate}}</span>
                     <select ng-model="selectedRoomType">
                         <option value="Living room">{{'LivingRoom' |translate}}</option>

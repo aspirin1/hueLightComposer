@@ -46,7 +46,22 @@ define(function () {
         var refreshLightList = function () {
             DataService.getEnrichedGroupInfos().then(function (data) {
                 console.log(data);
-                $scope.allGroups = data;
+                var tmp = [];
+                var lightGroups = [],
+                    rooms = [];
+                angular.forEach(data, function (value, key) {
+                    value.id = key;
+                    tmp.push(value);
+                    if (value.type === "LightGroup")
+                        lightGroups.push(value);
+                    if (value.type === "Room")
+                        rooms.push(value);
+                });
+
+                $scope.allGroups = tmp;
+                $scope.lightGroups = lightGroups;
+                $scope.rooms = rooms;
+
                 window.setTimeout(checkIfAtLeastOneLightIsOn, 1000);
             });
         };
@@ -61,8 +76,9 @@ define(function () {
             animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.createGroupModal = modal;
-            $scope.selectedGroupType = "lightGroup";
+
             $scope.newGroup = {};
+            $scope.newGroup.selectedGroupType = "lightGroup";
             $scope.newGroup.name = "";
             $scope.createGroupSelection = {};
             DataService.getEnrichedLightInfos(true).then(function (data) {
@@ -84,13 +100,15 @@ define(function () {
                 }
             });
 
-            var groupType = $scope.selectedGroupType;
+            var groupType = $scope.newGroup.selectedGroupType;
+            console.log(groupType, $scope.newGroup.name)
             if (groupType === "lightGroup" && lights.length > 0 && $scope.newGroup.name.length > 0) {
                 HueService.createGroup($scope.newGroup.name, lights).then(function (data) {
                     refreshLightList();
                     $scope.closeCreateGroupModal();
                 });
             } else if (groupType === "room" && $scope.newGroup.name.length > 0) {
+                console.log("room")
                 HueService.createRoom($scope.newGroup.name, $scope.selectedRoomType, lights).then(function (data) {
                     refreshLightList();
                     $scope.closeCreateGroupModal();

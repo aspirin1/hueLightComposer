@@ -8,7 +8,7 @@
 
     <ion-content has-header="true" has-tabs="true">
         <div class="list">
-            <div ng-repeat="color in colors | filter:listFilter" class="item item-avatar item-button-right">
+            <div collection-repeat="color in colors | filter:listFilter" class="item item-avatar item-button-right">
                 <img ng-style="getBackgroundStyle(color.hexColor)" />
                 <div ng-click="openCopyToModal(color)">
                     {{color.name}}
