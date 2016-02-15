@@ -2,7 +2,7 @@
 
 define(['angular'], function (angular) {
     "use strict";
-    var directive = function (ColorDataService, DataService, $rootScope) {
+    var directive = function (ColorDataService, DataService, $rootScope,  $ionicActionSheet) {
         return {
             restrict: 'E',
             scope: {
@@ -42,22 +42,6 @@ define(['angular'], function (angular) {
                 };
 
                 scope.colors = scope.colors || getFavorites() || getDefaultColors();
-                //console.log(scope.colors, getDefaultColors());
-                //[
-                //                    '#000000',
-                //                    '#892be2',
-                //            '#a52828',
-                //            '#ff7f4f',
-                //            '#6393ed',
-                //            '#e8967a',
-                //            '#473d8c',
-                //            '#cc5b5b',
-                //            '#ffb878',
-                //            '#ff887c',
-                //            '#dc2127',
-                //            '#dbadff',
-                //            '#ef7f7f']
-
 
                 scope.selected = scope.selected || {
                     color: scope.colors[0]
@@ -98,11 +82,48 @@ define(['angular'], function (angular) {
                 };
 
 
-            },
+                scope.openPopover = function () {
+                    scope.hideSheet = $ionicActionSheet.show({
+                        buttons: [
+                            {
+                                text: 'Favorites'
+                        },
+                            {
+                                text: 'Random'
+                        }
+     ],
+                        titleText: 'Change your colors',
+                        cancelText: 'Cancel',
+                        cancel: function () {
+                            scope.hideSheet();
+                        },
+                        buttonClicked: function (index) {
+                            if (index === 0)
+                                scope.loadFavorites();
+                            if (index === 1)
+                                scope.loadRandom();
+                            return true;
+                        }
+                    });
+                };
+
+                scope.loadFavorites = function () {
+                    scope.colors = getFavorites() || [];
+                    if (scope.colors.length > 0)
+                        scope.selected = scope.colors[0];
+                    scope.hideSheet();
+                };
+
+                scope.loadRandom = function () {
+                    scope.colors = getDefaultColors();
+                    if (scope.colors.length > 0)
+                        scope.selected = scope.colors[0];
+                    scope.hideSheet();
+                };},
             templateUrl: 'js/directives/colorScroll/colorScroll.html'
         };
     };
 
-    directive.$inject = ['ColorDataService', 'DataService', '$rootScope'];
+    directive.$inject = ['ColorDataService', 'DataService', '$rootScope', '$ionicActionSheet'];
     return directive;
 });
