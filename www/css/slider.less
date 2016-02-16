@@ -5,11 +5,18 @@
 // bar horizontal
 .noUi-horizontal {
     height: 6px;
-
+    // handle
     .noUi-handle {
         width: 36px;
         height: 36px;
         top: -18px;
+        border-color: @sliderContrast;
+        border-radius: 18px;
+        background: @sliderBase;
+
+        &:after, &:before {
+            display: none;
+        }
     }
 }
 // bg color bar
@@ -29,14 +36,5 @@
 
     .noUi-connect {
         box-shadow: none;
-    }
-}
-// handle
-.noUi-handle {
-    border-color: @sliderContrast;
-    border-radius: 18px;
-    background: @sliderBase;
-    &:after, &:before {
-        display: none;
     }
 }
