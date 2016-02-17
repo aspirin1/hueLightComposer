@@ -2,7 +2,7 @@
 
 define(['angular'], function (angular) {
     "use strict";
-    var directive = function (ColorDataService, DataService, $rootScope,  $ionicActionSheet) {
+    var directive = function (ColorDataService, DataService, $rootScope, $ionicActionSheet) {
         return {
             restrict: 'E',
             scope: {
@@ -110,16 +110,17 @@ define(['angular'], function (angular) {
                 scope.loadFavorites = function () {
                     scope.colors = getFavorites() || [];
                     if (scope.colors.length > 0)
-                        scope.selected = scope.colors[0];
+                        scope.selected.color = scope.colors[0];
                     scope.hideSheet();
                 };
 
                 scope.loadRandom = function () {
                     scope.colors = getDefaultColors();
                     if (scope.colors.length > 0)
-                        scope.selected = scope.colors[0];
+                        scope.selected.color = scope.colors[0];
                     scope.hideSheet();
-                };},
+                };
+            },
             templateUrl: 'js/directives/colorScroll/colorScroll.html'
         };
     };
