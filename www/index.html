@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app" ng-controller="BodyCtrl">
 <!--
   * Please see the included README.md file for license terms and conditions.
   -->
@@ -8,7 +8,7 @@
     <title>Blank Cordova Mobile App Project Template (Lite)</title>
     <link type="text/css" href="bower_components/ionic/release/css/ionic.min.css" rel="stylesheet">
     <link type="text/css" href="bower_components/ionic-filter-bar/dist/ionic.filter.bar.min.css" rel="stylesheet">
-    <link type="text/css" href="css/stylesheets/ionic.css" rel="stylesheet">
+    <link type="text/css" ng-href="css/stylesheets/ionic-{{theme()}}.css" rel="stylesheet">
     <!--<link type="text/css" href="css/stylesheets/ionicDark.css" rel="stylesheet">-->
     <link type="text/css" href="css/index.css" rel="stylesheet">
     <link type="text/css" href="css/style.css" rel="stylesheet">
@@ -55,7 +55,7 @@
 
 </head>
 
-<body ng-app="app" ng-controller="BodyCtrl" ng-class="getDesign()">
+<body ng-class="getDesign()">
     <ion-nav-view></ion-nav-view>
 </body>
 
