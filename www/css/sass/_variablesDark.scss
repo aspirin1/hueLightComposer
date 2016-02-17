@@ -2,15 +2,15 @@
 // Colors
 // -------------------------------
 
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
-$calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #444 !default;
+$light:                           #555 !default;
+$stable:                          #456 !default;
+$positive:                        #123 !default;
+$calm:                            #abc !default;
+$balanced:                        #def !default;
+$energized:                       #a2a !default;
+$assertive:                       #604 !default;
+$royal:                           #235 !default;
+$dark:                            #000 !default;
 
 
 // Base
@@ -36,8 +36,8 @@ $headings-font-family:            $font-family-base !default;
 $headings-font-weight:            500 !default;
 $headings-line-height:            1.2 !default;
 
-$base-background-color:           #fff !default;
-$base-color:                      #000 !default;
+$base-background-color:           $dark !default;
+$base-color:                      $light !default;
 
 $link-color:                      $positive !default;
 $link-hover-color:                darken($link-color, 15%) !default;
@@ -367,7 +367,7 @@ $item-dark-text:                  $button-dark-text !default;
 $item-dark-active-bg:             $button-dark-active-bg !default;
 $item-dark-active-border:         $button-dark-active-border !default;
 
-$item-default-bg:                 $item-light-bg !default;
+$item-default-bg:                 $item-dark-bg !default;
 $item-default-border:             $item-light-border !default;
 $item-default-text:               $item-light-text !default;
 $item-default-active-bg:          #D9D9D9 !default;
@@ -559,7 +559,7 @@ $menu-side-shadow:                -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px r
 // Modals
 // -------------------------------
 
-$modal-bg-color:                  #fff !default;
+$modal-bg-color:                  $dark !default;
 $modal-backdrop-bg-active:        #000 !default;
 $modal-backdrop-bg-inactive:      rgba(0,0,0,0) !default;
 
@@ -574,7 +574,7 @@ $modal-inset-mode-min-height:     240px !default;
 // Popovers
 // -------------------------------
 
-$popover-bg-color:                $light !default;
+$popover-bg-color:                $dark !default;
 $popover-backdrop-bg-active:      rgba(0,0,0,0.1) !default;
 $popover-backdrop-bg-inactive:    rgba(0,0,0,0) !default;
 $popover-width:                   220px !default;
@@ -588,7 +588,7 @@ $popover-border-radius:           2px !default;
 $popover-box-shadow-ios:          0 0 40px rgba(0,0,0,0.08) !default;
 $popover-border-radius-ios:       10px !default;
 
-$popover-bg-color-android:        #fafafa !default;
+$popover-bg-color-android:        $dark !default;
 $popover-box-shadow-android:      0 2px 6px rgba(0,0,0,0.35) !default;
 
 
