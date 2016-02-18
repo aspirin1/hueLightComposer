@@ -5,20 +5,15 @@ define(function () {
 
     function ctrl($scope, ConfigService) {
 
-        $scope.getDesign = function () {
-            var design = ConfigService.getDesign();
-            if (design === null)
-                return "app-light";
-            return design;
-        };
-
         $scope.theme = function () {
             var design = ConfigService.getDesign();
+            if (design.indexOf("app") >= 0)
+                design = "light";
+
             if (design === null)
-                design = "app-light";
-            if (design === "app-light")
-                return "light";
-            return "dark";
+                design = "light";
+
+            return design;
         };
     }
 

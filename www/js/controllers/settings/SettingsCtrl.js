@@ -11,10 +11,9 @@ define(function () {
             $translate.use(key);
         };
 
-        $scope.selectedDesign = $scope.getDesign();
+        $scope.selectedDesign = $scope.theme();
         $scope.designChanged = function (key) {
             ConfigService.setDesign(key);
-            $scope.getDesign();
         };
     }
 
