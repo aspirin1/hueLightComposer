@@ -5,7 +5,9 @@ define(function () {
 
     function ctrl($scope, $filter, DataService, EffectService, UtilityService) {
         console.log("LightningCtrl");
-
+        $scope.scrambleColors = {
+            state: false
+        };
         $scope.sliderOptions = {
             start: [10],
             connect: 'lower',
@@ -40,11 +42,12 @@ define(function () {
 
         $scope.copySelection = {};
         $scope.copyToSelection = function () {
+            console.log($scope.scrambleColors.state)
             var timeInMs = parseInt($scope.sliderOptions.start[0]) * 1000;
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var lightId = parseInt(UtilityService.getLightById($scope.allLights, key).id);
-                    EffectService.startLightning(lightId, timeInMs);
+                    EffectService.startLightning(lightId, timeInMs, $scope.scrambleColors.state);
                 }
             });
         };

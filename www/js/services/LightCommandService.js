@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function ($timeout, HueService, ColorService, DataService, UtilityService) {
+    var factory = function ($timeout, HueService, ColorService, DataService, UtilityService, ColorDataService) {
         var dark_red = ColorService.getXysFromHex("#54001c");
         var dark_purple = ColorService.getXysFromHex("#2c1b3d");
         var light_purple = ColorService.getXysFromHex("#902aaa");
@@ -356,7 +356,7 @@ define(['angular'], function (angular) {
             UtilityService.delayed(id, normal, warten);
         };
 
-        this.ausUndUnregelmaessigAufblitzen = function (id, blitzMin, blitzMax, time) {
+        this.ausUndUnregelmaessigAufblitzen = function (id, blitzMin, blitzMax, time, zufallsfarbenVerwenden) {
             UtilityService.resetTimeoutForId(id);
 
             var self = this;
@@ -390,11 +390,31 @@ define(['angular'], function (angular) {
                 });
             };
 
+            var vorblitzMitFarbe = function (bri) {
+                if (angular.isDefined(zufallsfarbenVerwenden) && zufallsfarbenVerwenden === true) {
+                    var hexColor = ColorDataService.getRandomHexColorForGamutC();
+                    var xy = ColorService.getGamutXyFromHex("C", hexColor);
+                    console.log(hexColor);
+                    HueService.changeLightState(id, {
+                        on: true,
+                        transitiontime: 0,
+                        bri: bri,
+                        xy: xy
+                    });
+                } else {
+                    HueService.changeLightState(id, {
+                        on: true,
+                        transitiontime: 0,
+                        bri: bri
+                    });
+                }
+            };
+
             //350ms
             var vorblitzEffekt = function () {
                 var blitzWarten = 0;
 
-                UtilityService.delayed(id, vorblitz, blitzWarten, 100);
+                UtilityService.delayed(id, vorblitzMitFarbe, blitzWarten, 100);
                 blitzWarten += 50;
                 UtilityService.delayed(id, aus, warten);
                 blitzWarten += 50;
@@ -435,6 +455,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['$timeout', 'HueService', 'ColorService', 'DataService', 'UtilityService'];
+    factory.$inject = ['$timeout', 'HueService', 'ColorService', 'DataService', 'UtilityService', 'ColorDataService'];
     return factory;
 });

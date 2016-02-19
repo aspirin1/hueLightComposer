@@ -1085,26 +1085,38 @@ define(['angular'], function (angular) {
         };
 
         this.getRandomHexColorForGamutA = function () {
-            var color = self.getRandomHexColor();
-            while (!color.isReachableByGamutA) {
+            var color;
+            var rawxy;
+            do {
                 color = self.getRandomHexColor();
-            }
+                var rgb = hexToRGB(color);
+                rawxy = ColorService.getRawXYPointFromRGB(rgb);
+            } while (!ColorService.checkPointInLampsReach("A", rawxy));
+
             return color;
         };
 
         this.getRandomHexColorForGamutB = function () {
-            var color = self.getRandomHexColor();
-            while (!color.isReachableByGamutB) {
+            var color;
+            var rawxy;
+            do {
                 color = self.getRandomHexColor();
-            }
+                var rgb = hexToRGB(color);
+                rawxy = ColorService.getRawXYPointFromRGB(rgb);
+            } while (!ColorService.checkPointInLampsReach("B", rawxy));
+
             return color;
         };
 
         this.getRandomHexColorForGamutC = function () {
-            var color = self.getRandomHexColor();
-            while (!color.isReachableByGamutC) {
+            var color;
+            var rawxy;
+            do {
                 color = self.getRandomHexColor();
-            }
+                var rgb = hexToRGB(color);
+                rawxy = ColorService.getRawXYPointFromRGB(rgb);
+            } while (!ColorService.checkPointInLampsReach("C", rawxy));
+
             return color;
         };
 

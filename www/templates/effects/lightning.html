@@ -11,12 +11,22 @@
     </ion-nav-bar>
     <ion-content>
         <!--<input type="number" ng-model="customLoopTime" />-->
-        <label class="item item-input item-stacked-label">
-            <span class="input-label">{{'Effects_Lightning_MaxTimeBetween' | translate}} {{sliderOptions.start[0]}}s</span>
-            <div ya-no-ui-slider="sliderOptions"></div>
-        </label>
-
         <ul class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">{{'Effects_Lightning_MaxTimeBetween' | translate}} {{sliderOptions.start[0]}}s</span>
+                <div ya-no-ui-slider="sliderOptions"></div>
+            </label>
+
+            <li class="item item-toggle">
+                Scramble
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox" ng-model="scrambleColors.state">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+
             <li class="item item-checkbox" ng-repeat="light in allLights">
                 <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
                 <label class="checkbox">
