@@ -28,13 +28,12 @@
 
     <script id="copyto-modal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar>
+            <ion-header-bar class="has-tabs-top">
                 <h1 class="title">{{'Home_LightList_Detail_CopyTo' | translate}}</h1>
                 <div class="copyColorModalColorPreview" ng-style="getCopyToSelectedColorStyle()"></div>
             </ion-header-bar>
-            <ion-content has-footer>
-                <light-selection color-supported="{{modalColor.hexColor}}" selected-lights="copySelection" refresh="true"></light-selection>
-            </ion-content>
+            <light-selection color-supported="{{modalColor.hexColor}}" selected-lights="copySelection" refresh="true"></light-selection>
+
             <ion-footer-bar>
                 <div class="button-bar">
                     <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>
@@ -46,7 +45,7 @@
 
 
     <script id="filter-popover.html" type="text/ng-template">
-        <ion-popover-view class="fit">
+        <ion-popover-view class="platform-ios fit">
             <ion-content scroll="false">
                 <div class="list">
                     <ion-checkbox ng-model="filter.showFavorites">Favorites</ion-checkbox>

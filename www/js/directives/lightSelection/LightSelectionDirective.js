@@ -49,11 +49,12 @@ define(['angular'], function (angular) {
                 };
 
                 var broadcastGroupSelected = function () {
-                    $rootScope.$broadcast('GroupSelected', scope.selectedLights);
+                    $rootScope.$broadcast('GroupSelected', scope.selectedLights.selected);
                 };
 
                 getGroupList();
                 scope.selectedTab = 1;
+                scope.choice = undefined;
                 scope.lights = scope.lights || getLightList();
                 scope.colorSupported = scope.colorSupported || undefined;
                 scope.selectedLights = scope.selectedLights || {};
@@ -78,7 +79,9 @@ define(['angular'], function (angular) {
                 };
 
                 scope.allSelected = function () {
-                    scope.selectedLights = {};
+                    angular.forEach(scope.lights, function (light) {
+                        scope.selectedLights[light.id] = false;
+                    });
                     angular.forEach(scope.lights, function (light) {
                         scope.selectedLights[light.id] = true;
                     });
@@ -86,11 +89,14 @@ define(['angular'], function (angular) {
                 };
 
                 scope.groupSelected = function (group) {
-                    scope.selectedLights = {};
+                    angular.forEach(scope.lights, function (light) {
+                        scope.selectedLights[light.id] = false;
+                    });
                     angular.forEach(group.lights, function (id) {
                         scope.selectedLights[id] = true;
                     });
                     broadcastGroupSelected();
+                    console.log(scope.selectedLights);
                 };
 
             },

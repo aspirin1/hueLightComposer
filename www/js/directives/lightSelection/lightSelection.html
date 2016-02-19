@@ -1,17 +1,19 @@
-<div class="tabs tabs-icon-top ">
+<div class="tabs-striped tabs-top tabs-icon-top">
+    <div class="tabs">
 
-    <div class="tab-item" ng-class="{active: selectedTab==1}" ng-click="selectedTab=1">
-        <i class="icon ion-lightbulb"></i> {{'Layout_Home_Tab_Lights' | translate}}
-    </div>
+        <div class="tab-item" ng-class="{active: selectedTab==1}" ng-click="selectedTab=1">
+            <i class="icon ion-lightbulb"></i> {{'Layout_Home_Tab_Lights' | translate}}
+        </div>
 
-    <div class="tab-item" ng-class="{active: selectedTab==2}" ng-click="selectedTab=2">
-        <i class="icon ion-grid"></i> {{'Layout_Home_Tab_Groups' | translate}}
+        <div class="tab-item" ng-class="{active: selectedTab==2}" ng-click="selectedTab=2">
+            <i class="icon ion-grid"></i> {{'Layout_Home_Tab_Groups' | translate}}
+        </div>
     </div>
 </div>
 
 
-<ul class="list" ng-show="selectedTab==1">
-    <li class="item item-checkbox" ng-repeat="light in lights">
+<div class="list has-tabs-top" ng-show="selectedTab==1">
+    <div class="item item-checkbox" ng-repeat="light in lights">
         <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
         <label class="checkbox">
             <input type="checkbox" ng-model="selectedLights[light.id]">
@@ -22,24 +24,24 @@
             <span>{{getColorSupportedText(light)}}</span>
         </p>
         <p>&nbsp;</p>
-    </li>
-</ul>
+    </div>
+</div>
 
-<ul class="list" ng-show="selectedTab==2">
-    <ion-radio ng-model="choice" class="item" ng-click='allSelected()'>
+<div class="list has-tabs-top" ng-show="selectedTab==2">
+    <ion-radio ng-model="choice" ng-value="'0'" class="item" ng-click='allSelected()'>
         {{'Home_Groups_AllLights' |translate}}
     </ion-radio>
     <div class="item item-divider">
         Rooms
     </div>
-    <ion-radio ng-model="choice" ng-repeat="group in rooms" class="item item-button-right" ng-click='groupSelected(group)'>
+    <ion-radio ng-model="choice" ng-value="group.id" ng-repeat="group in rooms" class="item item-button-right" ng-click='groupSelected(group)'>
         {{group.name}}
     </ion-radio>
 
     <div class="item item-divider">
         Light Groups
     </div>
-    <ion-radio ng-model="choice" ng-repeat="group in lightGroups" class="item item-button-right" ng-click='groupSelected(group)'>
+    <ion-radio ng-model="choice" ng-value="group.id" ng-repeat="group in lightGroups" class="item item-button-right" ng-click='groupSelected(group)'>
         {{group.name}}
     </ion-radio>
-</ul>
+</div>

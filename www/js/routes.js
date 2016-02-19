@@ -30,6 +30,7 @@ define(['app'], function (app) {
         $ionicConfigProvider.views.forwardCache(false);
         $ionicConfigProvider.views.maxCache(0);
         $ionicConfigProvider.tabs.position("bottom");
+        $ionicConfigProvider.tabs.style("striped");
     }]);
 
     app.config(['$stateProvider', '$urlRouterProvider',

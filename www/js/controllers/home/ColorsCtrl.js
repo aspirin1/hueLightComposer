@@ -65,6 +65,7 @@ define(function () {
         };
 
         $scope.closeCopyToModal = function () {
+            console.log($scope.copySelection);
             $scope.copyToModal.hide();
         };
 
