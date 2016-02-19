@@ -5,6 +5,8 @@ define(function () {
     function ctrl($rootScope, $scope, $ionicModal, $ionicPopover, $filter, DataService, HueService, UtilityService) {
         console.info("HueLightDetailsCtrl init", $scope.lightId);
 
+
+
         var refreshLightInfo = function () {
             DataService.getEnrichedLightInfo($scope.lightId).then(function (data) {
                 $scope.light = data;
@@ -86,7 +88,7 @@ define(function () {
             return retVal;
         };
 
-        $rootScope.$on('ColorChanged', function (event, color) {
+        var unregisterEvent = $rootScope.$on('ColorChanged', function (event, color) {
             console.log(color);
             HueService.changeLightToHexColor($scope.lightId, $scope.light.gamut, color);
         });
@@ -236,9 +238,10 @@ define(function () {
             $scope.popover = popover;
         });
 
-        //        $scope.$on("$destroy", function () {
-        //            $interval.cancel(candle);
-        //        });
+        $scope.$on("$destroy", function () {
+            unregisterEvent();
+        });
+
     }
 
     ctrl.$inject = ['$rootScope', '$scope', '$ionicModal', '$ionicPopover', '$filter', 'DataService', 'HueService', 'UtilityService'];

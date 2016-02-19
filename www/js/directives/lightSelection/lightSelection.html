@@ -26,20 +26,20 @@
 </ul>
 
 <ul class="list" ng-show="selectedTab==2">
-    <li class="item" ng-click='allSelected()'>
+    <ion-radio ng-model="choice" class="item" ng-click='allSelected()'>
         {{'Home_Groups_AllLights' |translate}}
-    </li>
+    </ion-radio>
     <div class="item item-divider">
         Rooms
     </div>
-    <li ng-repeat="group in rooms" class="item item-button-right" ng-click='groupSelected(group)'>
+    <ion-radio ng-model="choice" ng-repeat="group in rooms" class="item item-button-right" ng-click='groupSelected(group)'>
         {{group.name}}
-    </li>
+    </ion-radio>
 
     <div class="item item-divider">
         Light Groups
     </div>
-    <li ng-repeat="group in lightGroups" class="item item-button-right" ng-click='groupSelected(group)'>
+    <ion-radio ng-model="choice" ng-repeat="group in lightGroups" class="item item-button-right" ng-click='groupSelected(group)'>
         {{group.name}}
-    </li>
+    </ion-radio>
 </ul>
