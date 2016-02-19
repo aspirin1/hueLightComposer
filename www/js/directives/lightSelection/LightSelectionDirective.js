@@ -2,7 +2,7 @@
 
 define(['angular'], function (angular) {
     "use strict";
-    var directive = function ($filter, ColorDataService, DataService) {
+    var directive = function ($rootScope, $filter, ColorDataService, DataService) {
 
 
         return {
@@ -48,8 +48,12 @@ define(['angular'], function (angular) {
                     });
                 };
 
+                var broadcastGroupSelected = function () {
+                    $rootScope.$broadcast('GroupSelected', scope.selectedLights);
+                };
+
                 getGroupList();
-                console.log("lade");
+                scope.selectedTab = 1;
                 scope.lights = scope.lights || getLightList();
                 scope.colorSupported = scope.colorSupported || undefined;
                 scope.selectedLights = scope.selectedLights || {};
@@ -78,25 +82,22 @@ define(['angular'], function (angular) {
                     angular.forEach(scope.lights, function (light) {
                         scope.selectedLights[light.id] = true;
                     });
+                    broadcastGroupSelected();
                 };
 
                 scope.groupSelected = function (group) {
                     scope.selectedLights = {};
-                    angular.forEach(group.lights, function (light) {
-                        scope.selectedLights[light.id] = true;
+                    angular.forEach(group.lights, function (id) {
+                        scope.selectedLights[id] = true;
                     });
+                    broadcastGroupSelected();
                 };
 
-                scope.onTabSelected = function () {
-                    var lights = scope.lights;
-                    scope.lights = lights;
-                    console.log(scope.lights, scope.allGroups)
-                };
             },
             templateUrl: 'js/directives/lightSelection/lightSelection.html'
         };
     };
 
-    directive.$inject = ['$filter', 'ColorDataService', 'DataService'];
+    directive.$inject = ['$rootScope', '$filter', 'ColorDataService', 'DataService'];
     return directive;
 });

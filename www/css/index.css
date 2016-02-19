@@ -1,3 +1,20 @@
+ion-popover-view.fit {
+    height: auto;
+}
+
+ion-popover-view.fit ion-content {
+    position: relative;
+}
+
+.platform-android ion-popover-view.fit {
+    margin-top: 10px;
+}
+
+.platform-ios ion-popover-view.fit {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .back-button .ion-arrow-left-c {
     font-size: 30px;
 }
@@ -15,6 +32,7 @@
     display: block;
     height: 30px;
     width: 30px;
+    box-shadow: 4px 4px 5px #888888;
 }
 
 .effectList .item {
@@ -80,25 +98,6 @@
 .bar-subheader .button.button-full {
     margin-top: 0px;
     margin-bottom: 0px;
-}
-
-
-/*
-body.app-dark,
-.app-dark .pane,
-.app-dark .view {
-    color: #fff;
-    background-color: #000;
-}
-
-.app-dark .item {
-    border-color: #ddd;
-    background-color: #000;
-    color: #444;
-}*/
-
-.lightDetailPopover.popover {
-    height: 174px;
 }
 
 .hueListIcon .lightNotReachable {
