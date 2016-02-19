@@ -1,14 +1,40 @@
-<ul class="list">
-    <li class="item item-checkbox" ng-repeat="light in lights">
-        <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
-        <label class="checkbox">
-            <input type="checkbox" ng-model="selectedLights[light.id]">
-        </label>
-        <h2>{{light.name}}</h2>
-        <p ng-show="showColorSupported(light)">
-            <i class="icon ion-ios-lightbulb-outline"></i>
-            <span>{{getColorSupportedText(light)}}</span>
-        </p>
-        <p>&nbsp;</p>
-    </li>
-</ul>
+<ion-tabs class="tabs-icon-top tabs-default">
+
+    <ion-tab title="{{'Layout_Home_Tab_Lights' | translate}}" icon="icon ion-lightbulb" on-select="onTabSelected()">
+        <ul class="list">
+            <li class="item item-checkbox" ng-repeat="light in lights">
+                <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="selectedLights[light.id]">
+                </label>
+                <h2>{{light.name}}</h2>
+                <p ng-show="showColorSupported(light)">
+                    <i class="icon ion-ios-lightbulb-outline"></i>
+                    <span>{{getColorSupportedText(light)}}</span>
+                </p>
+                <p>&nbsp;</p>
+            </li>
+        </ul>
+    </ion-tab>
+
+    <ion-tab title="{{'Layout_Home_Tab_Groups' | translate}}" icon="icon ion-grid">
+        <ul class="list">
+            <li class="item" ng-click='allSelected()'>
+                {{'Home_Groups_AllLights' |translate}}
+            </li>
+            <div class="item item-divider">
+                Rooms
+            </div>
+            <li ng-repeat="group in rooms" class="item item-button-right" ng-click='groupSelected(group)'>
+                {{group.name}}
+            </li>
+
+            <div class="item item-divider">
+                Light Groups
+            </div>
+            <li ng-repeat="group in lightGroups" class="item item-button-right" ng-click='groupSelected(group)'>
+                {{group.name}}
+            </li>
+        </ul>
+    </ion-tab>
+</ion-tabs>

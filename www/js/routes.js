@@ -26,8 +26,8 @@ define(['app'], function (app) {
 
     app.config(['$ionicConfigProvider', function ($ionicConfigProvider) {
         $ionicConfigProvider.backButton.previousTitleText(false).text('');
-        $ionicConfigProvider.platform.ios.navBar.alignTitle('left');
-        //$ionicConfigProvider.views.forwardCache(false);
+        $ionicConfigProvider.platform.android.navBar.alignTitle('middle');
+        $ionicConfigProvider.views.forwardCache(false);
         $ionicConfigProvider.views.maxCache(0);
         $ionicConfigProvider.tabs.position("bottom");
     }]);

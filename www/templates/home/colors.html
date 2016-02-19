@@ -8,7 +8,7 @@
 
     <ion-content has-header="true" has-tabs="true">
         <div class="list">
-            <div collection-repeat="color in colors | filter:listFilter" class="item item-avatar item-button-right">
+            <div ng-repeat="color in colors | filter:listFilter" class="item item-avatar item-button-right">
                 <img ng-style="getBackgroundStyle(color.hexColor)" />
                 <div ng-click="openCopyToModal(color)">
                     {{color.name}}
@@ -32,13 +32,15 @@
                 <h1 class="title">{{'Home_LightList_Detail_CopyTo' | translate}}</h1>
                 <div class="copyColorModalColorPreview" ng-style="getCopyToSelectedColorStyle()"></div>
             </ion-header-bar>
-            <ion-content>
+            <ion-content has-footer>
                 <light-selection color-supported="{{modalColor.hexColor}}" selected-lights="copySelection" refresh="true"></light-selection>
+            </ion-content>
+            <ion-footer-bar>
                 <div class="button-bar">
                     <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>
                     <button class="button button-positive" ng-click="copyToSelection()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
                 </div>
-            </ion-content>
+            </ion-footer-bar>
         </ion-modal-view>
     </script>
 

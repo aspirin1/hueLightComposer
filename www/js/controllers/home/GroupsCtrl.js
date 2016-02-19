@@ -101,14 +101,12 @@ define(function () {
             });
 
             var groupType = $scope.newGroup.selectedGroupType;
-            console.log(groupType, $scope.newGroup.name)
             if (groupType === "lightGroup" && lights.length > 0 && $scope.newGroup.name.length > 0) {
                 HueService.createGroup($scope.newGroup.name, lights).then(function (data) {
                     refreshLightList();
                     $scope.closeCreateGroupModal();
                 });
             } else if (groupType === "room" && $scope.newGroup.name.length > 0) {
-                console.log("room")
                 HueService.createRoom($scope.newGroup.name, $scope.selectedRoomType, lights).then(function (data) {
                     refreshLightList();
                     $scope.closeCreateGroupModal();
