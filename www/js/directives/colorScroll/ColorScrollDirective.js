@@ -2,7 +2,7 @@
 
 define(['angular'], function (angular) {
     "use strict";
-    var directive = function (ColorDataService, DataService, $rootScope, $ionicActionSheet) {
+    var directive = function (ColorDataService, DataService, $rootScope, $ionicActionSheet, $ionicPopover) {
         return {
             restrict: 'E',
             scope: {
@@ -107,24 +107,33 @@ define(['angular'], function (angular) {
                     });
                 };
 
+
+                $ionicPopover.fromTemplateUrl('colorScroll-popover.html', {
+                    scope: scope,
+                }).then(function (popover) {
+                    scope.popover = popover;
+                });
+
                 scope.loadFavorites = function () {
                     scope.colors = getFavorites() || [];
                     if (scope.colors.length > 0)
                         scope.selected.color = scope.colors[0];
-                    scope.hideSheet();
+                    //scope.hideSheet();
+                    scope.popover.hide();
                 };
 
                 scope.loadRandom = function () {
                     scope.colors = getDefaultColors();
                     if (scope.colors.length > 0)
                         scope.selected.color = scope.colors[0];
-                    scope.hideSheet();
+                    //scope.hideSheet();
+                    scope.popover.hide();
                 };
             },
             templateUrl: 'js/directives/colorScroll/colorScroll.html'
         };
     };
 
-    directive.$inject = ['ColorDataService', 'DataService', '$rootScope', '$ionicActionSheet'];
+    directive.$inject = ['ColorDataService', 'DataService', '$rootScope', '$ionicActionSheet', '$ionicPopover'];
     return directive;
 });

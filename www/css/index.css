@@ -1,3 +1,10 @@
+.colorScrollSettingsIcon {
+    font-size: 35px;
+    left: 2px;
+    position: absolute;
+    bottom: 10px;
+}
+
 ion-popover-view.fit {
     height: auto;
 }

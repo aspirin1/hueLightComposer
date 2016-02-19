@@ -1,6 +1,5 @@
-<i class="icon ion-android-settings" ng-click="openPopover()"></i>
+<i class="icon ion-android-settings colorScrollSettingsIcon" ng-click="popover.show($event)"></i>
 <ion-content ng-style="getContainerStyle()">
-
     <ion-scroll direction="x">
         <div style="width: -webkit-max-content;width: max-content;">
             <div class="item" ng-style="getStyle(color)" ng-click="pick(color)" ng-repeat="color in colors"> </div>
@@ -9,3 +8,15 @@
 
 </ion-content>
 <i class="icon ion-arrow-right-c" style="float:right;"></i>
+
+
+<script id="colorScroll-popover.html" type="text/ng-template">
+    <ion-popover-view class="fit">
+        <ion-content scroll="false">
+            <div class="list">
+                <div class="item" ng-click="loadFavorites()">Favorites</div>
+                <div class="item" ng-click="loadRandom()">Random</div>
+            </div>
+        </ion-content>
+    </ion-popover-view>
+</script>
