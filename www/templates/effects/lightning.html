@@ -37,4 +37,10 @@
             </li>
         </ul>
     </ion-content>
+    <ion-footer-bar>
+        <div class="button-bar">
+                    <button class="button button-calm" ng-click="stopEffect()" ng-show="isEffectRunning()">Stop</button>
+                    <button class="button button-positive pull-right" ng-click="copyToSelection()" ng-show="anythingSelected()">Start</button>
+        </div>
+    </ion-footer-bar>
 </ion-view>

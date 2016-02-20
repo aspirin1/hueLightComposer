@@ -52,7 +52,15 @@ define(function () {
             });
         };
 
+        $scope.isEffectRunning = function () {
+            var effectName = "Lightning";
+            return DataService.isEffectRunning(effectName);
+        };
 
+        $scope.stopEffect = function () {
+            var effectName = "Lightning";
+            DataService.stopEffectByName(effectName);
+        };
     }
 
     ctrl.$inject = ['$scope', '$filter', 'DataService', 'EffectService', 'UtilityService'];
