@@ -223,6 +223,25 @@ define(['angular'], function (angular) {
             return (groupId in groupEffectState);
         };
 
+        this.stopEffectByName = function (name) {
+            angular.forEach(effectState, function (effect) {
+                if (effect.effect === name) {
+                    self.stopEffect(effect.lightId);
+                }
+            });
+        };
+
+        this.isEffectRunning = function (name) {
+            var retVal = false;
+            angular.forEach(effectState, function (effect) {
+                if (effect.effect === name) {
+                    retVal = true;
+                    return;
+                }
+            });
+            return retVal;
+        };
+
         this.stopEffect = function (lightId) {
             var q;
             isStoppingState[parseInt(lightId)] = true;

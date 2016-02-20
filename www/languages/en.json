@@ -57,7 +57,7 @@
     "Effects_List_Title": "Effects",
     "Effects_Status_Title": "Status",
     "Effects_Status_StopAll": "Stop all",
-    "Effects_Lightning_MaxTimeBetween": "Maximum time span between lightnings",
+    "Effects_Lightning_MaxTimeBetween": "Lightning interval",
 
     "Home_Groups_Title": "Groups",
     "Home_Groups_AllLights": "All Lights",
