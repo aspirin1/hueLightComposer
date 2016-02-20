@@ -279,6 +279,9 @@ define(['angular'], function (angular) {
                     initGamutX();
                 }
             },
+            gammaCorrect = function (x) {
+                return (x <= 0.0031308) ? (12.92 * x) : ((1.0 + 0.055) * Math.pow(x, (1.0 / 2.4)) - 0.055);
+            },
             /**
              * Returns a rgb array for given x, y values. Not actually an inverse of
              * getXYPointFromRGB. Implementation of the instructions found on the
@@ -297,22 +300,58 @@ define(['angular'], function (angular) {
                 if (!checkPointInLampsReach(xyPoint)) {
                     // Calculate the closest point on the color gamut triangle
                     // and use that as xy value See step 6 of color to xy.
+                    console.log("xy nicht in dreieck, nutze näherung");
                     xyPoint = getClosestPointToPoint(xyPoint);
                 }
 
                 // Calculate XYZ values Convert using the following formulas:
-                var Y = bri,
-                    X = (Y / xyPoint.y) * xyPoint.x,
-                    Z = (Y / xyPoint.y) * (1 - xyPoint.x - xyPoint.y);
+
+                var z = 1.0 - xyPoint.x - xyPoint.y;
+                var Y = bri; // The given brightness value
+                var X = (Y / xyPoint.y) * xyPoint.x;
+                var Z = (Y / xyPoint.y) * z;
+
+                //                var Y = bri,
+                //                    X = (Y / xyPoint.y) * xyPoint.x,
+                //                    Z = (Y / xyPoint.y) * (1 - xyPoint.x - xyPoint.y);
 
                 // Convert to RGB using Wide RGB D65 conversion.
-                var rgb = [
-                X * 1.612 - Y * 0.203 - Z * 0.302,
-                -X * 0.509 + Y * 1.412 + Z * 0.066,
-                X * 0.026 - Y * 0.072 + Z * 0.962
-            ];
+                //                var rgb = [
+                //                X * 1.656492 - Y * 0.354851 - Z * 0.255038,
+                //                -X * 0.707196 + Y * 1.655397 + Z * 0.036152,
+                //                X * 0.051713 - Y * 0.121364 + Z * 1.011530
+                //            ];
+                //                console.log("rgb:", rgb);
+                //
+                //                // Apply reverse gamma correction.
+                //                rgb = rgb.map(function (x) {
+                //                    return (x <= 0.0031308) ? (12.92 * x) : ((1.0 + 0.055) * Math.pow(x, (1.0 / 2.4)) - 0.055);
+                //                });
+                //
+                //                // Bring all negative components to zero.
+                //                rgb = rgb.map(function (x) {
+                //                    return Math.max(0, x);
+                //                });
+                //
+                //                // If one component is greater than 1, weight components by that value.
+                //                var max = Math.max(rgb[0], rgb[1], rgb[2]);
+                //                if (max > 1) {
+                //                    rgb = rgb.map(function (x) {
+                //                        return x / max;
+                //                    });
+                //                }
+                //                console.log(rgb)
+                //
+                //                rgb = rgb.map(function (x) {
+                //                    return Math.floor(x * 255);
+                //                });
 
-                // Apply reverse gamma correction.
+                var r = X * 1.656492 - Y * 0.354851 - Z * 0.255038;
+                var g = -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
+                var b = X * 0.051713 - Y * 0.121364 + Z * 1.011530;
+
+                var rgb = [r, g, b];
+                //Apply reverse gamma correction.
                 rgb = rgb.map(function (x) {
                     return (x <= 0.0031308) ? (12.92 * x) : ((1.0 + 0.055) * Math.pow(x, (1.0 / 2.4)) - 0.055);
                 });
@@ -335,6 +374,29 @@ define(['angular'], function (angular) {
                 });
 
                 return rgb;
+                //                if (r > b && r > g && r > 1.0) {
+                //                    // red is too big
+                //                    g = g / r;
+                //                    b = b / r;
+                //                    r = 1.0;
+                //                } else if (g > b && g > r && g > 1.0) {
+                //                    // green is too big
+                //                    r = r / g;
+                //                    b = b / g;
+                //                    g = 1.0;
+                //                } else if (b > r && b > g && b > 1.0) {
+                //                    // blue is too big
+                //                    r = r / b;
+                //                    g = g / b;
+                //                    b = 1.0;
+                //                }
+                //
+                //                // Apply gamma correction
+                //                r = gammaCorrect(r);
+                //                g = gammaCorrect(g);
+                //                b = gammaCorrect(b);
+                //
+                //                return [Math.floor(r * 255), Math.floor(g * 255), Math.floor(b * 255)];
             };
 
         /**
@@ -352,6 +414,57 @@ define(['angular'], function (angular) {
              */
             rgbToHex: function (r, g, b) {
                 return rgbToHex(r, g, b);
+            },
+
+            hexToRgb: function (hex) {
+                return hexToRGB(hex);
+            },
+
+            hexToHsl: function (hex) {
+                var rgb = hexToRGB(hex);
+                var r = rgb[0];
+                var g = rgb[1];
+                var b = rgb[2];
+
+                if (r < 0) r = 0;
+                if (g < 0) g = 0;
+                if (b < 0) b = 0;
+                if (r > 255) r = 255;
+                if (g > 255) g = 255;
+                if (b > 255) b = 255;
+
+                hex = r * 65536 + g * 256 + b;
+                hex = hex.toString(16, 6);
+                var len = hex.length;
+                if (len < 6)
+                    for (var i = 0; i < 6 - len; i++)
+                        hex = '0' + hex;
+                r /= 255;
+                g /= 255;
+                b /= 255;
+                var M = Math.max(r, g, b);
+                var m = Math.min(r, g, b);
+                var d = M - m;
+                var h, s, l;
+                if (d === 0) h = 0;
+                else if (M === r) h = ((g - b) / d) % 6;
+                else if (M === g) h = (b - r) / d + 2;
+                else h = (r - g) / d + 4;
+                h *= 60;
+                if (h < 0) h += 360;
+                l = (M + m) / 2;
+                if (d === 0)
+                    s = 0;
+                else
+                    s = d / (1 - Math.abs(2 * l - 1));
+                s *= 100;
+                l *= 100;
+
+                return {
+                    h: parseFloat(h.toFixed(0)),
+                    s: parseFloat(s.toFixed(1)),
+                    l: parseFloat(l.toFixed(1))
+                };
             },
 
             /**

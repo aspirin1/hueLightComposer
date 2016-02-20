@@ -3,15 +3,32 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $filter, $interval, $ionicModal, $ionicPopover, DataService, HueService, UtilityService) {
+    function ctrl($ionicLoading, $scope, $state, $filter, $interval, $ionicModal, $ionicPopover, DataService, HueService, UtilityService) {
         console.info("ColorsCtrl init");
+
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
+
         $scope.filter = {
             'showFavorites': false,
             'a': false,
             'b': false,
-            'c': false
+            'c': false,
+            'showCustoms': false
         };
-        $scope.colors = DataService.getCustomColors();
+
+        $scope.changeSorting = function () {
+            var orderBy = $filter('orderBy');
+            $scope.friends = orderBy($scope.friends, predicate, $scope.reverse);
+        };
+
+
+        DataService.getAllColors().then(function (colors) {
+            $scope.colors = colors;
+            console.log("colors", colors);
+            $ionicLoading.hide();
+        });
 
         DataService.getEnrichedLightInfos().then(function (data) {
             var tmp = [];
@@ -35,6 +52,9 @@ define(function () {
             if ($scope.filter.c && !color.isReachableByGamutC) {
                 return false;
             }
+            if ($scope.filter.showCustoms && !color.isCustom) {
+                return false;
+            }
             return true;
         };
 
@@ -48,9 +68,6 @@ define(function () {
                 'background-color': hexColor.toString()
             };
         };
-
-
-
 
         $scope.openCopyToModal = function (color) {
             $scope.modalColor = color;
@@ -106,9 +123,15 @@ define(function () {
         }).then(function (popover) {
             $scope.popover = popover;
         });
+
+        $ionicPopover.fromTemplateUrl('sort-popover.html', {
+            scope: $scope,
+        }).then(function (popover) {
+            $scope.sortPopover = popover;
+        });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicModal', '$ionicPopover', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$ionicLoading', '$scope', '$state', '$filter', '$interval', '$ionicModal', '$ionicPopover', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

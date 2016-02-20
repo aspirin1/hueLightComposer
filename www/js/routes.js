@@ -168,22 +168,6 @@ define(['app'], function (app) {
                 controller: 'SettingsCtrl'
             });
 
-            $stateProvider.state('main.effects_tab', {
-                url: '/effects_tab',
-                abstract: true,
-                templateUrl: 'templates/layouts/effects_tab.html',
-            });
-
-
-            $stateProvider.state('main.effects_tab.status', {
-                url: '/status',
-                views: {
-                    'effectStatus-tab': {
-                        templateUrl: 'templates/effects/effectStatus.html',
-                        controller: 'EffectStatusCtrl'
-                    }
-                }
-            });
 
             $urlRouterProvider.otherwise("main/home_tab/lightList");
 

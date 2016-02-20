@@ -13,14 +13,6 @@ define(['angular'], function (angular) {
                 "gamutB": [0.3092, 0.321],
                 "gamutC": [0.3088, 0.3212],
                 "hexColor": "#eff7ff"
-        },
-            {
-                "name": "Alice Blue",
-                "rgb": [239, 247, 255],
-                "gamutA": [0.3088, 0.3212],
-                "gamutB": [0.3092, 0.321],
-                "gamutC": [0.3088, 0.3212],
-                "hexColor": "#eff7ff"
         }, {
                 "name": "Antique White",
                 "rgb": [249, 234, 214],

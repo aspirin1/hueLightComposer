@@ -2,7 +2,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($rootScope, $scope, $ionicModal, $ionicPopover, $filter, DataService, HueService, UtilityService) {
+    function ctrl($rootScope, $scope, $ionicLoading, $interval, $ionicModal, $ionicPopover, $filter, DataService, HueService, UtilityService, $q, ColorService) {
         console.info("HueLightDetailsCtrl init", $scope.lightId);
 
 
@@ -190,6 +190,57 @@ define(function () {
         $scope.openCopyToModal = function () {
             $scope.copyToModal.show();
         };
+
+        var getColorXy = function () {
+            var deferred = $q.defer();
+
+            var colorName = "test";
+            var lightId = $scope.lightId;
+            var attempts = 0;
+            var xyFound, briFound, hexFound;
+
+            $ionicLoading.show({
+                template: 'Loading...'
+            });
+
+            var returnColor = function () {
+                $interval.cancel(interval);
+                $ionicLoading.hide();
+                deferred.resolve({
+                    xy: xyFound,
+                    bri: briFound,
+                    hexColor: hexFound
+                });
+            };
+
+            var tryFindColor = function () {
+                DataService.getEnrichedLightInfo(lightId).then(function (data) {
+                    //$scope.light = data;
+                    console.log(data.state.xy, attempts);
+                    if (attempts === 0) {
+                        xyFound = data.state.xy;
+                        briFound = data.state.bri;
+                        hexFound = data.hexColor;
+                    }
+                    if (attempts == 10) {
+                        returnColor();
+                        console.log("abbruch weil 10 versuche");
+                    }
+                    if (attempts > 0 && (xyFound[0] !== data.state.xy[0] || xyFound[1] !== data.state.xy[1])) {
+                        xyFound = data.state.xy;
+                        briFound = data.state.bri;
+                        hexFound = data.hexColor;
+                        returnColor();
+                        console.log("abbruch weil gefunden");
+                    }
+                    attempts++;
+                });
+            };
+
+            var interval = $interval(tryFindColor, 1000);
+            return deferred.promise;
+        };
+
         $scope.closeCopyToModal = function () {
             $scope.copyToModal.hide();
         };
@@ -209,26 +260,38 @@ define(function () {
 
 
         $scope.saveColor = function () {
-            navigator.notification.prompt(
-                $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Text'), // message
-                onPrompt, // callback to invoke
-                $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Title'), // title
-                [$filter('translate')('SINGLE_Ok'), $filter('translate')('SINGLE_Cancel')] // buttonLabels
-            );
+            var lightId = $scope.lightId;
+
+
+            getColorXy(lightId).then(function (data) {
+                DataService.addCustomColor(data.hexColor);
+            });
+
+            //            navigator.notification.prompt(
+            //                $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Text'), // message
+            //                onPrompt, // callback to invoke
+            //                $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Title'), // title
+            //                [$filter('translate')('SINGLE_Ok'), $filter('translate')('SINGLE_Cancel')] // buttonLabels
+            //            );
         };
 
         function onPrompt(results) {
             //OK
             if (results.buttonIndex === 1) {
-                DataService.getEnrichedLightInfo($scope.lightId).then(function (data) {
-                    $scope.light = data;
-                    var colorName = results.input1;
+                var colorName = results.input1;
+                var lightId = $scope.lightId;
 
-                    //var gamut = DataService.getGamutMode(light.modelid);
-                    //var hexColor = DataService.getHexColor(gamut, $scope.light.state.xy, $scope.light.state.bri);
 
-                    DataService.addCustomColor(colorName, $scope.light.state.bri, $scope.light.state.sat, $scope.light.state.hue, $scope.light.hexColor);
+                getColorXy(lightId).then(function (data) {
+                    DataService.addCustomColor(colorName, data.hexColor);
+                    //console.info(data);
+                    //var calculatedHex = ColorService.CIE1931ToHex("C", data.xy[0], data.xy[1], 255);
+                    //console.info(data.hexColor, calculatedHex);
                 });
+
+
+
+
             }
         }
 
@@ -244,7 +307,7 @@ define(function () {
 
     }
 
-    ctrl.$inject = ['$rootScope', '$scope', '$ionicModal', '$ionicPopover', '$filter', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$rootScope', '$scope', '$ionicLoading', '$interval', '$ionicModal', '$ionicPopover', '$filter', 'DataService', 'HueService', 'UtilityService', '$q', 'ColorService'];
     return ctrl;
 
 });

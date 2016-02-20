@@ -44,38 +44,59 @@ define(['angular'], function (angular) {
             localStorageService.set(favoriteColorsKey, tmp);
         };
 
-        this.getCustomColors = function () {
-            var colors = ColorDataService.getColors();
-            //var testColor = colors[0];
-            //var gamutAxy = ColorService.rgbArrayToCIE1931("A", testColor.rgb);
-            //var gamutBxy = ColorService.rgbArrayToCIE1931("B", testColor.rgb);
-            //var gamutCxy = ColorService.rgbArrayToCIE1931("C", testColor.rgb);
+        this.getAllColors = function () {
+            var deferred = $q.defer();
+            $timeout(function () {
+                var allColors = [];
+                var baseColors = ColorDataService.getColors();
 
-            angular.forEach(colors, function (color) {
-                color.isFavorite = self.isColorFavorite(color.hexColor);
-            });
+                angular.forEach(baseColors, function (color) {
+                    color.isCustom = false;
+                    allColors.push(color);
+                });
 
-            //console.log(testColor);
-            //console.log(gamutAxy, gamutBxy, gamutCxy);
+                var customColors = localStorageService.get('customColors');
 
-            //var tmp = localStorageService.get('customColors');
-            //return tmp;
-            return colors;
+                angular.forEach(customColors, function (color) {
+                    color.isCustom = true;
+                    allColors.push(color);
+                });
+
+                angular.forEach(allColors, function (color) {
+                    color.isFavorite = self.isColorFavorite(color.hexColor);
+
+                    var rawxy = ColorService.getRawXYPointFromRGB(ColorService.hexToRgb(color.hexColor));
+                    color.isReachableByGamutA = ColorService.checkPointInLampsReach("A", rawxy);
+                    color.isReachableByGamutB = ColorService.checkPointInLampsReach("B", rawxy);
+                    color.isReachableByGamutC = ColorService.checkPointInLampsReach("C", rawxy);
+                    color.hsl = ColorService.hexToHsl(color.hexColor);
+                });
+
+                deferred.resolve(allColors);
+            }, 0);
+            return deferred.promise;
         };
 
-        this.addCustomColor = function (name, bri, sat, hue, hexColor) {
+        this.addCustomColor = function (hexColor) {
             var tmp = localStorageService.get('customColors');
-            console.log(tmp);
             if (tmp === null)
                 tmp = [];
             var newColor = {
-                name: name,
-                hue: hue,
-                sat: sat,
-                bri: bri,
                 hexColor: hexColor
             };
-            tmp.push(newColor);
+
+            var containsColorAlready = false;
+            angular.forEach(tmp, function (color) {
+                if (color.hexColor === hexColor) {
+                    containsColorAlready = true;
+                    return;
+                }
+            });
+
+            if (containsColorAlready === false) {
+                tmp.push(newColor);
+            }
+
             localStorageService.set('customColors', tmp);
         };
 

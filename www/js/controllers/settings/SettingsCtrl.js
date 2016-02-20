@@ -15,6 +15,12 @@ define(function () {
         $scope.designChanged = function (key) {
             ConfigService.setDesign(key);
         };
+
+        $scope.reset = function () {
+            localStorage.removeItem("ls.design");
+            localStorage.removeItem("ls.customColors");
+            localStorage.removeItem("ls.favoriteColors");
+        };
     }
 
     ctrl.$inject = ['$scope', '$state', '$translate', 'ConfigService'];

@@ -1,25 +1,29 @@
 <ion-view view-title="{{'Settings_Title' |translate}}">
     <ion-content>
-        <label class="item item-input item-select">
-            <div class="input-label">
-                {{'Settings_Language' |translate}}
+        <div class="list">
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    {{'Settings_Language' |translate}}
+                </div>
+                <select ng-model="selectedLanguage" ng-change="languageChanged(selectedLanguage)">
+                    <option value="en">{{'Settings_En' |translate}}</option>
+                    <option value="de">{{'Settings_De' |translate}}</option>
+                </select>
+
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    {{'Settings_Design' |translate}}
+                </div>
+                <select ng-model="selectedDesign" ng-change="designChanged(selectedDesign)">
+                    <option value="dark">{{'Settings_Dark' |translate}}</option>
+                    <option value="light">{{'Settings_Light' |translate}}</option>
+                </select>
+            </label>
+            <div class="item">
+                <button ng-click="reset()">Reset</button>
             </div>
-            <select ng-model="selectedLanguage" ng-change="languageChanged(selectedLanguage)">
-                <option value="en">{{'Settings_En' |translate}}</option>
-                <option value="de">{{'Settings_De' |translate}}</option>
-            </select>
 
-        </label>
-        <label class="item item-input item-select">
-            <div class="input-label">
-                {{'Settings_Design' |translate}}
-            </div>
-            <select ng-model="selectedDesign" ng-change="designChanged(selectedDesign)">
-                <option value="dark">{{'Settings_Dark' |translate}}</option>
-                <option value="light">{{'Settings_Light' |translate}}</option>
-            </select>
-
-        </label>
-
+        </div>
     </ion-content>
 </ion-view>
