@@ -1,4 +1,4 @@
-/*global define, console, window*/
+/*global define, console, window, angular*/
 
 define(function () {
     'use strict';
@@ -7,8 +7,10 @@ define(function () {
 
         $scope.theme = function () {
             var design = ConfigService.getDesign();
-            if (design.indexOf("app") >= 0)
+
+            if (angular.isUndefined(design) || design === null) {
                 design = "light";
+            }
 
             if (design === null)
                 design = "light";

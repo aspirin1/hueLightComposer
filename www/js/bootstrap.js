@@ -13,6 +13,13 @@ define(['ionic', 'angular', 'app', 'routes'], function (ionic, angular, app) {
             //                ticker: "String",
             //                text: "String"
             //            });
+
+            console.log("device ready background mode", cordova.plugins.backgroundMode);
+            if (angular.isDefined(cordova.plugins.backgroundMode)) {
+                cordova.plugins.backgroundMode.onactivate = function () {
+                    console.info("activate background mode");
+                };
+            }
             angular.bootstrap(document, [app.name]);
 
         };

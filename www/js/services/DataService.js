@@ -1,4 +1,4 @@
-/*global define, console */
+/*global define, console, cordova */
 
 define(['angular'], function (angular) {
     "use strict";
@@ -245,8 +245,19 @@ define(['angular'], function (angular) {
                         q = $interval.cancel(effect.interval);
                         delete effectState[parseInt(effect.lightId)];
                     }
+
+                    var effectsRunningCnt = Object.keys(effectState).length;
+                    if (effectsRunningCnt === 0) {
+                        cordova.plugins.backgroundMode.disable();
+                    } else {
+                        cordova.plugins.backgroundMode.configure({
+                            text: effectsRunningCnt + "effects running"
+                        });
+                    }
                 }
             });
+
+
 
             return q;
         };
@@ -280,6 +291,14 @@ define(['angular'], function (angular) {
                 interval: interval,
                 timeouts: []
             };
+
+            var effectsRunningCnt = Object.keys(effectState).length;
+            cordova.plugins.backgroundMode.configure({
+                title: "Hue light composer",
+                ticker: "Ticker Hue light composer Hue light composer",
+                text: effectsRunningCnt + " effects running"
+            });
+            cordova.plugins.backgroundMode.enable();
         };
 
         this.getEffect = function (lightId) {
