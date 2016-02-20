@@ -1,14 +1,12 @@
 <ion-view view-title="{{'Home_LightList_Title' | translate }}">
 
-    <ion-nav-bar class="bar-main" ng-controller="NavMenuCtrl">
+    <ion-nav-bar class="bar-main bar-calm" ng-controller="NavMenuCtrl">
         <ion-nav-buttons side="left">
             <!-- Toggle left side menu -->
             <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="toggleLeftSideMenu()"></button>
         </ion-nav-buttons>
         <ion-nav-buttons side="secondary">
-            <button class="button button-light" ng-click="openCreateSceneModal()">
-                <i class="fa fa-plus-square"></i>
-            </button>
+            <button class="button button-icon icon ion-plus-circled" ng-click="openCreateSceneModal()"></button>
         </ion-nav-buttons>
 
     </ion-nav-bar>
@@ -19,7 +17,7 @@
                 <a href="{{light.state.reachable ? getPathToLight(light.id): ' '}}" class="lightLink">
                     <div class="hueListIcon">
                         <hue-image template="{{light.image}}" light='light '></hue-image>
-                        <i class="fa fa-bolt lightNotReachable" ng-hide="{{light.state.reachable}}"></i>
+                        <i class="ion-ios-bolt lightNotReachable" ng-hide="{{light.state.reachable}}"></i>
                     </div>
 
                     <div class="hueListContent">
