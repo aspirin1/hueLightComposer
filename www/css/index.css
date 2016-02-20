@@ -41,41 +41,58 @@ ion-popover-view.fit ion-content {
     width: 30px;
     box-shadow: 4px 4px 5px #888888;
 }
-
-.effectList .item {
+/*EFFECT LIST*/
+.effectList .col {
     margin-bottom: 0px;
-    height: 150px;
+    padding: 0px 2px;
     background-size: cover;
+    background-position: center;
 }
 
 .effectList .row {
-    padding: 0px;
+  padding: 2px;
 }
-
-.item .innerText {
-    color: #ffffff;
-    font-size: 25px;
+.effectImage {
+    position: relative;
+}
+.innerText {
+    color: ghostwhite;
+    font-size: 30px;
+    line-height: 30px;
     font-weight: 400;
+    position: absolute;
+    bottom: 45%;
+    text-align: center;
+    text-shadow:
+        1px 1px 1px #555, -1px -1px 1px #555, -1px 1px 1px #555, 1px -1px 1px #555,
+        0px 1px 1px #555, -1px 0px 1px #555, 1px 0px 1px #555, 0px -1px 1px #555;
+    width: 100%;
 }
 
-.item.colorLoop {
+.colorLoop {
     background-image: url(./../img/effects/colorloop.jpg);
 }
 
-.item.candle {
+.candle {
     background-image: url(./../img/effects/candle.jpg);
 }
 
-.item.aurora {
+.aurora {
     background-image: url(./../img/effects/aurora.jpg);
 }
 
-.item.lightning {
+.lightning {
     background-image: url(./../img/effects/lightning.jpg);
 }
 
-.item.pulse {
+.pulse {
     background-image: url(./../img/effects/pulse.jpg);
+}
+.pulseMultiColor {
+    background-image: url(./../img/effects/pulseMultiColor.jpg);
+}
+.pulseColorPhases {
+    background-image: url(./../img/effects/pulseColorPhases.jpg);
 }
 
 .app-light {}
