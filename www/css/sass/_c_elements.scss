@@ -1,5 +1,5 @@
  hue-image, .hueListIcon {
-        path {
+        path, circle, line, polyline, polygon, ellipse, rect {
             stroke: $button-stable-border;
         }
     }
