@@ -265,13 +265,15 @@ define(['angular'], function (angular) {
                         delete effectState[parseInt(effect.lightId)];
                     }
 
-                    var effectsRunningCnt = Object.keys(effectState).length;
-                    if (effectsRunningCnt === 0) {
-                        cordova.plugins.backgroundMode.disable();
-                    } else {
-                        cordova.plugins.backgroundMode.configure({
-                            text: effectsRunningCnt + "effects running"
-                        });
+                    if (angular.isDefined(cordova.plugins) && angular.isDefined(cordova.plugins.backgroundMode)) {
+                        var effectsRunningCnt = Object.keys(effectState).length;
+                        if (effectsRunningCnt === 0) {
+                            cordova.plugins.backgroundMode.disable();
+                        } else {
+                            cordova.plugins.backgroundMode.configure({
+                                text: effectsRunningCnt + "effects running"
+                            });
+                        }
                     }
                 }
             });
@@ -311,13 +313,15 @@ define(['angular'], function (angular) {
                 timeouts: []
             };
 
-            var effectsRunningCnt = Object.keys(effectState).length;
-            cordova.plugins.backgroundMode.configure({
-                title: "Hue light composer",
-                ticker: "Ticker Hue light composer Hue light composer",
-                text: effectsRunningCnt + " effects running"
-            });
-            cordova.plugins.backgroundMode.enable();
+            if (angular.isDefined(cordova.plugins) && angular.isDefined(cordova.plugins.backgroundMode)) {
+                var effectsRunningCnt = Object.keys(effectState).length;
+                cordova.plugins.backgroundMode.configure({
+                    title: "Hue light composer",
+                    ticker: "Ticker Hue light composer Hue light composer",
+                    text: effectsRunningCnt + " effects running"
+                });
+                cordova.plugins.backgroundMode.enable();
+            }
         };
 
         this.getEffect = function (lightId) {

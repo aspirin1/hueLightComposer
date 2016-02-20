@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1455967335627,
+      "lastModifiedDate": 1455971831507,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -86,30 +86,25 @@
         "permissions": {},
         "description": "Cordova Device Plugin",
         "data": {},
-        "dependedBy": [
-          "de.appplant.cordova.plugin.background-mode"
-        ]
+        "dependedBy": []
       },
       {
         "id": "de.appplant.cordova.plugin.background-mode",
         "name": "BackgroundMode",
         "version": "0.6.4",
-        "originType": "repo",
-        "origin": "https://github.com/mrameezraja/cordova-plugin-background-mode",
-        "gitref": "0.6.4",
-        "subdir": ".",
+        "originType": "local",
+        "origin": "./www/res/cordova-plugin-background-mode-0.6.4",
+        "gitref": "",
         "paramvals": {},
         "sourceLocation": "plugins/de.appplant.cordova.plugin.background-mode",
         "selectedState": "Included",
-        "checksum": "635b4db3",
-        "dependsOn": [
-          "cordova-plugin-device"
-        ],
+        "checksum": "73eb4055",
+        "dependsOn": [],
         "topLevel": true,
         "cordovaVersion": ">=3.0.0",
         "author": "Sebastián Katzer",
         "permissions": {},
-        "description": "\r\n        Cordova plugin to prevent the app from going to sleep in background.\r\n    ",
+        "description": "\n        Cordova plugin to prevent the app from going to sleep in background.\n    ",
         "data": {},
         "dependedBy": [],
         "custom": "true"
