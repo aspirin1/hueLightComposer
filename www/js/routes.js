@@ -184,7 +184,15 @@ define(['app'], function (app) {
                     }
                 }
             });
-
+            $stateProvider.state('main.home_tab.strobe', {
+                url: '/strobe',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/strobe.html',
+                        controller: 'StrobeCtrl'
+                    }
+                }
+            });
 
             //using main layout pages
             $stateProvider.state('main.settings', {

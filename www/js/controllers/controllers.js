@@ -29,6 +29,8 @@ define(function (require) {
     controllers.controller('PulseCtrl', require('controllers/effects/PulseCtrl'));
     controllers.controller('PulseChangingColorsCtrl', require('controllers/effects/PulseChangingColorsCtrl'));
     controllers.controller('PulseMultiColorsCtrl', require('controllers/effects/PulseMultiColorsCtrl'));
+    controllers.controller('StrobeCtrl', require('controllers/effects/StrobeCtrl'));
+
 
 
     controllers.run(['$rootScope', function ($rootScope) {

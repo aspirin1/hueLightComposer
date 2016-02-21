@@ -162,21 +162,37 @@ define(['angular'], function (angular) {
             UtilityService.delayed(id, customLoop, 0);
         };
 
-        this.schnellesBlinken = function (id, bri, time) {
+
+        this.schnellesBlinken = function (id, effektDauer, bri, timing, zufallsfarbenVerwenden) {
             UtilityService.resetTimeoutForId(id);
 
             var warten = 0;
             var onOffState = false;
 
+
             var changeOnOff = function (newState) {
-                HueService.changeLightState(id, {
-                    on: newState,
-                    transitiontime: 0,
-                    bri: bri
-                });
+                if (angular.isDefined(zufallsfarbenVerwenden) && zufallsfarbenVerwenden === true) {
+                    var hexColor = ColorDataService.getRandomHexColorForGamutC();
+                    var xy = ColorService.getGamutXyFromHex("C", hexColor);
+
+                    HueService.changeLightState(id, {
+                        on: newState,
+                        transitiontime: 0,
+                        bri: bri,
+                        xy: xy
+                    });
+                } else {
+
+                    HueService.changeLightState(id, {
+                        on: newState,
+                        transitiontime: 0,
+                        bri: bri
+                    });
+                }
             };
 
-            for (warten = 0; warten < time; warten += 100) {
+
+            for (warten = 0; warten < effektDauer; warten += timing) {
                 UtilityService.delayed(id, changeOnOff, warten, onOffState);
                 onOffState = !onOffState;
             }
