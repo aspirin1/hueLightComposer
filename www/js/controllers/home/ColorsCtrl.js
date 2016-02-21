@@ -106,6 +106,17 @@ define(function () {
         });
 
         $scope.listFilter = function (color) {
+            var show = true;
+            if ($scope.filter.red || $scope.filter.green) {
+                if ($scope.filter.red && (color.hsl.h < 30 || color.hsl.h > 330)) {
+                    show = true;
+                } else if ($scope.filter.green && (color.hsl.h >= 80 && color.hsl.h <= 140)) {
+                    show = true;
+                } else {
+                    show = false;
+                }
+            }
+
             if ($scope.filter.showFavorites && !color.isFavorite) {
                 return false;
             }
@@ -123,18 +134,7 @@ define(function () {
             }
 
 
-
-            if ($scope.filter.red || $scope.filter.green) {
-                if ($scope.filter.red && (color.hsl.h < 30 || color.hsl.h > 330)) {
-                    return true;
-                }
-                if ($scope.filter.green && (color.hsl.h >= 80 && color.hsl.h <= 140)) {
-                    return true;
-                }
-                return false;
-            }
-
-            return true;
+            return show;
         };
 
         $scope.toggleFavorite = function (color) {
