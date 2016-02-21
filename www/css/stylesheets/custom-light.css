@@ -3,6 +3,38 @@ hue-image path, hue-image circle, hue-image line, hue-image polyline, hue-image 
   stroke: #b2b2b2;
 }
 
+/*EFFECT LIST*/
+/* line 3, ../sass/_c_effects.scss */
+.effectList .col {
+  margin-bottom: 0px;
+  padding: 0px 2px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* line 10, ../sass/_c_effects.scss */
+.effectList .row {
+  padding: 2px;
+}
+
+/* line 14, ../sass/_c_effects.scss */
+.effectImage {
+  position: relative;
+}
+
+/* line 18, ../sass/_c_effects.scss */
+.innerText {
+  color: ghostwhite;
+  font-size: 30px;
+  line-height: 30px;
+  font-weight: 400;
+  position: absolute;
+  bottom: 45%;
+  text-align: center;
+  text-shadow: 1px 1px 1px #555, -1px -1px 1px #555, -1px 1px 1px #555, 1px -1px 1px #555, 0px 1px 1px #555, -1px 0px 1px #555, 1px 0px 1px #555, 0px -1px 1px #555;
+  width: 100%;
+}
+
 /* line 1, ../sass/_c_colors.scss */
 .colorListContainer {
   margin: 0;

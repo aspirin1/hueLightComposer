@@ -1,0 +1,28 @@
+/*EFFECT LIST*/
+
+.effectList .col {
+    margin-bottom: 0px;
+    padding: 0px 2px;
+    background-size: cover;
+    background-position: center;
+}
+
+.effectList .row {
+    padding: 2px;
+}
+
+.effectImage {
+    position: relative;
+}
+
+.innerText {
+    color: ghostwhite;
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 400;
+    position: absolute;
+    bottom: 45%;
+    text-align: center;
+    text-shadow: 1px 1px 1px #555, -1px -1px 1px #555, -1px 1px 1px #555, 1px -1px 1px #555, 0px 1px 1px #555, -1px 0px 1px #555, 1px 0px 1px #555, 0px -1px 1px #555;
+    width: 100%;
+}
