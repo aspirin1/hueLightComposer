@@ -13587,8 +13587,3 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   -webkit-transition-duration: 0s;
   transition-duration: 0s;
 }
-
-/* line 2, ../sass/_c_elements.scss */
-hue-image path, hue-image circle, hue-image line, hue-image polyline, hue-image polygon, hue-image ellipse, hue-image rect, .hueListIcon path, .hueListIcon circle, .hueListIcon line, .hueListIcon polyline, .hueListIcon polygon, .hueListIcon ellipse, .hueListIcon rect {
-  stroke: #b2b2b2;
-}
