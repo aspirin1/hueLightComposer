@@ -9,23 +9,24 @@
     </ion-nav-buttons>
 
     <ion-content has-header="true" has-tabs="true">
-        <div class="list">
-            <div ng-repeat="color in colors | filter:listFilter " class="item item-button-right" ng-style="getBackgroundStyle(color.hexColor)">
+        <div class="" style="margin-right:2px;">
+            <div ng-repeat="color in colors | filter:listFilter " class="col col-25" style="border: 1px solid #fff; margin:0px; border-radius: 6px;float:left; width:20%; height:0px; padding: 0px 0px 20% 0px;" ng-style="getBackgroundStyle(color.hexColor)">
 
-                <div ng-click="openCopyToModal(color)">
-                    &nbsp;
-                </div>
-                <!-- {{color.name}}
+<div  style="padding-bottom: 100%; width:100%; position:relative; /*border:1px solid red; border-radius:6px;*/">
 
-                    <span ng-show="color.isReachableByGamutA">A</span>
-                    <span ng-show="color.isReachableByGamutB">B</span>
-                    <span ng-show="color.isReachableByGamutC">C</span> -->
+    <div ng-click="openCopyToModal(color)" style="padding-bottom: 100%; width:100%; position:absolute; /*border:1px solid blue; border-radius:6px;*/">
 
-                <button class="button button-clear" ng-click="toggleFavorite(color)">
-                    <i class="icon ion-android-star-outline" ng-show="!color.isFavorite"></i>
-                    <i class="icon ion-android-star" ng-show="color.isFavorite"></i>
+</div>
+
+                <button class="" style="border: none; background:transparent; padding: 0; position:absolute; height: 50%; width:50%; font-size: 5vmin; line-height: 100%;" ng-click="toggleFavorite(color)">
+                    <i class="icon ion-android-star" ng-show="!color.isFavorite" style="color:floralwhite; opacity: .5;text-shadow: 0px 0px 1px #000;"></i>
+                    <i class="icon ion-android-star" ng-show="color.isFavorite"
+                       style="color:gold; text-shadow: 0px 2px 3px #000, 0px 0px 10px #999;">
+                    </i>
                 </button>
-            </div>
+
+            </div></div>
+
         </div>
     </ion-content>
 
