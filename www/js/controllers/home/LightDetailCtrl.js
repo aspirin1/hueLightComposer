@@ -249,6 +249,7 @@ define(function () {
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     HueService.changeLightState(key, {
+                        on: true,
                         bri: parseInt($scope.light.state.bri),
                         sat: parseInt($scope.light.state.sat),
                         hue: parseInt($scope.light.state.hue),

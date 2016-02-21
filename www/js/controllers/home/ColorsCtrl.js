@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($ionicLoading, $scope, $state, $filter, $interval, $ionicModal, $ionicPopover, DataService, HueService, UtilityService) {
+    function ctrl($ionicLoading, $scope, $state, $filter, $interval, $ionicModal, $ionicPopover, $ionicListDelegate, DataService, HueService, UtilityService) {
         console.info("ColorsCtrl init");
 
         $ionicLoading.show({
@@ -18,15 +18,79 @@ define(function () {
             'showCustoms': false
         };
 
-        $scope.changeSorting = function () {
-            var orderBy = $filter('orderBy');
-            $scope.friends = orderBy($scope.friends, predicate, $scope.reverse);
+        $scope.orderItems = [
+            {
+                id: 0,
+                text: "Hue",
+                order: "asc",
+                orderItem: "hsl.h"
+            },
+            {
+                id: 1,
+                text: "Saturation",
+                order: "asc",
+                orderItem: "hsl.s"
+            },
+            {
+                id: 2,
+                text: "Luminance",
+                order: "asc",
+                orderItem: "hsl.l"
+            }, ];
+
+        $scope.data = {
+            showReorder: false,
+            listCanSwipe: true,
         };
 
+        var reloadSorting = function () {
+            var orderBy = $filter('orderBy');
+            var orderCmd = [];
+
+            angular.forEach($scope.orderItems, function (value) {
+                var cmd = value.orderItem;
+                if (value.order === "desc") {
+                    cmd = "-" + cmd;
+                }
+                orderCmd.push(cmd);
+            });
+
+            console.log(orderCmd);
+            var predicate = orderCmd;
+            var reverse = false;
+
+            $scope.colors = orderBy($scope.colors, predicate, reverse);
+        };
+
+        $scope.asc = function (item) {
+            item.order = "asc";
+            $ionicListDelegate.$getByHandle('sorting-options').closeOptionButtons();
+            reloadSorting();
+        };
+
+        $scope.desc = function (item) {
+            item.order = "desc";
+            $ionicListDelegate.$getByHandle('sorting-options').closeOptionButtons();
+            reloadSorting();
+        };
+
+        $scope.ascDescToggle = function (item) {
+            if (item.order === "asc")
+                item.order = "desc";
+            else
+                item.order = "asc";
+            reloadSorting();
+        };
+
+        $scope.moveItem = function (item, fromIndex, toIndex) {
+            $scope.orderItems.splice(fromIndex, 1);
+            $scope.orderItems.splice(toIndex, 0, item);
+            reloadSorting();
+        };
 
         DataService.getAllColors().then(function (colors) {
             $scope.colors = colors;
-            console.log("colors", colors);
+            reloadSorting();
             $ionicLoading.hide();
         });
 
@@ -70,6 +134,7 @@ define(function () {
         };
 
         $scope.openCopyToModal = function (color) {
+            console.info(color);
             $scope.modalColor = color;
 
             $ionicModal.fromTemplateUrl('copyto-modal.html', {
@@ -131,7 +196,7 @@ define(function () {
         });
     }
 
-    ctrl.$inject = ['$ionicLoading', '$scope', '$state', '$filter', '$interval', '$ionicModal', '$ionicPopover', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$ionicLoading', '$scope', '$state', '$filter', '$interval', '$ionicModal', '$ionicPopover', '$ionicListDelegate', 'DataService', 'HueService', 'UtilityService'];
     return ctrl;
 
 });
