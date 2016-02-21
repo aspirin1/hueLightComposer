@@ -1,5 +1,74 @@
- hue-image, .hueListIcon {
-        path, circle, line, polyline, polygon, ellipse, rect {
-            stroke: $button-stable-border;
+hue-image,
+.hueListIcon {
+    path,
+    circle,
+    line,
+    polyline,
+    polygon,
+    ellipse,
+    rect {
+        stroke: $button-stable-border;
+    }
+}
+
+.HueImage {
+    width: 100%;
+    height: 100%;
+}
+
+.detailViewHueImage svg {
+    width: 20vmin;
+    height: 20vmin;
+}
+
+.cooler-col-33 {
+    max-width: 33vmin;
+}
+
+.cooler-col-80 {
+    max-width: 80vmin;
+}
+
+.cooler-col-67 {
+    max-width: 67vmin;
+}
+
+.lightDisplay {
+    margin: 5vmin auto;
+    max-width: 80vmin;
+    width: 80vmin;
+    .item {
+      //  margin: -15px 2px 21px 5px;
+
+        &:last-child {
+           // margin-bottom: 0px;
+            //padding-bottom: 0px;
+            vertical-align: middle;
+            line-height: 30px;
+          // margin-top: -22px;
+        //    padding-top: 8px;
+            .button {
+                font-size: 30px;
+                min-height: 30px;
+                height: 30px;
+                padding: 0px;
+            }
+            .button .icon:before,
+            .button.icon:before,
+            .button.icon-left:before,
+            .button.icon-right:before {
+                line-height: 30px;
+            }
+            a.button .icon:before,
+            a.button.icon:before,
+            a.button.icon-left:before,
+            a.button.icon-right:before {
+                margin-top: 0px;
+            }
         }
     }
+}
+
+.cooler-input-label {
+    width: 100%;
+}

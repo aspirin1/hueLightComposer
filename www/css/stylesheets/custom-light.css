@@ -1,6 +1,84 @@
-/* line 2, ../sass/_c_elements.scss */
-hue-image path, hue-image circle, hue-image line, hue-image polyline, hue-image polygon, hue-image ellipse, hue-image rect, .hueListIcon path, .hueListIcon circle, .hueListIcon line, .hueListIcon polyline, .hueListIcon polygon, .hueListIcon ellipse, .hueListIcon rect {
+/* line 3, ../sass/_c_elements.scss */
+hue-image path,
+hue-image circle,
+hue-image line,
+hue-image polyline,
+hue-image polygon,
+hue-image ellipse,
+hue-image rect,
+.hueListIcon path,
+.hueListIcon circle,
+.hueListIcon line,
+.hueListIcon polyline,
+.hueListIcon polygon,
+.hueListIcon ellipse,
+.hueListIcon rect {
   stroke: #b2b2b2;
+}
+
+/* line 14, ../sass/_c_elements.scss */
+.HueImage {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 19, ../sass/_c_elements.scss */
+.detailViewHueImage svg {
+  width: 20vmin;
+  height: 20vmin;
+}
+
+/* line 24, ../sass/_c_elements.scss */
+.cooler-col-33 {
+  max-width: 33vmin;
+}
+
+/* line 28, ../sass/_c_elements.scss */
+.cooler-col-80 {
+  max-width: 80vmin;
+}
+
+/* line 32, ../sass/_c_elements.scss */
+.cooler-col-67 {
+  max-width: 67vmin;
+}
+
+/* line 36, ../sass/_c_elements.scss */
+.lightDisplay {
+  margin: 5vmin auto;
+  max-width: 80vmin;
+  width: 80vmin;
+}
+/* line 43, ../sass/_c_elements.scss */
+.lightDisplay .item:last-child {
+  vertical-align: middle;
+  line-height: 30px;
+}
+/* line 50, ../sass/_c_elements.scss */
+.lightDisplay .item:last-child .button {
+  font-size: 30px;
+  min-height: 30px;
+  height: 30px;
+  padding: 0px;
+}
+/* line 56, ../sass/_c_elements.scss */
+.lightDisplay .item:last-child .button .icon:before,
+.lightDisplay .item:last-child .button.icon:before,
+.lightDisplay .item:last-child .button.icon-left:before,
+.lightDisplay .item:last-child .button.icon-right:before {
+  line-height: 30px;
+}
+/* line 62, ../sass/_c_elements.scss */
+.lightDisplay .item:last-child a.button .icon:before,
+.lightDisplay .item:last-child a.button.icon:before,
+.lightDisplay .item:last-child a.button.icon-left:before,
+.lightDisplay .item:last-child a.button.icon-right:before {
+  margin-top: 0px;
+}
+
+/* line 72, ../sass/_c_elements.scss */
+.cooler-input-label {
+  width: 100%;
 }
 
 /*EFFECT LIST*/
