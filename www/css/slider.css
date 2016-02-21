@@ -48,12 +48,13 @@
   width: 100%;
 }
 .colorGradient .noUi-horizontal .noUi-handle {
-  width: 25px;
-  height: 50px;
-  top: -23px;
-  border-color: #cccccc;
+  width: 28px;
+  height: 56px;
+  top: -26px;
+  border-color: #999;
   border-radius: 2px;
-  background: #ffffff;
+  background: transparent;
+  box-shadow: inset 0px 0px 0px 4px #ffffff;
 }
 .colorGradient .noUi-horizontal .noUi-handle:after,
 .colorGradient .noUi-horizontal .noUi-handle:before {

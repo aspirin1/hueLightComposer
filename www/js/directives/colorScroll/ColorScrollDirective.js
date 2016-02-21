@@ -14,14 +14,15 @@ define(['angular'], function (angular) {
             link: function (scope, element, attrs) {
                 scope.options = scope.options || {
                     size: 50,
-                    limit: 15
+                    limit: 50,
+                    limitRand: 20
                 };
 
                 var getDefaultColors = function () {
                     var ret = [
                         //'#000000'
                     ];
-                    for (var i = 0; i < scope.options.limit; i++) {
+                    for (var i = 0; i < scope.options.limitRand; i++) {
                         ret.push(ColorDataService.getRandomHexColorForGamutABC());
                     }
                     return ret;
@@ -54,7 +55,7 @@ define(['angular'], function (angular) {
                 scope.getContainerStyle = function () {
                     var ret = {
                         'left': '40px',
-                        'right': '40px',
+                        'right': '0px',
                     };
 
 

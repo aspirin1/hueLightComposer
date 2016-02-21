@@ -61,12 +61,15 @@
         width: 100%;
         // handle
         .noUi-handle {
-            width: 25px;
-            height: 50px;
-            top: -23px;
-            border-color: @sliderContrast;
+            width: 28px;
+            height: 56px;
+            top: -26px;
+            border-color: #999;
             border-radius: 2px;
-            background: @sliderBase;
+            //background: @sliderBase;
+            background: transparent;
+            //opacity: .4;
+            box-shadow: inset 0px 0px 0px 4px @sliderBase;
             &:after,
             &:before {
                 display: none;
