@@ -15,7 +15,9 @@ define(function () {
             'a': false,
             'b': false,
             'c': false,
-            'showCustoms': false
+            'showCustoms': false,
+            'red': false,
+            'green': false
         };
 
         $scope.orderItems = [
@@ -119,6 +121,19 @@ define(function () {
             if ($scope.filter.showCustoms && !color.isCustom) {
                 return false;
             }
+
+
+
+            if ($scope.filter.red || $scope.filter.green) {
+                if ($scope.filter.red && (color.hsl.h < 30 || color.hsl.h > 330)) {
+                    return true;
+                }
+                if ($scope.filter.green && (color.hsl.h >= 80 && color.hsl.h <= 140)) {
+                    return true;
+                }
+                return false;
+            }
+
             return true;
         };
 
