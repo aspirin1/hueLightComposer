@@ -419,6 +419,89 @@ define(['angular'], function (angular) {
             hexToRgb: function (hex) {
                 return hexToRGB(hex);
             },
+            hslToHex: function (hue, sat, lum) {
+                var rgb = this.hslToRgb(hue, sat, lum);
+                return "#" + rgbToHex(rgb[0], rgb[1], rgb[2]);
+            },
+
+            hslToRgb: function (hue, sat, lum) {
+
+                var h = parseFloat(hue);
+                var s = parseFloat(sat);
+                var l = parseFloat(lum);
+                if (h < 0) h = 0;
+                if (s < 0) s = 0;
+                if (l < 0) l = 0;
+                if (h >= 360) h = 359;
+                if (s > 100) s = 100;
+                if (l > 100) l = 100;
+                s /= 100;
+                l /= 100;
+                var C = (1 - Math.abs(2 * l - 1)) * s;
+                var hh = h / 60;
+                var X = C * (1 - Math.abs(hh % 2 - 1));
+                var r = 0;
+                var g = 0;
+                var b = 0;
+
+                if (hh >= 0 && hh < 1) {
+                    r = C;
+                    g = X;
+                } else if (hh >= 1 && hh < 2) {
+                    r = X;
+                    g = C;
+                } else if (hh >= 2 && hh < 3) {
+                    g = C;
+                    b = X;
+                } else if (hh >= 3 && hh < 4) {
+                    g = X;
+                    b = C;
+                } else if (hh >= 4 && hh < 5) {
+                    r = X;
+                    b = C;
+                } else {
+                    r = C;
+                    b = X;
+                }
+                var m = l - C / 2;
+                r += m;
+                g += m;
+                b += m;
+
+
+                //                var rgb = [r, g, b];
+                //                //Apply reverse gamma correction.
+                //                rgb = rgb.map(function (x) {
+                //                    return (x <= 0.0031308) ? (12.92 * x) : ((1.0 + 0.055) * Math.pow(x, (1.0 / 2.4)) - 0.055);
+                //                });
+                //
+                //                // Bring all negative components to zero.
+                //                rgb = rgb.map(function (x) {
+                //                    return Math.max(0, x);
+                //                });
+                //
+                //                // If one component is greater than 1, weight components by that value.
+                //                var max = Math.max(rgb[0], rgb[1], rgb[2]);
+                //                if (max > 1) {
+                //                    rgb = rgb.map(function (x) {
+                //                        return x / max;
+                //                    });
+                //                }
+                //
+                //                rgb = rgb.map(function (x) {
+                //                    return Math.floor(x * 255);
+                //                });
+                //return rgb;
+
+                r *= 255.0;
+                g *= 255.0;
+                b *= 255.0;
+                r = Math.round(r);
+                g = Math.round(g);
+                b = Math.round(b);
+                return [r, g, b];
+
+            },
 
             hexToHsl: function (hex) {
                 var rgb = hexToRGB(hex);
