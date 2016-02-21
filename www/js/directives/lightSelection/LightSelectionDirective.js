@@ -2,16 +2,18 @@
 
 define(['angular'], function (angular) {
     "use strict";
-    var directive = function ($rootScope, $filter, ColorDataService, DataService) {
-
+    var directive = function ($rootScope, $filter, ColorDataService, DataService, UtilityService) {
 
         return {
             restrict: 'E',
             scope: {
-                lights: "=",
-                refresh: "@",
-                selectedLights: "=",
-                colorSupported: "@"
+                lights: "=", //lights to use
+                refresh: "@", //refresh light information
+                selectedLights: "=", //object for selected lights
+                colorSupported: "@", //display color supported
+                headerClass: "@", //class added in each tab content
+                tabsTop: "@", //css top in pixels for tab bar
+                effectsRunning: "@", //display effectsRunning
             },
             link: function (scope, element, attrs) {
                 var getLightList = function () {
@@ -57,6 +59,9 @@ define(['angular'], function (angular) {
                 scope.choice = undefined;
                 scope.lights = scope.lights || getLightList();
                 scope.colorSupported = scope.colorSupported || undefined;
+                scope.effectsRunning = scope.effectsRunning || undefined;
+                scope.tabsTop = scope.tabsTop || undefined;
+                scope.headerClass = scope.headerClass || "";
                 scope.selectedLights = scope.selectedLights || {};
 
                 scope.showColorSupported = function (light) {
@@ -70,11 +75,13 @@ define(['angular'], function (angular) {
                 };
 
                 scope.getColorSupportedText = function (light) {
-                    var reachable = ColorDataService.isColorReachableByGamut(scope.colorSupported, light.gamut);
-                    if (reachable) {
-                        return $filter('translate')('LightSelection_LightCanBeDisplayedCorrectly');
-                    } else {
-                        return $filter('translate')('LightSelection_LightCanNotBeDisplayedCorrectly');
+                    if (angular.isDefined(scope.colorSupported)) {
+                        var reachable = ColorDataService.isColorReachableByGamut(scope.colorSupported, light.gamut);
+                        if (reachable) {
+                            return $filter('translate')('LightSelection_LightCanBeDisplayedCorrectly');
+                        } else {
+                            return $filter('translate')('LightSelection_LightCanNotBeDisplayedCorrectly');
+                        }
                     }
                 };
 
@@ -99,11 +106,24 @@ define(['angular'], function (angular) {
                     console.log(scope.selectedLights);
                 };
 
+                scope.getTabsTop = function () {
+                    if (angular.isDefined(scope.tabsTop)) {
+                        return {
+                            'top': scope.tabsTop + "px"
+                        };
+                    }
+                };
+
+                scope.getEffectRunning = function (lightId) {
+                    if (angular.isDefined(scope.effectsRunning)) {
+                        return UtilityService.getEffectRunningText(scope.lights, lightId);
+                    }
+                };
             },
             templateUrl: 'js/directives/lightSelection/lightSelection.html'
         };
     };
 
-    directive.$inject = ['$rootScope', '$filter', 'ColorDataService', 'DataService'];
+    directive.$inject = ['$rootScope', '$filter', 'ColorDataService', 'DataService', 'UtilityService'];
     return directive;
 });

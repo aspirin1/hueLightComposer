@@ -4,10 +4,11 @@ define(function () {
     'use strict';
 
     function ctrl($scope, $filter, DataService, EffectService, UtilityService, ColorService) {
-        console.log("PulseCtrl");
+        console.log("PulseChangingColorsCtrl");
+        $scope.effectName = $filter('translate')('Effect_PulseChangingColors');
 
-        $scope.effectName = $filter('translate')('Effect_Pulse');
         $scope.selectedColor1 = {};
+        $scope.selectedColor2 = {};
 
         $scope.speedOptions = {
             start: [10],
@@ -38,6 +39,7 @@ define(function () {
             $scope.allLights = tmp;
         });
 
+
         $scope.test = {};
         $scope.test.maxTimeBetween = 10;
         $scope.copySelection = {};
@@ -46,20 +48,27 @@ define(function () {
             var minBri = parseInt($scope.briOptions.start[0]);
             var maxBri = parseInt($scope.briOptions.start[1]);
             var color1 = $scope.selectedColor1.color;
+            var color2 = $scope.selectedColor2.color;
 
+            console.log(color1, color2);
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var light = UtilityService.getLightById($scope.allLights, key);
                     var lightId = parseInt(light.id);
                     var color1xy;
+                    var color2xy;
                     if (color1 != "#000000") {
                         color1xy = ColorService.getGamutXyFromHex(light.gamut, color1);
                     }
+                    if (color2 != "#000000") {
+                        color2xy = ColorService.getGamutXyFromHex(light.gamut, color2);
+                    }
 
-                    EffectService.startPulse(lightId, timeInMs, minBri, maxBri, color1xy);
+                    EffectService.startPulsierenMitFarbwechsel2(lightId, timeInMs, minBri, maxBri, color1xy, color2xy);
                 }
             });
         };
+
     }
 
     ctrl.$inject = ['$scope', '$filter', 'DataService', 'EffectService', 'UtilityService', 'ColorService'];

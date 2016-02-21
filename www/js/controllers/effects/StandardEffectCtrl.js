@@ -15,18 +15,7 @@ define(function () {
             $scope.allLights = tmp;
         });
 
-        $scope.anythingSelected = function () {
-            var retVal = false;
-            angular.forEach($scope.copySelection, function (value, key) {
-                if (value === true)
-                    retVal = true;
-            });
-            return retVal;
-        };
         $scope.effectName = $filter('translate')('Effect_' + $scope.effect);
-        $scope.getEffectRunning = function (lightId) {
-            return UtilityService.getEffectRunningText($scope.allLights, lightId);
-        };
 
         $scope.copySelection = {};
         $scope.copyToSelection = function () {
@@ -38,12 +27,6 @@ define(function () {
                     }
                     if ($scope.effect === "Candle") {
                         EffectService.startCandle(lightId);
-                    }
-                    if ($scope.effect === "Lightning") {
-                        EffectService.startLightning(lightId);
-                    }
-                    if ($scope.effect === "Pulse") {
-                        EffectService.startPulse(lightId);
                     }
                 }
             });
