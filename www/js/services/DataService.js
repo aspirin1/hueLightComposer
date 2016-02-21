@@ -150,7 +150,7 @@ define(['angular'], function (angular) {
                 };
 
             initGamutC();
-            return doCalc(0.01, Blue[0], Blue[1], Red[0], Red[1], Green[0], Green[1]);
+            return doCalc(0.02, Blue[0], Blue[1], Red[0], Red[1], Green[0], Green[1]);
         };
 
 
