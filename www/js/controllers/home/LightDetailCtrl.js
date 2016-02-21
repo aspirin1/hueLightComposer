@@ -153,6 +153,32 @@ define(function () {
             }
         };
 
+        $scope.getColorGradient = function () {
+            var css = {};
+
+            var hslColors = [];
+            for (var i = 0; i <= 360; i += 10) {
+                var percentage = 0;
+                if (i > 0) {
+                    percentage = ((parseFloat(i) / 360.0) * 100).toFixed(2);
+                }
+                var color = "hsl(" + i + ", 100%, 50%) " + percentage + "%";
+                hslColors.push(color);
+            }
+
+            var linGradient = "linear-gradient(90deg, ";
+            angular.forEach(hslColors, function (colorString) {
+                linGradient += (colorString + ",");
+            });
+            linGradient = linGradient.slice(0, -1); //remove last ','
+            linGradient += ");";
+
+            css['background-image'] = linGradient;
+
+            console.log(css);
+            return css;
+        };
+
 
         $ionicModal.fromTemplateUrl('rename-modal.html', {
             scope: $scope,
