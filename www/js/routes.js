@@ -107,6 +107,15 @@ define(['app'], function (app) {
                             controller: 'ColorsCtrl'
                         }
                     }
+                })
+                .state('main.home_tab.colorsAdministration', {
+                    url: '/colorsAdministration',
+                    views: {
+                        'colors-tab': {
+                            templateUrl: 'templates/home/colorsAdministration.html',
+                            controller: 'ColorsAdministrationCtrl'
+                        }
+                    }
                 });
 
 
