@@ -1,0 +1,53 @@
+/* line 2, ../sass/_c_elements.scss */
+hue-image path, hue-image circle, hue-image line, hue-image polyline, hue-image polygon, hue-image ellipse, hue-image rect, .hueListIcon path, .hueListIcon circle, .hueListIcon line, .hueListIcon polyline, .hueListIcon polygon, .hueListIcon ellipse, .hueListIcon rect {
+  stroke: #b2b2b2;
+}
+
+/* line 1, ../sass/_c_colors.scss */
+.colorListContainer {
+  margin: 0;
+}
+/* line 3, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare {
+  border: 1px solid #fff;
+  margin: 0px;
+  border-radius: 6px;
+  float: left;
+  width: 20%;
+  height: 0px;
+  padding: 0px 0px 20% 0px;
+}
+/* line 11, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent {
+  padding-bottom: 100%;
+  width: 100%;
+  position: relative;
+}
+/* line 15, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent .colorSquareAction {
+  padding-bottom: 100%;
+  width: 100%;
+  position: absolute;
+}
+/* line 20, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent .favColor {
+  border: none;
+  background: transparent;
+  padding: 0;
+  position: absolute;
+  height: 50%;
+  width: 50%;
+  font-size: 5vmin;
+  line-height: 100%;
+}
+/* line 29, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent .favColor i {
+  color: floralwhite;
+  opacity: .5;
+  text-shadow: 0px 0px 1px #000;
+}
+/* line 33, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent .favColor i.fav {
+  color: gold;
+  text-shadow: 0px 0px 1px #000;
+}
