@@ -12,6 +12,40 @@ define(['angular'], function (angular) {
         var dark_blue_nightSky = ColorService.getXysFromHex("#1e228d");
         var turquois = ColorService.getXysFromHex("#3cd5c0");
 
+
+        this.startStrobe = function (lightId, maxBri, time, zufallsfarbenVerwenden) {
+            DataService.stopEffect(lightId);
+
+
+
+            var effektDauer = 8000;
+
+            var usedMaxBri = 254;
+            var usedTiming = 150;
+            var usedZufallsfarbenVerwenden = false;
+
+            if (angular.isDefined(maxBri)) {
+                usedMaxBri = maxBri;
+            }
+            if (angular.isDefined(time)) {
+                usedTiming = time;
+            }
+            if (angular.isDefined(zufallsfarbenVerwenden)) {
+                usedZufallsfarbenVerwenden = zufallsfarbenVerwenden;
+            }
+
+            HueService.changeLightState(lightId, {
+                on: true,
+                //bri: usedMaxBri
+            });
+
+            var interval = $interval(
+                LightCommandService.schnellesBlinken,
+                effektDauer + 150, 0, false, lightId, effektDauer, usedMaxBri, usedTiming, usedZufallsfarbenVerwenden);
+            DataService.setEffect(lightId, "Strobe", interval);
+            LightCommandService.schnellesBlinken(lightId, effektDauer, usedMaxBri, usedTiming, usedZufallsfarbenVerwenden);
+        };
+
         this.startColorLoop = function (lightId, timeInMs) {
             DataService.stopEffect(lightId);
 

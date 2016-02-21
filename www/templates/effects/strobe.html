@@ -1,0 +1,34 @@
+<ion-view view-title="{{effectName}}">
+    <ion-nav-bar class="bar-main">
+        <ion-nav-back-button class="button-clear">
+            <i class="ion-arrow-left-c"></i>
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <div class="scroll-content ionic-scroll overflow-scroll  has-header has-footer has-tabs">
+        <ul class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">{{'SINGLE_Speed' | translate}} {{speedOptions.start[0]}}ms</span>
+                <div ya-no-ui-slider='speedOptions'></div>
+            </label>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">{{'SINGLE_Brightness' | translate}}</span>
+                <div ya-no-ui-slider='briOptions'></div>
+            </label>
+
+            <li class="item item-toggle">
+                Scramble
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox" ng-model="scrambleColors.state">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+        </ul>
+        <light-selection effects-running="true" selected-lights="copySelection" refresh="true" header-class="has-header" tabs-top="205"></light-selection>
+    </div>
+    <ion-footer-bar>
+        <effect-buttons name="Strobe" selection="copySelection" start="copyToSelection"></effect-buttons>
+    </ion-footer-bar>
+</ion-view>
