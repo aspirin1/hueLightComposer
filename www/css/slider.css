@@ -34,3 +34,43 @@
 .noUi-target .noUi-connect {
   box-shadow: none;
 }
+.colorGradient {
+  background-image: linear-gradient(90deg, #ff0000 0%, #ff2b00 2.78%, #ff5500 5.56%, #ff8000 8.33%, #ffaa00 11.11%, #ffd500 13.89%, #ffff00 16.67%, #d4ff00 19.44%, #aaff00 22.22%, #80ff00 25%, #55ff00 27.78%, #2bff00 30.56%, #00ff00 33.33%, #00ff2b 36.11%, #00ff55 38.89%, #00ff80 41.67%, #00ffaa 44.44%, #00ffd5 47.22%, #00ffff 50%, #00d4ff 52.78%, #00aaff 55.56%, #007fff 58.33%, #0055ff 61.11%, #002bff 63.89%, #0000ff 66.67%, #2a00ff 69.44%, #5500ff 72.22%, #7f00ff 75%, #aa00ff 77.78%, #d400ff 80.56%, #ff00ff 83.33%, #ff00d4 86.11%, #ff00aa 88.89%, #ff0080 91.67%, #ff0055 94.44%, #ff002b 97.22%, #ff0000 100%);
+  background-image: -webkit-linear-gradient(left, #ff0000 0%, #ff2b00 2.78%, #ff5500 5.56%, #ff8000 8.33%, #ffaa00 11.11%, #ffd500 13.89%, #ffff00 16.67%, #d4ff00 19.44%, #aaff00 22.22%, #80ff00 25%, #55ff00 27.78%, #2bff00 30.56%, #00ff00 33.33%, #00ff2b 36.11%, #00ff55 38.89%, #00ff80 41.67%, #00ffaa 44.44%, #00ffd5 47.22%, #00ffff 50%, #00d4ff 52.78%, #00aaff 55.56%, #007fff 58.33%, #0055ff 61.11%, #002bff 63.89%, #0000ff 66.67%, #2a00ff 69.44%, #5500ff 72.22%, #7f00ff 75%, #aa00ff 77.78%, #d400ff 80.56%, #ff00ff 83.33%, #ff00d4 86.11%, #ff00aa 88.89%, #ff0080 91.67%, #ff0055 94.44%, #ff002b 97.22%, #ff0000 100%);
+  background-image: -moz-linear-gradient(left, #ff0000 0%, #ff2b00 2.78%, #ff5500 5.56%, #ff8000 8.33%, #ffaa00 11.11%, #ffd500 13.89%, #ffff00 16.67%, #d4ff00 19.44%, #aaff00 22.22%, #80ff00 25%, #55ff00 27.78%, #2bff00 30.56%, #00ff00 33.33%, #00ff2b 36.11%, #00ff55 38.89%, #00ff80 41.67%, #00ffaa 44.44%, #00ffd5 47.22%, #00ffff 50%, #00d4ff 52.78%, #00aaff 55.56%, #007fff 58.33%, #0055ff 61.11%, #002bff 63.89%, #0000ff 66.67%, #2a00ff 69.44%, #5500ff 72.22%, #7f00ff 75%, #aa00ff 77.78%, #d400ff 80.56%, #ff00ff 83.33%, #ff00d4 86.11%, #ff00aa 88.89%, #ff0080 91.67%, #ff0055 94.44%, #ff002b 97.22%, #ff0000 100%);
+}
+.colorGradient [ya-no-ui-slider] {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.colorGradient .noUi-horizontal {
+  height: 6px;
+  width: 100%;
+}
+.colorGradient .noUi-horizontal .noUi-handle {
+  width: 25px;
+  height: 50px;
+  top: -23px;
+  border-color: #cccccc;
+  border-radius: 2px;
+  background: #ffffff;
+}
+.colorGradient .noUi-horizontal .noUi-handle:after,
+.colorGradient .noUi-horizontal .noUi-handle:before {
+  display: none;
+}
+.colorGradient .noUi-background {
+  background: transparent;
+  box-shadow: none;
+}
+.colorGradient .noUi-connect {
+  background: transparent;
+  box-shadow: none;
+}
+.colorGradient .noUi-target {
+  border-color: transparent;
+  box-shadow: none;
+}
+.colorGradient .noUi-target .noUi-connect {
+  box-shadow: none;
+}
