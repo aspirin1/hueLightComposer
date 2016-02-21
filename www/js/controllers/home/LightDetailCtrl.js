@@ -199,28 +199,41 @@ define(function () {
                 $scope.modal.hide();
             });
         };
+
         $scope.$on('$destroy', function () {
             $scope.renameModal.remove();
             $scope.copyToModal.remove();
         });
 
-
-        $scope.copySelection = {};
-        $ionicModal.fromTemplateUrl('copyto-modal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.copyToModal = modal;
-        });
-
-        $scope.openCopyToModal = function () {
-            $scope.copyToModal.show();
+        $scope.getCopyToSelectedColorStyle = function () {
+            if (!angular.isDefined($scope.modalColor))
+                return {};
+            return {
+                'background-color': $scope.modalColor.hexColor
+            };
         };
 
-        var getColorXy = function () {
+
+        $scope.copySelection = {};
+
+
+        $scope.openCopyToModal = function () {
+            getColorXy(5).then(function (data) {
+                $scope.modalColor = data;
+
+                $ionicModal.fromTemplateUrl('copyto-modal.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up'
+                }).then(function (modal) {
+                    $scope.copyToModal = modal;
+                    $scope.copyToModal.show();
+                });
+            });
+        };
+
+        var getColorXy = function (minSeks) {
             var deferred = $q.defer();
 
-            var colorName = "test";
             var lightId = $scope.lightId;
             var attempts = 0;
             var xyFound, briFound, hexFound;
@@ -248,9 +261,9 @@ define(function () {
                         briFound = data.state.bri;
                         hexFound = data.hexColor;
                     }
-                    if (attempts == 10) {
+                    if (attempts == minSeks) {
                         returnColor();
-                        console.log("abbruch weil 10 versuche");
+                        console.log("abbruch weil " + minSeks + " versuche");
                     }
                     if (attempts > 0 && (xyFound[0] !== data.state.xy[0] || xyFound[1] !== data.state.xy[1])) {
                         xyFound = data.state.xy;
@@ -274,11 +287,13 @@ define(function () {
         $scope.copyToSelection = function () {
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
+                    var mc = $scope.modalColor;
+                    var light = $scope.light;
+
+                    var gamutXy = ColorService.getGamutXyFromHex(light.gamut, mc.hexColor); //mc["gamut" + light.gamut];
                     HueService.changeLightState(key, {
                         on: true,
-                        bri: parseInt($scope.light.state.bri),
-                        sat: parseInt($scope.light.state.sat),
-                        hue: parseInt($scope.light.state.hue),
+                        xy: gamutXy
                     });
                 }
             });
@@ -289,8 +304,7 @@ define(function () {
         $scope.saveColor = function () {
             var lightId = $scope.lightId;
 
-
-            getColorXy(lightId).then(function (data) {
+            getColorXy(10).then(function (data) {
                 DataService.addCustomColor(data.hexColor);
             });
 

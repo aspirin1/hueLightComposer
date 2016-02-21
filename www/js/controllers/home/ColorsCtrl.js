@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($ionicLoading, $scope, $state, $filter, $interval, $ionicModal, $ionicPopover, $ionicListDelegate, DataService, HueService, UtilityService,ColorService) {
+    function ctrl($ionicLoading, $scope, $state, $filter, $interval, $ionicModal, $ionicPopover, $ionicListDelegate, DataService, HueService, UtilityService, ColorService) {
         console.info("ColorsCtrl init");
 
         $ionicLoading.show({
@@ -172,10 +172,9 @@ define(function () {
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var mc = $scope.modalColor;
-                    console.log(mc)
                     var light = getLightById(key);
 
-                    var gamutXy = ColorService.getGamutXyFromHex(light.gamut, mc.hexColor);//mc["gamut" + light.gamut];
+                    var gamutXy = ColorService.getGamutXyFromHex(light.gamut, mc.hexColor); //mc["gamut" + light.gamut];
                     HueService.changeLightState(key, {
                         on: true,
                         xy: gamutXy

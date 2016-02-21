@@ -107,8 +107,9 @@
         <ion-modal-view>
             <ion-header-bar>
                 <h1 class="title">{{'Home_LightList_Detail_CopyTo' | translate}}</h1>
+                <div class="copyColorModalColorPreview" ng-style="getCopyToSelectedColorStyle()"></div>
             </ion-header-bar>
-            <ion-content>
+            <!--
                 <ul class="list">
                     <li class="item item-checkbox" ng-repeat="light in allLightsExceptCurrent">
                         <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
@@ -118,12 +119,15 @@
                         <h2>{{light.name}}</h2>
                         <p>&nbsp;</p>
                     </li>
-                </ul>
+                </ul>-->
+            <light-selection lights="allLightsExceptCurrent" color-supported="{{modalColor.hexColor}}" selected-lights="copySelection" refresh="true" header-class="has-tabs-top">
+            </light-selection>
+            <ion-footer-bar>
                 <div class="button-bar">
                     <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>
                     <button class="button button-positive" ng-click="copyToSelection()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
                 </div>
-            </ion-content>
+            </ion-footer-bar>
         </ion-modal-view>
     </script>
 
