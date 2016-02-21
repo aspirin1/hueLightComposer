@@ -153,6 +153,23 @@ define(['angular'], function (angular) {
             return doCalc(0.02, Blue[0], Blue[1], Red[0], Red[1], Green[0], Green[1]);
         };
 
+        this.getOwnColors = function () {
+            var deferred = $q.defer();
+            $timeout(function () {
+                var allColors = [];
+
+                var customColors = localStorageService.get('customColors');
+
+                angular.forEach(customColors, function (color) {
+                    color.isCustom = true;
+                    allColors.push(color);
+                });
+
+                deferred.resolve(allColors);
+            }, 0);
+            return deferred.promise;
+        };
+
 
         this.getAllColors = function () {
             var deferred = $q.defer();
@@ -214,6 +231,22 @@ define(['angular'], function (angular) {
             }
 
             localStorageService.set('customColors', tmp);
+        };
+
+
+        this.removeCustomColor = function (hexColor) {
+            var tmp = localStorageService.get('customColors');
+            if (tmp === null)
+                tmp = [];
+            var tmpNew = [];
+            angular.forEach(tmp, function (color) {
+                if (color.hexColor !== hexColor) {
+                    tmpNew.push(color);
+                }
+            });
+
+
+            localStorageService.set('customColors', tmpNew);
         };
 
         this.getImageFromModelId = function (modelid) {

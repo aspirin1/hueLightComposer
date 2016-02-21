@@ -18,6 +18,7 @@ define(function (require) {
     controllers.controller('GroupsCtrl', require('controllers/home/GroupsCtrl'));
     controllers.controller('ScenesCtrl', require('controllers/home/ScenesCtrl'));
     controllers.controller('ColorsCtrl', require('controllers/home/ColorsCtrl'));
+    controllers.controller('ColorsAdministrationCtrl', require('controllers/home/ColorsAdministrationCtrl'));
 
     controllers.controller('SettingsCtrl', require('controllers/settings/SettingsCtrl'));
 
