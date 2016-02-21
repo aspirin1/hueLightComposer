@@ -51,11 +51,6 @@
         <div class="row">
             <div class="col">
                 <div ya-no-ui-slider="brightnessOptions" ya-no-ui-slider-events="brightnessSliderEvents"></div>
-                <!--
-                <div class="range range-positive">
-                    <input type="range" min="1" max="254" step="1" ng-model="light.state.bri" ng-change="brightnessChanged()" />
-                </div>
--->
             </div>
         </div>
 
@@ -67,23 +62,14 @@
         <div class="row">
             <div class="col">
                 <div ya-no-ui-slider="saturationOptions" ya-no-ui-slider-events="saturationSliderEvents"></div>
-                <!--
-                <div class="range range-positive">
-                    <input type="range" min="1" max="254" step="1" ng-model="light.state.sat" ng-change="saturationChanged()" />
-                </div>-->
             </div>
         </div>
 
 
         <div class="row"><span class="input-label">{{'SINGLE_Hue' | translate}}</span></div>
         <div class="row">
-            <div class="col">
+            <div class="col colorGradient">
                 <div ya-no-ui-slider="hueOptions" ya-no-ui-slider-events="hueSliderEvents"></div>
-                <!--
-                <div class="range range-positive">
-                    <input type="range" min="0" max="65535" step="500" ng-model="light.state.hue" ng-change="hueChanged()" />
-                </div>
--->
             </div>
         </div>
 

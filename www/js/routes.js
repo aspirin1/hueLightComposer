@@ -138,13 +138,29 @@ define(['app'], function (app) {
                 }
             });
             $stateProvider.state('main.home_tab.pulse', {
-                url: '/pulse/:effect',
+                url: '/pulse',
                 views: {
                     'effectList-tab': {
                         templateUrl: 'templates/effects/pulse.html',
-                        controller: function ($scope, $stateParams) {
-                            $scope.effect = $stateParams.effect;
-                        }
+                        controller: 'PulseCtrl'
+                    }
+                }
+            });
+            $stateProvider.state('main.home_tab.pulseMultiColors', {
+                url: '/pulseMultiColors',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/pulseMultiColors.html',
+                        controller: 'PulseMultiColorsCtrl'
+                    }
+                }
+            });
+            $stateProvider.state('main.home_tab.pulseChangingColors', {
+                url: '/pulseChangingColors',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/pulseChangingColors.html',
+                        controller: 'PulseChangingColorsCtrl'
                     }
                 }
             });

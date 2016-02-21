@@ -142,7 +142,7 @@ define(['angular'], function (angular) {
             var interval = $interval(
                 LightCommandService.pulsierenMitFarbwechsel1,
                 effektDauer + 1500, 0, false, lightId, effektDauer, usedXy1, usedXy2, usedMinBri, usedMaxBri); //[0.2703, 0.1398]
-            DataService.setEffect(lightId, "PulsierenMitFarbwechsel1", interval);
+            DataService.setEffect(lightId, "PulseColorTransition", interval);
             LightCommandService.pulsierenMitFarbwechsel1(lightId, effektDauer, usedXy1, usedXy2, usedMinBri, usedMaxBri);
         };
 
@@ -179,7 +179,7 @@ define(['angular'], function (angular) {
             var interval = $interval(
                 LightCommandService.pulsierenMitFarbwechsel2,
                 effektDauer + 2500, 0, false, lightId, effektDauer, usedXy1, usedXy2, usedMinBri, usedMaxBri);
-            DataService.setEffect(lightId, "PulsierenMitFarbwechsel2", interval);
+            DataService.setEffect(lightId, "PulseChangingColors", interval);
             LightCommandService.pulsierenMitFarbwechsel2(lightId, effektDauer, usedXy1, usedXy2, usedMinBri, usedMaxBri);
         };
 
