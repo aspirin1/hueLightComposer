@@ -1,15 +1,15 @@
 @sliderContrast: #ccc;
 @sliderAccent: #007799;
 @sliderBase: #fff;
-
 // bar horizontal
 [ya-no-ui-slider] {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+
 .noUi-horizontal {
     height: 6px;
-    width: 95%;
+    width: 100%;
     // handle
     .noUi-handle {
         width: 36px;
@@ -18,28 +18,77 @@
         border-color: @sliderContrast;
         border-radius: 18px;
         background: @sliderBase;
-
-        &:after, &:before {
+        &:after,
+        &:before {
             display: none;
         }
     }
 }
+
 // bg color bar
 .noUi-background {
     background: @sliderContrast;
     box-shadow: none;
 }
+
 // bg color accent
 .noUi-connect {
     background: @sliderAccent;
     box-shadow: none;
 }
+
 // bar?
 .noUi-target {
     border-color: @sliderBase;
     box-shadow: none;
-
     .noUi-connect {
         box-shadow: none;
+    }
+}
+
+// color slider
+.colorGradient {
+    background-image: linear-gradient(90deg, hsl(0, 100%, 50%) 0%, hsl(10, 100%, 50%) 2.78%, hsl(20, 100%, 50%) 5.56%, hsl(30, 100%, 50%) 8.33%, hsl(40, 100%, 50%) 11.11%, hsl(50, 100%, 50%) 13.89%, hsl(60, 100%, 50%) 16.67%, hsl(70, 100%, 50%) 19.44%, hsl(80, 100%, 50%) 22.22%, hsl(90, 100%, 50%) 25.00%, hsl(100, 100%, 50%) 27.78%, hsl(110, 100%, 50%) 30.56%, hsl(120, 100%, 50%) 33.33%, hsl(130, 100%, 50%) 36.11%, hsl(140, 100%, 50%) 38.89%, hsl(150, 100%, 50%) 41.67%, hsl(160, 100%, 50%) 44.44%, hsl(170, 100%, 50%) 47.22%, hsl(180, 100%, 50%) 50.00%, hsl(190, 100%, 50%) 52.78%, hsl(200, 100%, 50%) 55.56%, hsl(210, 100%, 50%) 58.33%, hsl(220, 100%, 50%) 61.11%, hsl(230, 100%, 50%) 63.89%, hsl(240, 100%, 50%) 66.67%, hsl(250, 100%, 50%) 69.44%, hsl(260, 100%, 50%) 72.22%, hsl(270, 100%, 50%) 75.00%, hsl(280, 100%, 50%) 77.78%, hsl(290, 100%, 50%) 80.56%, hsl(300, 100%, 50%) 83.33%, hsl(310, 100%, 50%) 86.11%, hsl(320, 100%, 50%) 88.89%, hsl(330, 100%, 50%) 91.67%, hsl(340, 100%, 50%) 94.44%, hsl(350, 100%, 50%) 97.22%, hsl(360, 100%, 50%) 100.00%);
+    background-image: -webkit-linear-gradient(left, hsl(0, 100%, 50%) 0%, hsl(10, 100%, 50%) 2.78%, hsl(20, 100%, 50%) 5.56%, hsl(30, 100%, 50%) 8.33%, hsl(40, 100%, 50%) 11.11%, hsl(50, 100%, 50%) 13.89%, hsl(60, 100%, 50%) 16.67%, hsl(70, 100%, 50%) 19.44%, hsl(80, 100%, 50%) 22.22%, hsl(90, 100%, 50%) 25.00%, hsl(100, 100%, 50%) 27.78%, hsl(110, 100%, 50%) 30.56%, hsl(120, 100%, 50%) 33.33%, hsl(130, 100%, 50%) 36.11%, hsl(140, 100%, 50%) 38.89%, hsl(150, 100%, 50%) 41.67%, hsl(160, 100%, 50%) 44.44%, hsl(170, 100%, 50%) 47.22%, hsl(180, 100%, 50%) 50.00%, hsl(190, 100%, 50%) 52.78%, hsl(200, 100%, 50%) 55.56%, hsl(210, 100%, 50%) 58.33%, hsl(220, 100%, 50%) 61.11%, hsl(230, 100%, 50%) 63.89%, hsl(240, 100%, 50%) 66.67%, hsl(250, 100%, 50%) 69.44%, hsl(260, 100%, 50%) 72.22%, hsl(270, 100%, 50%) 75.00%, hsl(280, 100%, 50%) 77.78%, hsl(290, 100%, 50%) 80.56%, hsl(300, 100%, 50%) 83.33%, hsl(310, 100%, 50%) 86.11%, hsl(320, 100%, 50%) 88.89%, hsl(330, 100%, 50%) 91.67%, hsl(340, 100%, 50%) 94.44%, hsl(350, 100%, 50%) 97.22%, hsl(360, 100%, 50%) 100.00%);
+    background-image: -moz-linear-gradient(left, hsl(0, 100%, 50%) 0%, hsl(10, 100%, 50%) 2.78%, hsl(20, 100%, 50%) 5.56%, hsl(30, 100%, 50%) 8.33%, hsl(40, 100%, 50%) 11.11%, hsl(50, 100%, 50%) 13.89%, hsl(60, 100%, 50%) 16.67%, hsl(70, 100%, 50%) 19.44%, hsl(80, 100%, 50%) 22.22%, hsl(90, 100%, 50%) 25.00%, hsl(100, 100%, 50%) 27.78%, hsl(110, 100%, 50%) 30.56%, hsl(120, 100%, 50%) 33.33%, hsl(130, 100%, 50%) 36.11%, hsl(140, 100%, 50%) 38.89%, hsl(150, 100%, 50%) 41.67%, hsl(160, 100%, 50%) 44.44%, hsl(170, 100%, 50%) 47.22%, hsl(180, 100%, 50%) 50.00%, hsl(190, 100%, 50%) 52.78%, hsl(200, 100%, 50%) 55.56%, hsl(210, 100%, 50%) 58.33%, hsl(220, 100%, 50%) 61.11%, hsl(230, 100%, 50%) 63.89%, hsl(240, 100%, 50%) 66.67%, hsl(250, 100%, 50%) 69.44%, hsl(260, 100%, 50%) 72.22%, hsl(270, 100%, 50%) 75.00%, hsl(280, 100%, 50%) 77.78%, hsl(290, 100%, 50%) 80.56%, hsl(300, 100%, 50%) 83.33%, hsl(310, 100%, 50%) 86.11%, hsl(320, 100%, 50%) 88.89%, hsl(330, 100%, 50%) 91.67%, hsl(340, 100%, 50%) 94.44%, hsl(350, 100%, 50%) 97.22%, hsl(360, 100%, 50%) 100.00%);
+
+    [ya-no-ui-slider] {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .noUi-horizontal {
+        height: 6px;
+        width: 100%;
+        // handle
+        .noUi-handle {
+            width: 25px;
+            height: 50px;
+            top: -23px;
+            border-color: @sliderContrast;
+            border-radius: 2px;
+            background: @sliderBase;
+            &:after,
+            &:before {
+                display: none;
+            }
+        }
+    }
+    // bg color bar
+    .noUi-background {
+        background: transparent;
+        box-shadow: none;
+    }
+    // bg color accent
+    .noUi-connect {
+        background: transparent;
+        box-shadow: none;
+    }
+    // bar?
+    .noUi-target {
+        border-color: transparent;
+        box-shadow: none;
+        .noUi-connect {
+            box-shadow: none;
+        }
     }
 }
