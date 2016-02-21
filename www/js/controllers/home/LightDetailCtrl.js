@@ -9,8 +9,12 @@ define(function () {
 
         var refreshLightInfo = function () {
             DataService.getEnrichedLightInfo($scope.lightId).then(function (data) {
-                $scope.light = data;
-
+                if (angular.isUndefined($scope.light)) {
+                    $scope.light = data;
+                } else {
+                    $scope.light.state = data.state;
+                    $scope.light.hexColor = data.hexColor;
+                }
                 $scope.brightnessOptions = {
                     start: [$scope.light.state.bri],
                     connect: 'lower',
@@ -42,27 +46,28 @@ define(function () {
                 };
             });
         };
+        var refreshLightInBackground = $interval(refreshLightInfo, 3000, 0, true);
         refreshLightInfo();
 
 
         $scope.brightnessSliderEvents = {
             change: function (values, handle, unencoded) {
                 var bri = parseInt(values[0][0]);
-                HueService.changeBrightness($scope.lightId, bri).then(refreshLightInfo);
+                HueService.changeBrightness($scope.lightId, bri);
             }
         };
 
         $scope.saturationSliderEvents = {
             change: function (values, handle, unencoded) {
                 var sat = parseInt(values[0][0]);
-                HueService.changeSaturation($scope.lightId, sat).then(refreshLightInfo);
+                HueService.changeSaturation($scope.lightId, sat);
             }
         };
 
         $scope.hueSliderEvents = {
             change: function (values, handle, unencoded) {
                 var hue = parseInt(values[0][0]);
-                HueService.changeHue($scope.lightId, hue).then(refreshLightInfo);
+                HueService.changeHue($scope.lightId, hue);
             }
         };
 
@@ -139,19 +144,45 @@ define(function () {
             }
         };
 
+        var reCalcColor = function (hue, sat) {
+            //var sat = $scope.light.state.sat; //->l
+            //var hue = $scope.light.state.hue; //->h
+
+            var huePercentage = parseFloat(hue) / 65535.0;
+            var satPercentage = parseFloat(sat) / 254.0;
+
+            var s = 100;
+            var h = 360 * huePercentage;
+            var l = 50 + 50 * huePercentage;
+
+            console.log(h, s, l);
+
+            var hexColor = ColorService.hslToHex(h, s, l);
+            console.log(hexColor);
+            $scope.light.hexColor = hexColor;
+        };
+
         $scope.saturationChanged = function () {
             if (typeof ($scope.light) !== "undefined") {
                 var val = $scope.light.state.sat;
-                HueService.changeSaturation($scope.lightId, val);
+                HueService.changeSaturation($scope.lightId, val).then(function (data) {
+                    //reCalcColor();
+                });
+                //reCalcColor();
             }
         };
 
         $scope.hueChanged = function () {
             if (typeof ($scope.light) !== "undefined") {
                 var val = $scope.light.state.hue;
-                HueService.changeHue($scope.lightId, val);
+                HueService.changeHue($scope.lightId, val).then(function (data) {
+                    //reCalcColor();
+                });
+                //reCalcColor();
             }
         };
+
+
 
         $scope.getColorGradient = function () {
             var css = {};
@@ -200,10 +231,6 @@ define(function () {
             });
         };
 
-        $scope.$on('$destroy', function () {
-            $scope.renameModal.remove();
-            $scope.copyToModal.remove();
-        });
 
         $scope.getCopyToSelectedColorStyle = function () {
             if (!angular.isDefined($scope.modalColor))
@@ -329,10 +356,6 @@ define(function () {
                     //var calculatedHex = ColorService.CIE1931ToHex("C", data.xy[0], data.xy[1], 255);
                     //console.info(data.hexColor, calculatedHex);
                 });
-
-
-
-
             }
         }
 
@@ -343,7 +366,10 @@ define(function () {
         });
 
         $scope.$on("$destroy", function () {
+            //$scope.renameModal.remove();
+            //$scope.copyToModal.remove();
             unregisterEvent();
+            $interval.cancel(refreshLightInBackground);
         });
 
     }
