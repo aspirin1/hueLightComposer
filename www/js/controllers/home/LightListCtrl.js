@@ -104,6 +104,7 @@ define(function () {
             $scope.createSceneSelection = {};
             $scope.newScene = {};
             $scope.newScene.name = '';
+            $scope.newScene.image = undefined;
             $scope.createSceneModal.show();
         };
         $scope.closeCreateSceneModal = function () {
@@ -142,7 +143,7 @@ define(function () {
             });
         };
         $scope.urlForImage = function () {
-            if (angular.isDefined($scope.newScene) && angular.IsDefined($scope.newScene.image)) {
+            if (angular.isDefined($scope.newScene) && typeof ($scope.newScene.image) !== "undefined") {
                 return UtilityService.getUrlForImage($scope.newScene.image);
             }
         };
