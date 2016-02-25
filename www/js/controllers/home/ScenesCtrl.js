@@ -1,11 +1,15 @@
-/*global angular, define, console, window*/
+/*global angular, define, console, window, navigator,cordova*/
 
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService) {
+    function ctrl($scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService, $q) {
         console.info("ScenesCtrl init");
         var filterBarInstance;
+
+        $scope.$on("$ionicView.beforeEnter", function () {
+            refresh();
+        });
 
         function getIndexOf(arr, val, prop) {
             var l = arr.length,
@@ -43,23 +47,17 @@ define(function () {
 
         var refresh = function () {
             HueService.getAllScenes().then(function (data) {
-                    var ret = [];
-                    angular.forEach(data, function (value, key) {
-                        value.id = key;
-                        ret.push(value);
-                    });
-                    $scope.allScenes = ret;
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                    $scope.$broadcast('scroll.refreshComplete');
+                var ret = [];
+                angular.forEach(data, function (value, key) {
+                    value.id = key;
+                    ret.push(value);
                 });
+                $scope.allScenes = ret;
+            });
         };
-
-        refresh();
     }
 
-    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService', '$q'];
     return ctrl;
 
 });

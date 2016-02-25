@@ -6,21 +6,20 @@ define(function () {
     function ctrl($filter, $scope, $ionicModal, DataService, HueService, UtilityService, LightCommandService, ColorService) {
         console.info("HueLightListCtrl init");
 
+        $scope.$on("$ionicView.beforeEnter", function () {
+            refreshLightList();
+        });
 
         var refreshLightList = function () {
             DataService.getEnrichedLightInfos(true).then(function (data) {
-                    var tmp = [];
-                    angular.forEach(data, function (value, key) {
-                        value.id = key;
-                        tmp.push(value);
-                    });
-                    $scope.allLights = tmp;
-                })
-                .finally(function () {
-                    $scope.$broadcast('scroll.refreshComplete');
+                var tmp = [];
+                angular.forEach(data, function (value, key) {
+                    value.id = key;
+                    tmp.push(value);
                 });
+                $scope.allLights = tmp;
+            });
         };
-        refreshLightList();
 
         $scope.test = function (lightId) {
 
@@ -36,6 +35,7 @@ define(function () {
                 //LightCommandService.ausUndUnregelmaessigAufblitzen(i, 500, 7000, 60000);
             }
         };
+
         $scope.isEffectRunning = function (lightId) {
             var retVal = false;
 
@@ -121,10 +121,29 @@ define(function () {
 
             if (tmp.length > 0 && $scope.newScene.name.length > 0) {
                 HueService.createScene($scope.newScene.name, tmp).then(function (data) {
+                    DataService.addCustomScene(data[0].success.id, $scope.newScene.name, tmp, $scope.newScene.image);
                     $scope.closeCreateSceneModal();
                 });
             } else {
                 $scope.closeCreateSceneModal();
+            }
+        };
+
+        $scope.scenePictureAlbum = function () {
+            UtilityService.getAndStorePictureAlbum().then(function (data) {
+                console.log(data);
+                $scope.newScene.image = data;
+            });
+        };
+        $scope.scenePictureCamera = function () {
+            UtilityService.getAndStorePictureCamera().then(function (data) {
+                console.log(data);
+                $scope.newScene.image = data;
+            });
+        };
+        $scope.urlForImage = function () {
+            if (angular.isDefined($scope.newScene) && angular.IsDefined($scope.newScene.image)) {
+                return UtilityService.getUrlForImage($scope.newScene.image);
             }
         };
 

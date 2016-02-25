@@ -10,6 +10,51 @@ define(['angular'], function (angular) {
         var groupEffectState = {};
         var enrichedLightInfos = null;
         var favoriteColorsKey = "favoriteColors";
+        var customColorsKey = "customColors";
+        var customScenesKey = "customScenes";
+
+        this.addCustomScene = function (id, name, lights, image) {
+            var tmp = localStorageService.get(customScenesKey);
+            if (tmp === null)
+                tmp = [];
+            var newScene = {
+                id: id,
+                name: name,
+                lights: lights,
+                image: image
+            };
+
+            tmp.push(newScene);
+
+            localStorageService.set(customScenesKey, tmp);
+        };
+
+        this.removeCustomScene = function (id) {
+            var tmp = localStorageService.get(customScenesKey);
+            if (tmp === null)
+                tmp = [];
+            var tmpNew = [];
+            angular.forEach(tmp, function (scene) {
+                if (scene.id !== id) {
+                    tmpNew.push(scene);
+                }
+            });
+
+            localStorageService.set(customScenesKey, tmpNew);
+        };
+
+        this.getCustomScenes = function () {
+            var tmp = localStorageService.get(customScenesKey);
+            if (tmp === null)
+                tmp = {};
+
+            var ret = [];
+            angular.forEach(tmp, function (value, key) {
+                ret.push(key);
+            });
+            return ret;
+        };
+
 
         this.isColorFavorite = function (hexColor) {
             var tmp = localStorageService.get(favoriteColorsKey);
@@ -158,7 +203,7 @@ define(['angular'], function (angular) {
             $timeout(function () {
                 var allColors = [];
 
-                var customColors = localStorageService.get('customColors');
+                var customColors = localStorageService.get(customColorsKey);
 
                 angular.forEach(customColors, function (color) {
                     color.isCustom = true;
@@ -188,7 +233,7 @@ define(['angular'], function (angular) {
                     });
                 });
 
-                var customColors = localStorageService.get('customColors');
+                var customColors = localStorageService.get(customColorsKey);
 
                 angular.forEach(customColors, function (color) {
                     color.isCustom = true;
@@ -211,7 +256,7 @@ define(['angular'], function (angular) {
         };
 
         this.addCustomColor = function (hexColor) {
-            var tmp = localStorageService.get('customColors');
+            var tmp = localStorageService.get(customColorsKey);
             if (tmp === null)
                 tmp = [];
             var newColor = {
@@ -230,12 +275,12 @@ define(['angular'], function (angular) {
                 tmp.push(newColor);
             }
 
-            localStorageService.set('customColors', tmp);
+            localStorageService.set(customColorsKey, tmp);
         };
 
 
         this.removeCustomColor = function (hexColor) {
-            var tmp = localStorageService.get('customColors');
+            var tmp = localStorageService.get(customColorsKey);
             if (tmp === null)
                 tmp = [];
             var tmpNew = [];
@@ -246,7 +291,7 @@ define(['angular'], function (angular) {
             });
 
 
-            localStorageService.set('customColors', tmpNew);
+            localStorageService.set(customColorsKey, tmpNew);
         };
 
         this.getImageFromModelId = function (modelid) {
@@ -311,6 +356,14 @@ define(['angular'], function (angular) {
 
         this.getHexColor = function (gamut, xy, bri) {
             return "#" + ColorService.CIE1931ToHex(gamut, xy[0], xy[1], bri);
+        };
+
+        this.getLightById = function (key) {
+            var id = parseInt(key);
+            console.log(id, enrichedLightInfos);
+            var light = enrichedLightInfos[id];
+            light.id = id;
+            return light;
         };
 
         var getRefreshedLightInfos = function () {

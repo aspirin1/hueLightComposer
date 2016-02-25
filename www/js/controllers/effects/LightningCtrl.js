@@ -18,16 +18,6 @@ define(function () {
             }
         };
 
-        DataService.getEnrichedLightInfos().then(function (data) {
-            var tmp = [];
-            angular.forEach(data, function (value, key) {
-                value.id = key;
-                tmp.push(value);
-            });
-            $scope.allLights = tmp;
-        });
-
-
         $scope.effectName = $filter('translate')('Effect_Lightning');
 
 
@@ -36,7 +26,7 @@ define(function () {
             var timeInMs = parseInt($scope.sliderOptions.start[0]) * 1000;
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
-                    var lightId = parseInt(UtilityService.getLightById($scope.allLights, key).id);
+                    var lightId = parseInt(key);
                     EffectService.startLightning(lightId, timeInMs, $scope.scrambleColors.state);
                 }
             });

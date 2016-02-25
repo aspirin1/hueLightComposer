@@ -6,8 +6,11 @@ define(function () {
     function ctrl($ionicLoading, $scope, $state, $filter, $interval, $ionicModal, $ionicPopover, $ionicListDelegate, DataService, HueService, UtilityService, ColorService) {
         console.info("ColorsCtrl init");
 
-        $ionicLoading.show({
-            template: 'Loading...'
+        $scope.$on("$ionicView.beforeEnter", function () {
+            $ionicLoading.show({
+                template: 'Loading...'
+            });
+            getAllColors();
         });
 
         $scope.filter = {
@@ -90,11 +93,13 @@ define(function () {
             reloadSorting();
         };
 
-        DataService.getAllColors().then(function (colors) {
-            $scope.colors = colors;
-            reloadSorting();
-            $ionicLoading.hide();
-        });
+        var getAllColors = function () {
+            DataService.getAllColors().then(function (colors) {
+                $scope.colors = colors;
+                reloadSorting();
+                $ionicLoading.hide();
+            });
+        };
 
         DataService.getEnrichedLightInfos().then(function (data) {
             var tmp = [];
@@ -151,14 +156,7 @@ define(function () {
         $scope.openCopyToModal = function (color) {
             console.info(color);
             $scope.modalColor = color;
-
-            $ionicModal.fromTemplateUrl('copyto-modal.html', {
-                scope: $scope,
-                animation: 'slide-in-up'
-            }).then(function (modal) {
-                $scope.copyToModal = modal;
-                $scope.copyToModal.show();
-            });
+            $scope.copyToModal.show();
         };
 
         $scope.closeCopyToModal = function () {
@@ -199,14 +197,23 @@ define(function () {
             $scope.closeCopyToModal();
         };
 
+        $ionicModal.fromTemplateUrl('copyto-modal.html', {
+            scope: $scope,
+            //animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.copyToModal = modal;
+        });
+
         $ionicPopover.fromTemplateUrl('filter-popover.html', {
             scope: $scope,
+            animation: 'slide-in-down'
         }).then(function (popover) {
             $scope.popover = popover;
         });
 
         $ionicPopover.fromTemplateUrl('sort-popover.html', {
             scope: $scope,
+            animation: 'slide-in-down'
         }).then(function (popover) {
             $scope.sortPopover = popover;
         });

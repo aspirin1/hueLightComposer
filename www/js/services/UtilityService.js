@@ -1,10 +1,122 @@
-/*global define, console */
+/*global define, console, navigator, cordova, window */
 
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function ($filter, $timeout, DataService) {
+    var factory = function ($q, $filter, $timeout, DataService) {
         var self = this;
+
+        this.getAndStorePictureCamera = function () {
+            return self.getAndStorePicture({
+                quality: 75,
+                targetWidth: 320,
+                targetHeight: 320,
+                sourceType: navigator.camera.PictureSourceType.CAMERA, //0=PHOTOLIBRARY;1=CAMERA
+                saveToPhotoAlbum: false
+            });
+        };
+
+        this.getAndStorePictureAlbum = function () {
+            return self.getAndStorePicture({
+                quality: 75,
+                targetWidth: 320,
+                targetHeight: 320,
+                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, //0=PHOTOLIBRARY;1=CAMERA;2=SAVEDPHOTOALBUM
+                saveToPhotoAlbum: false
+            });
+        };
+
+        this.getAndStorePicture = function (options) {
+            var usedOptions = {
+                quality: 75,
+                targetWidth: 320,
+                targetHeight: 320,
+                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, //0=PHOTOLIBRARY;1=CAMERA
+                saveToPhotoAlbum: false
+            };
+
+            if (angular.isDefined(options)) {
+                usedOptions = options;
+            }
+            console.log(usedOptions);
+
+            return self.getPicture(usedOptions).then(function (imageURI) {
+                console.log(imageURI);
+                var defered = $q.defer();
+
+                $timeout(createFileEntry, 0, false, imageURI);
+                return defered.promise;
+
+                function createFileEntry(fileURI) {
+                    window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+                }
+
+                function copyFile(fileEntry) {
+                    var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+                    var newName = makeid() + name;
+
+                    console.log(newName, cordova.file.dataDirectory);
+                    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
+                            fileEntry.copyTo(
+                                fileSystem2,
+                                newName,
+                                onCopySuccess,
+                                fail
+                            );
+                        },
+                        fail);
+                }
+
+                function onCopySuccess(entry) {
+                    console.log(entry);
+                    defered.resolve(entry.name);
+                    //                    $scope.$apply(function () {
+                    //                        $scope.images.push(entry.nativeURL);
+                    //                    });
+                    //$scope.lastPhoto = "" + imageURI;
+                }
+
+                function fail(error) {
+                    console.error("fail: " + error.code);
+                }
+
+                function makeid() {
+                    var text = "";
+                    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                    for (var i = 0; i < 5; i++) {
+                        text += possible.charAt(Math.floor(Math.random() * possible.length));
+                    }
+                    return text;
+                }
+
+
+
+
+            }, function (err) {
+                console.err(err);
+            });
+        };
+
+        this.getPicture = function (options) {
+            var q = $q.defer();
+
+            navigator.camera.getPicture(function (result) {
+                q.resolve(result);
+            }, function (err) {
+                q.reject(err);
+            }, options);
+
+            return q.promise;
+        };
+
+        this.getUrlForImage = function (imageName) {
+            if (angular.isDefined(imageName)) {
+                var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+                var trueOrigin = cordova.file.dataDirectory + name;
+                return trueOrigin;
+            }
+        };
 
         this.getLightById = function (allLights, id) {
             for (var i = 0; i < allLights.length; i++) {
@@ -74,6 +186,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ["$filter", "$timeout", "DataService"];
+    factory.$inject = ['$q', "$filter", "$timeout", "DataService"];
     return factory;
 });

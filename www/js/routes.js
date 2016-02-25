@@ -3,6 +3,13 @@
 define(['app'], function (app) {
     'use strict';
 
+    app.config([
+    '$compileProvider',
+    function ($compileProvider)
+        {
+            $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob):|data:image\//);
+    }]);
+
     app.config(['$translateProvider', function ($translateProvider) {
 
         $translateProvider.useStaticFilesLoader({
@@ -27,8 +34,8 @@ define(['app'], function (app) {
     app.config(['$ionicConfigProvider', function ($ionicConfigProvider) {
         $ionicConfigProvider.backButton.previousTitleText(false).text('');
         $ionicConfigProvider.platform.android.navBar.alignTitle('middle');
-        $ionicConfigProvider.views.forwardCache(false);
-        $ionicConfigProvider.views.maxCache(0);
+        //$ionicConfigProvider.views.forwardCache(false);
+        //$ionicConfigProvider.views.maxCache(0);
         $ionicConfigProvider.tabs.position("bottom");
         $ionicConfigProvider.tabs.style("striped");
     }]);

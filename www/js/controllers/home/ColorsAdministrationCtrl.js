@@ -6,8 +6,11 @@ define(function () {
     function ctrl($ionicLoading, $scope, $timeout, DataService) {
         console.info("ColorsAdministrationCtrl init");
 
-        $ionicLoading.show({
-            template: 'Loading...'
+        $scope.$on("$ionicView.beforeEnter", function () {
+            $ionicLoading.show({
+                template: 'Loading...'
+            });
+            loadOwnColors();
         });
 
         var loadOwnColors = function () {
@@ -16,8 +19,6 @@ define(function () {
                 $ionicLoading.hide();
             });
         };
-        loadOwnColors();
-
 
         $scope.removeColor = function (color) {
             DataService.removeCustomColor(color.hexColor);

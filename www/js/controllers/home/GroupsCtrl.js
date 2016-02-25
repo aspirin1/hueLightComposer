@@ -6,6 +6,11 @@ define(function () {
     function ctrl($scope, $state, $interval, $ionicModal, DataService, HueService, UtilityService) {
         console.info("GroupsCtrl init");
 
+        $scope.$on("$ionicView.beforeEnter", function () {
+            refreshLightList();
+            checkIfAtLeastOneLightIsOn();
+        });
+
         $scope.atLeastOneLightOn = false;
         $scope.changeOnOffGroup0 = function (newState) {
             DataService.getEnrichedLightInfos(false).then(function (data) {
@@ -62,31 +67,25 @@ define(function () {
                 $scope.lightGroups = lightGroups;
                 $scope.rooms = rooms;
 
-                window.setTimeout(checkIfAtLeastOneLightIsOn, 1000);
+                //window.setTimeout(checkIfAtLeastOneLightIsOn, 1000);
             });
         };
-
-        refreshLightList();
-        checkIfAtLeastOneLightIsOn();
-
-
 
         $ionicModal.fromTemplateUrl('createGroup-modal.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.createGroupModal = modal;
+        });
 
+        $scope.openCreateGroupModal = function () {
             $scope.newGroup = {};
             $scope.newGroup.selectedGroupType = "lightGroup";
             $scope.newGroup.name = "";
             $scope.createGroupSelection = {};
-            DataService.getEnrichedLightInfos(true).then(function (data) {
-                $scope.allLights = data;
-            });
-        });
-
-        $scope.openCreateGroupModal = function () {
+            //            DataService.getEnrichedLightInfos(true).then(function (data) {
+            //                $scope.allLights = data;
+            //            });
             $scope.createGroupModal.show();
         };
         $scope.closeCreateGroupModal = function () {

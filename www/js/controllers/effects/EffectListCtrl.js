@@ -5,13 +5,13 @@ define(function () {
 
     function ctrl($scope, $state, $translate, ConfigService, DataService) {
 
-        $scope.stopAllEffects = function () {
-            DataService.getEnrichedLightInfos().then(function (data) {
-                angular.forEach(data, function (value, key) {
-                    DataService.stopEffect(key);
-                });
-            });
-        };
+        //        $scope.stopAllEffects = function () {
+        //            DataService.getEnrichedLightInfos().then(function (data) {
+        //                angular.forEach(data, function (value, key) {
+        //                    DataService.stopEffect(key);
+        //                });
+        //            });
+        //        };
     }
 
     ctrl.$inject = ['$scope', '$state', '$translate', 'ConfigService', 'DataService'];

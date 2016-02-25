@@ -31,15 +31,6 @@ define(function () {
             }
         };
 
-        DataService.getEnrichedLightInfos().then(function (data) {
-            var tmp = [];
-            angular.forEach(data, function (value, key) {
-                value.id = key;
-                tmp.push(value);
-            });
-            $scope.allLights = tmp;
-        });
-
         $scope.test = {};
         $scope.test.maxTimeBetween = 10;
         $scope.copySelection = {};
@@ -52,8 +43,8 @@ define(function () {
 
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
-                    var light = UtilityService.getLightById($scope.allLights, key);
-                    var lightId = parseInt(light.id);
+                    var light = DataService.getLightById(key);
+                    var lightId = light.id;
                     var color1xy;
                     var color2xy;
                     if (color1 != "#000000") {

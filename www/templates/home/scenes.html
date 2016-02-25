@@ -6,8 +6,9 @@
     </ion-nav-buttons>
 
     <ion-content has-header="true" has-tabs="true">
+        <img ng-src="{{urlForImage(lastPhoto)}}" />
         <ul class="list">
-            <li ng-repeat="scene in allScenes | filter:{name:searchFilter}" class="item item-button-right">
+            <li ng-repeat="scene in allScenes | filter:{name:searchFilter}" class="item item-button-right" ng-click="test()">
                 {{scene.name}}
                 <div class="buttons">
                     <button class="button" ng-click="deleteScene(scene.id)">
@@ -17,6 +18,7 @@
                         {{'SINGLE_On' |translate}}
                     </button>
                 </div>
-            </li></ul>
+            </li>
+        </ul>
     </ion-content>
 </ion-view>

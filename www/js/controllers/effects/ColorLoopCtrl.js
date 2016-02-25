@@ -6,14 +6,6 @@ define(function () {
     function ctrl($scope, $filter, DataService, EffectService, UtilityService) {
         console.log("ColorLoopCtrl");
 
-        function getLightById(key) {
-            for (var i = 0; i < $scope.allLights.length; i++) {
-                if ($scope.allLights[i].id === key) {
-                    return $scope.allLights[i];
-                }
-            }
-        }
-
         $scope.sliderOptions = {
             start: [10],
             connect: 'lower',
@@ -24,14 +16,6 @@ define(function () {
             }
         };
 
-        DataService.getEnrichedLightInfos().then(function (data) {
-            var tmp = [];
-            angular.forEach(data, function (value, key) {
-                value.id = key;
-                tmp.push(value);
-            });
-            $scope.allLights = tmp;
-        });
         $scope.effectName = $filter('translate')('Effect_ColorLoop');
 
         $scope.test = {};
@@ -41,7 +25,9 @@ define(function () {
             var timeInMs = parseInt($scope.sliderOptions.start[0]) * 1000;
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
-                    var lightId = parseInt(getLightById(key).id);
+                    //var lightId = parseInt(getLightById(key).id);
+                    //var lightId = DataService.getLightById(key).id;
+                    var lightId = key;
                     EffectService.startColorLoop(lightId, timeInMs);
                 }
             });

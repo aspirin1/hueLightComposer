@@ -50,6 +50,11 @@
                 <h1 class="title">{{'Home_LightList_CreateScene' | translate}}</h1>
             </ion-header-bar>
             <ion-content>
+                <img ng-src="{{urlForImage(lastPhoto)}}" />
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="scenePictureAlbum()">Album</button>
+                    <button class="button button-positive" ng-click="scenePictureCamera()">Camera</button>
+                </div>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">{{'SINGLE_Name' | translate}}</span>
                     <input type="text" ng-model="newScene.name" name='sceneName' />

@@ -5,7 +5,21 @@ define(function () {
     function ctrl($rootScope, $scope, $ionicLoading, $interval, $ionicModal, $ionicPopover, $filter, DataService, HueService, UtilityService, $q, ColorService) {
         console.info("HueLightDetailsCtrl init", $scope.lightId);
 
+        var refreshLightInBackground;
+        var unregisterEvent;
 
+        $scope.$on("$ionicView.beforeEnter", function () {
+            unregisterEvent = $rootScope.$on('ColorChanged', function (event, color) {
+                HueService.changeLightToHexColor($scope.lightId, $scope.light.gamut, color);
+            });
+            refreshLightInfo();
+            refreshLightInBackground = $interval(refreshLightInfo, 3000, 0, true);
+        });
+
+        $scope.$on("$destroy", function () {
+            unregisterEvent();
+            $interval.cancel(refreshLightInBackground);
+        });
 
         var refreshLightInfo = function () {
             DataService.getEnrichedLightInfo($scope.lightId).then(function (data) {
@@ -46,8 +60,7 @@ define(function () {
                 };
             });
         };
-        var refreshLightInBackground = $interval(refreshLightInfo, 3000, 0, true);
-        refreshLightInfo();
+
 
 
         $scope.brightnessSliderEvents = {
@@ -92,11 +105,6 @@ define(function () {
 
             return retVal;
         };
-
-        var unregisterEvent = $rootScope.$on('ColorChanged', function (event, color) {
-            console.log(color);
-            HueService.changeLightToHexColor($scope.lightId, $scope.light.gamut, color);
-        });
 
         $scope.getEffectRunning = function () {
             var eff = DataService.getEffect($scope.lightId);
@@ -365,12 +373,7 @@ define(function () {
             $scope.popover = popover;
         });
 
-        $scope.$on("$destroy", function () {
-            //$scope.renameModal.remove();
-            //$scope.copyToModal.remove();
-            unregisterEvent();
-            $interval.cancel(refreshLightInBackground);
-        });
+
 
     }
 

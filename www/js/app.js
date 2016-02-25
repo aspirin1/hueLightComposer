@@ -32,6 +32,8 @@ define(['angular',
             'ya.nouislider',
         ]);
 
+
+
         return app;
 
     });
