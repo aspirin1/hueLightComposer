@@ -46,13 +46,9 @@ define(['angular'], function (angular) {
         this.getCustomScenes = function () {
             var tmp = localStorageService.get(customScenesKey);
             if (tmp === null)
-                tmp = {};
+                tmp = [];
 
-            var ret = [];
-            angular.forEach(tmp, function (value, key) {
-                ret.push(key);
-            });
-            return ret;
+            return tmp;
         };
 
 

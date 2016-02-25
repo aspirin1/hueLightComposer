@@ -6,6 +6,7 @@ define(function () {
     function ctrl($scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService, $q) {
         console.info("ScenesCtrl init");
         var filterBarInstance;
+        $scope.selectedTab = 1;
 
         $scope.$on("$ionicView.beforeEnter", function () {
             refresh();
@@ -54,6 +55,9 @@ define(function () {
                 });
                 $scope.allScenes = ret;
             });
+
+            $scope.customScenes = DataService.getCustomScenes();
+            console.log($scope.customScenes);
         };
     }
 

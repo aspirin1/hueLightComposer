@@ -1,4 +1,39 @@
+.scene {
+    border: 1px solid #fff;
+    margin: 0px;
+    border-radius: 6px;
+    float: left;
+    /*width: 20%;*/
+    height: 0px;
+    padding: 0px 0px 25% 0px;
+    position: relative;
+}
 
+.innerTextScene {
+    color: ghostwhite;
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 400;
+    position: absolute;
+    bottom: 45%;
+    text-align: center;
+    text-shadow: 1px 1px 1px #555, -1px -1px 1px #555, -1px 1px 1px #555, 1px -1px 1px #555, 0px 1px 1px #555, -1px 0px 1px #555, 1px 0px 1px #555, 0px -1px 1px #555;
+    width: 100%;
+    z-index: 9;
+}
+
+.sceneLampInfo {
+    color: ghostwhite;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: 400;
+    position: absolute;
+    bottom: 25%;
+    text-align: center;
+    text-shadow: 1px 1px 1px #555, -1px -1px 1px #555, -1px 1px 1px #555, 1px -1px 1px #555, 0px 1px 1px #555, -1px 0px 1px #555, 1px 0px 1px #555, 0px -1px 1px #555;
+    width: 100%;
+    z-index: 9;
+}
 
 .colorScrollSettingsIcon {
     font-size: 35px;
@@ -43,9 +78,6 @@ ion-popover-view.fit ion-content {
     width: 30px;
     box-shadow: 4px 4px 5px #888888;
 }
-
-
-
 
 .app-light {}
 
