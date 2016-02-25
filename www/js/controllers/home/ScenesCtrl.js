@@ -23,6 +23,10 @@ define(function () {
             return false;
         }
 
+        $scope.getUrlSrc = function (imageUrl) {
+            return UtilityService.getUrlForImage(imageUrl);
+        };
+
         $scope.showFilterBar = function () {
             filterBarInstance = $ionicFilterBar.show({
                 items: $scope.allScenes,
