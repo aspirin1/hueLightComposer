@@ -1,4 +1,4 @@
-/*global define, require, console, cordova, navigator, document */
+/*global define, require, console, cordova, navigator, document, Firebase */
 define(['angular',
         'angularLocalStorage',
         'providers/providers',
@@ -12,6 +12,7 @@ define(['angular',
         'angularTranslateLoaderStaticFile',
         'ionicFilterbar',
         'noUiSliderAngular',
+        'angularfire'
        ],
 
     function (angular) {
@@ -30,8 +31,28 @@ define(['angular',
             'pascalprecht.translate',
             'jett.ionic.filter.bar',
             'ya.nouislider',
+            'firebase'
         ]);
 
+        //        app.factory('Auth', function ($firebaseAuth, FirebaseUrl) {
+        //            var usersRef = new Firebase(FirebaseUrl);
+        //            return $firebaseAuth(usersRef);
+        //        });
+
+        //        app.factory('User', function ($firebaseArray, $firebaseObject, FirebaseUrl, DataService) {
+        //            var authData = DataService.getUserAuthData();
+        //            if (authData !== null) {
+        //                var uid = authData.uid;
+        //
+        //                var usersRef = new Firebase(FirebaseUrl + 'users');
+        //
+        //
+        //                this.getUser = function () {
+        //                    return $firebaseObject(usersRef.child(uid));
+        //                };
+        //            }
+        //            return this;
+        //        });
 
 
         return app;

@@ -12,6 +12,19 @@ define(['angular'], function (angular) {
         var favoriteColorsKey = "favoriteColors";
         var customColorsKey = "customColors";
         var customScenesKey = "customScenes";
+        var userAuthData = null;
+
+        this.setUserAuthData = function (auth) {
+            userAuthData = auth;
+        };
+
+        this.getUserAuthData = function () {
+            return userAuthData;
+        };
+
+        this.isUserLoggedIn = function () {
+            return self.getUserAuthData() !== null;
+        };
 
         this.addCustomScene = function (id, name, lights, image) {
             var tmp = localStorageService.get(customScenesKey);

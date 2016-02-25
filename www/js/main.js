@@ -13,7 +13,8 @@ require.config({
         angularTranslate: '../bower_components/angular-translate/angular-translate.min',
         angularTranslateLoaderStaticFile: '../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min',
         noUiSliderAngular: '../res/nouislider-angular-master/nouislider',
-        //noUiSlider: '../bower_components/nouislider/distribute/nouislider.min',
+        firebase: '../bower_components/firebase/firebase',
+        angularfire: '../bower_components/angularfire/dist/angularfire.min',
     },
     shim: {
         angular: {
@@ -50,6 +51,9 @@ require.config({
         noUiSliderAngular: {
             deps: ['angular']
         },
+        angularfire: {
+            deps: ['firebase']
+        }
     },
     //
     //    priority: [

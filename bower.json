@@ -10,6 +10,7 @@
     "ionic-filter-bar": "1.1.1",
     "icomoon": "0.1.0",
     "material-design-iconic-font": "2.2.0",
-    "nouislider": "8.2.1"
+    "nouislider": "8.2.1",
+    "angularfire": "1.1.4"
   }
 }

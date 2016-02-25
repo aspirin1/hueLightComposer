@@ -8,6 +8,9 @@ define(function (require) {
         config = require('config'),
         services = angular.module('app.services', ['app.config']);
 
+    services.factory('Auth', require('services/Service/Auth'));
+    services.factory('User', require('services/Service/User'));
+
     services.factory('LightCommandService', require('services/LightCommandService'));
     services.factory('EffectService', require('services/EffectService'));
     services.factory('ColorService', require('services/ColorService'));
