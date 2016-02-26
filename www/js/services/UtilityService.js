@@ -6,6 +6,8 @@ define(['angular'], function (angular) {
     var factory = function ($q, $filter, $timeout, DataService) {
         var self = this;
 
+
+
         this.getAndStorePictureCamera = function () {
             return self.getAndStorePicture({
                 quality: 75,

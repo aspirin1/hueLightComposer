@@ -7,15 +7,15 @@ define(function () {
 
         $scope.theme = function () {
             var design = ConfigService.getDesign();
+            if (angular.isDefined(design) && angular.isDefined(design.key))
+                return design.key;
 
-            if (angular.isUndefined(design) || design === null) {
-                design = "light";
+            if (angular.isUndefined(design) || design === null || angular.isUndefined(design.key) || typeof (design) === "string") {
+                design = {};
+                design.key = "light";
             }
 
-            if (design === null)
-                design = "light";
-
-            return design;
+            return design.key;
         };
     }
 

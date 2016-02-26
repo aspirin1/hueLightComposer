@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function (HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
+    var factory = function (HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
         var self = this;
         var effectState = {};
         var isStoppingState = {};
@@ -30,11 +30,14 @@ define(['angular'], function (angular) {
             var tmp = localStorageService.get(customScenesKey);
             if (tmp === null)
                 tmp = [];
+
             var newScene = {
-                id: id,
-                name: name,
-                lights: lights,
-                image: image
+                'uid': HelperService.getNewGuid(),
+                'changedAt': HelperService.getTime(),
+                'id': id,
+                'name': name,
+                'lights': lights,
+                'image': image
             };
 
             tmp.push(newScene);
@@ -66,10 +69,14 @@ define(['angular'], function (angular) {
 
 
         this.isColorFavorite = function (hexColor) {
+            var searchText = hexColor;
+            if (searchText.length === 7)
+                searchText = searchText.substring(1);
+
             var tmp = localStorageService.get(favoriteColorsKey);
             if (tmp === null)
                 tmp = {};
-            return angular.isDefined(tmp[hexColor]);
+            return angular.isDefined(tmp[searchText]);
         };
 
         this.getFavorites = function () {
@@ -79,20 +86,28 @@ define(['angular'], function (angular) {
 
             var ret = [];
             angular.forEach(tmp, function (value, key) {
-                ret.push(key);
+                ret.push(value.hexColor);
             });
             return ret;
         };
 
         this.toggleFavorite = function (hexColor) {
+            var searchText = hexColor;
+            if (searchText.length === 7)
+                searchText = searchText.substring(1);
+
             var tmp = localStorageService.get(favoriteColorsKey);
             if (tmp === null)
                 tmp = {};
 
-            if (angular.isDefined(tmp[hexColor])) {
-                delete tmp[hexColor];
+            if (angular.isDefined(tmp[searchText])) {
+                delete tmp[searchText];
             } else {
-                tmp[hexColor] = hexColor;
+                tmp[searchText] = {
+                    'uid': HelperService.getNewGuid(),
+                    'changedAt': HelperService.getTime(),
+                    'hexColor': hexColor
+                };
             }
 
             localStorageService.set(favoriteColorsKey, tmp);
@@ -268,8 +283,11 @@ define(['angular'], function (angular) {
             var tmp = localStorageService.get(customColorsKey);
             if (tmp === null)
                 tmp = [];
+
             var newColor = {
-                hexColor: hexColor
+                'uid': HelperService.getNewGuid(),
+                'changedAt': HelperService.getTime(),
+                'hexColor': hexColor
             };
 
             var containsColorAlready = false;
@@ -592,6 +610,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService'];
+    factory.$inject = ['HelperService', 'HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService'];
     return factory;
 });

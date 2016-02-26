@@ -3,14 +3,11 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function (localStorageService) {
+    var factory = function (localStorageService, HelperService) {
 
         var self = this;
         var bridgeUrl = null;
         var userId = null;
-        var language = null;
-        var design = null;
-
 
         this.getBridgeUrl = function () {
             if (bridgeUrl === null)
@@ -32,26 +29,30 @@ define(['angular'], function (angular) {
             localStorageService.set('userId', userIdent);
         };
         this.getLanguage = function () {
-            if (language === null)
-                language = localStorageService.get('language');
-            return language;
+            return localStorageService.get('language');
         };
         this.setLanguage = function (language) {
-            language = language;
-            localStorageService.set('language', language);
+            var languageNew = {
+                'uid': HelperService.getNewGuid(),
+                'changedAt': HelperService.getTime(),
+                'key': language
+            };
+            localStorageService.set('language', languageNew);
         };
         this.getDesign = function () {
-            if (design === null)
-                design = localStorageService.get('design');
-            return design;
+            return localStorageService.get('design');
         };
         this.setDesign = function (tmp) {
-            design = tmp;
-            localStorageService.set('design', tmp);
+            var designNew = {
+                'uid': HelperService.getNewGuid(),
+                'changedAt': HelperService.getTime(),
+                'key': tmp
+            };
+            localStorageService.set('design', designNew);
         };
         return this;
     };
 
-    factory.$inject = ['localStorageService'];
+    factory.$inject = ['localStorageService', 'HelperService'];
     return factory;
 });

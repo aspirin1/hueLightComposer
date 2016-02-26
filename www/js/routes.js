@@ -25,7 +25,7 @@ define(['app'], function (app) {
 
         var lang = window.localStorage['ls.language'];
         if (typeof (lang) !== 'undefined') {
-            $translateProvider.preferredLanguage(JSON.parse(lang));
+            $translateProvider.preferredLanguage(JSON.parse(lang).key);
         }
         //$translateProvider.useSanitizeValueStrategy('sanitize');
 

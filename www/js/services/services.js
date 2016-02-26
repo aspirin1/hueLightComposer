@@ -19,6 +19,7 @@ define(function (require) {
     services.factory('HueService', require('services/HueService'));
     services.factory('DataService', require('services/DataService'));
     services.factory('UtilityService', require('services/UtilityService'));
+    services.factory('HelperService', require('services/HelperService'));
 
     return services;
 
