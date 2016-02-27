@@ -1,4 +1,4 @@
-/*global define, console, navigator, cordova, window */
+/*global define, console, navigator, cordova, window, FileReader,LocalFileSystem */
 
 define(['angular'], function (angular) {
     "use strict";
@@ -6,7 +6,60 @@ define(['angular'], function (angular) {
     var factory = function ($q, $filter, $timeout, DataService) {
         var self = this;
 
+        this.getBase64FromImageUrl = function (imageUrl) {
+            console.log(imageUrl, cordova.file.dataDirectory);
+            var defer = $q.defer();
+            window.resolveLocalFileSystemURL(cordova.file.dataDirectory + imageUrl, function (fileEntry) {
+                    fileEntry.file(function (file) {
+                        var reader = new FileReader();
+                        reader.onloadend = function (evt) {
+                            defer.resolve({
+                                'imageUrl': imageUrl,
+                                'image64': evt.target.result
+                            });
+                        };
+                        reader.readAsDataURL(file);
+                    }, fail);
+                },
+                fail);
+            return defer.promise;
+        };
 
+
+        this.writeBase64ImageToFilesSystem = function (imageUrl, image64) {
+            console.log(imageUrl, image64);
+            var defer = $q.defer();
+            window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dir) {
+                dir.getFile(imageUrl, {
+                    create: true,
+                    exclusive: false
+                }, function (fileEntry) {
+                    fileEntry.createWriter(function (writer) {
+
+                        function _base64ToArrayBuffer(base64) {
+                            var binary_string = window.atob(base64);
+                            var len = binary_string.length;
+                            var bytes = new Uint8Array(len);
+                            for (var i = 0; i < len; i++) {
+                                bytes[i] = binary_string.charCodeAt(i);
+                            }
+                            return bytes.buffer;
+                        }
+
+                        var replaced = image64.replace('data:image/jpeg;base64,', '');
+                        var imageBin = _base64ToArrayBuffer(replaced);
+
+                        writer.onwriteend = function (evt) {
+                            console.log("written", evt);
+                            defer.resolve(evt);
+                        };
+                        writer.write(imageBin);
+                    }, fail);
+                }, fail);
+            }, fail);
+
+            return defer.promise;
+        };
 
         this.getAndStorePictureCamera = function () {
             return self.getAndStorePicture({
@@ -59,6 +112,7 @@ define(['angular'], function (angular) {
 
                     console.log(newName, cordova.file.dataDirectory);
                     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
+                            console.log(fileEntry);
                             fileEntry.copyTo(
                                 fileSystem2,
                                 newName,
@@ -78,9 +132,7 @@ define(['angular'], function (angular) {
                     //$scope.lastPhoto = "" + imageURI;
                 }
 
-                function fail(error) {
-                    console.error("fail: " + error.code);
-                }
+
 
                 function makeid() {
                     var text = "";
@@ -100,6 +152,9 @@ define(['angular'], function (angular) {
             });
         };
 
+        function fail(error) {
+            console.error("fail: " + error.code, error);
+        }
         this.getPicture = function (options) {
             var q = $q.defer();
 

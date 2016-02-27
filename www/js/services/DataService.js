@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function (HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
+    var factory = function (User,HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
         var self = this;
         var effectState = {};
         var isStoppingState = {};
@@ -12,18 +12,10 @@ define(['angular'], function (angular) {
         var favoriteColorsKey = "favoriteColors";
         var customColorsKey = "customColors";
         var customScenesKey = "customScenes";
-        var userAuthData = null;
 
-        this.setUserAuthData = function (auth) {
-            userAuthData = auth;
-        };
-
-        this.getUserAuthData = function () {
-            return userAuthData;
-        };
 
         this.isUserLoggedIn = function () {
-            return self.getUserAuthData() !== null;
+            return User.getUserAuthData() !== null;
         };
 
         this.addCustomScene = function (id, name, lights, image) {
@@ -102,12 +94,14 @@ define(['angular'], function (angular) {
 
             if (angular.isDefined(tmp[searchText])) {
                 delete tmp[searchText];
+                User.deleteFavoriteColor(searchText);
             } else {
                 tmp[searchText] = {
                     'uid': HelperService.getNewGuid(),
                     'changedAt': HelperService.getTime(),
                     'hexColor': hexColor
                 };
+                User.updateFavoriteColors(tmp);
             }
 
             localStorageService.set(favoriteColorsKey, tmp);
@@ -610,6 +604,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['HelperService', 'HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService'];
+    factory.$inject = ['User','HelperService', 'HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService'];
     return factory;
 });
