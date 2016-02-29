@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function (User,HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
+    var factory = function (User, HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
         var self = this;
         var effectState = {};
         var isStoppingState = {};
@@ -21,7 +21,7 @@ define(['angular'], function (angular) {
         this.addCustomScene = function (id, name, lights, image) {
             var tmp = localStorageService.get(customScenesKey);
             if (tmp === null)
-                tmp = [];
+                tmp = {};
 
             var newScene = {
                 'uid': HelperService.getNewGuid(),
@@ -32,7 +32,12 @@ define(['angular'], function (angular) {
                 'image': image
             };
 
-            tmp.push(newScene);
+            if (angular.isUndefined(newScene.image)) {
+                newScene.image = null;
+            }
+
+            tmp[newScene.uid] = newScene;
+            User.updateCustomScene(newScene.uid, newScene);
 
             localStorageService.set(customScenesKey, tmp);
         };
@@ -40,13 +45,17 @@ define(['angular'], function (angular) {
         this.removeCustomScene = function (id) {
             var tmp = localStorageService.get(customScenesKey);
             if (tmp === null)
-                tmp = [];
-            var tmpNew = [];
-            angular.forEach(tmp, function (scene) {
+                tmp = {};
+
+            var tmpNew = {};
+            angular.forEach(tmp, function (scene, key) {
                 if (scene.id !== id) {
-                    tmpNew.push(scene);
+                    tmpNew[key] = scene;
+                } else {
+                    User.deleteCustomScene(scene.uid);
                 }
             });
+
 
             localStorageService.set(customScenesKey, tmpNew);
         };
@@ -54,9 +63,13 @@ define(['angular'], function (angular) {
         this.getCustomScenes = function () {
             var tmp = localStorageService.get(customScenesKey);
             if (tmp === null)
-                tmp = [];
+                tmp = {};
 
-            return tmp;
+            var ret = [];
+            angular.forEach(tmp, function (value, key) {
+                ret.push(value);
+            });
+            return ret;
         };
 
 
@@ -101,7 +114,7 @@ define(['angular'], function (angular) {
                     'changedAt': HelperService.getTime(),
                     'hexColor': hexColor
                 };
-                User.updateFavoriteColors(tmp);
+                User.updateFavoriteColors(searchText, tmp[searchText]);
             }
 
             localStorageService.set(favoriteColorsKey, tmp);
@@ -223,7 +236,7 @@ define(['angular'], function (angular) {
 
                 var customColors = localStorageService.get(customColorsKey);
 
-                angular.forEach(customColors, function (color) {
+                angular.forEach(customColors, function (color, key) {
                     color.isCustom = true;
                     allColors.push(color);
                 });
@@ -253,7 +266,7 @@ define(['angular'], function (angular) {
 
                 var customColors = localStorageService.get(customColorsKey);
 
-                angular.forEach(customColors, function (color) {
+                angular.forEach(customColors, function (color, key) {
                     color.isCustom = true;
                     allColors.push(color);
                 });
@@ -276,7 +289,7 @@ define(['angular'], function (angular) {
         this.addCustomColor = function (hexColor) {
             var tmp = localStorageService.get(customColorsKey);
             if (tmp === null)
-                tmp = [];
+                tmp = {};
 
             var newColor = {
                 'uid': HelperService.getNewGuid(),
@@ -285,7 +298,7 @@ define(['angular'], function (angular) {
             };
 
             var containsColorAlready = false;
-            angular.forEach(tmp, function (color) {
+            angular.forEach(tmp, function (color, key) {
                 if (color.hexColor === hexColor) {
                     containsColorAlready = true;
                     return;
@@ -293,7 +306,8 @@ define(['angular'], function (angular) {
             });
 
             if (containsColorAlready === false) {
-                tmp.push(newColor);
+                tmp[newColor.uid] = newColor;
+                User.updateUserCustomColor(newColor.uid, newColor);
             }
 
             localStorageService.set(customColorsKey, tmp);
@@ -303,13 +317,15 @@ define(['angular'], function (angular) {
         this.removeCustomColor = function (hexColor) {
             var tmp = localStorageService.get(customColorsKey);
             if (tmp === null)
-                tmp = [];
-            var tmpNew = [];
-            angular.forEach(tmp, function (color) {
+                tmp = {};
+
+            var tmpNew = {};
+            angular.forEach(tmp, function (color, key) {
                 if (color.hexColor !== hexColor) {
-                    tmpNew.push(color);
+                    tmpNew[key] = color;
                 }
             });
+            User.deleteUserCustomColor(hexColor);
 
 
             localStorageService.set(customColorsKey, tmpNew);
@@ -604,6 +620,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['User','HelperService', 'HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService'];
+    factory.$inject = ['User', 'HelperService', 'HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService'];
     return factory;
 });
