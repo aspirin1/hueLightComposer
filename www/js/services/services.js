@@ -10,6 +10,7 @@ define(function (require) {
 
     services.factory('Auth', require('services/Service/Auth'));
     services.factory('User', require('services/Service/User'));
+    services.factory('Synchronization', require('services/Service/Synchronization'));
 
     services.factory('LightCommandService', require('services/LightCommandService'));
     services.factory('EffectService', require('services/EffectService'));

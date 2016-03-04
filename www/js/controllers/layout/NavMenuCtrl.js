@@ -1,9 +1,9 @@
-/*global define, console, window*/
+/*global define, console, window, angular*/
 
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $ionicSideMenuDelegate, Auth, DataService, User) {
+    function ctrl($scope, $state, $ionicSideMenuDelegate, Auth, User, Synchronization) {
         $scope.authData = null;
 
         $scope.toggleLeftSideMenu = function () {
@@ -25,7 +25,7 @@ define(function () {
         };
 
         $scope.isLoggedIn = function () {
-            return (DataService.getUserAuthData() !== null);
+            return (User.getUserAuthData() !== null);
         };
 
         $scope.abc = function () {
@@ -50,14 +50,15 @@ define(function () {
             } else {
                 console.log(authData);
                 console.log('Logged in as', authData.uid);
+                Synchronization.start();
             }
             // This will display the user's name in our view
-            //$scope.authData = authData;
-            DataService.setUserAuthData(authData);
+            User.setUserAuthData(authData);
+
         });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$ionicSideMenuDelegate', 'Auth', 'DataService', 'User'];
+    ctrl.$inject = ['$scope', '$state', '$ionicSideMenuDelegate', 'Auth', 'User', 'Synchronization'];
     return ctrl;
 
 });

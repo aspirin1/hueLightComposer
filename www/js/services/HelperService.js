@@ -10,7 +10,7 @@ define(['angular'], function (angular) {
                     .toString(16)
                     .substring(1);
             }
-            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+            return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
         };
 
         this.getTime = function () {
