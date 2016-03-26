@@ -5,151 +5,272 @@ define(['angular'], function (angular) {
 
     var factory = function (User, localStorageService, UtilityService, $q) {
         var self = this;
+        var favoriteColorsKey = "favoriteColors";
+        var customColorsKey = "customColors";
+        var customScenesKey = "customScenes";
 
-        var getLatestChangedAtObj = function (obj) {
-            var latestChangedAt = null;
-            angular.forEach(obj, function (value, key) {
-                if (key.charAt(0) !== '$' && (latestChangedAt === null || value.changedAt > latestChangedAt))
-                    latestChangedAt = value.changedAt;
-            });
-            return latestChangedAt;
-        };
-
-        var getLatestChangedAtList = function (list) {
-            var latestChangedAt = null;
-            angular.forEach(list, function (value) {
-                if (latestChangedAt === null || value.changedAt > latestChangedAt)
-                    latestChangedAt = value.changedAt;
-            });
-            return latestChangedAt;
-        };
-
-        var doSynchroJob = function (remote_favoriteColors, lsKey) {
-            var local_favoriteColors = localStorageService.get(lsKey);
-            console.info(remote_favoriteColors);
-
-            var updateLocalFromServer = function () {
-                console.log("update local from server");
-                var tmp = {};
-                angular.forEach(remote_favoriteColors, function (value, key) {
-                    if (key.charAt(0) !== '$')
-                        tmp[key] = value;
-                });
-                localStorageService.set(lsKey, tmp);
-
-                if (lsKey === "customScenes") {
-                    var remote_userImages = User.getUserImages();
-                    remote_userImages.$loaded().then(function () {
-                        angular.forEach(tmp, function (scene) {
-                            if (scene.image !== null) {
-                                UtilityService.writeBase64ImageToFilesSystem(scene.image, remote_userImages[scene.image.replace('.jpg', '')].image64);
-                            }
-                        });
-                    });
-                }
-            };
-
-            var pushToServer = function () {
-                angular.forEach(local_favoriteColors, function (value, key) {
-                    remote_favoriteColors[key] = value;
-                });
-                remote_favoriteColors.$save();
-
-                if (lsKey === "customScenes") {
-                    var images = {};
-                    var imagePromises = [];
-                    angular.forEach(remote_favoriteColors, function (scene) {
-                        if (scene.image !== null) {
-                            var imagePromise = UtilityService.getBase64FromImageUrl(scene.image).then(function (data) {
-                                var imageWithoutFileExtension = data.imageUrl.replace('.jpg', '');
-                                images[imageWithoutFileExtension] = {
-                                    'imageUrl': data.imageUrl,
-                                    'image64': data.image64
-                                };
-                            });
-                            imagePromises.push(imagePromise);
-                        }
-                    });
-                    var user = User.getUser();
-                    $q.all(imagePromises).then(function () {
-                        user.images = images;
-                        user.$save();
-                    });
-                }
-            };
-
-            //no local data exists try loading from remote
-            if (angular.isUndefined(local_favoriteColors) || local_favoriteColors === null) {
-                updateLocalFromServer();
-            }
-            //initial post to server
-            else if (angular.isDefined(remote_favoriteColors.$value) && remote_favoriteColors.$value === null) {
-                pushToServer();
-            } else {
-                if (Object.keys(local_favoriteColors).length > 0) {
-                    var latestLocal = getLatestChangedAtObj(local_favoriteColors);
-                    var latestRemote = getLatestChangedAtObj(remote_favoriteColors);
-                    console.log(latestLocal, latestRemote);
-
-                    if (latestLocal > latestRemote) //new entry exists locally
-                    {
-                        pushToServer();
-                        //                        console.log("push data to server");
-                        //                        angular.forEach(local_favoriteColors, function (value, key) {
-                        //                            remote_favoriteColors[key] = value;
-                        //                        });
-                        //                        remote_favoriteColors.$save();
-                    } else if (latestRemote > latestLocal) //new entry exists remote
-                    {
-                        updateLocalFromServer();
-                    }
-                }
-            }
-        };
-
-        var favoriteColorsChanged = function () {
-            console.log("FavoriteColors changed", this, arguments);
-
-            var remote_favoriteColors = User.getUserFavoriteColors();
-            remote_favoriteColors.$loaded().then(function () {
-                doSynchroJob(remote_favoriteColors, 'favoriteColors');
-            });
-        };
-
-        var customColorsChanged = function () {
-            console.log("CustomColors changed", this, arguments);
-
-            var remote_favoriteColors = User.getUserCustomColors();
-            remote_favoriteColors.$loaded().then(function () {
-                doSynchroJob(remote_favoriteColors, 'customColors');
-            });
-        };
-
-        var customScenesChanged = function () {
-            console.log("CustomScenes changed", this, arguments);
-
-            var remote_favoriteColors = User.getUserCustomScenes();
-            remote_favoriteColors.$loaded().then(function () {
-                doSynchroJob(remote_favoriteColors, 'customScenes');
-            });
-        };
+        var localHistoryKey = "localHistory";
+        var lastSynchroKey = "lastSynchro";
+        var lastClientChangeKey = "lastClientChange";
 
         this.isUserLoggedIn = function () {
             return User.getUserAuthData() !== null;
+        };
+
+        var getLatestHistoryItem = function (remoteHistory) {
+            var latest = {
+                'time': -1
+            };
+            angular.forEach(remoteHistory, function (historyItem) {
+                if (historyItem.time > latest.time) latest = historyItem;
+            });
+            return latest;
         };
 
         this.start = function () {
             if (!self.isUserLoggedIn()) {
                 return;
             }
-            var user = User.getUser();
-            user.$loaded().then(function () {
-                console.log(user);
+
+            User.getUser().$watch(function () {
+                var remote_user = User.getUser();
+                remote_user.$loaded().then(function () {
+
+                    var lastClientChange = localStorageService.get(lastClientChangeKey);
+                    if (lastClientChange === null) {
+                        lastClientChange = 0;
+                    }
+
+                    var lastSynchronizedHistoryItem = localStorageService.get(lastSynchroKey);
+                    if (lastSynchronizedHistoryItem === null) {
+                        lastSynchronizedHistoryItem = 0;
+                    }
+
+                    if (angular.isUndefined(remote_user.history)) {
+                        remote_user.history = [];
+                    }
+
+
+                    var latestRemoteHistory = getLatestHistoryItem(remote_user.history);
+                    if (lastClientChange > latestRemoteHistory.time) //client has changes
+                    {
+                        console.info("client has changes which will be pushed to server");
+                        self.doSync();
+                    } else if (latestRemoteHistory.time > lastSynchronizedHistoryItem) //server has changes
+                    {
+                        console.info("server has changes which will be pulled to client");
+                        self.doSync();
+                    }
+                });
+            });
+        };
+
+        function groupBy(array, f) {
+            var groups = {};
+            array.forEach(function (o) {
+                var group = JSON.stringify(f(o));
+                groups[group] = groups[group] || [];
+                groups[group].push(o);
+            });
+            return Object.keys(groups).map(function (group) {
+                return groups[group];
+            });
+        }
+
+
+        var mergeClientAndRemoteHistory = function (clientHistory, remoteHistory) {
+            var mergedList = clientHistory;
+            angular.forEach(remoteHistory, function (value) {
+                mergedList.push({
+                    'type': value.type,
+                    'crud': value.crud,
+                    'uid': value.uid,
+                    'time': value.time
+                });
             });
 
-            User.getUserFavoriteColors().$watch(favoriteColorsChanged);
-            User.getUserCustomColors().$watch(customColorsChanged);
-            User.getUserCustomScenes().$watch(customScenesChanged);
+
+            var groupedByTypeAndIdList = groupBy(mergedList, function (item) {
+                return [item.type, item.uid];
+            });
+
+
+            var mergedHistoryList = [];
+            angular.forEach(groupedByTypeAndIdList, function (group) {
+                if (group.length === 1) {
+                    mergedHistoryList.push(group[0]);
+                } else {
+                    var latest = {
+                        'time': -1
+                    };
+                    angular.forEach(group, function (groupedItem) {
+                        if (groupedItem.time > latest.time) latest = groupedItem;
+                    });
+                    mergedHistoryList.push(latest);
+                }
+            });
+
+            return mergedHistoryList;
+        };
+
+        this.doSync = function () {
+            console.info("Start synchronization process!");
+            if (!self.isUserLoggedIn()) {
+                return;
+            }
+
+            var lastClientChange = localStorageService.get(lastClientChangeKey);
+            if (lastClientChange === null) {
+                lastClientChange = 0;
+            }
+
+            var lastSynchronizedHistoryItem = localStorageService.get(lastSynchroKey);
+            if (lastSynchronizedHistoryItem === null) {
+                lastSynchronizedHistoryItem = 0;
+            }
+
+            var clientHistory = localStorageService.get(localHistoryKey);
+            if (clientHistory === null) {
+                clientHistory = [];
+            }
+
+            var clientScenes = localStorageService.get(customScenesKey);
+            if (clientScenes === null) {
+                clientScenes = {};
+            }
+
+            var clientFavorites = localStorageService.get(favoriteColorsKey);
+            if (clientFavorites === null) {
+                clientFavorites = {};
+            }
+
+            var clientColors = localStorageService.get(customColorsKey);
+            if (clientColors === null) {
+                clientColors = {};
+            }
+
+            var remote_user = User.getUser();
+            remote_user.$loaded().then(function () {
+                console.log(remote_user);
+
+                if (angular.isUndefined(remote_user.lastSynchroTime)) {
+                    remote_user.lastSynchroTime = 0;
+                }
+
+                if (angular.isUndefined(remote_user.history)) {
+                    remote_user.history = [];
+                }
+
+                if (angular.isUndefined(remote_user.favorites)) {
+                    remote_user.favorites = {};
+                }
+
+                if (angular.isUndefined(remote_user.colors)) {
+                    remote_user.colors = {};
+                }
+
+                if (angular.isUndefined(remote_user.scenes)) {
+                    remote_user.scenes = {};
+                }
+
+                if (angular.isUndefined(remote_user.images)) {
+                    remote_user.images = {};
+                }
+
+                var imagePromises = [];
+                var images = {};
+                var mergedHistory = mergeClientAndRemoteHistory(clientHistory, remote_user.history);
+
+                angular.forEach(mergedHistory, function (historyItem) {
+                    if (historyItem.type === 'favorite') {
+                        if (historyItem.crud === 'create') {
+                            //favorite not yet on remote server
+                            if (!(historyItem.uid in remote_user.favorites)) {
+                                var clientFavorite = clientFavorites[historyItem.uid];
+                                remote_user.favorites[historyItem.uid] = clientFavorite;
+                            }
+                        } else if (historyItem.crud === 'delete') {
+                            delete remote_user.favorites[historyItem.uid];
+                        }
+                    } else if (historyItem.type === 'color') {
+                        if (historyItem.crud === 'create') {
+                            //color not yet on remote server
+                            if (!(historyItem.uid in remote_user.colors)) {
+                                var clientColor = clientColors[historyItem.uid];
+                                remote_user.colors[historyItem.uid] = clientColor;
+                            }
+                        } else if (historyItem.crud === 'delete') {
+                            delete remote_user.colors[historyItem.uid];
+                        }
+
+                    } else if (historyItem.type === 'scene') {
+                        if (historyItem.crud === 'create') {
+                            //scene not yet on remote server
+                            if (!(historyItem.uid in remote_user.scenes)) {
+                                var clientScene = clientScenes[historyItem.uid];
+                                remote_user.scenes[historyItem.uid] = clientScene;
+
+                                if (angular.isDefined(clientScene.image) && clientScene.image !== null && !(clientScene.image.replace('.jpg', '') in remote_user.images)) {
+                                    var imagePromise = UtilityService.getBase64FromImageUrl(clientScene.image).then(function (data) {
+                                        var imageWithoutFileExtension = data.imageUrl.replace('.jpg', '');
+                                        images[imageWithoutFileExtension] = {
+                                            'imageUrl': data.imageUrl,
+                                            'image64': data.image64
+                                        };
+                                    });
+                                    imagePromises.push(imagePromise);
+                                }
+                            }
+                        } else if (historyItem.crud === 'delete') {
+                            var remoteScene = remote_user.scenes[historyItem.uid];
+                            if (angular.isDefined(remoteScene) && angular.isDefined(remoteScene.image) && remoteScene.image !== null) {
+                                var imageKey = remoteScene.image.replace('.jpg', '');
+                                delete remote_user.images[imageKey];
+                            }
+                            delete remote_user.scenes[historyItem.uid];
+                        } else if (historyItem.crud === 'update') {
+
+                        }
+                    }
+                });
+
+                remote_user.history = mergedHistory;
+                localStorageService.set(localHistoryKey, null);
+                localStorageService.set(lastClientChangeKey, null);
+
+                var synchroTime = getLatestHistoryItem(remote_user.history);
+                remote_user.lastSynchroTime = synchroTime.time;
+                localStorageService.set(lastSynchroKey, synchroTime.time);
+
+
+                localStorageService.set(customScenesKey, remote_user.scenes);
+                localStorageService.set(customColorsKey, remote_user.colors);
+                localStorageService.set(favoriteColorsKey, remote_user.favorites);
+
+                angular.forEach(remote_user.scenes, function (scene) {
+                    if (scene.image !== null) {
+                        var imageKey = scene.image.replace('.jpg', '');
+                        if (angular.isDefined(remote_user.images) && (imageKey in remote_user.images)) {
+                            UtilityService.writeBase64ImageToFilesSystem(scene.image, remote_user.images[imageKey].image64);
+                        }
+                    }
+                });
+
+                $q.all(imagePromises).then(function () {
+                    if (angular.isUndefined(remote_user.images)) {
+                        remote_user.images = {};
+                    }
+
+                    angular.forEach(images, function (value, key) {
+                        remote_user.images[key] = value;
+                    });
+
+                    remote_user.$save();
+                });
+
+                //remote_user.$save();
+                console.log(remote_user);
+            });
         };
 
         return this;

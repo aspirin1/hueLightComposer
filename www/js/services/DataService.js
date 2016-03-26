@@ -12,10 +12,30 @@ define(['angular'], function (angular) {
         var favoriteColorsKey = "favoriteColors";
         var customColorsKey = "customColors";
         var customScenesKey = "customScenes";
-
+        var localHistoryKey = "localHistory";
+        var lastSynchroKey = "lastSynchro";
+        var lastClientChangeKey = "lastClientChange";
 
         this.isUserLoggedIn = function () {
             return User.getUserAuthData() !== null;
+        };
+
+        this.addToLocalHistory = function (type, crud, uid) {
+            var tmp = localStorageService.get(localHistoryKey);
+            if (tmp === null)
+                tmp = [];
+
+            var newEntry = {
+                'type': type,
+                'crud': crud,
+                'uid': uid,
+                'time': HelperService.getTime()
+            };
+
+            tmp.push(newEntry);
+
+            localStorageService.set(localHistoryKey, tmp);
+            localStorageService.set(lastClientChangeKey, newEntry.time);
         };
 
         this.addCustomScene = function (id, name, lights, image) {
@@ -37,9 +57,10 @@ define(['angular'], function (angular) {
             }
 
             tmp[newScene.uid] = newScene;
-            User.updateCustomScene(newScene.uid, newScene);
+            self.addToLocalHistory('scene', 'create', newScene.uid);
 
             localStorageService.set(customScenesKey, tmp);
+            User.triggerUserChange();
         };
 
         this.removeCustomScene = function (id) {
@@ -52,12 +73,12 @@ define(['angular'], function (angular) {
                 if (scene.id !== id) {
                     tmpNew[key] = scene;
                 } else {
-                    User.deleteCustomScene(scene.uid);
+                    self.addToLocalHistory('scene', 'delete', scene.uid);
                 }
             });
 
-
             localStorageService.set(customScenesKey, tmpNew);
+            User.triggerUserChange();
         };
 
         this.getCustomScenes = function () {
@@ -106,18 +127,19 @@ define(['angular'], function (angular) {
                 tmp = {};
 
             if (angular.isDefined(tmp[searchText])) {
+                self.addToLocalHistory('favorite', 'delete', searchText);
                 delete tmp[searchText];
-                User.deleteFavoriteColor(searchText);
             } else {
                 tmp[searchText] = {
                     'uid': HelperService.getNewGuid(),
                     'changedAt': HelperService.getTime(),
                     'hexColor': hexColor
                 };
-                User.updateFavoriteColors(searchText, tmp[searchText]);
+                self.addToLocalHistory('favorite', 'create', searchText);
             }
 
             localStorageService.set(favoriteColorsKey, tmp);
+            User.triggerUserChange();
         };
 
 
@@ -307,10 +329,11 @@ define(['angular'], function (angular) {
 
             if (containsColorAlready === false) {
                 tmp[newColor.uid] = newColor;
-                User.updateUserCustomColor(newColor.uid, newColor);
+                self.addToLocalHistory('color', 'create', newColor.uid);
             }
 
             localStorageService.set(customColorsKey, tmp);
+            User.triggerUserChange();
         };
 
 
@@ -323,12 +346,13 @@ define(['angular'], function (angular) {
             angular.forEach(tmp, function (color, key) {
                 if (color.hexColor !== hexColor) {
                     tmpNew[key] = color;
+                } else {
+                    self.addToLocalHistory('color', 'delete', color.uid);
                 }
             });
-            User.deleteUserCustomColor(hexColor);
-
 
             localStorageService.set(customColorsKey, tmpNew);
+            User.triggerUserChange();
         };
 
         this.getImageFromModelId = function (modelid) {

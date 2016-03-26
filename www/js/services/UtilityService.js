@@ -63,31 +63,34 @@ define(['angular'], function (angular) {
 
         this.getAndStorePictureCamera = function () {
             return self.getAndStorePicture({
-                quality: 75,
-                targetWidth: 320,
-                targetHeight: 320,
+                quality: 80,
+                targetWidth: 300,
+                targetHeight: 300,
                 sourceType: navigator.camera.PictureSourceType.CAMERA, //0=PHOTOLIBRARY;1=CAMERA
-                saveToPhotoAlbum: false
+                saveToPhotoAlbum: false,
+                correctOrientation: true
             });
         };
 
         this.getAndStorePictureAlbum = function () {
             return self.getAndStorePicture({
-                quality: 75,
-                targetWidth: 320,
-                targetHeight: 320,
+                quality: 80,
+                targetWidth: 300,
+                targetHeight: 300,
                 sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, //0=PHOTOLIBRARY;1=CAMERA;2=SAVEDPHOTOALBUM
-                saveToPhotoAlbum: false
+                saveToPhotoAlbum: false,
+                correctOrientation: true
             });
         };
 
         this.getAndStorePicture = function (options) {
             var usedOptions = {
-                quality: 75,
-                targetWidth: 320,
-                targetHeight: 320,
+                quality: 80,
+                targetWidth: 300,
+                targetHeight: 300,
                 sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, //0=PHOTOLIBRARY;1=CAMERA
-                saveToPhotoAlbum: false
+                saveToPhotoAlbum: false,
+                correctOrientation: true
             };
 
             if (angular.isDefined(options)) {
@@ -168,7 +171,7 @@ define(['angular'], function (angular) {
         };
 
         this.getUrlForImage = function (imageName) {
-            if (angular.isDefined(imageName)) {
+            if (angular.isDefined(imageName) && imageName !== null) {
                 var name = imageName.substr(imageName.lastIndexOf('/') + 1);
                 var trueOrigin = cordova.file.dataDirectory + name;
                 return trueOrigin;

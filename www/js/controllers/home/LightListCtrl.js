@@ -146,6 +146,8 @@ define(function () {
         $scope.urlForImage = function () {
             if (angular.isDefined($scope.newScene) && typeof ($scope.newScene.image) !== "undefined") {
                 return UtilityService.getUrlForImage($scope.newScene.image);
+            } else {
+                return "";
             }
         };
 

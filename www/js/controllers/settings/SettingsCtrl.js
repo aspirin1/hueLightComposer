@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl(HelperService, $scope, $state, $translate, ConfigService, ColorService, ColorDataService, User, DataService, localStorageService, UtilityService, $q) {
+    function ctrl(HelperService, $scope, $state, $translate, ConfigService, ColorService, ColorDataService, User, DataService, localStorageService, UtilityService, $q, Synchronization) {
 
         $scope.selectedLanguage = $translate.use();
         $scope.languageChanged = function (key) {
@@ -119,9 +119,13 @@ define(function () {
             //localStorage.removeItem("ls.customColors");
             //localStorage.removeItem("ls.favoriteColors");
         };
+
+        $scope.sync = function () {
+            Synchronization.doSync();
+        };
     }
 
-    ctrl.$inject = ['HelperService', '$scope', '$state', '$translate', 'ConfigService', 'ColorService', 'ColorDataService', 'User', 'DataService', 'localStorageService', 'UtilityService', '$q'];
+    ctrl.$inject = ['HelperService', '$scope', '$state', '$translate', 'ConfigService', 'ColorService', 'ColorDataService', 'User', 'DataService', 'localStorageService', 'UtilityService', '$q', 'Synchronization'];
     return ctrl;
 
 });
