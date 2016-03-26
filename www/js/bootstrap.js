@@ -20,6 +20,7 @@ define(['ionic', 'angular', 'app', 'routes'], function (ionic, angular, app) {
                     console.info("activate background mode");
                 };
             }
+
             angular.bootstrap(document, [app.name]);
 
         };

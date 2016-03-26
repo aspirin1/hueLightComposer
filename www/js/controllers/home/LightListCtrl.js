@@ -122,6 +122,7 @@ define(function () {
 
             if (tmp.length > 0 && $scope.newScene.name.length > 0) {
                 HueService.createScene($scope.newScene.name, tmp).then(function (data) {
+                    console.log(data);
                     DataService.addCustomScene(data[0].success.id, $scope.newScene.name, tmp, $scope.newScene.image);
                     $scope.closeCreateSceneModal();
                 });

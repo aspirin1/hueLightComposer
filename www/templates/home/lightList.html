@@ -40,9 +40,7 @@
                 </div>
             </li>
         </ul>
-
     </ion-content>
-
 
     <script id="createScene-modal.html" type="text/ng-template">
         <ion-modal-view>
@@ -62,11 +60,13 @@
                 <ul class="list">
                     <ion-checkbox ng-repeat="light in allLights" ng-model="createSceneSelection[light.id]">{{light.name}}</ion-checkbox>
                 </ul>
+            </ion-content>
+            <ion-footer-bar>
                 <div class="button-bar">
                     <button class="button button-calm" ng-click="closeCreateSceneModal()">{{'SINGLE_Cancel' | translate}}</button>
                     <button class="button button-positive" ng-click="createScene()">{{'SINGLE_Create' | translate}}</button>
                 </div>
-            </ion-content>
+            </ion-footer-bar>
         </ion-modal-view>
     </script>
 </ion-view>

@@ -102,6 +102,10 @@ define(['angular'], function (angular) {
 
             var scenes = self.getUserCustomScenes();
             scenes.$loaded().then(function () {
+                var scene = scenes[uid];
+                var imageWithoutFileExtension = scene.image.replace('.jpg', '');
+
+                self.deleteUserImage(imageWithoutFileExtension);
                 delete scenes[uid];
                 scenes.$save();
             });

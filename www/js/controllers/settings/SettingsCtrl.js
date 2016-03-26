@@ -112,11 +112,12 @@ define(function () {
         };
 
         $scope.reset = function () {
-            localStorage.removeItem("ls.language");
-            localStorage.removeItem("ls.design");
-            localStorage.removeItem("ls.customScenes");
-            localStorage.removeItem("ls.customColors");
-            localStorage.removeItem("ls.favoriteColors");
+            localStorage.clear();
+            //localStorage.removeItem("ls.language");
+            //localStorage.removeItem("ls.design");
+            //localStorage.removeItem("ls.customScenes");
+            //localStorage.removeItem("ls.customColors");
+            //localStorage.removeItem("ls.favoriteColors");
         };
     }
 

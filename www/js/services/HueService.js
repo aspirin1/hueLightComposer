@@ -218,7 +218,8 @@ define(['angular'], function (angular) {
             var url = getBaseApiUrl() + '/scenes/';
             var cmd = JSON.stringify({
                 name: sceneName,
-                lights: lightsArray
+                lights: lightsArray,
+                recycle: false,
             });
             console.info(url, cmd);
             return $http.post(url, cmd)

@@ -9,6 +9,7 @@ define(function (require) {
         config = require('config'),
         controllers = angular.module('app.controllers', ['app.services', 'app.config']);
 
+    controllers.controller('AppCtrl', require('controllers/AppCtrl'));
     controllers.controller('BodyCtrl', require('controllers/layout/BodyCtrl'));
     controllers.controller('NavMenuCtrl', require('controllers/layout/NavMenuCtrl'));
 
@@ -36,6 +37,7 @@ define(function (require) {
     controllers.run(['$rootScope', function ($rootScope) {
         //$rootScope.sampleParam = "value";
     }]);
+
 
     return controllers;
 

@@ -1,4 +1,4 @@
-/*global define, console, navigator, cordova, window, FileReader,LocalFileSystem */
+/*global define, console, navigator, cordova, window, FileReader,LocalFileSystem,Uint8Array */
 
 define(['angular'], function (angular) {
     "use strict";

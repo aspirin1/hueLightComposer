@@ -45,6 +45,7 @@ define(function () {
 
         $scope.deleteScene = function (sceneId) {
             HueService.deleteScene(sceneId).then(function (data) {
+                DataService.removeCustomScene(sceneId);
                 refresh();
             });
         };
