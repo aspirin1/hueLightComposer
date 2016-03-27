@@ -64,8 +64,8 @@ define(['angular'], function (angular) {
         this.getAndStorePictureCamera = function () {
             return self.getAndStorePicture({
                 quality: 80,
-                targetWidth: 300,
-                targetHeight: 300,
+                //targetWidth: 300,
+                //targetHeight: 300,
                 sourceType: navigator.camera.PictureSourceType.CAMERA, //0=PHOTOLIBRARY;1=CAMERA
                 saveToPhotoAlbum: false,
                 correctOrientation: true
@@ -75,8 +75,8 @@ define(['angular'], function (angular) {
         this.getAndStorePictureAlbum = function () {
             return self.getAndStorePicture({
                 quality: 80,
-                targetWidth: 300,
-                targetHeight: 300,
+                targetWidth: 1024,
+                targetHeight: 1024,
                 sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, //0=PHOTOLIBRARY;1=CAMERA;2=SAVEDPHOTOALBUM
                 saveToPhotoAlbum: false,
                 correctOrientation: true
@@ -86,8 +86,8 @@ define(['angular'], function (angular) {
         this.getAndStorePicture = function (options) {
             var usedOptions = {
                 quality: 80,
-                targetWidth: 300,
-                targetHeight: 300,
+                //targetWidth: 300,
+                //targetHeight: 300,
                 sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, //0=PHOTOLIBRARY;1=CAMERA
                 saveToPhotoAlbum: false,
                 correctOrientation: true

@@ -5,6 +5,8 @@ define(['angular'], function (angular) {
 
     var factory = function (User, HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
         var self = this;
+        var sceneImage = null;
+        var sceneImageCropped = null;
         var effectState = {};
         var isStoppingState = {};
         var groupEffectState = {};
@@ -15,6 +17,22 @@ define(['angular'], function (angular) {
         var localHistoryKey = "localHistory";
         var lastSynchroKey = "lastSynchro";
         var lastClientChangeKey = "lastClientChange";
+
+        this.getSceneImage = function () {
+            return sceneImage;
+        };
+
+        this.setSceneImage = function (imageFileName) {
+            sceneImage = imageFileName;
+        };
+
+        this.getSceneImageCropped = function () {
+            return sceneImageCropped;
+        };
+
+        this.setSceneImageCropped = function (imageFileName) {
+            sceneImageCropped = imageFileName;
+        };
 
         this.isUserLoggedIn = function () {
             return User.getUserAuthData() !== null;

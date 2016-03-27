@@ -88,6 +88,25 @@ define(['app'], function (app) {
                         }
                     }
                 })
+                .state('main.home_tab.newScene', {
+                    url: '/newScene',
+                    views: {
+                        'lightList-tab': {
+                            templateUrl: 'templates/home/newScene.html',
+                            controller: 'NewSceneCtrl'
+                        }
+                    }
+                })
+                .state('main.home_tab.newSceneImage', {
+                    url: '/newSceneImage',
+                    views: {
+                        'lightList-tab': {
+                            templateUrl: 'templates/home/newSceneImage.html',
+                            controller: 'NewSceneImageCtrl'
+                        }
+                    }
+
+                })
                 .state('main.home_tab.groups', {
                     url: '/groups',
                     views: {

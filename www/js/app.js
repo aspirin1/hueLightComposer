@@ -12,7 +12,8 @@ define(['angular',
         'angularTranslateLoaderStaticFile',
         'ionicFilterbar',
         'noUiSliderAngular',
-        'angularfire'
+        'angularfire',
+        'imgcrop'
        ],
 
     function (angular) {
@@ -31,28 +32,9 @@ define(['angular',
             'pascalprecht.translate',
             'jett.ionic.filter.bar',
             'ya.nouislider',
-            'firebase'
+            'firebase',
+            'ngImgCrop'
         ]);
-
-        //        app.factory('Auth', function ($firebaseAuth, FirebaseUrl) {
-        //            var usersRef = new Firebase(FirebaseUrl);
-        //            return $firebaseAuth(usersRef);
-        //        });
-
-        //        app.factory('User', function ($firebaseArray, $firebaseObject, FirebaseUrl, DataService) {
-        //            var authData = DataService.getUserAuthData();
-        //            if (authData !== null) {
-        //                var uid = authData.uid;
-        //
-        //                var usersRef = new Firebase(FirebaseUrl + 'users');
-        //
-        //
-        //                this.getUser = function () {
-        //                    return $firebaseObject(usersRef.child(uid));
-        //                };
-        //            }
-        //            return this;
-        //        });
 
 
         return app;

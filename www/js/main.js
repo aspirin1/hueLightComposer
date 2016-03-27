@@ -15,6 +15,7 @@ require.config({
         noUiSliderAngular: '../res/nouislider-angular-master/nouislider',
         firebase: '../bower_components/firebase/firebase',
         angularfire: '../bower_components/angularfire/dist/angularfire.min',
+        imgcrop: '../bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop'
     },
     shim: {
         angular: {
@@ -53,6 +54,9 @@ require.config({
         },
         angularfire: {
             deps: ['firebase']
+        },
+        imgcrop: {
+            deps: ['angular']
         }
     },
     //

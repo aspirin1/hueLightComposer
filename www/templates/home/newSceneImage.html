@@ -1,0 +1,25 @@
+<ion-view title="{{'Home_LightList_CreateScene' | translate}}">
+    <ion-nav-bar class="bar-main">
+        <ion-nav-back-button class="button-clear">
+            <i class="ion-arrow-left-c"></i>
+        </ion-nav-back-button>
+
+    </ion-nav-bar>
+
+
+    <ion-content has-header="true">
+        <div class="cropArea" style="background: #000;      overflow: hidden;      width:100%;      height:100%;">
+            <img-crop image="image.myImage" result-image="image.myCroppedImage" area-type="square" result-image-format="image/jpeg"></img-crop>
+        </div>
+        <!--
+        <div>Cropped Image:</div>
+        <div><img ng-src="{{myCroppedImage}}" /></div>
+        <img ng-src="{{image.myCroppedImage}}" />-->
+    </ion-content>
+
+    <ion-footer-bar>
+        <div class="button-bar">
+            <button class="button button-positive" ng-click="saveImage()">{{'SINGLE_Create' | translate}}</button>
+        </div>
+    </ion-footer-bar>
+</ion-view>
