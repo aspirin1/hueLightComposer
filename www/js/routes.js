@@ -219,6 +219,15 @@ define(['app'], function (app) {
                     }
                 }
             });
+            $stateProvider.state('main.home_tab.beacon', {
+                url: '/beacon',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/beacon.html',
+                        controller: 'BeaconCtrl'
+                    }
+                }
+            });
 
             //using main layout pages
             $stateProvider.state('main.settings', {

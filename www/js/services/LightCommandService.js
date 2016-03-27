@@ -11,6 +11,77 @@ define(['angular'], function (angular) {
         var turquois = ColorService.getXysFromHex("#3cd5c0");
         var dark_blue = ColorService.getXysFromHex("#1e228d");
 
+        this.beacon = function (orderedSelectedLights, timeInMs, xyColor) {
+            angular.forEach(orderedSelectedLights, function (lightId) {
+                UtilityService.resetTimeoutForId(lightId);
+            });
+
+            var anzahlBeteiligterLampen = orderedSelectedLights.length;
+            var zeitProLampeInMs = timeInMs / anzahlBeteiligterLampen;
+            var flankeZumAufAbblenden = zeitProLampeInMs / 2;
+
+            var komplettSofortAn = function (id) {
+                var obj = {
+                    on: true,
+                    xy: xyColor,
+                    bri: 200,
+                    transitiontime: 0,
+                };
+
+                HueService.changeLightState(id, obj);
+            };
+
+            var anschalten = function (id) {
+                var obj = {
+                    on: true,
+                    xy: xyColor,
+                    bri: 200,
+                    transitiontime: UtilityService.msToTransitionTime(zeitProLampeInMs),
+                };
+
+                HueService.changeLightState(id, obj);
+            };
+
+            var ausschalten = function (id) {
+                var obj = {
+                    on: false,
+                    transitiontime: UtilityService.msToTransitionTime(zeitProLampeInMs),
+                };
+
+                HueService.changeLightState(id, obj);
+            };
+
+            var warten = 0;
+
+
+            for (var i = 0; i < orderedSelectedLights.length; i++) {
+                if (i === orderedSelectedLights.length - 1) {
+                    UtilityService.delayed(orderedSelectedLights[i], ausschalten, warten, orderedSelectedLights[i]);
+                    UtilityService.delayed(orderedSelectedLights[0], anschalten, warten, orderedSelectedLights[0]);
+                } else {
+                    UtilityService.delayed(orderedSelectedLights[i], ausschalten, warten, orderedSelectedLights[i]);
+                    UtilityService.delayed(orderedSelectedLights[i + 1], anschalten, warten, orderedSelectedLights[i + 1]);
+                }
+
+                warten += zeitProLampeInMs;
+            }
+
+            //            UtilityService.delayed(orderedSelectedLights[0], ausschalten, warten, orderedSelectedLights[0]);
+            //            UtilityService.delayed(orderedSelectedLights[1], anschalten, warten, orderedSelectedLights[1]);
+            //            warten += zeitProLampeInMs;
+            //            UtilityService.delayed(orderedSelectedLights[1], ausschalten, warten, orderedSelectedLights[1]);
+            //            UtilityService.delayed(orderedSelectedLights[2], anschalten, warten, orderedSelectedLights[2]);
+            //            warten += zeitProLampeInMs;
+            //            UtilityService.delayed(orderedSelectedLights[2], ausschalten, warten, orderedSelectedLights[2]);
+            //            UtilityService.delayed(orderedSelectedLights[0], anschalten, warten, orderedSelectedLights[0]);
+
+            //            angular.forEach(orderedSelectedLights, function (id) {
+            //                UtilityService.delayed(id, anschalten, warten, id);
+            //                warten += flankeZumAufAbblenden;
+            //                UtilityService.delayed(id, ausschalten, warten, id);
+            //            });
+        };
+
         this.kurzesHellesAufleuchten = function (id, time, minBri, maxBri, xy) {
             UtilityService.resetTimeoutForId(id);
             var warten = 0;

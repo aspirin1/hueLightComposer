@@ -33,6 +33,7 @@ define(function (require) {
     controllers.controller('PulseChangingColorsCtrl', require('controllers/effects/PulseChangingColorsCtrl'));
     controllers.controller('PulseMultiColorsCtrl', require('controllers/effects/PulseMultiColorsCtrl'));
     controllers.controller('StrobeCtrl', require('controllers/effects/StrobeCtrl'));
+    controllers.controller('BeaconCtrl', require('controllers/effects/BeaconCtrl'));
 
 
 

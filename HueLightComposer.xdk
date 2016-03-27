@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1458905614570,
+      "lastModifiedDate": 1459100753060,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -179,6 +179,25 @@
         "cordovaVersion": ">=3.1.0",
         "permissions": {},
         "description": "Cordova Splashscreen Plugin",
+        "data": {},
+        "dependedBy": []
+      },
+      {
+        "id": "ionic-plugin-keyboard",
+        "name": "Keyboard",
+        "version": "1.0.8",
+        "originType": "cordova.io",
+        "origin": "ionic-plugin-keyboard",
+        "gitref": "",
+        "paramvals": {},
+        "sourceLocation": "plugins/ionic-plugin-keyboard",
+        "selectedState": "Included",
+        "checksum": "363a5382",
+        "dependsOn": [],
+        "topLevel": true,
+        "cordovaVersion": ">=3.0.0",
+        "permissions": {},
+        "description": "Ionic Keyboard Plugin",
         "data": {},
         "dependedBy": []
       }

@@ -1,0 +1,25 @@
+<ion-view view-title="{{effectName}}">
+    <ion-nav-bar class="bar-main">
+        <ion-nav-back-button class="button-clear" class="backButton">
+            <i class="ion-arrow-left-c"></i>
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">{{'SINGLE_Speed' | translate}} {{sliderOptions.start[0]}}s</span>
+                <div ya-no-ui-slider="sliderOptions"></div>
+            </label>
+
+            <div class="colorScrollContainer" style="height:50px;">
+                <color-scroll selected="selectedColor1" change="changeColorFromPicker(color)"></color-scroll>
+            </div>
+        </div>
+
+        <light-selection-sortable lights="lights" effects-running="true" selected-lights="copySelection" refresh="true" header-class="has-header" tabs-top="129"></light-selection-sortable>
+
+    </ion-content>
+    <ion-footer-bar>
+        <effect-buttons name="ColorLoop" selection="copySelection" start="copyToSelection"></effect-buttons>
+    </ion-footer-bar>
+</ion-view>

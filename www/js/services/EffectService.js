@@ -12,6 +12,26 @@ define(['angular'], function (angular) {
         var dark_blue_nightSky = ColorService.getXysFromHex("#1e228d");
         var turquois = ColorService.getXysFromHex("#3cd5c0");
 
+        this.startBeacon = function (orderedSelectedLights, timeInMs, xyColor) {
+            angular.forEach(orderedSelectedLights, function (lightId) {
+                DataService.stopEffect(lightId);
+            });
+
+            HueService.changeLightState(orderedSelectedLights[0], {
+                on: true,
+                xy: xyColor,
+                bri: 200,
+                transitiontime: 0,
+            });
+
+            var interval = $interval(LightCommandService.beacon, timeInMs + 300, 0, false, orderedSelectedLights, timeInMs, xyColor);
+
+            angular.forEach(orderedSelectedLights, function (lightId) {
+                DataService.setEffect(lightId, "Beacon", interval);
+            });
+
+            LightCommandService.beacon(orderedSelectedLights, timeInMs, xyColor);
+        };
 
         this.startStrobe = function (lightId, maxBri, time, zufallsfarbenVerwenden) {
             DataService.stopEffect(lightId);
