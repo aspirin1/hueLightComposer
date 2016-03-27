@@ -6,21 +6,21 @@ define(function () {
     function ctrl($scope, $ionicHistory, $state, $filter, DataService, HueService, UtilityService) {
         console.info("New ScenesCtrl init");
 
+        var resetForm = function () {
+            $scope.createSceneSelection = {};
+            $scope.newScene = {};
+            $scope.newScene.name = '';
+            DataService.setSceneImageCropped(null);
+            DataService.setSceneImage(null);
+        };
+
+        resetForm();
+
         $scope.$on("$ionicView.beforeEnter", function () {
             refresh();
         });
 
-        $scope.myImage = $scope.myImage = UtilityService.getUrlForImage(DataService.getSceneImage());
-        $scope.myCroppedImage = '';
-
-        console.log("myImage", $scope.myImage)
-
         var refresh = function () {
-            $scope.createSceneSelection = {};
-            $scope.newScene = {};
-            $scope.newScene.name = '';
-            $scope.newScene.image = undefined;
-
             DataService.getEnrichedLightInfos(true).then(function (data) {
                 var tmp = [];
                 angular.forEach(data, function (value, key) {
@@ -43,7 +43,9 @@ define(function () {
             if (tmp.length > 0 && $scope.newScene.name.length > 0) {
                 HueService.createScene($scope.newScene.name, tmp).then(function (data) {
                     console.log(data);
-                    DataService.addCustomScene(data[0].success.id, $scope.newScene.name, tmp, $scope.newScene.image);
+                    DataService.addCustomScene(data[0].success.id, $scope.newScene.name, tmp, DataService.getSceneImageCropped());
+                    resetForm();
+                    $state.go('main.home_tab.scenes');
                 });
             }
         };
@@ -54,8 +56,6 @@ define(function () {
                 $scope.newScene.image = data;
                 DataService.setSceneImage(data);
                 $state.go('main.home_tab.newSceneImage');
-
-                $scope.myImage = UtilityService.getUrlForImage(data);
             });
         };
 
@@ -65,23 +65,29 @@ define(function () {
                 $scope.newScene.image = data;
                 DataService.setSceneImage(data);
 
-
-                $scope.myImage = UtilityService.getUrlForImage(data);
-                console.log($scope.myImage);
-
                 $state.go('main.home_tab.newSceneImage');
             });
         };
 
+        $scope.newCrop = function () {
+            $state.go('main.home_tab.newSceneImage');
+        };
+
+        $scope.croppedImageAvailable = function () {
+            var croppedImageUrl = DataService.getSceneImageCropped();
+            return croppedImageUrl !== null;
+        };
+
         $scope.urlForImage = function () {
-            if (angular.isDefined($scope.newScene) && typeof ($scope.newScene.image) !== "undefined") {
-                return UtilityService.getUrlForImage($scope.newScene.image);
+            if ($scope.croppedImageAvailable()) {
+                return UtilityService.getUrlForImage(DataService.getSceneImageCropped());
             } else {
                 return "";
             }
         };
 
         $scope.back = function () {
+            resetForm();
             $ionicHistory.goBack();
         };
     }

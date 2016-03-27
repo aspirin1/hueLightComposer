@@ -9,12 +9,13 @@
 
     <ion-content has-header="true">
         <div class="cropArea" style="background: #000;      overflow: hidden;      width:100%;      height:100%;">
-            <img-crop image="image.myImage" result-image="image.myCroppedImage" area-type="square" result-image-format="image/jpeg"></img-crop>
+            <img-crop image="image.myImage" result-image="image.myCroppedImage" area-type="square" result-image-size="400"></img-crop>
         </div>
         <!--
         <div>Cropped Image:</div>
         <div><img ng-src="{{myCroppedImage}}" /></div>
         <img ng-src="{{image.myCroppedImage}}" />-->
+        <canvas id="canvas" style="display:none;"></canvas>
     </ion-content>
 
     <ion-footer-bar>

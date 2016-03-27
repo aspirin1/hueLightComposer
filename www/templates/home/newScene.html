@@ -7,8 +7,9 @@
     </ion-nav-bar>
 
     <ion-content has-header="true">
-        <img ng-src="{{urlForImage(lastPhoto)}}" height="300" width="300" />
+        <img ng-show="croppedImageAvailable()" ng-src="{{urlForImage(lastPhoto)}}" height="400" width="400" />
         <div class="button-bar">
+            <button ng-show="croppedImageAvailable()" class="button button-calm" ng-click="newCrop()">Crop</button>
             <button class="button button-calm" ng-click="scenePictureAlbum()">Album</button>
             <button class="button button-positive" ng-click="scenePictureCamera()">Camera</button>
         </div>
