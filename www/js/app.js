@@ -1,6 +1,10 @@
 /*global define, require, console, cordova, navigator, document, Firebase */
 define(['angular',
         'angularLocalStorage',
+
+        'angularTranslate',
+        'angularTranslateLoaderStaticFile',
+
         'providers/providers',
         'config',
         'uiRouter',
@@ -9,7 +13,6 @@ define(['angular',
         'directives/directives',
         'controllers/controllers',
         'ionicAngular',
-        'angularTranslateLoaderStaticFile',
         'ionicFilterbar',
         'noUiSliderAngular',
         'angularfire',
@@ -19,9 +22,12 @@ define(['angular',
     function (angular) {
         'use strict';
 
+        console.log("loading app");
         var app = angular.module('app', [
-            'ionic',
             'LocalStorageModule',
+            'pascalprecht.translate',
+            'ionic',
+
             'app.controllers',
             'app.filters',
             'app.services',
@@ -29,7 +35,7 @@ define(['angular',
             'app.config',
             'app.providers',
             'ui.router',
-            'pascalprecht.translate',
+
             'jett.ionic.filter.bar',
             'ya.nouislider',
             'firebase',

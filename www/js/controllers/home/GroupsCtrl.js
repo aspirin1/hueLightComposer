@@ -63,6 +63,7 @@ define(function () {
                         rooms.push(value);
                 });
 
+                console.info("all groups", tmp);
                 $scope.allGroups = tmp;
                 $scope.lightGroups = lightGroups;
                 $scope.rooms = rooms;

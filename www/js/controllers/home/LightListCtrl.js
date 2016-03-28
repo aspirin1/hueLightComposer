@@ -3,11 +3,17 @@
 define(function () {
     'use strict';
 
-    function ctrl($filter, $scope, $ionicModal, DataService, HueService, UtilityService, LightCommandService, ColorService) {
+    function ctrl($state, $filter, $scope, $ionicModal, DataService, HueService, UtilityService, LightCommandService, ColorService, ConfigService) {
         console.info("HueLightListCtrl init");
 
+
         $scope.$on("$ionicView.beforeEnter", function () {
-            refreshLightList();
+            console.log("beforeEnter", ConfigService.getBridgeUrl(), ConfigService.getUserId());
+            if (ConfigService.getBridgeUrl() === null || ConfigService.getUserId() === null) {
+                $state.go('searchingBridge');
+            } else {
+                refreshLightList();
+            }
         });
 
         var refreshLightList = function () {
@@ -156,7 +162,7 @@ define(function () {
         //        });
     }
 
-    ctrl.$inject = ['$filter', '$scope', '$ionicModal', 'DataService', 'HueService', 'UtilityService', 'LightCommandService', 'ColorService'];
+    ctrl.$inject = ['$state', '$filter', '$scope', '$ionicModal', 'DataService', 'HueService', 'UtilityService', 'LightCommandService', 'ColorService', 'ConfigService'];
     return ctrl;
 
 });

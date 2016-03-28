@@ -1,6 +1,6 @@
 /*global define, require, console, cordova, navigator, document */
 
-define(['ionic', 'angular', 'app', 'routes'], function (ionic, angular, app) {
+define(['angular', 'ionic', 'app', 'routes'], function (angular, ionic, app) {
     'use strict';
 
     var $html,
@@ -22,7 +22,6 @@ define(['ionic', 'angular', 'app', 'routes'], function (ionic, angular, app) {
             }
 
             angular.bootstrap(document, [app.name]);
-
         };
 
     document.addEventListener("deviceready", onDeviceReady, false);

@@ -57,9 +57,9 @@ define(['app'], function (app) {
                     url: "/main",
                     abstract: true,
                     templateUrl: "templates/layouts/main.html",
-                    resolve: {
-                        authenticate: authenticate
-                    }
+                    //                    resolve: {
+                    //                        authenticate: authenticate
+                    //                    }
                 })
                 .state('main.home_tab', {
                     url: "/home_tab",
@@ -252,7 +252,7 @@ define(['app'], function (app) {
                         // This code runs after the authentication promise has been rejected.
                         // Go to the log-in page
                         $state.go('searchingBridge');
-                    }, 100);
+                    }, 1000);
 
                     // Reject the authentication promise to prevent the state from loading
                     return $q.reject();
