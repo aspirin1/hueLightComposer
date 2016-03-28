@@ -6,6 +6,8 @@
     "Effect_Pulse": "Pulse",
     "Effect_PulseColorTransition": "Pulse color change",
     "Effect_PulseChangingColors": "Pulse different colors",
+    "Effect_Strobe": "Strobe",
+    "Effect_Beacon": "Beacon",
 
     "NO_EFFECT_RUNNING": "No effect running",
     "SINGLE_Speed": "Speed",
