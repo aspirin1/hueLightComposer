@@ -17,6 +17,8 @@ define(function (require) {
     controllers.controller('LightListCtrl', require('controllers/home/LightListCtrl'));
     controllers.controller('LightDetailCtrl', require('controllers/home/LightDetailCtrl'));
     controllers.controller('GroupsCtrl', require('controllers/home/GroupsCtrl'));
+    controllers.controller('GroupCommandCtrl', require('controllers/home/GroupCommandCtrl'));
+
     controllers.controller('ScenesCtrl', require('controllers/home/ScenesCtrl'));
     controllers.controller('NewSceneCtrl', require('controllers/home/NewSceneCtrl'));
     controllers.controller('NewSceneImageCtrl', require('controllers/home/NewSceneImageCtrl'));

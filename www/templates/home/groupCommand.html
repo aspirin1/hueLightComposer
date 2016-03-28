@@ -1,0 +1,78 @@
+<ion-view view-title="{{group.name}}" ng-controller="GroupCommandCtrl">
+    <ion-nav-bar class="bar-main">
+        <ion-nav-back-button class="button-clear">
+            <i class="ion-arrow-left-c"></i>
+        </ion-nav-back-button>
+
+    </ion-nav-bar>
+
+    <ion-content>
+
+        <div class="row">
+            <div class="card lightDisplay">
+                <div class="row">
+                    <div class="col col-33 cooler-col-33">
+                        <!--<hue-image class="detailViewHueImage" template="{{light.image}}" light='light'></hue-image>-->
+                    </div>
+
+                    <div class="col col-67 cooler-col-67">
+
+                        <ul class="list">
+                            <li class="item item-toggle">
+
+                                {{'SINGLE_On' | translate}}/{{'SINGLE_Off' | translate}}
+                                <label class="toggle toggle-positive">
+                                    <input type="checkbox" ng-model="group.action.on" ng-change="toggleLightOnOff()">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Slider & ColorScroll -->
+        <div class="row">
+            <div class="col">
+                <span class="input-label cooler-input-label">{{'SINGLE_Brightness' | translate}}: {{getBrightnessPercentage()}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div ya-no-ui-slider="brightnessOptions" ya-no-ui-slider-events="brightnessSliderEvents"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <span class="input-label cooler-input-label">{{'SINGLE_Saturation' | translate}}: {{getSaturationPercentage()}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div ya-no-ui-slider="saturationOptions" ya-no-ui-slider-events="saturationSliderEvents"></div>
+            </div>
+        </div>
+        <div class="row">
+            <span class="input-label cooler-input-label">{{'SINGLE_Hue' | translate}}</span>
+        </div>
+        <div class="row">
+            <div class="col colorGradient">
+                <div ya-no-ui-slider="hueOptions" ya-no-ui-slider-events="hueSliderEvents"></div>
+            </div>
+        </div>
+        <div class="row"><span class="input-label cooler-input-label">&nbsp;</span></div>
+        <div class="row">
+            <div class="col">
+                <div class="colorScrollContainer" style="height:50px;">
+                    <color-scroll selected="selectedColor1" change="changeColorFromPicker(color)"></color-scroll>
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

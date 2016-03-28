@@ -7,7 +7,9 @@
         <ul class="list">
 
             <li class="item item-button-right">
+                <a href="#/main/home_tab/groupCommand/0">
                 {{'Home_Groups_AllLights' |translate}}
+                    </a>
                 <button class="button" ng-show="atLeastOneLightOn" ng-click="changeOnOffGroup0(false)">
                     {{'SINGLE_Off' |translate}}
                 </button>
@@ -20,7 +22,9 @@
                 Rooms
             </div>
             <li ng-repeat="group in rooms" class="item item-button-right">
+                <a href="#/main/home_tab/groupCommand/{{group.id}}">
                 {{group.name}}
+                </a>
                 <div class="buttons">
                     <button class="button" ng-click="deleteGroup(group.id)">
                         {{'SINGLE_Delete' |translate}}
@@ -35,7 +39,9 @@
                 Light Groups
             </div>
             <li ng-repeat="group in lightGroups" class="item item-button-right">
+                <a href="#/main/home_tab/groupCommand/{{group.id}}">
                 {{group.name}}
+                </a>
                 <div class="buttons">
                     <button class="button" ng-click="deleteGroup(group.id)">
                         {{'SINGLE_Delete' |translate}}

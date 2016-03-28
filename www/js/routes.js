@@ -116,6 +116,17 @@ define(['app'], function (app) {
                         }
                     }
                 })
+                .state('main.home_tab.groupCommand', {
+                    url: '/groupCommand/:id',
+                    views: {
+                        'groups-tab': {
+                            templateUrl: 'templates/home/groupCommand.html',
+                            controller: function ($scope, $stateParams) {
+                                $scope.groupId = $stateParams.id;
+                            }
+                        }
+                    }
+                })
                 .state('main.home_tab.scenes', {
                     url: '/scenes',
                     views: {

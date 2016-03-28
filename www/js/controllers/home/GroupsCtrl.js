@@ -84,9 +84,9 @@ define(function () {
             $scope.newGroup.selectedGroupType = "lightGroup";
             $scope.newGroup.name = "";
             $scope.createGroupSelection = {};
-            //            DataService.getEnrichedLightInfos(true).then(function (data) {
-            //                $scope.allLights = data;
-            //            });
+            DataService.getEnrichedLightInfos(true).then(function (data) {
+                $scope.allLights = data;
+            });
             $scope.createGroupModal.show();
         };
         $scope.closeCreateGroupModal = function () {

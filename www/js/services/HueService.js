@@ -75,11 +75,25 @@ define(['angular'], function (angular) {
             return this.changeLightState(lightId, obj);
         };
 
+        this.turnGroupOnOff = function (groupId, newState) {
+            var obj = {
+                on: newState
+            };
+            return this.changeGroupState(groupId, obj);
+        };
+
         this.changeBrightness = function (lightId, newState) {
             var obj = {
                 bri: parseInt(newState)
             };
             return this.changeLightState(lightId, obj);
+        };
+
+        this.changeGroupBrightness = function (groupId, newState) {
+            var obj = {
+                bri: parseInt(newState)
+            };
+            return this.changeGroupState(groupId, obj);
         };
 
         this.changeSaturation = function (lightId, newState) {
@@ -89,11 +103,25 @@ define(['angular'], function (angular) {
             return this.changeLightState(lightId, obj);
         };
 
+        this.changeGroupSaturation = function (groupId, newState) {
+            var obj = {
+                sat: parseInt(newState)
+            };
+            return this.changeGroupState(groupId, obj);
+        };
+
         this.changeHue = function (lightId, newState) {
             var obj = {
                 hue: parseInt(newState)
             };
             return this.changeLightState(lightId, obj);
+        };
+
+        this.changeGroupHue = function (groupId, newState) {
+            var obj = {
+                hue: parseInt(newState)
+            };
+            return this.changeGroupState(groupId, obj);
         };
 
         this.changeLightToHexColor = function (lightId, gamut, hexColor) {
@@ -102,6 +130,14 @@ define(['angular'], function (angular) {
                 xy: xy
             };
             return this.changeLightState(lightId, obj);
+        };
+
+        this.changeGroupToHexColor = function (groupId, gamut, hexColor) {
+            var xy = ColorService.getGamutXyFromHex(gamut, hexColor);
+            var obj = {
+                xy: xy
+            };
+            return this.changeGroupState(groupId, obj);
         };
 
         this.toggleColorloop = function (lightId, doColorLoop) {
@@ -122,6 +158,15 @@ define(['angular'], function (angular) {
                 name: newName
             };
             return this.changeLightAttribute(lightId, obj);
+        };
+
+        this.getGroup = function (groupId) {
+            var url = getBaseApiUrl() + '/groups/' + groupId;
+            console.log(url);
+            return $http.get(url)
+                .then(function (result) {
+                    return result.data;
+                });
         };
 
         this.getAllGroups = function () {
@@ -180,13 +225,6 @@ define(['angular'], function (angular) {
                 .then(function (result) {
                     return result.data;
                 });
-        };
-
-        this.turnGroupOnOff = function (groupId, newState) {
-            var obj = {
-                on: newState
-            };
-            return this.changeGroupState(groupId, obj);
         };
 
         this.getAllScenes = function () {
