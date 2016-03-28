@@ -149,13 +149,13 @@ define(function () {
                 $scope.newScene.image = data;
             });
         };
-        $scope.urlForImage = function () {
-            if (angular.isDefined($scope.newScene) && typeof ($scope.newScene.image) !== "undefined") {
-                return UtilityService.getUrlForImage($scope.newScene.image);
-            } else {
-                return "";
-            }
-        };
+        //        $scope.urlForImage = function () {
+        //            if (angular.isDefined($scope.newScene) && typeof ($scope.newScene.image) !== "undefined") {
+        //                return UtilityService.getUrlForImage($scope.newScene.image);
+        //            } else {
+        //                return "";
+        //            }
+        //        };
 
         //        $scope.$on("$destroy", function () {
         //            $interval.cancel(interval);

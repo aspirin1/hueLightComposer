@@ -7,7 +7,7 @@ define(['app'], function (app) {
     '$compileProvider',
     function ($compileProvider)
         {
-            $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob):|data:image\//);
+            $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|ms-appx|ms-appx-web|ms-appdata):|data:image\//);
     }]);
 
     app.config(['$translateProvider', function ($translateProvider) {

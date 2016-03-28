@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1459152300150,
+      "lastModifiedDate": 1459163144986,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -258,13 +258,13 @@
         },
         "icons_": [],
         "splashes_": [],
-        "addlPermissions_": "",
+        "addlPermissions_": "privateNetworkClientServer",
         "excludedLibraries_": "",
         "certificateId_": "",
         "cordovaCLIVersion_": "5.4.1",
         "crosswalkVersion_": "14",
         "appAuthor_": "Intel XDK",
-        "appVersion_": "0.0.0.1",
+        "appVersion_": "0.0.0.3",
         "appDescription_": "Universal init code for Intel XDK and Cordova device ready detection, as well as within browser."
       },
       "WebApp": {
@@ -403,12 +403,13 @@
         "appName_": "HueLightComposer",
         "appID_": "xdk.intel.cordova.template.lite",
         "appAccess_": {
-          "mode": "legacy",
+          "mode": "whitelist",
           "network": [
             "*"
           ],
           "intents": [],
-          "navigation": []
+          "navigation": [],
+          "properties": {}
         },
         "icons_": [
           {

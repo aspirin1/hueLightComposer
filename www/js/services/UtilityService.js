@@ -111,7 +111,7 @@ define(['angular'], function (angular) {
 
                 function copyFile(fileEntry) {
                     var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-                    var newName = makeid() + name;
+                    var newName = makeid() + ".jpg";
 
                     console.log(newName, cordova.file.dataDirectory);
                     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
@@ -141,7 +141,7 @@ define(['angular'], function (angular) {
                     var text = "";
                     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-                    for (var i = 0; i < 5; i++) {
+                    for (var i = 0; i < 10; i++) {
                         text += possible.charAt(Math.floor(Math.random() * possible.length));
                     }
                     return text;
@@ -174,8 +174,10 @@ define(['angular'], function (angular) {
             if (angular.isDefined(imageName) && imageName !== null) {
                 var name = imageName.substr(imageName.lastIndexOf('/') + 1);
                 var trueOrigin = cordova.file.dataDirectory + name;
+                //console.log("getUrlForImage", imageName, trueOrigin, cordova.file.dataDirectory);
                 return trueOrigin;
             }
+            return undefined;
         };
 
         this.getLightById = function (allLights, id) {

@@ -56,13 +56,18 @@ define(function () {
                 var ret = [];
                 angular.forEach(data, function (value, key) {
                     value.id = key;
-                    ret.push(value);
+                    if (!value.name.match(/\soff\s\d+/g)) {
+                        value.name = value.name.replace(/\son\s\d+/, '').replace(/\sfon\s\d+/, '');
+                        ret.push(value);
+                    }
                 });
                 $scope.allScenes = ret;
+                console.log($scope.allScenes);
             });
 
             $scope.customScenes = DataService.getCustomScenes();
             console.log($scope.customScenes);
+
         };
     }
 
