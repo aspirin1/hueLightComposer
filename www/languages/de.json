@@ -4,8 +4,10 @@
     "Effect_Candle": "Kerze",
     "Effect_Lightning": "Blitz",
     "Effect_Pulse": "Pulsieren",
-    "Effect_PulseColorTransition": "Pulse color change",
-    "Effect_PulseChangingColors": "Pulse different colors",
+    "Effect_PulseColorTransition": "Pulsieren farbwechsel",
+    "Effect_PulseChangingColors": "Pulsieren mehrfarbig",
+    "Effect_Strobe": "Stroboskop",
+    "Effect_Beacon": "Leuchtturm",
 
     "NO_EFFECT_RUNNING": "Kein Effekt ausgeführt",
     "SINGLE_Speed": "Geschwindigkeit",
