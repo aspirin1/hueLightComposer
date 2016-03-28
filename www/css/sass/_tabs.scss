@@ -92,9 +92,12 @@
   &.#{$style} {
     .tabs{
       background-color: $background;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.26);
+      border-top: 1px solid #11c1f3 !important;
     }
     .tab-item {
-      color: rgba($color, $tabs-striped-off-opacity);
+      //color: rgba($color, $tabs-striped-off-opacity);
+      color: rgba($color, 1);
       opacity: 1;
       .badge{
         opacity:$tabs-striped-off-opacity;
@@ -103,10 +106,13 @@
       &.active,
       &.activated {
         margin-top: -$tabs-striped-border-width;
-        color: $color;
+        color: darken($color, 60%);
         border-style: solid;
-        border-width: $tabs-striped-border-width 0 0 0;
+        //border-width: $tabs-striped-border-width 0 0 0;
+          border-width: 0;
         border-color: $color;
+          background-color: lighten($background,35%);
+          padding-top: 7px;
       }
     }
   }
