@@ -1,0 +1,35 @@
+<ion-view view-title="{{'ImageViewer_Title' |translate}}">
+    <ion-content>
+        <img src="{{myImage}}" id="imageSource" style="max-width: 100%;max-height: 100%;" />
+        <div class="swatches" style="    z-index: 10;">
+            <div class="swatch" style="background-color:{{hexPalette[0]}}"></div>
+            <div class="swatch" style="background-color:{{hexPalette[1]}}"></div>
+            <div class="swatch" style="background-color:{{hexPalette[2]}}"></div>
+            <div class="swatch" style="background-color:{{hexPalette[3]}}"></div>
+            <div class="swatch" style="background-color:{{hexPalette[4]}}"></div>
+        </div>
+        <ion-footer-bar>
+            <div class="button-bar">
+                <button class="button button-calm" ng-click="openModalLightSelection()">Select lights</button>
+                <button class="button button-calm" ng-click="loadImage()">Load Image</button>
+            </div>
+        </ion-footer-bar>
+    </ion-content>
+
+    <script id="copyto-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">{{'Home_LightList_Detail_CopyTo' | translate}}</h1>
+                <div class="copyColorModalColorPreview" ng-style="getCopyToSelectedColorStyle()"></div>
+            </ion-header-bar>
+            <light-selection selected-lights="copySelection" refresh="true" header-class="has-tabs-top">
+            </light-selection>
+            <ion-footer-bar>
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>
+                    <button class="button button-positive" ng-click="copyToSelection()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
+                </div>
+            </ion-footer-bar>
+        </ion-modal-view>
+    </script>
+</ion-view>

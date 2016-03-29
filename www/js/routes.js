@@ -247,6 +247,12 @@ define(['app'], function (app) {
                 controller: 'SettingsCtrl'
             });
 
+            $stateProvider.state('main.imageViewer', {
+                url: '/imageViewer',
+                templateUrl: 'templates/imageViewer/imageViewer.html',
+                controller: 'ImageViewerCtrl'
+            });
+
 
             $urlRouterProvider.otherwise("main/home_tab/lightList");
 

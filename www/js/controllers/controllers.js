@@ -26,6 +26,7 @@ define(function (require) {
     controllers.controller('ColorsAdministrationCtrl', require('controllers/home/ColorsAdministrationCtrl'));
 
     controllers.controller('SettingsCtrl', require('controllers/settings/SettingsCtrl'));
+    controllers.controller('ImageViewerCtrl', require('controllers/imageViewer/ImageViewerCtrl'));
 
     controllers.controller('EffectListCtrl', require('controllers/effects/EffectListCtrl'));
     controllers.controller('StandardEffectCtrl', require('controllers/effects/StandardEffectCtrl'));
