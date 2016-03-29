@@ -123,9 +123,9 @@ hue-image rect,
   margin: 0px;
   border-radius: 6px;
   float: left;
-  width: 20%;
+  width: 20vmin;
   height: 0px;
-  padding: 0px 0px 20% 0px;
+  padding: 0px 0px 20vmin 0px;
 }
 /* line 11, ../sass/_c_colors.scss */
 .colorListContainer .colorSquare .colorSquareContent {
