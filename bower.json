@@ -12,6 +12,7 @@
     "material-design-iconic-font": "2.2.0",
     "nouislider": "8.2.1",
     "angularfire": "1.1.4",
-    "ng-img-crop-full-extended": "ngImgCropFullExtended#0.5.4"
+    "ng-img-crop-full-extended": "ngImgCropFullExtended#0.5.4",
+    "color-thief": "2.0.1"
   }
 }
