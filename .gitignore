@@ -11,11 +11,8 @@
 !/.jscodehints
 !/app.json
 !/screenshot.png
-<<<<<<< HEAD
 !/icon.png
-=======
 !/icon.png
 /www/bower_components/
 /intelxdk.config.additions.xml
->>>>>>> HueApp/master
 /www/css/.sass-cache/
