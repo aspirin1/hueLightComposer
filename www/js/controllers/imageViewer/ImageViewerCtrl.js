@@ -34,7 +34,8 @@ define(function () {
                         HueService.changeLightToHexColor($scope.activeLights[i], "C", hexPalette[i]);
                     }
                 };
-                $scope.myImage = "file://" + data;
+                //$scope.myImage = "file://" + data;
+                $scope.myImage = "data:image/jpeg;base64," + data;
             });
         };
 

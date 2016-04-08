@@ -61,7 +61,7 @@ define(['angular'], function (angular) {
             return defer.promise;
         };
 
-        this.getPictureAlbumAsDataUrl = function () {
+        this.getPictureAlbumAsFileUrl = function () {
             var defered = $q.defer();
 
 
@@ -70,6 +70,27 @@ define(['angular'], function (angular) {
                 //targetWidth: 300,
                 //targetHeight: 300,
                 destinationType: 1, //0=DATA_URL, 1=FILE_URI
+                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, //0=PHOTOLIBRARY;1=CAMERA
+                saveToPhotoAlbum: false,
+                correctOrientation: true
+            };
+
+            self.getPicture(options).then(function (imageURI) {
+                defered.resolve(imageURI);
+            });
+
+            return defered.promise;
+        };
+
+        this.getPictureAlbumAsDataUrl = function () {
+            var defered = $q.defer();
+
+
+            var options = {
+                quality: 80,
+                targetWidth: 1000,
+                targetHeight: 1000,
+                destinationType: 0, //0=DATA_URL, 1=FILE_URI
                 sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, //0=PHOTOLIBRARY;1=CAMERA
                 saveToPhotoAlbum: false,
                 correctOrientation: true
