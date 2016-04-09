@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService, $q) {
+    function ctrl($scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService, $q, DbService) {
         console.info("ScenesCtrl init");
         var filterBarInstance;
         $scope.selectedTab = 1;
@@ -23,8 +23,11 @@ define(function () {
             return false;
         }
 
-        $scope.getUrlSrc = function (imageUrl) {
-            return UtilityService.getUrlForImage(imageUrl);
+        $scope.getUrlSrc = function (imageId) {
+            if (angular.isDefined($scope.allImages) && imageId in $scope.allImages) {
+                return $scope.allImages[imageId];
+            } else
+                return "";
         };
 
         $scope.showFilterBar = function () {
@@ -52,6 +55,21 @@ define(function () {
 
 
         var refresh = function () {
+            DbService.getAllImages()
+                .then(function (images) {
+                    var tmp = {};
+                    angular.forEach(images, function (image) {
+                        tmp[image.imageId] = image.imageData;
+                    });
+                    $scope.allImages = tmp;
+                    console.log($scope.allImages);
+                })
+                .then(function () {
+                    $scope.customScenes = DataService.getCustomScenes();
+                    console.log($scope.customScenes);
+                });
+
+
             HueService.getAllScenes().then(function (data) {
                 var ret = [];
                 angular.forEach(data, function (value, key) {
@@ -65,13 +83,10 @@ define(function () {
                 console.log($scope.allScenes);
             });
 
-            $scope.customScenes = DataService.getCustomScenes();
-            console.log($scope.customScenes);
-
         };
     }
 
-    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService', '$q'];
+    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService', '$q', 'DbService'];
     return ctrl;
 
 });

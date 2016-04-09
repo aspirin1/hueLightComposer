@@ -7,6 +7,8 @@ define(function () {
         console.info("HueLightListCtrl init");
 
 
+
+
         $scope.$on("$ionicView.beforeEnter", function () {
             console.log("beforeEnter", ConfigService.getBridgeUrl(), ConfigService.getUserId());
             if (ConfigService.getBridgeUrl() === null || ConfigService.getUserId() === null) {

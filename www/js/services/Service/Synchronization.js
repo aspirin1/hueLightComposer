@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function (User, localStorageService, UtilityService, $q) {
+    var factory = function (User, localStorageService, UtilityService, $q, DbService) {
         var self = this;
         var favoriteColorsKey = "favoriteColors";
         var customColorsKey = "customColors";
@@ -210,12 +210,11 @@ define(['angular'], function (angular) {
                                 var clientScene = clientScenes[historyItem.uid];
                                 remote_user.scenes[historyItem.uid] = clientScene;
 
-                                if (angular.isDefined(clientScene.image) && clientScene.image !== null && !(clientScene.image.replace('.jpg', '') in remote_user.images)) {
-                                    var imagePromise = UtilityService.getBase64FromImageUrl(clientScene.image).then(function (data) {
-                                        var imageWithoutFileExtension = data.imageUrl.replace('.jpg', '');
-                                        images[imageWithoutFileExtension] = {
-                                            'imageUrl': data.imageUrl,
-                                            'image64': data.image64
+                                if (angular.isDefined(clientScene.image) && clientScene.image !== null && !(clientScene.image in remote_user.images)) {
+                                    var imagePromise = DbService.getImageByImageId(clientScene.image).then(function (data) {
+                                        images[data.imageId] = {
+                                            'imageId': data.imageId,
+                                            'image64': data.imageData
                                         };
                                     });
                                     imagePromises.push(imagePromise);
@@ -249,9 +248,10 @@ define(['angular'], function (angular) {
 
                 angular.forEach(remote_user.scenes, function (scene) {
                     if (scene.image !== null) {
-                        var imageKey = scene.image.replace('.jpg', '');
+                        var imageKey = scene.image;
                         if (angular.isDefined(remote_user.images) && (imageKey in remote_user.images)) {
-                            UtilityService.writeBase64ImageToFilesSystem(scene.image, remote_user.images[imageKey].image64);
+                            //UtilityService.writeBase64ImageToFilesSystem(scene.image, remote_user.images[imageKey].image64);
+                            DbService.insertOrUpdateImage(scene.image, remote_user.images[imageKey].image64);
                         }
                     }
                 });
@@ -276,6 +276,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['User', 'localStorageService', 'UtilityService', '$q'];
+    factory.$inject = ['User', 'localStorageService', 'UtilityService', '$q', 'DbService'];
     return factory;
 });

@@ -1,4 +1,4 @@
-/*global define, require, console, cordova, navigator, document */
+/*global define, require, console, cordova, navigator, document, window */
 
 define(['angular', 'ionic', 'app', 'routes'], function (angular, ionic, app) {
     'use strict';
@@ -20,6 +20,7 @@ define(['angular', 'ionic', 'app', 'routes'], function (angular, ionic, app) {
                     console.info("activate background mode");
                 };
             }
+
 
             angular.bootstrap(document, [app.name]);
         };
