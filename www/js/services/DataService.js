@@ -62,7 +62,7 @@ define(['angular'], function (angular) {
                 tmp = {};
 
             var image = null;
-            if (angular.isDefined(imageData)) {
+            if (angular.isDefined(imageData) && imageData !== null) {
                 image = HelperService.getNewGuid();
                 DbService.insertImage(image, imageData);
             }
@@ -402,6 +402,9 @@ define(['angular'], function (angular) {
             if (modelid === 'LLC020') {
                 return "go";
             }
+            if (modelid === "LLC001") {
+                return "iris";
+            }
         };
 
         this.getGamutMode = function (modelid) {
@@ -422,7 +425,8 @@ define(['angular'], function (angular) {
                 modelid === 'LLC012' ||
                 modelid === 'LLC006' ||
                 modelid === 'LLC007' ||
-                modelid === 'LLC013'
+                modelid === 'LLC013' ||
+                modelid === "LLC001"
             ) {
                 return "A";
             }

@@ -16,7 +16,9 @@ require.config({
         noUiSliderAngular: '../res/nouislider-angular-master/nouislider',
         firebase: '../bower_components/firebase/firebase',
         angularfire: '../bower_components/angularfire/dist/angularfire',
-        imgcrop: '../bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop'
+        //imgcrop: '../bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop'
+        imgcrop: '../bower_components/ng-img-crop/compile/unminified/ng-img-crop',
+        crop: '../res/cropme-master/cropme'
     },
     shim: {
         angular: {
@@ -57,6 +59,9 @@ require.config({
             deps: ['angularTranslate', 'firebase']
         },
         imgcrop: {
+            deps: ['angularTranslate']
+        },
+        crop: {
             deps: ['angularTranslate']
         }
     },

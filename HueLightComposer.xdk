@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1460206110402,
+      "lastModifiedDate": 1460239859027,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -74,7 +74,7 @@
         "selectedState": "Included",
         "checksum": "927290ca",
         "dependsOn": [],
-        "topLevel": true,
+        "topLevel": false,
         "permissions": {},
         "description": "Cordova Device Plugin",
         "data": {},
@@ -210,17 +210,17 @@
         "custom": "true"
       },
       {
-        "id": "cordova-sqlite-storage",
-        "name": "Cordova sqlite storage plugin (core version)",
-        "version": "1.2.0",
+        "id": "cordova-sqlite-ext",
+        "name": "Cordova sqlite storage plugin with extras",
+        "version": "0.9.1",
         "originType": "repo",
-        "origin": "https://github.com/litehelpers/Cordova-sqlite-storage",
+        "origin": "https://github.com/litehelpers/cordova-sqlite-ext",
         "gitref": "",
         "subdir": ".",
         "paramvals": {},
-        "sourceLocation": "plugins/cordova-sqlite-storage",
+        "sourceLocation": "plugins/cordova-sqlite-ext",
         "selectedState": "Included",
-        "checksum": "252e96e9",
+        "checksum": "13b01124",
         "dependsOn": [],
         "topLevel": true,
         "cordovaVersion": ">=3.3.0",
@@ -228,7 +228,8 @@
         "permissions": {},
         "description": "Native interface to SQLite for PhoneGap/Cordova. Allows you to use more storage and provides more flexibility than the standard Web SQL database (window.openDatabase).",
         "data": {},
-        "dependedBy": []
+        "dependedBy": [],
+        "custom": "true"
       }
     ],
     "buildConfigurations": {

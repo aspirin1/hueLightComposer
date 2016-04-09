@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService, $q, DbService) {
+    function ctrl($scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService, $q, DbService, PlaceholderDataUrl) {
         console.info("ScenesCtrl init");
         var filterBarInstance;
         $scope.selectedTab = 1;
@@ -27,7 +27,7 @@ define(function () {
             if (angular.isDefined($scope.allImages) && imageId in $scope.allImages) {
                 return $scope.allImages[imageId];
             } else
-                return "";
+                return PlaceholderDataUrl;
         };
 
         $scope.showFilterBar = function () {
@@ -86,7 +86,7 @@ define(function () {
         };
     }
 
-    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService', '$q', 'DbService'];
+    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService', '$q', 'DbService', 'PlaceholderDataUrl'];
     return ctrl;
 
 });

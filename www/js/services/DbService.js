@@ -3,9 +3,13 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function ($q) {
+    var factory = function ($q, PlaceholderDataUrl) {
         var self = this;
         var db = null;
+
+        var isSqliteDefined = function () {
+            return angular.isDefined(window.sqlitePlugin);
+        };
 
         var errorCb = function (err) {
             console.error('Database ERROR: ' + JSON.stringify(err));
@@ -21,7 +25,7 @@ define(['angular'], function (angular) {
         };
 
         var getDbConnection = function () {
-            if (db === null) {
+            if (db === null && isSqliteDefined()) {
                 db = window.sqlitePlugin.openDatabase({
                     name: 'my.db',
                     location: 'default'
@@ -37,6 +41,10 @@ define(['angular'], function (angular) {
         };
 
         var createTables = function () {
+            if (!isSqliteDefined()) {
+                return;
+            }
+
             getDbConnection().transaction(function (tx) {
                 //tx.executeSql('DROP TABLE IF EXISTS images');
                 tx.executeSql('CREATE TABLE IF NOT EXISTS images (id integer primary key, imageId text, imageData text)');
@@ -44,6 +52,10 @@ define(['angular'], function (angular) {
         };
 
         var dropTables = function () {
+            if (!isSqliteDefined()) {
+                return;
+            }
+
             getDbConnection().transaction(function (tx) {
                 tx.executeSql('DROP TABLE IF EXISTS images');
             }, errorCb, successCb);
@@ -57,6 +69,10 @@ define(['angular'], function (angular) {
         };
 
         this.insertImage = function (imageId, imageData) {
+            if (!isSqliteDefined()) {
+                return;
+            }
+
             var db = getDbConnection();
             db.transaction(function (tx) {
                 var insertSql = "INSERT INTO images (imageId, imageData) VALUES (?,?)";
@@ -68,6 +84,10 @@ define(['angular'], function (angular) {
         };
 
         this.updateImage = function (imageId, imageData) {
+            if (!isSqliteDefined()) {
+                return;
+            }
+
             var db = getDbConnection();
             db.transaction(function (tx) {
                 var updateSql = "UPDATE images SET imageData=? WHERE imageId=?";
@@ -80,6 +100,10 @@ define(['angular'], function (angular) {
         };
 
         this.insertOrUpdateImage = function (imageId, imageData) {
+            if (!isSqliteDefined()) {
+                return;
+            }
+
             var db = getDbConnection();
             db.transaction(function (tx) {
                 tx.executeSql("select count(id) as cnt from images where imageId=?;", [imageId], function (tx, res) {
@@ -93,6 +117,10 @@ define(['angular'], function (angular) {
         };
 
         this.deleteImage = function (imageId, imageData) {
+            if (!isSqliteDefined()) {
+                return;
+            }
+
             var db = getDbConnection();
             db.transaction(function (tx) {
                 var deleteSql = "DELETE from images WHERE imageId=?";
@@ -106,6 +134,14 @@ define(['angular'], function (angular) {
 
         this.getAllImages = function () {
             var deferred = $q.defer();
+            if (!isSqliteDefined()) {
+                window.setTimeout(function () {
+                    var images = [];
+                    deferred.resolve(images);
+                }, 100);
+                return deferred.promise;
+            }
+
             var db = getDbConnection();
             db.readTransaction(function (tx) {
                 tx.executeSql('SELECT * FROM images;', [], function (tx, res) {
@@ -123,6 +159,13 @@ define(['angular'], function (angular) {
 
         this.getImageByImageId = function (imageId) {
             var deferred = $q.defer();
+            if (!isSqliteDefined()) {
+                window.setTimeout(function () {
+                    deferred.resolve(PlaceholderDataUrl);
+                }, 100);
+                return deferred.promise;
+            }
+
             var db = getDbConnection();
             db.readTransaction(function (tx) {
                 tx.executeSql('SELECT * FROM images WHERE imageId=?;', [imageId], function (tx, res) {
@@ -137,6 +180,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ["$q"];
+    factory.$inject = ["$q", 'PlaceholderDataUrl'];
     return factory;
 });

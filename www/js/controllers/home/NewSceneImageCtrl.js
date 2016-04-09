@@ -42,25 +42,63 @@ define(function () {
 
         var getImage = function () {
             var imageData = DataService.getSceneImage();
+            console.log(imageData);
             $scope.image.myImage = "data:image/jpeg;base64," + imageData;
         };
 
-        $scope.image = {};
-        getImage();
 
         var refresh = function () {
+            console.log("refresh");
+            $scope.image = {};
+            $scope.image.myCroppedImage = '';
+            //$scope.image.myImage = "data:image/jpeg;base64," + DataService.getSceneImage();
 
+            var image = document.getElementById('imageToCrop');
+            image.setAttribute('crossOrigin', 'anonymous');
+            image.onload = function () {
+                console.log("image loaded");
+                $scope.cropper = new Cropper(image, {
+                    viewMode: 3,
+                    dragMode: 'move',
+                    aspectRatio: 1 / 1,
+                    zoomable: false,
+                    toggleDragModeOnDblclick: false,
+                    minCropBoxWidth: 100,
+                    minCropBoxHeight: 100,
+                    //                    crop: function (e) {
+                    //                        console.log(e.detail.x);
+                    //                        console.log(e.detail.y);
+                    //                        console.log(e.detail.width);
+                    //                        console.log(e.detail.height);
+                    //                        console.log(e.detail.rotate);
+                    //                        console.log(e.detail.scaleX);
+                    //                        console.log(e.detail.scaleY);
+                    //                    }
+                });
+
+            };
+            image.src = "data:image/jpeg;base64," + DataService.getSceneImage();
+        };
+
+        $scope.reset = function () {
+            $scope.cropper.reset();
         };
 
         $scope.saveImage = function () {
-            var canvas = document.getElementById("canvas");
-            canvas.width = 400;
-            canvas.height = 400;
+            //            var canvas = document.getElementById("canvas");
+            //            canvas.width = 400;
+            //            canvas.height = 400;
+            //
+            //            var image = new Image();
+            //            image.src = $scope.image.myCroppedImage;
+            //            canvas.getContext("2d").drawImage(image, 0, 0);
+            //            var jpgDataUrlSrc = canvas.toDataURL("image/jpeg");
 
-            var image = new Image();
-            image.src = $scope.image.myCroppedImage;
-            canvas.getContext("2d").drawImage(image, 0, 0);
-            var jpgDataUrlSrc = canvas.toDataURL("image/jpeg");
+            var jpgDataUrlSrc = $scope.cropper.getCroppedCanvas({
+                width: 400,
+                height: 400
+            }).toDataURL('image/jpeg');
+            console.log(jpgDataUrlSrc);
 
             DataService.setSceneImageCropped(jpgDataUrlSrc);
             $scope.back();

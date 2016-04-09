@@ -39,7 +39,7 @@ define(['angular',
             'jett.ionic.filter.bar',
             'ya.nouislider',
             'firebase',
-            'ngImgCrop'
+            'ngImgCrop',
         ]);
 
 
