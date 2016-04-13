@@ -21,7 +21,6 @@ define(['angular', 'ionic', 'app', 'routes'], function (angular, ionic, app) {
                 };
             }
 
-
             angular.bootstrap(document, [app.name]);
         };
 

@@ -440,7 +440,7 @@ define(['angular'], function (angular) {
         };
 
         this.getHexColor = function (gamut, xy, bri) {
-            return "#" + ColorService.CIE1931ToHex(gamut, xy[0], xy[1], bri);
+            return "#" + ColorService.CIE1931ToHex(gamut, xy[0], xy[1], 1);
         };
 
         this.getLightById = function (key) {

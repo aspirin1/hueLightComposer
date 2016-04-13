@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1460239859027,
+      "lastModifiedDate": 1460567430018,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -59,8 +59,7 @@
         "permissions": {},
         "description": "Cordova Notification Plugin",
         "data": {},
-        "dependedBy": [],
-        "cordovaVersion": ">=3.0.0"
+        "dependedBy": []
       },
       {
         "id": "cordova-plugin-device",
@@ -78,10 +77,7 @@
         "permissions": {},
         "description": "Cordova Device Plugin",
         "data": {},
-        "dependedBy": [
-          "cordova-plugin-background-mode"
-        ],
-        "cordovaVersion": ">=3.0.0"
+        "dependedBy": []
       },
       {
         "id": "cordova-plugin-camera",
@@ -103,8 +99,7 @@
         },
         "description": "Cordova Camera Plugin",
         "data": {},
-        "dependedBy": [],
-        "cordovaVersion": ">=3.0.0"
+        "dependedBy": []
       },
       {
         "id": "cordova-plugin-file",
@@ -126,8 +121,7 @@
         },
         "description": "Cordova File Plugin",
         "data": {},
-        "dependedBy": [],
-        "cordovaVersion": ">=3.0.0"
+        "dependedBy": []
       },
       {
         "id": "cordova-plugin-inappbrowser",
@@ -187,40 +181,16 @@
         "dependedBy": []
       },
       {
-        "id": "cordova-plugin-background-mode",
-        "name": "BackgroundMode",
-        "version": "0.6.5",
+        "id": "cordova-sqlite-storage",
+        "name": "Cordova sqlite storage plugin (core version)",
+        "version": "0.8.5",
         "originType": "cordova.io",
-        "origin": "cordova-plugin-background-mode",
+        "origin": "cordova-sqlite-storage",
         "gitref": "",
         "paramvals": {},
-        "sourceLocation": "plugins/cordova-plugin-background-mode",
+        "sourceLocation": "plugins/cordova-sqlite-storage",
         "selectedState": "Included",
-        "checksum": "41408898",
-        "dependsOn": [
-          "cordova-plugin-device"
-        ],
-        "topLevel": true,
-        "cordovaVersion": ">=3.0.0",
-        "author": "Sebastián Katzer",
-        "permissions": {},
-        "description": "\n        Cordova plugin to prevent the app from going to sleep in background.\n    ",
-        "data": {},
-        "dependedBy": [],
-        "custom": "true"
-      },
-      {
-        "id": "cordova-sqlite-ext",
-        "name": "Cordova sqlite storage plugin with extras",
-        "version": "0.9.1",
-        "originType": "repo",
-        "origin": "https://github.com/litehelpers/cordova-sqlite-ext",
-        "gitref": "",
-        "subdir": ".",
-        "paramvals": {},
-        "sourceLocation": "plugins/cordova-sqlite-ext",
-        "selectedState": "Included",
-        "checksum": "13b01124",
+        "checksum": "f2ba68a7",
         "dependsOn": [],
         "topLevel": true,
         "cordovaVersion": ">=3.3.0",
@@ -228,8 +198,7 @@
         "permissions": {},
         "description": "Native interface to SQLite for PhoneGap/Cordova. Allows you to use more storage and provides more flexibility than the standard Web SQL database (window.openDatabase).",
         "data": {},
-        "dependedBy": [],
-        "custom": "true"
+        "dependedBy": []
       }
     ],
     "buildConfigurations": {
@@ -283,7 +252,9 @@
             "*"
           ],
           "intents": [],
-          "navigation": [],
+          "navigation": [
+            "*"
+          ],
           "properties": {}
         },
         "icons_": [],
@@ -437,8 +408,13 @@
           "network": [
             "*"
           ],
-          "intents": [],
-          "navigation": [],
+          "intents": [
+            "*.firebaseio.com",
+            "auth.firebase.com"
+          ],
+          "navigation": [
+            "*"
+          ],
           "properties": {}
         },
         "icons_": [

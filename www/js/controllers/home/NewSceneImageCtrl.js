@@ -1,4 +1,4 @@
-/*global angular, define, console, window, navigator,cordova,document, Image*/
+/*global angular, define, console, window, navigator,cordova,document, Image,XMLHttpRequest,Cropper*/
 
 define(function () {
     'use strict';

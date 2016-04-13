@@ -65,8 +65,21 @@ define(function () {
                     console.log($scope.allImages);
                 })
                 .then(function () {
-                    $scope.customScenes = DataService.getCustomScenes();
-                    console.log($scope.customScenes);
+                    //$scope.customScenes = DataService.getCustomScenes();
+                    var customScenes = DataService.getCustomScenes();
+                    var rowSize = 2;
+                    var customScenesRows = [];
+
+                    var rowList = [];
+                    angular.forEach(customScenes, function (scene) {
+                        if (rowList.length === rowSize) {
+                            customScenesRows.push(rowList);
+                            rowList = [];
+                        }
+                        rowList.push(scene);
+                    });
+                    customScenesRows.push(rowList);
+                    $scope.customScenesRows = customScenesRows;
                 });
 
 

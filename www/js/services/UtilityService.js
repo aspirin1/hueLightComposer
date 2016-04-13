@@ -93,7 +93,7 @@ define(['angular'], function (angular) {
                 destinationType: 0, //0=DATA_URL, 1=FILE_URI
                 sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY, //0=PHOTOLIBRARY;1=CAMERA
                 saveToPhotoAlbum: false,
-                correctOrientation: false
+                //correctOrientation: false
             };
             if (angular.isDefined(differentOptions)) {
                 options = differentOptions;
@@ -117,7 +117,7 @@ define(['angular'], function (angular) {
                 destinationType: 0, //0=DATA_URL, 1=FILE_URI
                 sourceType: navigator.camera.PictureSourceType.CAMERA, //0=PHOTOLIBRARY;1=CAMERA
                 saveToPhotoAlbum: false,
-                correctOrientation: false
+                //correctOrientation: false
             };
 
             if (angular.isDefined(differentOptions)) {
