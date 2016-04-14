@@ -5,8 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1459163144986,
-
+      "lastModifiedDate": 1459748341491,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -222,7 +221,7 @@
         "runtime_": "Cordova 3.x",
         "name_": "Windows8",
         "preferences_": {
-          "windows-publisher-display-name": "",
+          "windows-publisher-display-name": "ck",
           "windows-publisher-id": "19A78A9D-C59E-4915-8289-2BCA7290F6A3",
           "wp81-publisher-id": "e8afa127-95ee-47b4-ac3e-a78f88ed66a8"
         },
