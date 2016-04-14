@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $ionicHistory, $state, $filter, DataService, HueService, UtilityService) {
+    function ctrl($scope, $ionicHistory, $state, $filter, DataService, HueService, UtilityService, DbService) {
         console.info("New ScenesCtrl init");
 
         var resetForm = function () {
@@ -17,6 +17,7 @@ define(function () {
         resetForm();
 
         $scope.$on("$ionicView.beforeEnter", function () {
+            DbService.getAllImages();
             refresh();
         });
 
@@ -51,20 +52,15 @@ define(function () {
         };
 
         $scope.scenePictureAlbum = function () {
-            UtilityService.getAndStorePictureAlbum().then(function (data) {
-                console.log(data);
-                $scope.newScene.image = data;
+            UtilityService.getPictureAlbumAsDataUrl().then(function (data) {
                 DataService.setSceneImage(data);
                 $state.go('main.home_tab.newSceneImage');
             });
         };
 
         $scope.scenePictureCamera = function () {
-            UtilityService.getAndStorePictureCamera().then(function (data) {
-                console.log(data);
-                $scope.newScene.image = data;
+            UtilityService.getPictureCameraAsDataUrl().then(function (data) {
                 DataService.setSceneImage(data);
-
                 $state.go('main.home_tab.newSceneImage');
             });
         };
@@ -80,7 +76,7 @@ define(function () {
 
         $scope.urlForImage = function () {
             if ($scope.croppedImageAvailable()) {
-                return UtilityService.getUrlForImage(DataService.getSceneImageCropped());
+                return DataService.getSceneImageCropped();
             } else {
                 return "";
             }
@@ -92,7 +88,7 @@ define(function () {
         };
     }
 
-    ctrl.$inject = ['$scope', '$ionicHistory', '$state', '$filter', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$ionicHistory', '$state', '$filter', 'DataService', 'HueService', 'UtilityService', 'DbService'];
     return ctrl;
 
 });

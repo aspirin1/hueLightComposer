@@ -17,7 +17,7 @@ define(['angular'], function (angular) {
                         var reader = new FileReader();
                         reader.onloadend = function (evt) {
                             defer.resolve({
-                                'imageUrl': imageUrl,
+                                'imageId': imageUrl,
                                 'image64': evt.target.result
                             });
                         };

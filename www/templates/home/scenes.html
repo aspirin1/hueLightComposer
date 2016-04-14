@@ -19,11 +19,12 @@
     <div class="scroll-content ionic-scroll overflow-scroll  has-header has-footer has-tabs-top">
 
         <div class="" ng-show="selectedTab==1">
-            <div ng-repeat="scene in customScenes" class="col col-50 scene" ng-click="activateScene(scene.id)">
-                <img ng-if="scene.image===undefined" class="full-image" src="img/effects/aurora.jpg">
-                <img ng-if="scene.image!==undefined" class="full-image" ng-src="{{getUrlSrc(scene.image)}}">
-                <span class="innerTextScene">{{scene.name}}</span>
-                <span class="sceneLampInfo">{{scene.lights.length}}</span>
+            <div class="row" ng-repeat="row in customScenesRows">
+                <div ng-repeat="scene in row" class="col col-50" ng-click="activateScene(scene.id)">
+                    <img ng-if="scene.image!==undefined" class="full-image" ng-src="{{getUrlSrc(scene.image)}}">
+                    <span class="innerTextScene">{{scene.name}}</span>
+                    <span class="sceneLampInfo">Lampen: {{scene.lights.length}}</span>
+                </div>
             </div>
         </div>
 

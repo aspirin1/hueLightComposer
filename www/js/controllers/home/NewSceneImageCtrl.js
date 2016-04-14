@@ -1,4 +1,4 @@
-/*global angular, define, console, window, navigator,cordova,document, Image*/
+/*global angular, define, console, window, navigator,cordova,document, Image,XMLHttpRequest,Cropper*/
 
 define(function () {
     'use strict';
@@ -14,11 +14,7 @@ define(function () {
             var xhr = new XMLHttpRequest();
             xhr.responseType = 'blob';
             xhr.onload = function () {
-                //                var reader = new FileReader();
-                //                reader.onloadend = function () {
-                //                    callback(reader.result);
-                //                };
-                //                reader.readAsDataURL(xhr.response);
+
                 callback(xhr.response);
             };
             xhr.open('GET', url);
@@ -38,7 +34,6 @@ define(function () {
                 ctx.drawImage(this, 0, 0);
 
                 var dataURL = canvas.toDataURL("image/jpeg");
-                //console.log("dataURL", dataURL);
                 deferred.resolve(dataURL);
             };
             img.src = url;
@@ -46,59 +41,67 @@ define(function () {
         }
 
         var getImage = function () {
-            var imageName = DataService.getSceneImage();
-            var imageFullPath = UtilityService.getUrlForImage(imageName);
-
-            //            if (angular.isDefined(imageFullPath) && imageFullPath !== null) {
-            //                getBase64FromImageUrl(imageFullPath).then(function (data) {
-            //                    //console.log("resolved", data);
-            //                    $scope.image.myImage = data;
-            //                });
-            //            }
-            //
-            //            convertFileToDataURLviaFileReader(imageFullPath, function (data) {
-            //                console.log("resolved2", data);
-            //                deferred.resolve(data);
-            //            });
-            //var image = new Image();
-            //image.src = imageFullPath;
-            //return imageFullPath;
-            $scope.image.myImage = imageFullPath;
+            var imageData = DataService.getSceneImage();
+            console.log(imageData);
+            $scope.image.myImage = "data:image/jpeg;base64," + imageData;
         };
 
-        $scope.image = {};
-        getImage();
-        //$scope.image.myImage = getImage();
-        //$scope.myCroppedImage = '';
-        //$scope.croppedBlob = '';
-        //$scope.croppedBlobUrl = '';
 
         var refresh = function () {
+            console.log("refresh");
+            $scope.image = {};
+            $scope.image.myCroppedImage = '';
+            //$scope.image.myImage = "data:image/jpeg;base64," + DataService.getSceneImage();
 
+            var image = document.getElementById('imageToCrop');
+            image.setAttribute('crossOrigin', 'anonymous');
+            image.onload = function () {
+                console.log("image loaded");
+                $scope.cropper = new Cropper(image, {
+                    viewMode: 3,
+                    dragMode: 'move',
+                    aspectRatio: 1 / 1,
+                    zoomable: false,
+                    toggleDragModeOnDblclick: false,
+                    minCropBoxWidth: 100,
+                    minCropBoxHeight: 100,
+                    //                    crop: function (e) {
+                    //                        console.log(e.detail.x);
+                    //                        console.log(e.detail.y);
+                    //                        console.log(e.detail.width);
+                    //                        console.log(e.detail.height);
+                    //                        console.log(e.detail.rotate);
+                    //                        console.log(e.detail.scaleX);
+                    //                        console.log(e.detail.scaleY);
+                    //                    }
+                });
+
+            };
+            image.src = "data:image/jpeg;base64," + DataService.getSceneImage();
+        };
+
+        $scope.reset = function () {
+            $scope.cropper.reset();
         };
 
         $scope.saveImage = function () {
-            var canvas = document.getElementById("canvas");
-            canvas.width = 400;
-            canvas.height = 400;
+            //            var canvas = document.getElementById("canvas");
+            //            canvas.width = 400;
+            //            canvas.height = 400;
+            //
+            //            var image = new Image();
+            //            image.src = $scope.image.myCroppedImage;
+            //            canvas.getContext("2d").drawImage(image, 0, 0);
+            //            var jpgDataUrlSrc = canvas.toDataURL("image/jpeg");
 
-            var image = new Image();
-            image.src = $scope.image.myCroppedImage;
-            canvas.getContext("2d").drawImage(image, 0, 0);
-            var jpgDataUrlSrc = canvas.toDataURL("image/jpeg");
+            var jpgDataUrlSrc = $scope.cropper.getCroppedCanvas({
+                width: 400,
+                height: 400
+            }).toDataURL('image/jpeg');
+            console.log(jpgDataUrlSrc);
 
-            //console.log($scope.image.myImage);
-            //console.log($scope.image.myCroppedImage);
-            //console.log(jpgDataUrlSrc);
-
-            var imageName = HelperService.getNewGuid();
-            var imageUrl = imageName + ".jpg";
-
-            UtilityService.writeBase64ImageToFilesSystem(imageUrl, jpgDataUrlSrc).then(function () {
-                DataService.setSceneImageCropped(imageUrl);
-                console.log(imageUrl, DataService.getSceneImageCropped());
-                $scope.back();
-            });
+            DataService.setSceneImageCropped(jpgDataUrlSrc);
+            $scope.back();
         };
 
         $scope.back = function () {

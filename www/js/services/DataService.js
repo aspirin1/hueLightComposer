@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function (User, HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService) {
+    var factory = function (User, HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService, DbService) {
         var self = this;
         var sceneImage = null;
         var sceneImageCropped = null;
@@ -56,10 +56,16 @@ define(['angular'], function (angular) {
             localStorageService.set(lastClientChangeKey, newEntry.time);
         };
 
-        this.addCustomScene = function (id, name, lights, image) {
+        this.addCustomScene = function (id, name, lights, imageData) {
             var tmp = localStorageService.get(customScenesKey);
             if (tmp === null)
                 tmp = {};
+
+            var image = null;
+            if (angular.isDefined(imageData) && imageData !== null) {
+                image = HelperService.getNewGuid();
+                DbService.insertImage(image, imageData);
+            }
 
             var newScene = {
                 'uid': HelperService.getNewGuid(),
@@ -69,10 +75,6 @@ define(['angular'], function (angular) {
                 'lights': lights,
                 'image': image
             };
-
-            if (angular.isUndefined(newScene.image)) {
-                newScene.image = null;
-            }
 
             tmp[newScene.uid] = newScene;
             self.addToLocalHistory('scene', 'create', newScene.uid);
@@ -400,6 +402,9 @@ define(['angular'], function (angular) {
             if (modelid === 'LLC020') {
                 return "go";
             }
+            if (modelid === "LLC001") {
+                return "iris";
+            }
         };
 
         this.getGamutMode = function (modelid) {
@@ -420,7 +425,8 @@ define(['angular'], function (angular) {
                 modelid === 'LLC012' ||
                 modelid === 'LLC006' ||
                 modelid === 'LLC007' ||
-                modelid === 'LLC013'
+                modelid === 'LLC013' ||
+                modelid === "LLC001"
             ) {
                 return "A";
             }
@@ -434,7 +440,7 @@ define(['angular'], function (angular) {
         };
 
         this.getHexColor = function (gamut, xy, bri) {
-            return "#" + ColorService.CIE1931ToHex(gamut, xy[0], xy[1], bri);
+            return "#" + ColorService.CIE1931ToHex(gamut, xy[0], xy[1], 1);
         };
 
         this.getLightById = function (key) {
@@ -662,6 +668,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['User', 'HelperService', 'HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService'];
+    factory.$inject = ['User', 'HelperService', 'HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService', 'DbService'];
     return factory;
 });

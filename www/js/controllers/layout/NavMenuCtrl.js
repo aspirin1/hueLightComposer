@@ -11,7 +11,10 @@ define(function () {
         };
 
         $scope.login = function (authMethod) {
-            Auth.$authWithOAuthRedirect(authMethod).then(function (authData) {}).catch(function (error) {
+            //Auth.$authWithOAuthRedirect(authMethod).then(function (authData) {}).catch(function (error) {
+            Auth.$authWithOAuthPopup(authMethod).then(function (authData) {
+                console.info(authData);
+            }).catch(function (error) {
                 if (error.code === 'TRANSPORT_UNAVAILABLE') {
                     Auth.$authWithOAuthPopup(authMethod).then(function (authData) {});
                 } else {

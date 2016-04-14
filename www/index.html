@@ -15,7 +15,8 @@
     <link type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link type="text/css" href="bower_components/icomoon/style.css" rel="stylesheet">
     <link type="text/css" href="bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
-    <link type="text/css" href="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.css" rel="stylesheet">
+    <link type="text/css" href="bower_components/ng-img-crop/compile/unminified/ng-img-crop.css" rel="stylesheet">
+    <link type="text/css" href="bower_components/cropperjs/dist/cropper.css" rel="stylesheet">
 
     <link type="text/css" href="bower_components/nouislider/distribute/nouislider.min.css" rel="stylesheet">
     <link type="text/css" href="css/slider.css" rel="stylesheet">
@@ -24,6 +25,9 @@
 
     <!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">-->
+
+
     <style>
         /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
         /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
@@ -46,7 +50,9 @@
             user-zoom: fixed;
         }
     </style>
-    <script src="http://debug-software.intel.com/target/target-script-min.js#gKl9udviQ4I0ebTL4mjUROJA71XBX63bTFW3K0XZInc"></script>
+    <!--<script src="http://debug-software.intel.com/target/target-script-min.js#gKl9udviQ4I0ebTL4mjUROJA71XBX63bTFW3K0XZInc"></script>-->
+    <script src="bower_components/color-thief/src/color-thief.js"></script>
+    <script src="bower_components/cropperjs/dist/cropper.js"></script>
     <script src="cordova.js"></script>
     <script src="bower_components/requirejs/require.js" data-main="js/main"></script>
     <!-- phantom library, needed for Cordova api calls, added during build -->

@@ -1,0 +1,55 @@
+<ion-view view-title="{{'ImageViewer_Title' |translate}}">
+    <ion-nav-buttons side="secondary">
+        <div class="buttons">
+            <button class="button button-icon ion-funnel" ng-click="popover.show($event)">
+            </button>
+        </div>
+    </ion-nav-buttons>
+    <ion-content>
+        <img src="{{myImage}}" id="imageSource" style="max-width: 100%;max-height: 100%;" />
+        <canvas id="imageViewerCanvas" style="display:none;"></canvas>
+        <div class="swatches" style="    z-index: 10;">
+            <div class="swatch" ng-repeat="colorItem in hexPalette" style="background-color:{{colorItem.hexColor}}">
+                <span>{{colorItem.lightIdActive}}</span>
+            </div>
+        </div>
+        <ion-footer-bar>
+            <div class="button-bar">
+                <button class="button button-calm" ng-click="openModalLightSelection()">Select lights</button>
+                <button class="button button-calm" ng-click="loadImage()">Load Image</button>
+            </div>
+        </ion-footer-bar>
+    </ion-content>
+
+
+    <script id="copyto-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">{{'Home_LightList_Detail_CopyTo' | translate}}</h1>
+                <div class="copyColorModalColorPreview" ng-style="getCopyToSelectedColorStyle()"></div>
+            </ion-header-bar>
+            <light-selection selected-lights="copySelection" refresh="true" header-class="has-tabs-top">
+            </light-selection>
+            <ion-footer-bar>
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>
+                    <button class="button button-positive" ng-click="copyToSelection()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>
+                </div>
+            </ion-footer-bar>
+        </ion-modal-view>
+    </script>
+
+    <script id="options-popover.html" type="text/ng-template">
+        <ion-popover-view class="animated slideInRight platform-ios fit">
+            <ion-content scroll="false">
+                <div class="list">
+                    <ion-checkbox ng-model="options.useRealBrightness">Real brightness</ion-checkbox>
+                    <ion-checkbox ng-model="options.useAdaptiveBrightness">Adaptive brightness</ion-checkbox>
+                    <!--<ion-checkbox ng-model="options.a">A</ion-checkbox>
+                    <ion-checkbox ng-model="options.b">B</ion-checkbox>
+                    <ion-checkbox ng-model="options.c">C</ion-checkbox>-->
+                </div>
+            </ion-content>
+        </ion-popover-view>
+    </script>
+</ion-view>

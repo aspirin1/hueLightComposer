@@ -21,6 +21,8 @@ define(function (require) {
     services.factory('DataService', require('services/DataService'));
     services.factory('UtilityService', require('services/UtilityService'));
     services.factory('HelperService', require('services/HelperService'));
+    services.factory('DbService', require('services/DbService'));
+
 
     return services;
 
