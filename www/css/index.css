@@ -70,13 +70,13 @@ sortable list
 
     .innerTextScene {
         color: ghostwhite;
-        font-size: 30px;
+        font-size: 28px;
         /*line-height: 30px;*/
         font-weight: 400;
         position: absolute;
         /*bottom: 45%;*/
         margin-top: -44%;
-        margin-left: 4%;
+        margin-left: 3.5%;
         text-align: center;
         text-shadow: 1px 1px 1px #555, -1px -1px 1px #555, -1px 1px 1px #555, 1px -1px 1px #555, 0px 1px 1px #555, -1px 0px 1px #555, 1px 0px 1px #555, 0px -1px 1px #555;
         /*width: 100%;*/
@@ -97,6 +97,16 @@ sortable list
         z-index: 9;
         margin-top: -39%;
         margin-left: 4%;
+        display: block;
+    }
+
+    .sceneInfoButton {
+        color: ghostwhite;
+        font-size: 19px;
+        position: absolute;
+        z-index: 9;
+        margin-top: -44%;
+        margin-left: 40%;
         display: block;
     }
 

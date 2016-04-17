@@ -4,42 +4,48 @@
             <button class="button button-icon ion-android-search" ng-click="showFilterBar()"></button>
         </div>
     </ion-nav-buttons>
-    <div class="tabs-striped tabs-top tabs-icon-top tabs-calm">
-        <div class="tabs">
 
-            <div class="tab-item" ng-class="{active: selectedTab==1}" ng-click="selectedTab=1">
-                <i class="icon ion-lightbulb"></i> {{'Layout_Home_Tab_Lights' | translate}}
-            </div>
-
-            <div class="tab-item" ng-class="{active: selectedTab==2}" ng-click="selectedTab=2">
-                <i class="icon ion-grid"></i> {{'Layout_Home_Tab_Groups' | translate}}
+    <ion-content has-header="true" has-tabs="true">
+        <div class="row" ng-repeat="row in customScenesRows">
+            <div ng-repeat="scene in row" class="col col-50" ng-click="activateScene(scene.id)">
+                <img class="full-image" ng-src="{{getUrlSrc(scene.image)}}">
+                <span class="innerTextScene">{{scene.name}}</span>
+                <span class="sceneLampInfo">Lampen: {{scene.lights.length}}</span>
+                <div ng-click="openEditSceneModal(scene)" class="sceneInfoButton"><i class="icon ion-edit"></i></div>
             </div>
         </div>
-    </div>
-    <div class="scroll-content ionic-scroll overflow-scroll  has-header has-footer has-tabs-top">
+    </ion-content>
 
-        <div class="" ng-show="selectedTab==1">
-            <div class="row" ng-repeat="row in customScenesRows">
-                <div ng-repeat="scene in row" class="col col-50" ng-click="activateScene(scene.id)">
-                    <img ng-if="scene.image!==undefined" class="full-image" ng-src="{{getUrlSrc(scene.image)}}">
-                    <span class="innerTextScene">{{scene.name}}</span>
-                    <span class="sceneLampInfo">Lampen: {{scene.lights.length}}</span>
+    <script id="scene-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">{{scene.name}}</h1>
+            </ion-header-bar>
+
+            <ion-content has-header="true">
+                <img ng-show="croppedImageAvailable()" ng-src="{{urlForImage(lastPhoto)}}" height="400" width="400" />
+                <div class="button-bar">
+                    <button ng-show="croppedImageAvailable()" class="button button-calm" ng-click="newCrop()">Crop</button>
+                    <button class="button button-calm" ng-click="scenePictureAlbum()">Album</button>
+                    <button class="button button-positive" ng-click="scenePictureCamera()">Camera</button>
                 </div>
-            </div>
-        </div>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">{{'SINGLE_Name' | translate}}</span>
+                    <input type="text" ng-model="newScene.name" name='sceneName' />
+                </label>
+                <ul class="list">
+                    <ion-checkbox ng-repeat="light in allLights" ng-model="createSceneSelection[light.id]">{{light.name}}</ion-checkbox>
+                </ul>
+            </ion-content>
 
-        <div class="list" ng-show="selectedTab==2">
-            <div ng-repeat="scene in allScenes | filter:{name:searchFilter}" class="item item-button-right">
-                {{scene.name}}
-                <div class="buttons">
-                    <button class="button" ng-click="deleteScene(scene.id)">
-                        {{'SINGLE_Delete' |translate}}
-                    </button>
-                    <button class="button" ng-click="activateScene(scene.id)">
-                        {{'SINGLE_On' |translate}}
-                    </button>
+            <ion-footer-bar>
+                <div class="button-bar">
+                    <button class="button button-calm" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
+                    <button class="button button-danger" ng-click="deleteScene(scene.id)">{{'SINGLE_Delete' | translate}}</button>
+                    <button class="button button-positive" ng-click="createScene()">{{'SINGLE_Create' | translate}}</button>
                 </div>
-            </div>
-        </div>
-    </div>
+            </ion-footer-bar>
+
+        </ion-modal-view>
+    </script>
 </ion-view>

@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService, $q, DbService, PlaceholderDataUrl) {
+    function ctrl($ionicModal, $scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService, $q, DbService, PlaceholderDataUrl) {
         console.info("ScenesCtrl init");
         var filterBarInstance;
         $scope.selectedTab = 1;
@@ -34,7 +34,7 @@ define(function () {
             filterBarInstance = $ionicFilterBar.show({
                 items: $scope.allScenes,
                 update: function (filteredItems) {
-                    $scope.allScenes = filteredItems;
+                    refreshGridView(filteredItems);
                 },
                 filterProperties: 'name'
             });
@@ -47,12 +47,51 @@ define(function () {
         };
 
         $scope.deleteScene = function (sceneId) {
-            HueService.deleteScene(sceneId).then(function (data) {
-                DataService.removeCustomScene(sceneId);
-                refresh();
-            });
+            console.log(sceneId);
+
+            function onConfirm(buttonIndex) {
+                if (buttonIndex === 1) //delete
+                {
+                    HueService.deleteScene(sceneId).then(function (data) {
+                        DataService.removeCustomScene(sceneId);
+                        refresh();
+                        $scope.closeModal();
+                    });
+                }
+            }
+
+            navigator.notification.confirm(
+                'Do you really want to delete the scene "' + $scope.scene.name + '"?', // message
+                onConfirm, // callback to invoke with index of button pressed
+                'Delete', // title
+                    ['Delete', 'Cancel'] // buttonLabels
+            );
+
         };
 
+        var refreshGridView = function (customScenes) {
+            var ownCustomScenes = DataService.getCustomScenes();
+
+            var rowSize = 2;
+            var customScenesRows = [];
+
+            var rowList = [];
+            angular.forEach(customScenes, function (scene) {
+                angular.forEach(ownCustomScenes, function (ownScene) {
+                    if (ownScene.id === scene.id && angular.isDefined(ownScene.image)) {
+                        scene.image = ownScene.image;
+                    }
+                });
+
+                if (rowList.length === rowSize) {
+                    customScenesRows.push(rowList);
+                    rowList = [];
+                }
+                rowList.push(scene);
+            });
+            customScenesRows.push(rowList);
+            $scope.customScenesRows = customScenesRows;
+        };
 
         var refresh = function () {
             DbService.getAllImages()
@@ -65,41 +104,43 @@ define(function () {
                     console.log($scope.allImages);
                 })
                 .then(function () {
-                    //$scope.customScenes = DataService.getCustomScenes();
-                    var customScenes = DataService.getCustomScenes();
-                    var rowSize = 2;
-                    var customScenesRows = [];
 
-                    var rowList = [];
-                    angular.forEach(customScenes, function (scene) {
-                        if (rowList.length === rowSize) {
-                            customScenesRows.push(rowList);
-                            rowList = [];
-                        }
-                        rowList.push(scene);
+                    HueService.getAllScenes().then(function (data) {
+                        var customScenes = [];
+                        angular.forEach(data, function (value, key) {
+                            value.id = key;
+                            if (!value.name.match(/\soff\s\d+/g)) {
+                                value.name = value.name.replace(/\son\s\d+/, '').replace(/\sfon\s\d+/, '');
+                                customScenes.push(value);
+                            }
+                        });
+                        $scope.allScenes = customScenes;
+                        refreshGridView(customScenes);
                     });
-                    customScenesRows.push(rowList);
-                    $scope.customScenesRows = customScenesRows;
+
+
                 });
 
+        };
 
-            HueService.getAllScenes().then(function (data) {
-                var ret = [];
-                angular.forEach(data, function (value, key) {
-                    value.id = key;
-                    if (!value.name.match(/\soff\s\d+/g)) {
-                        value.name = value.name.replace(/\son\s\d+/, '').replace(/\sfon\s\d+/, '');
-                        ret.push(value);
-                    }
-                });
-                $scope.allScenes = ret;
-                console.log($scope.allScenes);
-            });
+        $ionicModal.fromTemplateUrl('scene-modal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.sceneModal = modal;
+        });
 
+        $scope.openEditSceneModal = function (scene) {
+            console.log(scene);
+            $scope.scene = scene;
+            $scope.sceneModal.show();
+        };
+        $scope.closeModal = function () {
+            $scope.sceneModal.hide();
         };
     }
 
-    ctrl.$inject = ['$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService', '$q', 'DbService', 'PlaceholderDataUrl'];
+    ctrl.$inject = ['$ionicModal', '$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService', '$q', 'DbService', 'PlaceholderDataUrl'];
     return ctrl;
 
 });
