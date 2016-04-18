@@ -136,7 +136,7 @@ define(function () {
                     }
 
                     var colorThief = new ColorThief();
-                    var palette = colorThief.getPalette(image, $scope.activeLights.length * 3, 5);
+                    var palette = colorThief.getPalette(image, 20, 6);
                     var hexPalette = [];
 
                     angular.forEach(palette, function (rgb) {
@@ -153,7 +153,8 @@ define(function () {
                             isReachableByGamutC: isPointInTriangle(rawxy, "C"),
                         };
 
-                        if (item.hsl.l > 37
+                        //hexPalette.push(item);
+                        if (item.hsl.l > 35 && item.hsl.s > 60
                             //&& (
                             //    item.isReachableByGamutA ||
                             //    item.isReachableByGamutB ||
@@ -211,6 +212,7 @@ define(function () {
                                 var gamutLight2 = $scope.allLights[parseInt($scope.activeLights[k])].gamut;
 
                                 HueService.changeLightToHexColor($scope.activeLights[k], gamutLight2, hexPalette[tmpIndex].hexColor);
+                                hexPalette[tmpIndex].lightIdActive = $scope.activeLights[k];
                                 tmpIndex++;
                                 if (tmpIndex === hexPalette.length) {
                                     tmpIndex = 0;
