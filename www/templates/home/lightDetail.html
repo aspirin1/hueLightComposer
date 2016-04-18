@@ -5,8 +5,8 @@
         </ion-nav-back-button>
         <ion-nav-buttons side="secondary">
             <div class="buttons">
-                <button class="button button-icon ion-more" ng-click="popover.show($event)">
-                </button>
+                <button class="button button-icon ion-more" ng-click="popover.show($event)"> </button>
+                <button class="button button-icon ion-edit" ng-click="openRename()"> </button>
             </div>
         </ion-nav-buttons>
     </ion-nav-bar>
@@ -85,7 +85,7 @@
         </div>
 
     </ion-content>
-
+    <!--
     <script id="rename-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar>
@@ -105,7 +105,7 @@
             </ion-content>
         </ion-modal-view>
     </script>
-
+-->
     <script id="copyto-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar>
@@ -138,9 +138,6 @@
         <ion-popover-view class="fit">
             <ion-content scroll="false">
                 <div class="list">
-                    <a class="item" ng-click="openRenameModal()">
-              {{'Home_LightList_Detail_Rename' | translate}}
-            </a>
                     <a class="item" ng-click="openCopyToModal()">
               {{'Home_LightList_Detail_CopyTo' | translate}}
             </a>

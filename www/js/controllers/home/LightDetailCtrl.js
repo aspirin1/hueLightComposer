@@ -219,25 +219,26 @@ define(function () {
         };
 
 
-        $ionicModal.fromTemplateUrl('rename-modal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.renameModal = modal;
-        });
+        $scope.openRename = function () {
+            function onPrompt(results) {
+                if (results.buttonIndex === 1) {
+                    var newName = results.input1;
+                    HueService.renameLight($scope.lightId, newName).then(function (data) {
+                        $scope.light.name = newName;
+                    });
+                }
+            }
 
-        $scope.openRenameModal = function () {
-            $scope.renameModal.show();
+            navigator.notification.prompt(
+                'Please enter a new name', // message
+                onPrompt, // callback to invoke
+                'Rename', // title
+                ['Rename', 'Cancel'], // buttonLabels
+                $scope.light.name // defaultText
+            );
         };
-        $scope.closeModal = function () {
-            $scope.renameModal.hide();
-        };
-        $scope.changeLightName = function (newName) {
-            HueService.renameLight($scope.lightId, newName).then(function (data) {
-                $scope.light.name = newName;
-                $scope.modal.hide();
-            });
-        };
+
+
 
 
         $scope.getCopyToSelectedColorStyle = function () {
