@@ -307,10 +307,10 @@ define(['angular'], function (angular) {
                 });
 
                 var customColors = localStorageService.get(customColorsKey);
-
+                var ownColors = [];
                 angular.forEach(customColors, function (color, key) {
                     color.isCustom = true;
-                    allColors.push(color);
+                    ownColors.push(color);
                 });
 
                 angular.forEach(allColors, function (color) {
@@ -323,7 +323,21 @@ define(['angular'], function (angular) {
                     color.hsl = ColorService.hexToHsl(color.hexColor);
                 });
 
-                deferred.resolve(allColors);
+                angular.forEach(ownColors, function (color) {
+                    color.isFavorite = self.isColorFavorite(color.hexColor);
+
+                    var rawxy = ColorService.getRawXYPointFromRGB(ColorService.hexToRgb(color.hexColor));
+                    color.isReachableByGamutA = ColorService.checkPointInLampsReach("A", rawxy);
+                    color.isReachableByGamutB = ColorService.checkPointInLampsReach("B", rawxy);
+                    color.isReachableByGamutC = ColorService.checkPointInLampsReach("C", rawxy);
+                    color.hsl = ColorService.hexToHsl(color.hexColor);
+                });
+
+                console.log(ownColors)
+                deferred.resolve({
+                    shippedColors: allColors,
+                    ownColors: ownColors
+                });
             }, 0);
             return deferred.promise;
         };

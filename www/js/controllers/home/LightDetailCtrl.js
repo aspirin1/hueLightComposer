@@ -342,6 +342,7 @@ define(function () {
 
             getColorXy(10).then(function (data) {
                 DataService.addCustomColor(data.hexColor);
+                navigator.notification.alert($filter('translate')('COLOR_SAVED'), null, $filter('translate')('COLOR_SAVED_TITLE'));
             });
 
             //            navigator.notification.prompt(

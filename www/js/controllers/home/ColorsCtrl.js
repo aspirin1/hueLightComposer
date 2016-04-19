@@ -65,6 +65,7 @@ define(function () {
             var reverse = false;
 
             $scope.colors = orderBy($scope.colors, predicate, reverse);
+            $scope.ownColors = orderBy($scope.ownColors, predicate, reverse);
         };
 
         $scope.asc = function (item) {
@@ -95,7 +96,9 @@ define(function () {
 
         var getAllColors = function () {
             DataService.getAllColors().then(function (colors) {
-                $scope.colors = colors;
+                $scope.ownColors = colors.ownColors;
+                console.log(colors.ownColors);
+                $scope.colors = colors.shippedColors;
                 reloadSorting();
                 $ionicLoading.hide();
             });
