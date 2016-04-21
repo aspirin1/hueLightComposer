@@ -18,10 +18,12 @@ require.config({
         angularfire: '../bower_components/angularfire/dist/angularfire',
         //imgcrop: '../bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop'
         imgcrop: '../bower_components/ng-img-crop/compile/unminified/ng-img-crop',
-        crop: '../res/cropme-master/cropme'
+        crop: '../res/cropme-master/cropme',
+        jquery: '../bower_components/jquery/dist/jquery'
     },
     shim: {
         angular: {
+            deps: ['jquery'],
             exports: 'angular'
         },
         angularTranslate: {

@@ -1,0 +1,30 @@
+<ion-modal-view ng-controller="SceneModalCtrl">
+    <ion-header-bar>
+        <h1 class="title">{{scene.name}}</h1>
+    </ion-header-bar>
+
+    <ion-content has-header="true">
+        <img ng-show="croppedImageAvailable()" ng-src="{{urlForImage(lastPhoto)}}" height="400" width="400" />
+        <div class="button-bar">
+            <button ng-show="croppedImageAvailable()" class="button button-calm" ng-click="newCrop()">Crop</button>
+            <button class="button button-calm" ng-click="scenePictureAlbum()">Album</button>
+            <button class="button button-positive" ng-click="scenePictureCamera()">Camera</button>
+        </div>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">{{'SINGLE_Name' | translate}}</span>
+            <input type="text" ng-model="newScene.name" name='sceneName' />
+        </label>
+        <ul class="list">
+            <ion-checkbox ng-repeat="light in allLights" ng-model="createSceneSelection[light.id]">{{light.name}}</ion-checkbox>
+        </ul>
+    </ion-content>
+
+    <ion-footer-bar>
+        <div class="button-bar">
+            <button class="button button-calm" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
+            <button class="button button-danger" ng-click="deleteScene(scene.id)">{{'SINGLE_Delete' | translate}}</button>
+            <button class="button button-positive" ng-click="createScene()">{{'SINGLE_Create' | translate}}</button>
+        </div>
+    </ion-footer-bar>
+
+</ion-modal-view>

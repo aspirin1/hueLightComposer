@@ -9,19 +9,16 @@ define(function () {
         $scope.selectedTab = 1;
 
         $scope.$on("$ionicView.beforeEnter", function () {
-            refresh();
+            $scope.refresh();
         });
 
-        function getIndexOf(arr, val, prop) {
-            var l = arr.length,
-                k = 0;
-            for (k = 0; k < l; k = k + 1) {
-                if (arr[k][prop] === val) {
-                    return k;
-                }
-            }
-            return false;
-        }
+
+        var animateCss = function (selector, animationName) {
+            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            angular.element(selector).addClass('animated ' + animationName).one(animationEnd, function () {
+                angular.element(selector).removeClass('animated ' + animationName);
+            });
+        };
 
         $scope.getUrlSrc = function (imageId) {
             if (angular.isDefined($scope.allImages) && imageId in $scope.allImages) {
@@ -42,31 +39,9 @@ define(function () {
 
         $scope.activateScene = function (sceneId) {
             HueService.recallScene(sceneId).then(function (data) {
-
+                //todo css flash effect
+                animateCss('#sceneId' + sceneId, 'pulse');
             });
-        };
-
-        $scope.deleteScene = function (sceneId) {
-            console.log(sceneId);
-
-            function onConfirm(buttonIndex) {
-                if (buttonIndex === 1) //delete
-                {
-                    HueService.deleteScene(sceneId).then(function (data) {
-                        DataService.removeCustomScene(sceneId);
-                        refresh();
-                        $scope.closeModal();
-                    });
-                }
-            }
-
-            navigator.notification.confirm(
-                'Do you really want to delete the scene "' + $scope.scene.name + '"?', // message
-                onConfirm, // callback to invoke with index of button pressed
-                'Delete', // title
-                    ['Delete', 'Cancel'] // buttonLabels
-            );
-
         };
 
         var refreshGridView = function (customScenes) {
@@ -93,7 +68,7 @@ define(function () {
             $scope.customScenesRows = customScenesRows;
         };
 
-        var refresh = function () {
+        $scope.refresh = function () {
             DbService.getAllImages()
                 .then(function (images) {
                     var tmp = {};
@@ -120,10 +95,9 @@ define(function () {
 
 
                 });
-
         };
 
-        $ionicModal.fromTemplateUrl('scene-modal.html', {
+        $ionicModal.fromTemplateUrl('templates/home/modals/sceneModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {
@@ -131,13 +105,10 @@ define(function () {
         });
 
         $scope.openEditSceneModal = function (scene) {
-            console.log(scene);
             $scope.scene = scene;
             $scope.sceneModal.show();
         };
-        $scope.closeModal = function () {
-            $scope.sceneModal.hide();
-        };
+
     }
 
     ctrl.$inject = ['$ionicModal', '$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService', '$q', 'DbService', 'PlaceholderDataUrl'];
