@@ -16,7 +16,8 @@ define(['angular',
         'ionicFilterbar',
         'noUiSliderAngular',
         'angularfire',
-        'imgcrop'
+        'imgcrop',
+        'hammer'
        ],
 
     function (angular) {

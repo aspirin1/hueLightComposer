@@ -1,4 +1,4 @@
-/*global angular, define, console, window, navigator,cordova,document, Image,XMLHttpRequest,Cropper*/
+/*global angular, define, console, window, navigator,cordova,document, Image,XMLHttpRequest,Cropper,Hammer*/
 
 define(function () {
     'use strict';
@@ -9,6 +9,66 @@ define(function () {
         $scope.$on("$ionicView.beforeEnter", function () {
             refresh();
         });
+
+
+
+        var myElement = document.getElementById('pinchContainer');
+        var mc = new Hammer.Manager(myElement);
+        var pinch = new Hammer.Pinch();
+        mc.add([pinch]);
+        var lastDeltaTime = 0;
+        var widthHeight = 0;
+        mc.on("pinchstart", function (ev) {
+            ev.preventDefault();
+            var data = $scope.cropper.getData();
+            widthHeight = data.width;
+        });
+        mc.on("pinchmove", function (ev) {
+            ev.preventDefault();
+            //console.log("isLast", ev)
+            var val = parseInt(widthHeight * ev.scale);
+            var data2 = $scope.cropper.getData();
+            data2.width = val;
+            data2.height = val;
+            $scope.cropper.setData(data2);
+        });
+        //        mc.on("pinch", function (ev) {
+        //            ev.preventDefault();
+        //            if (ev.isFirst) {
+        //                console.log("first", ev)
+        //                var data = $scope.cropper.getData();
+        //                widthHeight = data.width;
+        //            }
+        //            if (ev.isLast) {
+        //                console.log("isLast", ev)
+        //                var val = widthHeight * scale;
+        //                var data2 = $scope.cropper.getData();
+        //                data2.width = val;
+        //                data2.height = val;
+        //                $scope.cropper.setData(data2);
+        //            }
+        //
+        //            if (ev.deltaTime < lastDeltaTime) {
+        //                lastDeltaTime = 0;
+        //            }
+        //
+        //            //            if ((ev.deltaTime - lastDeltaTime) > 50) {
+        //            //                console.log(ev)
+        //            //
+        //            //
+        //            //                data.width = data.width - ev.deltaY;
+        //            //                data.height = data.width;
+        //            //
+        //            //                //var offset = parseInt(data.width / 2);
+        //            //                //data.x = ev.center.x - offset;
+        //            //                //data.y = ev.center.y - offset;
+        //            //
+        //            //                lastDeltaTime = ev.deltaTime;
+        //            //                $scope.cropper.setData(data);
+        //            //            }
+        //
+        //        });
+
 
         function convertFileToDataURLviaFileReader(url, callback) {
             var xhr = new XMLHttpRequest();

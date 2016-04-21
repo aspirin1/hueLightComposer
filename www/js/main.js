@@ -19,7 +19,8 @@ require.config({
         //imgcrop: '../bower_components/ng-img-crop-full-extended/compile/unminified/ng-img-crop'
         imgcrop: '../bower_components/ng-img-crop/compile/unminified/ng-img-crop',
         crop: '../res/cropme-master/cropme',
-        jquery: '../bower_components/jquery/dist/jquery'
+        jquery: '../bower_components/jquery/dist/jquery',
+        hammer: '../bower_components/hammerjs/hammer'
     },
     shim: {
         angular: {
