@@ -15,7 +15,9 @@ define(function () {
 
         var animateCss = function (selector, animationName) {
             var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            angular.element(selector).find("span,div").hide();
             angular.element(selector).addClass('animated ' + animationName).one(animationEnd, function () {
+                angular.element(selector).find("span,div").show();
                 angular.element(selector).removeClass('animated ' + animationName);
             });
         };

@@ -7,15 +7,19 @@
         <ul class="list">
 
             <li class="item item-button-right">
-                <a href="#/main/home_tab/groupCommand/0">
-                {{'Home_Groups_AllLights' |translate}}
-                    </a>
-                <button class="button" ng-show="atLeastOneLightOn" ng-click="changeOnOffGroup0(false)">
-                    {{'SINGLE_Off' |translate}}
-                </button>
-                <button class="button" ng-show="!atLeastOneLightOn" ng-click="changeOnOffGroup0(true)">
-                    {{'SINGLE_On' |translate}}
-                </button>
+                <a class="lightLink" href="#/main/home_tab/groupCommand/0">
+                     {{'Home_Groups_AllLights' |translate}}
+                </a>
+
+
+                <div class="hueListContentRight2">
+                    <label class="toggle toggle-positive">
+                        <input type="checkbox" ng-model="atLeastOneLightOn" ng-change="changeOnOffGroup0()">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </div>
             </li>
 
             <div class="item item-divider">
@@ -25,13 +29,13 @@
                 <a href="#/main/home_tab/groupCommand/{{group.id}}">
                 {{group.name}}
                 </a>
-                <div class="buttons">
-                    <button class="button" ng-click="deleteGroup(group.id)">
-                        {{'SINGLE_Delete' |translate}}
-                    </button>
-                    <button class="button" ng-click="turnGroupOn(group.id)">
-                        {{'SINGLE_On' |translate}}
-                    </button>
+                <div class="hueListContentRight2">
+                    <label class="toggle toggle-positive">
+                        <input type="checkbox" ng-model="allLightsOfGroupAreOn[group.id]" ng-change="turnGroupOnOff(group)">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
                 </div>
             </li>
 
@@ -42,13 +46,13 @@
                 <a href="#/main/home_tab/groupCommand/{{group.id}}">
                 {{group.name}}
                 </a>
-                <div class="buttons">
-                    <button class="button" ng-click="deleteGroup(group.id)">
-                        {{'SINGLE_Delete' |translate}}
-                    </button>
-                    <button class="button" ng-click="turnGroupOn(group.id)">
-                        {{'SINGLE_On' |translate}}
-                    </button>
+                <div class="hueListContentRight2">
+                    <label class="toggle toggle-positive">
+                        <input type="checkbox" ng-model="allLightsOfGroupAreOn[group.id]" ng-change="turnGroupOnOff(group)">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
                 </div>
             </li>
         </ul>

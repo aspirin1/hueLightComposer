@@ -6,46 +6,83 @@ define(function () {
     function ctrl($scope, $state, $interval, $ionicModal, DataService, HueService, UtilityService) {
         console.info("GroupsCtrl init");
 
-        $scope.$on("$ionicView.beforeEnter", function () {
+        $scope.allLightsOfGroupAreOn = {};
+
+        var refreshLightInfos = function () {
+            DataService.getEnrichedLightInfos(true).then(function (data) {
+                var tmp = [];
+                angular.forEach(data, function (value, key) {
+                    value.id = key;
+                    tmp.push(value);
+                });
+                $scope.lights = tmp;
+            });
+        };
+
+        var refreshView = function () {
+            refreshLightInfos();
             refreshLightList();
-            checkIfAtLeastOneLightIsOn();
+        };
+
+        $scope.$on("$ionicView.beforeEnter", function () {
+            refreshView();
         });
 
         $scope.atLeastOneLightOn = false;
-        $scope.changeOnOffGroup0 = function (newState) {
-            DataService.getEnrichedLightInfos(false).then(function (data) {
-                angular.forEach(data, function (value, key) {
-                    DataService.stopEffect(key);
-                });
+        $scope.changeOnOffGroup0 = function () {
+            var newState = !$scope.atLeastOneLightOn;
+            angular.forEach($scope.lights, function (value, key) {
+                DataService.stopEffect(key);
             });
 
             HueService.turnGroupOnOff(0, newState).then(function (data) {
                 $scope.atLeastOneLightOn = newState;
+                angular.forEach($scope.allLightsOfGroupAreOn, function (value, key) {
+                    value = false;
+                });
             });
         };
-        $scope.turnGroupOn = function (groupId) {
-            HueService.turnGroupOnOff(groupId, true).then(function (data) {
+        $scope.turnGroupOnOff = function (group) {
+            var newValue = $scope.allLightsOfGroupAreOn[group.id];
+            HueService.turnGroupOnOff(group.id, newValue).then(function (data) {
+                $scope.allLightsOfGroupAreOn[group.id] = newValue;
+                refreshView();
+            });
+        };
 
+        var checkGroupState = function () {
+            angular.forEach($scope.allGroups, function (group) {
+                $scope.allLightsOfGroupAreOn[group.id] = allLightsOfGroupAreOn(group);
             });
         };
+
+        var allLightsOfGroupAreOn = function (group) {
+            var cnt = 0;
+            angular.forEach(group.lights, function (groupLightId) {
+                angular.forEach($scope.lights, function (light) {
+                    if (light.id === groupLightId && light.state.on) {
+                        cnt++;
+                    }
+                });
+            });
+            return cnt === group.lights.length;
+        };
+
         $scope.deleteGroup = function (groupId) {
             HueService.deleteGroup(groupId, true).then(function (data) {
-                refreshLightList();
+                refreshView();
             });
         };
 
         var checkIfAtLeastOneLightIsOn = function () {
-
-            DataService.getEnrichedLightInfos(true).then(function (data) {
-                var atLeastOneOn = false;
-                angular.forEach(data, function (value, key) {
-                    if (value.state.on) {
-                        atLeastOneOn = true;
-                        return;
-                    }
-                });
-                $scope.atLeastOneLightOn = atLeastOneOn;
+            var atLeastOneOn = false;
+            angular.forEach($scope.lights, function (value, key) {
+                if (value.state.on) {
+                    atLeastOneOn = true;
+                    return;
+                }
             });
+            $scope.atLeastOneLightOn = atLeastOneOn;
         };
 
         var refreshLightList = function () {
@@ -68,7 +105,8 @@ define(function () {
                 $scope.lightGroups = lightGroups;
                 $scope.rooms = rooms;
 
-                //window.setTimeout(checkIfAtLeastOneLightIsOn, 1000);
+                checkIfAtLeastOneLightIsOn();
+                checkGroupState();
             });
         };
 
@@ -89,9 +127,11 @@ define(function () {
             });
             $scope.createGroupModal.show();
         };
+
         $scope.closeCreateGroupModal = function () {
             $scope.createGroupModal.hide();
         };
+
         $scope.createGroup = function () {
             var lights = [];
             angular.forEach($scope.createGroupSelection, function (value, key) {
