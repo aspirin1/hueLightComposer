@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($ionicLoading, $scope, $state, $filter, $interval, $ionicModal, $ionicPopover, $ionicListDelegate, DataService, HueService, UtilityService, ColorService) {
+    function ctrl($ionicLoading, $scope, $filter, $ionicModal, $ionicPopover, $ionicListDelegate, DataService, HueService, ColorService) {
         console.info("ColorsCtrl init");
 
         $scope.$on("$ionicView.beforeEnter", function () {
@@ -222,7 +222,7 @@ define(function () {
         });
     }
 
-    ctrl.$inject = ['$ionicLoading', '$scope', '$state', '$filter', '$interval', '$ionicModal', '$ionicPopover', '$ionicListDelegate', 'DataService', 'HueService', 'UtilityService', 'ColorService'];
+    ctrl.$inject = ['$ionicLoading', '$scope', '$filter', '$ionicModal', '$ionicPopover', '$ionicListDelegate', 'DataService', 'HueService', 'ColorService'];
     return ctrl;
 
 });

@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($ionicPopover, $ionicModal, HelperService, $scope, $state, $translate, HueService, ColorService, ColorDataService, User, DataService, localStorageService, UtilityService, $q, Synchronization, DbService) {
+    function ctrl($ionicPopover, $ionicModal, $scope, HueService, ColorService, DataService, UtilityService) {
 
         DataService.getEnrichedLightInfos().then(function (allLights) {
             console.log(allLights);
@@ -262,7 +262,7 @@ define(function () {
         });
     }
 
-    ctrl.$inject = ['$ionicPopover', '$ionicModal', 'HelperService', '$scope', '$state', '$translate', 'HueService', 'ColorService', 'ColorDataService', 'User', 'DataService', 'localStorageService', 'UtilityService', '$q', 'Synchronization', 'DbService'];
+    ctrl.$inject = ['$ionicPopover', '$ionicModal', '$scope', 'HueService', 'ColorService', 'DataService', 'UtilityService'];
     return ctrl;
 
 });

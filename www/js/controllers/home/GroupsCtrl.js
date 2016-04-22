@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $interval, $ionicModal, DataService, HueService, UtilityService) {
+    function ctrl($scope, $ionicModal, DataService, HueService) {
         console.info("GroupsCtrl init");
 
         $scope.allLightsOfGroupAreOn = {};
@@ -157,7 +157,7 @@ define(function () {
         };
     }
 
-    ctrl.$inject = ['$scope', '$state', '$interval', '$ionicModal', 'DataService', 'HueService', 'UtilityService'];
+    ctrl.$inject = ['$scope', '$ionicModal', 'DataService', 'HueService'];
     return ctrl;
 
 });

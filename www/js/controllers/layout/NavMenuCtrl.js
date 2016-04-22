@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $state, $ionicSideMenuDelegate, Auth, User, Synchronization) {
+    function ctrl($scope, $ionicSideMenuDelegate, Auth, User, Synchronization) {
         $scope.authData = null;
 
         $scope.toggleLeftSideMenu = function () {
@@ -61,7 +61,7 @@ define(function () {
         });
     }
 
-    ctrl.$inject = ['$scope', '$state', '$ionicSideMenuDelegate', 'Auth', 'User', 'Synchronization'];
+    ctrl.$inject = ['$scope', '$ionicSideMenuDelegate', 'Auth', 'User', 'Synchronization'];
     return ctrl;
 
 });

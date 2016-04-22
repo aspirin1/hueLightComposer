@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($q, $scope, $ionicHistory, $state, $filter, DataService, HueService, UtilityService, HelperService) {
+    function ctrl($q, $scope, $ionicHistory, DataService) {
         console.info("NewSceneImageCtrl init");
 
         $scope.$on("$ionicView.beforeEnter", function () {
@@ -25,49 +25,12 @@ define(function () {
         });
         mc.on("pinchmove", function (ev) {
             ev.preventDefault();
-            //console.log("isLast", ev)
             var val = parseInt(widthHeight * ev.scale);
             var data2 = $scope.cropper.getData();
             data2.width = val;
             data2.height = val;
             $scope.cropper.setData(data2);
         });
-        //        mc.on("pinch", function (ev) {
-        //            ev.preventDefault();
-        //            if (ev.isFirst) {
-        //                console.log("first", ev)
-        //                var data = $scope.cropper.getData();
-        //                widthHeight = data.width;
-        //            }
-        //            if (ev.isLast) {
-        //                console.log("isLast", ev)
-        //                var val = widthHeight * scale;
-        //                var data2 = $scope.cropper.getData();
-        //                data2.width = val;
-        //                data2.height = val;
-        //                $scope.cropper.setData(data2);
-        //            }
-        //
-        //            if (ev.deltaTime < lastDeltaTime) {
-        //                lastDeltaTime = 0;
-        //            }
-        //
-        //            //            if ((ev.deltaTime - lastDeltaTime) > 50) {
-        //            //                console.log(ev)
-        //            //
-        //            //
-        //            //                data.width = data.width - ev.deltaY;
-        //            //                data.height = data.width;
-        //            //
-        //            //                //var offset = parseInt(data.width / 2);
-        //            //                //data.x = ev.center.x - offset;
-        //            //                //data.y = ev.center.y - offset;
-        //            //
-        //            //                lastDeltaTime = ev.deltaTime;
-        //            //                $scope.cropper.setData(data);
-        //            //            }
-        //
-        //        });
 
 
         function convertFileToDataURLviaFileReader(url, callback) {
@@ -125,15 +88,6 @@ define(function () {
                     toggleDragModeOnDblclick: false,
                     minCropBoxWidth: 100,
                     minCropBoxHeight: 100,
-                    //                    crop: function (e) {
-                    //                        console.log(e.detail.x);
-                    //                        console.log(e.detail.y);
-                    //                        console.log(e.detail.width);
-                    //                        console.log(e.detail.height);
-                    //                        console.log(e.detail.rotate);
-                    //                        console.log(e.detail.scaleX);
-                    //                        console.log(e.detail.scaleY);
-                    //                    }
                 });
 
             };
@@ -145,15 +99,6 @@ define(function () {
         };
 
         $scope.saveImage = function () {
-            //            var canvas = document.getElementById("canvas");
-            //            canvas.width = 400;
-            //            canvas.height = 400;
-            //
-            //            var image = new Image();
-            //            image.src = $scope.image.myCroppedImage;
-            //            canvas.getContext("2d").drawImage(image, 0, 0);
-            //            var jpgDataUrlSrc = canvas.toDataURL("image/jpeg");
-
             var jpgDataUrlSrc = $scope.cropper.getCroppedCanvas({
                 width: 400,
                 height: 400
@@ -169,7 +114,7 @@ define(function () {
         };
     }
 
-    ctrl.$inject = ['$q', '$scope', '$ionicHistory', '$state', '$filter', 'DataService', 'HueService', 'UtilityService', 'HelperService'];
+    ctrl.$inject = ['$q', '$scope', '$ionicHistory', 'DataService'];
     return ctrl;
 
 });

@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl(HelperService, $scope, $state, $translate, ConfigService, ColorService, ColorDataService, User, DataService, localStorageService, UtilityService, $q, Synchronization, DbService) {
+    function ctrl($scope, $translate, ConfigService, User, DataService, localStorageService, $q, Synchronization, DbService) {
 
         $scope.selectedLanguage = $translate.use();
         $scope.languageChanged = function (key) {
@@ -107,7 +107,7 @@ define(function () {
         };
     }
 
-    ctrl.$inject = ['HelperService', '$scope', '$state', '$translate', 'ConfigService', 'ColorService', 'ColorDataService', 'User', 'DataService', 'localStorageService', 'UtilityService', '$q', 'Synchronization', 'DbService'];
+    ctrl.$inject = ['$scope', '$translate', 'ConfigService', 'User', 'DataService', 'localStorageService', '$q', 'Synchronization', 'DbService'];
     return ctrl;
 
 });

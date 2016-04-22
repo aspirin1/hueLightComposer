@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($scope, $ionicHistory, $state, $filter, DataService, HueService, UtilityService, DbService) {
+    function ctrl($scope, $ionicHistory, $state, DataService, HueService, UtilityService, DbService) {
         console.info("New ScenesCtrl init");
 
         var resetForm = function () {
@@ -88,7 +88,7 @@ define(function () {
         };
     }
 
-    ctrl.$inject = ['$scope', '$ionicHistory', '$state', '$filter', 'DataService', 'HueService', 'UtilityService', 'DbService'];
+    ctrl.$inject = ['$scope', '$ionicHistory', '$state', 'DataService', 'HueService', 'UtilityService', 'DbService'];
     return ctrl;
 
 });

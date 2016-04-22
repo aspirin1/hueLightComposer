@@ -2,7 +2,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($rootScope, $scope, $ionicLoading, $interval, $ionicModal, $ionicPopover, $filter, DataService, HueService, UtilityService, $q, ColorService) {
+    function ctrl($rootScope, $scope, HueService, UtilityService) {
         console.info("GroupCommandCtrl init", $scope.groupId);
 
         var refreshLightInBackground;
@@ -156,7 +156,7 @@ define(function () {
         };
     }
 
-    ctrl.$inject = ['$rootScope', '$scope', '$ionicLoading', '$interval', '$ionicModal', '$ionicPopover', '$filter', 'DataService', 'HueService', 'UtilityService', '$q', 'ColorService'];
+    ctrl.$inject = ['$rootScope', '$scope', 'HueService', 'UtilityService'];
     return ctrl;
 
 });

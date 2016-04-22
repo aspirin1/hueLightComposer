@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($ionicModal, $scope, $state, $filter, $interval, $ionicLoading, $ionicFilterBar, DataService, HueService, UtilityService, $q, DbService, PlaceholderDataUrl) {
+    function ctrl($ionicModal, $scope, $ionicFilterBar, DataService, HueService, DbService, PlaceholderDataUrl) {
         console.info("ScenesCtrl init");
         var filterBarInstance;
         $scope.selectedTab = 1;
@@ -113,7 +113,7 @@ define(function () {
 
     }
 
-    ctrl.$inject = ['$ionicModal', '$scope', '$state', '$filter', '$interval', '$ionicLoading', '$ionicFilterBar', 'DataService', 'HueService', 'UtilityService', '$q', 'DbService', 'PlaceholderDataUrl'];
+    ctrl.$inject = ['$ionicModal', '$scope', '$ionicFilterBar', 'DataService', 'HueService', 'DbService', 'PlaceholderDataUrl'];
     return ctrl;
 
 });

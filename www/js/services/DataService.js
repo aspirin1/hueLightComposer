@@ -333,7 +333,7 @@ define(['angular'], function (angular) {
                     color.hsl = ColorService.hexToHsl(color.hexColor);
                 });
 
-                console.log(ownColors)
+
                 deferred.resolve({
                     shippedColors: allColors,
                     ownColors: ownColors

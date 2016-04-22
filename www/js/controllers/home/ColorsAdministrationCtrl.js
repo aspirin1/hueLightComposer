@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($ionicLoading, $scope, $timeout, DataService) {
+    function ctrl($ionicLoading, $scope, DataService) {
         console.info("ColorsAdministrationCtrl init");
 
         $scope.$on("$ionicView.beforeEnter", function () {
@@ -32,7 +32,7 @@ define(function () {
         };
     }
 
-    ctrl.$inject = ['$ionicLoading', '$scope', '$timeout', 'DataService'];
+    ctrl.$inject = ['$ionicLoading', '$scope', 'DataService'];
     return ctrl;
 
 });

@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl(HueService, $scope, $timeout, DataService) {
+    function ctrl(HueService, $scope, DataService) {
         console.info("SceneModalCtrl init");
 
         $scope.closeModal = function () {
@@ -35,7 +35,7 @@ define(function () {
         };
     }
 
-    ctrl.$inject = ['HueService', '$scope', '$timeout', 'DataService'];
+    ctrl.$inject = ['HueService', '$scope', 'DataService'];
     return ctrl;
 
 });

@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($state, $filter, $scope, $ionicModal, DataService, HueService, UtilityService, LightCommandService, ColorService, ConfigService) {
+    function ctrl($state, $filter, $scope, $ionicModal, DataService, HueService, UtilityService, ColorService, ConfigService) {
         console.info("HueLightListCtrl init");
 
 
@@ -29,20 +29,7 @@ define(function () {
             });
         };
 
-        $scope.test = function (lightId) {
 
-            var dark_blue = ColorService.getXysFromHex("#1e228d");
-            for (var i = 1; i < 4; i++) {
-                LightCommandService.kurzesHellesAufleuchten(i, dark_blue.gamutCxy, 15000);
-                //LightCommandService.schnellesBlinken(lightId, 100, 5000);
-                //LightCommandService.farbverlaufUndZurück(lightId, 30000, 15000);
-                //LightCommandService.helligkeitsFlackernDunklerRegelmaessig(lightId, 70, 30000);
-                //LightCommandService.helligkeitsFlackernHellerRegelmaessig(lightId, 120, 10000);
-                //LightCommandService.helligkeitsFlackernDunklerMehrstufig(lightId, 70, 20000);
-                //LightCommandService.helligkeitsFlackernDunklerMehrstufigZufall(lightId, 80, 60000);
-                //LightCommandService.ausUndUnregelmaessigAufblitzen(i, 500, 7000, 60000);
-            }
-        };
 
         $scope.isEffectRunning = function (lightId) {
             var retVal = false;
@@ -101,70 +88,15 @@ define(function () {
             return UtilityService.calculateFormattedPercentage(maxSat, lightBri);
         };
 
-        $ionicModal.fromTemplateUrl('createScene-modal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.createSceneModal = modal;
-        });
 
-        $scope.openCreateSceneModal = function () {
-            $scope.createSceneSelection = {};
-            $scope.newScene = {};
-            $scope.newScene.name = '';
-            $scope.newScene.image = undefined;
-            $scope.createSceneModal.show();
-        };
-        $scope.closeCreateSceneModal = function () {
-            $scope.createSceneModal.hide();
-        };
 
-        $scope.createScene = function () {
-            var tmp = [];
-
-            angular.forEach($scope.createSceneSelection, function (value, key) {
-                if (value === true) {
-                    tmp.push(key);
-                }
-            });
-
-            if (tmp.length > 0 && $scope.newScene.name.length > 0) {
-                HueService.createScene($scope.newScene.name, tmp).then(function (data) {
-                    console.log(data);
-                    DataService.addCustomScene(data[0].success.id, $scope.newScene.name, tmp, $scope.newScene.image);
-                    $scope.closeCreateSceneModal();
-                });
-            } else {
-                $scope.closeCreateSceneModal();
-            }
-        };
-
-        $scope.scenePictureAlbum = function () {
-            UtilityService.getAndStorePictureAlbum().then(function (data) {
-                console.log(data);
-                $scope.newScene.image = data;
-            });
-        };
-        $scope.scenePictureCamera = function () {
-            UtilityService.getAndStorePictureCamera().then(function (data) {
-                console.log(data);
-                $scope.newScene.image = data;
-            });
-        };
-        //        $scope.urlForImage = function () {
-        //            if (angular.isDefined($scope.newScene) && typeof ($scope.newScene.image) !== "undefined") {
-        //                return UtilityService.getUrlForImage($scope.newScene.image);
-        //            } else {
-        //                return "";
-        //            }
-        //        };
 
         //        $scope.$on("$destroy", function () {
         //            $interval.cancel(interval);
         //        });
     }
 
-    ctrl.$inject = ['$state', '$filter', '$scope', '$ionicModal', 'DataService', 'HueService', 'UtilityService', 'LightCommandService', 'ColorService', 'ConfigService'];
+    ctrl.$inject = ['$state', '$filter', '$scope', '$ionicModal', 'DataService', 'HueService', 'UtilityService', 'ColorService', 'ConfigService'];
     return ctrl;
 
 });
