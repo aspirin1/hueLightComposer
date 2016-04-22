@@ -111,6 +111,7 @@ hue-image rect,
   text-align: center;
   text-shadow: 1px 1px 1px #555, -1px -1px 1px #555, -1px 1px 1px #555, 1px -1px 1px #555, 0px 1px 1px #555, -1px 0px 1px #555, 1px 0px 1px #555, 0px -1px 1px #555;
   width: 100%;
+  display: block;
 }
 
 /* line 1, ../sass/_c_colors.scss */
@@ -123,7 +124,7 @@ hue-image rect,
   margin: 0px;
   border-radius: 6px;
   float: left;
-  width: 20vmin;
+  width: 19.5vmin;
   height: 0px;
   padding: 0px 0px 20vmin 0px;
 }
