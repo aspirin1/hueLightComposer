@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1460993900341,
+      "lastModifiedDate": 1461352249653,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -73,7 +73,7 @@
         "selectedState": "Included",
         "checksum": "927290ca",
         "dependsOn": [],
-        "topLevel": false,
+        "topLevel": true,
         "permissions": {},
         "description": "Cordova Device Plugin",
         "data": {},
@@ -222,7 +222,23 @@
           "navigation": [],
           "properties": {}
         },
-        "icons_": [],
+        "icons_": [
+          {
+            "relPath": "img/appIcons/LC-114.png",
+            "height": 114,
+            "width": 114
+          },
+          {
+            "relPath": "img/appIcons/LC-144.png",
+            "height": 144,
+            "width": 144
+          },
+          {
+            "relPath": "img/appIcons/LC-72.png",
+            "height": 72,
+            "width": 72
+          }
+        ],
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
