@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1461352249653,
+      "lastModifiedDate": 1461362853193,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -237,6 +237,71 @@
             "relPath": "img/appIcons/LC-72.png",
             "height": 72,
             "width": 72
+          },
+          {
+            "relPath": "img/appIcons/LC-100.png",
+            "height": 100,
+            "width": 100
+          },
+          {
+            "relPath": "img/appIcons/LC-50.png",
+            "height": 50,
+            "width": 50
+          },
+          {
+            "relPath": "img/appIcons/LC-57.png",
+            "height": 57,
+            "width": 57
+          },
+          {
+            "relPath": "img/appIcons/LC-80.png",
+            "height": 80,
+            "width": 80
+          },
+          {
+            "relPath": "img/appIcons/LC-40.png",
+            "height": 40,
+            "width": 40
+          },
+          {
+            "relPath": "img/appIcons/LC-152.png",
+            "height": 152,
+            "width": 152
+          },
+          {
+            "relPath": "img/appIcons/LC-76.png",
+            "height": 76,
+            "width": 76
+          },
+          {
+            "relPath": "img/appIcons/LC-180.png",
+            "height": 180,
+            "width": 180
+          },
+          {
+            "relPath": "img/appIcons/LC-120.png",
+            "height": 120,
+            "width": 120
+          },
+          {
+            "relPath": "img/appIcons/LC-60.png",
+            "height": 60,
+            "width": 60
+          },
+          {
+            "relPath": "img/appIcons/LC-87.png",
+            "height": 87,
+            "width": 87
+          },
+          {
+            "relPath": "img/appIcons/LC-58.png",
+            "height": 58,
+            "width": 58
+          },
+          {
+            "relPath": "img/appIcons/LC-29.png",
+            "height": 29,
+            "width": 29
           }
         ],
         "splashes_": [],
@@ -271,7 +336,103 @@
           "navigation": [],
           "properties": {}
         },
-        "icons_": [],
+        "icons_": [
+          {
+            "relPath": "img/appIcons/LC-24.png",
+            "height": 24,
+            "width": 24
+          },
+          {
+            "relPath": "img/appIcons/LC-30.png",
+            "height": 30,
+            "width": 30
+          },
+          {
+            "relPath": "img/appIcons/LC-33.png",
+            "height": 33,
+            "width": 33
+          },
+          {
+            "relPath": "img/appIcons/LC-50.png",
+            "height": 50,
+            "width": 50
+          },
+          {
+            "relPath": "img/appIcons/LC-58.png",
+            "height": 58,
+            "width": 58
+          },
+          {
+            "relPath": "img/appIcons/LC-70.png",
+            "height": 70,
+            "width": 70
+          },
+          {
+            "relPath": "img/appIcons/LC-120.png",
+            "height": 120,
+            "width": 120
+          },
+          {
+            "relPath": "img/appIcons/LC-44.png",
+            "height": 44,
+            "width": 44
+          },
+          {
+            "relPath": "img/appIcons/LC-62.png",
+            "height": 62,
+            "width": 62
+          },
+          {
+            "relPath": "img/appIcons/LC-71.png",
+            "height": 71,
+            "width": 71
+          },
+          {
+            "relPath": "img/appIcons/LC-99.png",
+            "height": 99,
+            "width": 99
+          },
+          {
+            "relPath": "img/appIcons/LC-106.png",
+            "height": 106,
+            "width": 106
+          },
+          {
+            "relPath": "img/appIcons/LC-150.png",
+            "height": 150,
+            "width": 150
+          },
+          {
+            "relPath": "img/appIcons/LC-170.png",
+            "height": 170,
+            "width": 170
+          },
+          {
+            "relPath": "img/appIcons/LC-210.png",
+            "height": 210,
+            "width": 210
+          },
+          {
+            "relPath": "img/appIcons/LC-360.png",
+            "height": 360,
+            "width": 360
+          },
+          {
+            "relPath": "img/appIcons/LC-310x150.png",
+            "height": 150,
+            "width": 310
+          },
+          {
+            "relPath": "img/appIcons/LC-434x210.png",
+            "height": 210,
+            "width": 434
+          },
+          {
+            "relPath": "img/appIcons/LC-744x360.png",
+            "height": 360,
+            "width": 744
+          }
+        ],
         "splashes_": [],
         "addlPermissions_": "privateNetworkClientServer",
         "excludedLibraries_": "",
@@ -444,6 +605,12 @@
             "density": "mdpi",
             "height": 48,
             "width": 48
+          },
+          {
+            "relPath": "img/appIcons/LC-36.png",
+            "density": "ldpi",
+            "height": 36,
+            "width": 36
           }
         ],
         "splashes_": [
