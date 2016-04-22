@@ -1,0 +1,18 @@
+<ion-modal-view ng-controller="SceneModalImageCropCtrl">
+
+
+
+    <ion-content>
+        <div id="pinchContainer">
+            <img style="max-width: 100%;" id="imageToCrop">
+        </div>
+        <canvas id="canvas" style="display:none;"></canvas>
+    </ion-content>
+
+    <ion-footer-bar>
+        <div class="button-bar">
+            <button class="button button-positive" ng-click="closeImageCropModal()">{{'SINGLE_Cancel' | translate}}</button>
+            <button class="button button-positive" ng-click="saveImage()">{{'SINGLE_Create' | translate}}</button>
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>

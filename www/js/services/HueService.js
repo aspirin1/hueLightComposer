@@ -266,6 +266,20 @@ define(['angular'], function (angular) {
                 });
         };
 
+        this.modifyScene = function (sceneId, sceneName, lightsArray) {
+            var url = getBaseApiUrl() + '/scenes/' + sceneId;
+            var cmd = JSON.stringify({
+                name: sceneName,
+                lights: lightsArray,
+                storelightstate: true
+            });
+            console.info(url, cmd);
+            return $http.put(url, cmd)
+                .then(function (result) {
+                    return result.data;
+                });
+        };
+
         this.deleteScene = function (sceneId) {
             var url = getBaseApiUrl() + '/scenes/' + sceneId;
             console.info(url);

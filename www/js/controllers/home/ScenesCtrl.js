@@ -100,6 +100,7 @@ define(function () {
         };
 
         $ionicModal.fromTemplateUrl('templates/home/modals/sceneModal.html', {
+            id: 'sceneModal',
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {

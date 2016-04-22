@@ -88,7 +88,17 @@ define(function () {
             return UtilityService.calculateFormattedPercentage(maxSat, lightBri);
         };
 
+        $ionicModal.fromTemplateUrl('templates/home/modals/sceneModal.html', {
+            id: 'sceneModal',
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.sceneModal = modal;
+        });
 
+        $scope.openCreateSceneModal = function () {
+            $scope.sceneModal.show();
+        };
 
 
         //        $scope.$on("$destroy", function () {
