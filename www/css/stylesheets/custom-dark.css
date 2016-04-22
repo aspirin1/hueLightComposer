@@ -1,72 +1,164 @@
-/*
-Error: Invalid CSS after "$myTest ": expected ":", was "= 100vmax % 100..."
-        on line 1 of E:/IntelXDKapps/hueding/www/css/sass/_c_colors.scss
-        from line 9 of E:/IntelXDKapps/hueding/www/css/sass/custom-dark.scss
+/* line 3, ../sass/_c_elements.scss */
+hue-image path,
+hue-image circle,
+hue-image line,
+hue-image polyline,
+hue-image polygon,
+hue-image ellipse,
+hue-image rect,
+.hueListIcon path,
+.hueListIcon circle,
+.hueListIcon line,
+.hueListIcon polyline,
+.hueListIcon polygon,
+.hueListIcon ellipse,
+.hueListIcon rect {
+  stroke: #b2b2b2;
+}
 
-1: $myTest = 100vmax % 100vmin;
-2: .colorListContainer {
-3:     margin: 0;
-4:     .colorSquare {
-5:         border: 1px solid $colorSquareBoder;
-6:         margin: 0px;
+/* line 14, ../sass/_c_elements.scss */
+.HueImage {
+  width: 100%;
+  height: 100%;
+}
 
-Backtrace:
-E:/IntelXDKapps/hueding/www/css/sass/_c_colors.scss:1
-E:/IntelXDKapps/hueding/www/css/sass/custom-dark.scss:9
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/scss/parser.rb:1166:in `expected'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/scss/parser.rb:1101:in `expected'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/scss/parser.rb:1096:in `tok!'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/scss/parser.rb:605:in `variable'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/scss/parser.rb:660:in `block_child'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/scss/parser.rb:650:in `block_contents'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/scss/parser.rb:117:in `stylesheet'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/scss/parser.rb:42:in `parse'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/engine.rb:393:in `_to_tree'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/engine.rb:299:in `to_tree'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:323:in `visit_import'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/stack.rb:88:in `with_import'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/stack.rb:115:in `with_frame'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/stack.rb:88:in `with_import'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:322:in `visit_import'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/base.rb:36:in `visit'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:158:in `visit'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/stack.rb:79:in `with_base'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/stack.rb:115:in `with_frame'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/stack.rb:79:in `with_base'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:158:in `visit'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-org/jruby/RubyArray.java:2412:in `map'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:167:in `visit_children'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/base.rb:36:in `visit'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/base.rb:36:in `visit'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:157:in `visit'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/visitors/perform.rb:8:in `visit'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/root_node.rb:36:in `css_tree'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/tree/root_node.rb:20:in `render'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/engine.rb:268:in `render'
-E:/compass.app/lib/ruby/compass_1.0/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:17:in `render'
-E:/compass.app/lib/ruby/compass_1.0/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:29:in `with_import_scope'
-E:/compass.app/lib/ruby/compass_1.0/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:16:in `render'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/plugin/compiler.rb:492:in `update_stylesheet'
-org/jruby/RubyMethod.java:128:in `call'
-file:/E:/compass.app/compass-app.jar!/hook/compass_patch.rb:108:in `update_stylesheet'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/plugin/compiler.rb:215:in `update_stylesheets'
-org/jruby/RubyArray.java:1613:in `each'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/plugin/compiler.rb:470:in `on_file_changed'
-E:/compass.app/lib/ruby/compass_1.0/sass-3.4.13/lib/sass/plugin/compiler.rb:328:in `watch'
-org/jruby/RubyProc.java:271:in `call'
-E:/compass.app/lib/ruby/jruby/listen-1.3.1-patched/lib/listen/listener.rb:252:in `on_change'
-E:/compass.app/lib/ruby/jruby/listen-1.3.1-patched/lib/listen/listener.rb:290:in `initialize_adapter'
-org/jruby/RubyProc.java:271:in `call'
-E:/compass.app/lib/ruby/jruby/listen-1.3.1-patched/lib/listen/adapters/polling.rb:48:in `poll_changed_directories'
-E:/compass.app/lib/ruby/jruby/listen-1.3.1-patched/lib/listen/adapter.rb:297:in `start_poller'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: Invalid CSS after \"$myTest \": expected \":\", was \"= 100vmax % 100...\"\A         on line 1 of E:/IntelXDKapps/hueding/www/css/sass/_c_colors.scss\A         from line 9 of E:/IntelXDKapps/hueding/www/css/sass/custom-dark.scss\A \A 1: $myTest = 100vmax % 100vmin;\A 2: .colorListContainer {\A 3:     margin: 0;\A 4:     .colorSquare {\A 5:         border: 1px solid $colorSquareBoder;\A 6:         margin: 0px;"; }
+/* line 19, ../sass/_c_elements.scss */
+.detailViewHueImage svg {
+  width: 20vmin;
+  height: 20vmin;
+}
+
+/* line 24, ../sass/_c_elements.scss */
+.cooler-col-33 {
+  max-width: 33vmin;
+}
+
+/* line 28, ../sass/_c_elements.scss */
+.cooler-col-80 {
+  max-width: 80vmin;
+}
+
+/* line 32, ../sass/_c_elements.scss */
+.cooler-col-67 {
+  max-width: 67vmin;
+}
+
+/* line 36, ../sass/_c_elements.scss */
+.lightDisplay {
+  margin: 5vmin auto;
+  max-width: 80vmin;
+  width: 80vmin;
+}
+/* line 43, ../sass/_c_elements.scss */
+.lightDisplay .item:last-child {
+  vertical-align: middle;
+  line-height: 30px;
+}
+/* line 50, ../sass/_c_elements.scss */
+.lightDisplay .item:last-child .button {
+  font-size: 30px;
+  min-height: 30px;
+  height: 30px;
+  padding: 0px;
+}
+/* line 56, ../sass/_c_elements.scss */
+.lightDisplay .item:last-child .button .icon:before,
+.lightDisplay .item:last-child .button.icon:before,
+.lightDisplay .item:last-child .button.icon-left:before,
+.lightDisplay .item:last-child .button.icon-right:before {
+  line-height: 30px;
+}
+/* line 62, ../sass/_c_elements.scss */
+.lightDisplay .item:last-child a.button .icon:before,
+.lightDisplay .item:last-child a.button.icon:before,
+.lightDisplay .item:last-child a.button.icon-left:before,
+.lightDisplay .item:last-child a.button.icon-right:before {
+  margin-top: 0px;
+}
+
+/* line 72, ../sass/_c_elements.scss */
+.cooler-input-label {
+  width: 100%;
+}
+
+/*EFFECT LIST*/
+/* line 3, ../sass/_c_effects.scss */
+.effectList .col {
+  margin-bottom: 0px;
+  padding: 0px 2px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* line 10, ../sass/_c_effects.scss */
+.effectList .row {
+  padding: 2px;
+}
+
+/* line 14, ../sass/_c_effects.scss */
+.effectImage {
+  position: relative;
+}
+
+/* line 18, ../sass/_c_effects.scss */
+.innerText {
+  color: ghostwhite;
+  font-size: 30px;
+  line-height: 30px;
+  font-weight: 400;
+  position: absolute;
+  bottom: 45%;
+  text-align: center;
+  text-shadow: 1px 1px 1px #555, -1px -1px 1px #555, -1px 1px 1px #555, 1px -1px 1px #555, 0px 1px 1px #555, -1px 0px 1px #555, 1px 0px 1px #555, 0px -1px 1px #555;
+  width: 100%;
+  display: block;
+}
+
+/* line 1, ../sass/_c_colors.scss */
+.colorListContainer {
+  margin: 0;
+}
+/* line 3, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare {
+  border: 1px solid #000;
+  margin: 0px;
+  border-radius: 6px;
+  float: left;
+  width: 19.5vmin;
+  height: 0px;
+  padding: 0px 0px 20vmin 0px;
+}
+/* line 11, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent {
+  padding-bottom: 100%;
+  width: 100%;
+  position: relative;
+}
+/* line 15, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent .colorSquareAction {
+  padding-bottom: 100%;
+  width: 100%;
+  position: absolute;
+}
+/* line 20, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent .favColor {
+  border: none;
+  background: transparent;
+  padding: 0;
+  position: absolute;
+  height: 50%;
+  width: 50%;
+  font-size: 5vmin;
+  line-height: 100%;
+}
+/* line 29, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent .favColor i {
+  color: floralwhite;
+  opacity: .5;
+  text-shadow: 0px 0px 1px #000;
+}
+/* line 33, ../sass/_c_colors.scss */
+.colorListContainer .colorSquare .colorSquareContent .favColor i.fav {
+  color: gold;
+  text-shadow: 0px 0px 1px #000;
+}
