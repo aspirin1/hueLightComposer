@@ -87,8 +87,11 @@ define(function () {
 
         var getScenePreviewImage = function () {
             if ($scope.isEditMode) {
-                if (angular.isDefined($scope.allImages) && $scope.scene.imageId in $scope.allImages) {
-                    return $scope.allImages[$scope.scene.imageId];
+                if (angular.isDefined($scope.allImages) &&
+                    angular.isDefined($scope.scene.image) &&
+                    $scope.scene.image !== null &&
+                    $scope.scene.image in $scope.allImages) {
+                    return $scope.allImages[$scope.scene.image];
                 }
             }
             return PlaceholderDataUrl;
