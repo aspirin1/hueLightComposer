@@ -40,6 +40,7 @@
     <ion-footer-bar>
         <div class="button-bar">
             <button class="button button-calm" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
+            <button class="button button-positive" ng-click="updateWithLightstate()" ng-show="isEditMode">{{'Update_With_Lightstate' | translate}}</button>
             <button class="button button-positive" ng-click="createOrUpdateScene()">{{saveText}}</button>
         </div>
     </ion-footer-bar>

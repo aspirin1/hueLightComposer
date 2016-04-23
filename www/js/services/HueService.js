@@ -266,13 +266,23 @@ define(['angular'], function (angular) {
                 });
         };
 
-        this.modifyScene = function (sceneId, sceneName, lightsArray) {
+        this.modifyScene = function (sceneId, sceneName, lightsArray, storelightstate) {
             var url = getBaseApiUrl() + '/scenes/' + sceneId;
+
             var cmd = JSON.stringify({
                 name: sceneName,
                 lights: lightsArray,
                 storelightstate: true
             });
+
+            if (angular.isDefined(storelightstate) && storelightstate === false) {
+                cmd = JSON.stringify({
+                    name: sceneName,
+                    lights: lightsArray,
+                    storelightstate: false
+                });
+            }
+
             console.info(url, cmd);
             return $http.put(url, cmd)
                 .then(function (result) {

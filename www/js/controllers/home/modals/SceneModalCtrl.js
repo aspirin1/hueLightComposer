@@ -123,14 +123,7 @@ define(function () {
             );
         };
 
-        $scope.createOrUpdateScene = function () {
-            var tmp = [];
-
-            angular.forEach($scope.modalScene.selectedLights, function (value, key) {
-                if (value === true) {
-                    tmp.push(key);
-                }
-            });
+        var validateForm = function (tmp) {
             if (tmp.length === 0) {
                 navigator.notification.alert($filter('translate')('Select_At_Least_1_Light'), null, $filter('translate')('ERROR_TITLE'));
             } else if ($scope.modalScene.name.length === 0) {
@@ -138,18 +131,54 @@ define(function () {
             } else if ($scope.modalScene.name.length > 32) {
                 navigator.notification.alert($filter('translate')('Name_Too_Long'), null, $filter('translate')('ERROR_TITLE'));
             }
+        };
+
+        var getLightSelection = function () {
+            var tmp = [];
+
+            angular.forEach($scope.modalScene.selectedLights, function (value, key) {
+                if (value === true) {
+                    tmp.push(key);
+                }
+            });
+            return tmp;
+        };
+
+        var afterModifyScene = function (tmp, data) {
+            console.log(data);
+
+            if (isCroppedImageAvailable()) {
+                DataService.removeCustomScene($scope.scene.id);
+                DataService.addCustomScene($scope.scene.id, $scope.modalScene.name, tmp, DataService.getSceneImageCropped());
+            }
+            $scope.closeModal();
+            if (angular.isDefined($scope.refresh)) {
+                $scope.refresh();
+            }
+            $state.go('main.home_tab.scenes');
+        };
+
+        $scope.updateWithLightstate = function () {
+            var tmp = getLightSelection();
+            validateForm(tmp);
 
             if (tmp.length > 0 && $scope.modalScene.name.length > 0 && $scope.modalScene.name.length <= 32) {
                 if ($scope.isEditMode) {
-                    HueService.modifyScene($scope.scene.id, $scope.modalScene.name, tmp).then(function (data) {
-                        console.log(data);
-                        DataService.removeCustomScene($scope.scene.id);
-                        DataService.addCustomScene($scope.scene.id, $scope.modalScene.name, tmp, DataService.getSceneImageCropped());
-                        $scope.closeModal();
-                        if (angular.isDefined($scope.refresh)) {
-                            $scope.refresh();
-                        }
-                        $state.go('main.home_tab.scenes');
+                    HueService.modifyScene($scope.scene.id, $scope.modalScene.name, tmp, true).then(function (data) {
+                        afterModifyScene(tmp, data);
+                    });
+                }
+            }
+        };
+
+        $scope.createOrUpdateScene = function () {
+            var tmp = getLightSelection();
+            validateForm(tmp);
+
+            if (tmp.length > 0 && $scope.modalScene.name.length > 0 && $scope.modalScene.name.length <= 32) {
+                if ($scope.isEditMode) {
+                    HueService.modifyScene($scope.scene.id, $scope.modalScene.name, tmp, false).then(function (data) {
+                        afterModifyScene(tmp, data);
                     });
                 } else {
                     HueService.createScene($scope.modalScene.name, tmp).then(function (data) {
