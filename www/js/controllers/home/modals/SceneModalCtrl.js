@@ -7,7 +7,7 @@ define(function () {
         console.info("SceneModalCtrl init");
 
 
-        DataService.getEnrichedLightInfos(false).then(function (data) {
+        DataService.getEnrichedLightInfos(true).then(function (data) {
             var tmp = [];
             angular.forEach(data, function (value, key) {
                 value.id = key;

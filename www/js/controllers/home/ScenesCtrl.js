@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($ionicModal, $scope, $ionicFilterBar, DataService, HueService, DbService, PlaceholderDataUrl) {
+    function ctrl($ionicModal, $scope, $ionicFilterBar, DataService, HueService, DbService, PlaceholderDataUrl, $q) {
         console.info("ScenesCtrl init");
         var filterBarInstance;
         $scope.selectedTab = 1;
@@ -43,6 +43,8 @@ define(function () {
             HueService.recallScene(sceneId).then(function (data) {
                 //todo css flash effect
                 animateCss('#sceneId' + sceneId, 'pulse');
+
+                window.setTimeout(refreshLightsAndLookForActiveScenes, 1000);
             });
         };
 
@@ -70,7 +72,82 @@ define(function () {
             $scope.customScenesRows = customScenesRows;
         };
 
+        var findActiveScenes = function () {
+            var promises = [];
+            var sceneDetails = {};
+            angular.forEach($scope.allScenes, function (scene) {
+                var promise = HueService.getScene(scene.id).then(function (data) {
+                    data.id = scene.id;
+                    sceneDetails[scene.id] = data;
+                });
+                promises.push(promise);
+            });
+            $q.all(promises).then(function () {
+                console.info(sceneDetails);
+                $scope.sceneDetails = sceneDetails;
+                checkIfSceneIsActive();
+            });
+        };
+
+        var checkIfSceneIsActive = function () {
+            //$scope.lightsById //obj by light id
+            //$scope.sceneDetails   //obj by scene id
+
+            angular.forEach($scope.allScenes, function (scene) {
+                var sceneDetail = $scope.sceneDetails[scene.id];
+                var isActive = (Object.keys(sceneDetail.lightstates).length > 0);
+                angular.forEach(sceneDetail.lightstates, function (lightstate, lightId) {
+                    if (isActive === false) {
+                        return;
+                    }
+                    var currentLightState = $scope.lightsById[lightId];
+
+                    console.log(sceneDetail.name);
+                    angular.forEach(lightstate, function (propertyValue, propertyName) {
+                        var state = currentLightState.state[propertyName];
+                        if (propertyName === "xy") {
+                            state[0] = parseFloat(state[0]).toFixed(1).toString();
+                            state[1] = parseFloat(state[1]).toFixed(1).toString();
+                            propertyValue[0] = parseFloat(propertyValue[0]).toFixed(1).toString();
+                            propertyValue[1] = parseFloat(propertyValue[1]).toFixed(1).toString();
+                            console.log(propertyName, propertyValue, state);
+                            isActive = isActive && (propertyValue[0] === state[0] && propertyValue[1] === state[1]);
+                        } else if (propertyName === "ct") {
+                            var ctState = parseInt(state);
+                            var ctPropertyValue = propertyValue;
+                            var diff = Math.abs(ctState - ctPropertyValue);
+                            console.log(propertyName, propertyValue, state, diff);
+                            isActive = isActive && (diff <= 5);
+                        } else {
+                            console.log(propertyName, propertyValue, state);
+                            isActive = isActive && (propertyValue === state);
+                        }
+                    });
+                });
+                console.info(sceneDetail.name, isActive);
+                console.info("================================");
+
+                scene.isActive = isActive;
+            });
+            refreshGridView($scope.allScenes);
+        };
+
+        var refreshLights = function () {
+            DataService.getEnrichedLightInfos(true).then(function (data) {
+                $scope.lightsById = data;
+            });
+        };
+
+        var refreshLightsAndLookForActiveScenes = function () {
+            DataService.getEnrichedLightInfos(true).then(function (data) {
+                $scope.lightsById = data;
+                findActiveScenes();
+            });
+        };
+
         $scope.refresh = function () {
+            refreshLights();
+
             DbService.getAllImages()
                 .then(function (images) {
                     var tmp = {};
@@ -86,6 +163,7 @@ define(function () {
                         var customScenes = [];
                         angular.forEach(data, function (value, key) {
                             value.id = key;
+                            value.isActive = false;
                             if (!value.name.match(/\soff\s\d+/g)) {
                                 value.name = value.name.replace(/\son\s\d+/, '').replace(/\sfon\s\d+/, '');
                                 customScenes.push(value);
@@ -93,6 +171,7 @@ define(function () {
                         });
                         $scope.allScenes = customScenes;
                         refreshGridView(customScenes);
+                        findActiveScenes();
                     });
 
 
@@ -114,7 +193,7 @@ define(function () {
 
     }
 
-    ctrl.$inject = ['$ionicModal', '$scope', '$ionicFilterBar', 'DataService', 'HueService', 'DbService', 'PlaceholderDataUrl'];
+    ctrl.$inject = ['$ionicModal', '$scope', '$ionicFilterBar', 'DataService', 'HueService', 'DbService', 'PlaceholderDataUrl', '$q'];
     return ctrl;
 
 });

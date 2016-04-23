@@ -1,3 +1,7 @@
+.sceneIsActive {
+    border: 1px solid;
+}
+
 @media (min-width: 680px) {
     .modal {
         top: 0px !important;
