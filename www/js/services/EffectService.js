@@ -12,6 +12,31 @@ define(['angular'], function (angular) {
         var dark_blue_nightSky = ColorService.getXysFromHex("#1e228d");
         var turquois = ColorService.getXysFromHex("#3cd5c0");
 
+        this.startCarousel = function (orderedSelectedLights, timeInMs, xyColors) {
+            angular.forEach(orderedSelectedLights, function (lightId) {
+                DataService.stopEffect(lightId);
+            });
+
+            LightCommandService.setCarouselColors(xyColors);
+
+            for (var i = 0; i < orderedSelectedLights.length; i++) {
+                HueService.changeLightState(orderedSelectedLights[i], {
+                    on: true,
+                    xy: xyColors[i],
+                    bri: 200,
+                    transitiontime: 0,
+                });
+            }
+
+            var interval = $interval(LightCommandService.carousel, timeInMs + 300, 0, false, orderedSelectedLights, timeInMs);
+
+            angular.forEach(orderedSelectedLights, function (lightId) {
+                DataService.setEffect(lightId, "Carousel", interval);
+            });
+
+            LightCommandService.carousel(orderedSelectedLights, timeInMs);
+        };
+
         this.startBeacon = function (orderedSelectedLights, timeInMs, xyColor) {
             angular.forEach(orderedSelectedLights, function (lightId) {
                 DataService.stopEffect(lightId);

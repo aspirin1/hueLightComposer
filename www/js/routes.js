@@ -239,6 +239,15 @@ define(['app'], function (app) {
                     }
                 }
             });
+            $stateProvider.state('main.home_tab.carousel', {
+                url: '/carousel',
+                views: {
+                    'effectList-tab': {
+                        templateUrl: 'templates/effects/carousel.html',
+                        controller: 'CarouselCtrl'
+                    }
+                }
+            });
 
             //using main layout pages
             $stateProvider.state('main.settings', {
