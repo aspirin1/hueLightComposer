@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($scope, $filter, DataService, HueService, EffectService, LightCommandService, ColorService, $interval, UtilityService) {
-        console.log("StandardEffectCtrl", $scope.effect);
+
 
 
         $scope.effectName = $filter('translate')('Effect_' + $scope.effect);

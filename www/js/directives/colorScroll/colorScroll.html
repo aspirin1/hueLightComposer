@@ -2,7 +2,7 @@
 <ion-content ng-style="getContainerStyle()">
     <ion-scroll direction="x">
         <div style="width: -webkit-max-content;width: max-content;">
-            <div class="item" ng-style="getStyle(color)" ng-click="pick(color)" ng-repeat="color in colors"> </div>
+            <div class="item" ng-style="getStyle(color)" ng-click="pick(color)" ng-repeat="color in colors track by $index"> </div>
         </div>
     </ion-scroll>
 

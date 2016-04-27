@@ -12,7 +12,7 @@
 
     <ion-content has-header="true" has-tabs="true">
         <div class="colorListContainer">
-            <div ng-repeat="color in ownColors | filter:listFilter " class="col col-25 colorSquare" ng-style="getBackgroundStyle(color.hexColor)">
+            <div ng-repeat="color in ownColors track by color.hexColor | filter:listFilter " class="col col-25 colorSquare" ng-style="getBackgroundStyle(color.hexColor)">
                 <div class="colorSquareContent">
                     <div ng-click="openCopyToModal(color)" class="colorSquareAction"></div>
                     <button class="favColor" ng-click="toggleFavorite(color)">
@@ -24,7 +24,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="colorListContainer">
-            <div ng-repeat="color in colors | filter:listFilter " class="col col-25 colorSquare" ng-style="getBackgroundStyle(color.hexColor)">
+            <div ng-repeat="color in colors  track by color.hexColor | filter:listFilter " class="col col-25 colorSquare" ng-style="getBackgroundStyle(color.hexColor)">
                 <div class="colorSquareContent">
                     <div ng-click="openCopyToModal(color)" class="colorSquareAction"></div>
                     <button class="favColor" ng-click="toggleFavorite(color)">
@@ -64,7 +64,7 @@
             </ion-header-bar>
             <ion-content>
                 <ion-list delegate-handle="sorting-options" show-reorder="data.showReorder" can-swipe="data.listCanSwipe">
-                    <ion-item ng-repeat="item in orderItems" item="item" ng-click="ascDescToggle(item)">
+                    <ion-item ng-repeat="item in orderItems  track by $index" item="item" ng-click="ascDescToggle(item)">
                         <h2>
                             <i class="icon ion-android-arrow-up" ng-show="item.order=='asc'"></i>
                             <i class="icon ion-android-arrow-down" ng-show="item.order=='desc'"></i>

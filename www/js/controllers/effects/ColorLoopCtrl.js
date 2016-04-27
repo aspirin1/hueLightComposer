@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($scope, $filter, DataService, EffectService, UtilityService) {
-        console.log("ColorLoopCtrl");
+
 
         $scope.sliderOptions = {
             start: [10],

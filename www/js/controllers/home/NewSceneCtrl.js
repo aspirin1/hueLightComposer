@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($scope, $ionicHistory, $state, DataService, HueService, UtilityService, DbService) {
-        console.info("New ScenesCtrl init");
+
 
         var resetForm = function () {
             $scope.createSceneSelection = {};
@@ -43,7 +43,7 @@ define(function () {
 
             if (tmp.length > 0 && $scope.newScene.name.length > 0) {
                 HueService.createScene($scope.newScene.name, tmp).then(function (data) {
-                    console.log(data);
+
                     DataService.addCustomScene(data[0].success.id, $scope.newScene.name, tmp, DataService.getSceneImageCropped());
                     resetForm();
                     $state.go('main.home_tab.scenes');

@@ -4,13 +4,13 @@ define(function () {
     'use strict';
 
     function ctrl($state, $filter, $scope, $ionicModal, DataService, HueService, UtilityService, ColorService, ConfigService) {
-        console.info("HueLightListCtrl init");
+
 
 
 
 
         $scope.$on("$ionicView.beforeEnter", function () {
-            console.log("beforeEnter", ConfigService.getBridgeUrl(), ConfigService.getUserId());
+
             if (ConfigService.getBridgeUrl() === null || ConfigService.getUserId() === null) {
                 $state.go('searchingBridge');
             } else {

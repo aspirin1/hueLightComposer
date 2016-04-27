@@ -18,7 +18,7 @@
     <ion-content has-header="true" has-tabs="true">
         <ul class="list lightList">
 
-            <li ng-repeat="light in allLights" class="item item-button-right">
+            <li ng-repeat="light in allLights  track by light.id" class="item item-button-right">
                 <a href="{{light.state.reachable ? getPathToLight(light.id): ' '}}" class="lightLink">
                     <div class="hueListIcon">
                         <hue-image template="{{light.image}}" light='light '></hue-image>
@@ -63,7 +63,7 @@
                     <input type="text" ng-model="newScene.name" name='sceneName' />
                 </label>
                 <ul class="list">
-                    <ion-checkbox ng-repeat="light in allLights" ng-model="createSceneSelection[light.id]">{{light.name}}</ion-checkbox>
+                    <ion-checkbox ng-repeat="light in allLights  track by light.id" ng-model="createSceneSelection[light.id]">{{light.name}}</ion-checkbox>
                 </ul>
             </ion-content>
             <ion-footer-bar>

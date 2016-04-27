@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($ionicLoading, $scope, DataService) {
-        console.info("ColorsAdministrationCtrl init");
+
 
         $scope.$on("$ionicView.beforeEnter", function () {
             $ionicLoading.show({

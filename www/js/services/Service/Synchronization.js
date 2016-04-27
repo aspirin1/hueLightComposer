@@ -54,11 +54,11 @@ define(['angular'], function (angular) {
                     var latestRemoteHistory = getLatestHistoryItem(remote_user.history);
                     if (lastClientChange > latestRemoteHistory.time) //client has changes
                     {
-                        console.info("client has changes which will be pushed to server");
+
                         self.doSync();
                     } else if (latestRemoteHistory.time > lastSynchronizedHistoryItem) //server has changes
                     {
-                        console.info("server has changes which will be pulled to client");
+
                         self.doSync();
                     }
                 });
@@ -114,7 +114,7 @@ define(['angular'], function (angular) {
         };
 
         this.doSync = function () {
-            console.info("Start synchronization process!");
+
             if (!self.isUserLoggedIn()) {
                 return;
             }
@@ -151,7 +151,7 @@ define(['angular'], function (angular) {
 
             var remote_user = User.getUser();
             remote_user.$loaded().then(function () {
-                console.log(remote_user);
+
 
                 if (angular.isUndefined(remote_user.lastSynchroTime)) {
                     remote_user.lastSynchroTime = 0;
@@ -269,7 +269,7 @@ define(['angular'], function (angular) {
                 });
 
                 //remote_user.$save();
-                console.log(remote_user);
+
             });
         };
 

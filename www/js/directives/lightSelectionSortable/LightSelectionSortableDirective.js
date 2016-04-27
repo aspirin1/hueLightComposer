@@ -31,7 +31,7 @@ define(['angular'], function (angular) {
 
                 var getGroupList = function () {
                     DataService.getEnrichedGroupInfos().then(function (data) {
-                        console.log(data);
+
                         var tmp = [];
                         var lightGroups = [],
                             rooms = [];
@@ -103,7 +103,7 @@ define(['angular'], function (angular) {
                         scope.selectedLights[id] = true;
                     });
                     broadcastGroupSelected();
-                    console.log(scope.selectedLights);
+
                 };
 
                 scope.getTabsTop = function () {

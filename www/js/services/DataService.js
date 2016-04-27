@@ -295,7 +295,7 @@ define(['angular'], function (angular) {
                 var allColors = [];
                 //var baseColors = ColorDataService.getColors();
                 var baseColors = self.calc();
-                console.log(baseColors);
+
 
                 angular.forEach(baseColors, function (color) {
                     //color.isCustom = false;
@@ -459,7 +459,7 @@ define(['angular'], function (angular) {
 
         this.getLightById = function (key) {
             var id = parseInt(key);
-            console.log(id, enrichedLightInfos);
+
             var light = enrichedLightInfos[id];
             light.id = id;
             return light;
@@ -473,7 +473,7 @@ define(['angular'], function (angular) {
                     value.gamut = self.getGamutMode(value.modelid);
                     value.hexColor = self.getHexColor(value.gamut, value.state.xy, value.state.bri);
                 });
-                console.log(lightInfos);
+
                 deferred.resolve(lightInfos);
             });
             return deferred.promise;
@@ -497,13 +497,13 @@ define(['angular'], function (angular) {
         this.getEnrichedLightInfos = function (refresh) {
             var deferred = $q.defer();
             if (enrichedLightInfos === null || typeof (refresh !== 'undefined') && refresh) {
-                console.info("refreshing light infos");
+
                 getRefreshedLightInfos().then(function (data) {
                     enrichedLightInfos = data;
                     deferred.resolve(data);
                 });
             } else {
-                console.info(enrichedLightInfos);
+
                 deferred.resolve(enrichedLightInfos);
             }
             return deferred.promise;

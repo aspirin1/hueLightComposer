@@ -115,7 +115,7 @@ define(['angular'], function (angular) {
             angular.forEach(allColors, function (value, key) {
                 value.isReachableByGamutC = true;
             });
-            console.log(Object.keys(allColors).length);
+
 
 
             initGamutB();
@@ -129,7 +129,7 @@ define(['angular'], function (angular) {
                 }
             });
             allColorsGamutB = undefined;
-            console.log(Object.keys(allColors).length);
+
 
 
             initGamutA();
@@ -143,14 +143,14 @@ define(['angular'], function (angular) {
                 }
             });
             allColorsGamutA = undefined;
-            console.log(Object.keys(allColors).length);
+
 
             return allColors;
         };
 
         this.initColorsTable = function () {
             var colors = self.calc(0.005);
-            console.info("Anzahl Farben: ", Object.keys(colors).length);
+
 
             if (!isSqliteDefined()) {
                 return;
@@ -162,10 +162,10 @@ define(['angular'], function (angular) {
             //              'CREATE TABLE IF NOT EXISTS colors (id integer primary key, x real, y real, hex text, isReachableByGamutA integer, isReachableByGamutB integer, isReachableByGamutC integer)',
             //            ], function () {
             //                db.executeSql('SELECT Count(*) as cnt FROM colors', [], function (res) {
-            //                    console.log('Items in colors table: ' + res.rows.item(0).cnt);
+            //
             //                });
             //            }, function (error) {
-            //                console.log('Populate table error: ' + error.message);
+            //
             //            });
 
             function generateColorInsertStatement(color) {
@@ -185,7 +185,7 @@ define(['angular'], function (angular) {
 
 
 
-            //console.log(insertQueries);
+
 
         };
 
@@ -194,15 +194,15 @@ define(['angular'], function (angular) {
         };
 
         var errorCb = function (err) {
-            console.error('Database ERROR: ' + JSON.stringify(err));
+
         };
         var errorCbWithCloseDb = function (err) {
-            console.error('Database ERROR: ' + JSON.stringify(err));
+
             closeDbConnection(getDbConnection());
         };
         var successCb = function () {
-            //console.log('Database Success:' + JSON.stringify(err));
-            console.log('transaction ok');
+
+
             //closeDbConnection(getDbConnection());
         };
 
@@ -213,7 +213,7 @@ define(['angular'], function (angular) {
                     location: 'default',
                     createFromLocation: 1
                 }, function () {
-                    console.log("OPEN successful");
+
                 }, errorCb);
             }
             return db;
@@ -264,7 +264,7 @@ define(['angular'], function (angular) {
             db.transaction(function (tx) {
                 var insertSql = "INSERT INTO colors (id,x, y, hex, isReachableByGamutA, isReachableByGamutB, isReachableByGamutC) VALUES (?,?,?,?,?,?,?)";
                 tx.executeSql(insertSql, [id, x, y, hex, isReachableByGamutA, isReachableByGamutB, isReachableByGamutC], function (tx, res) {
-                    //console.log("inserted new image with primary id: " + res.insertId);
+
                 }, errorCb);
 
             }, errorCb, successCb);
@@ -278,7 +278,7 @@ define(['angular'], function (angular) {
             var db = getDbConnection();
             db.transaction(function (tx) {
                 tx.executeSql("select count(id) as cnt from colors;", [], function (tx, res) {
-                    console.log("colors:", res.rows.item(0).cnt);
+
                 }, errorCb);
             }, errorCb, successCb);
         };
@@ -312,7 +312,7 @@ define(['angular'], function (angular) {
             db.transaction(function (tx) {
                 var insertSql = "INSERT INTO images (imageId, imageData) VALUES (?,?)";
                 tx.executeSql(insertSql, [imageId, imageData], function (tx, res) {
-                    console.log("inserted new image with primary id: " + res.insertId);
+
                 }, errorCb);
 
             }, errorCb, successCb);
@@ -328,7 +328,7 @@ define(['angular'], function (angular) {
                 var updateSql = "UPDATE images SET imageData=? WHERE imageId=?";
 
                 tx.executeSql(updateSql, [imageData, imageId], function (tx, res) {
-                    console.log(res);
+
                 }, errorCb);
 
             }, errorCb, successCb);
@@ -361,7 +361,7 @@ define(['angular'], function (angular) {
                 var deleteSql = "DELETE from images WHERE imageId=?";
 
                 tx.executeSql(deleteSql, [imageId], function (tx, res) {
-                    console.log(res);
+
                 }, errorCb);
 
             }, errorCb, successCb);
@@ -385,7 +385,7 @@ define(['angular'], function (angular) {
                         var image = res.rows.item(i);
                         images.push(image);
                     }
-                    console.log("ALL IMAGES:", images);
+
                     deferred.resolve(images);
                 }, errorCb);
             }, errorCb, successCb);

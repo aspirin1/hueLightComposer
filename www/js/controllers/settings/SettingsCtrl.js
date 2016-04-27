@@ -75,7 +75,7 @@ define(function () {
             if (DataService.isUserLoggedIn()) {
                 var user = User.getUser();
                 user.$loaded().then(function () {
-                    console.log("load", user);
+
                     ConfigService.setDesign(user.design.key);
                     ConfigService.setLanguage(user.language.key);
                     localStorageService.set('customScenes', user.customScenes);

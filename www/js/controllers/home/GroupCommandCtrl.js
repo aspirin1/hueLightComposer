@@ -3,7 +3,7 @@ define(function () {
     'use strict';
 
     function ctrl($rootScope, $scope, HueService, UtilityService) {
-        console.info("GroupCommandCtrl init", $scope.groupId);
+
 
         var refreshLightInBackground;
         var unregisterEvent;
@@ -11,7 +11,7 @@ define(function () {
         var getGroupInfo = function () {
             HueService.getGroup($scope.groupId).then(function (groupData) {
                 $scope.group = groupData;
-                console.info($scope.groupId, $scope.group);
+
 
                 $scope.brightnessOptions = {
                     start: [$scope.group.action.bri],
@@ -151,7 +151,7 @@ define(function () {
 
             css['background-image'] = linGradient;
 
-            console.log(css);
+
             return css;
         };
     }

@@ -3,7 +3,7 @@ define(function () {
     'use strict';
 
     function ctrl($rootScope, $scope, $ionicLoading, $interval, $ionicModal, $ionicPopover, $filter, DataService, HueService, UtilityService, $q, ColorService) {
-        console.info("HueLightDetailsCtrl init", $scope.lightId);
+
 
         var refreshLightInBackground;
         var unregisterEvent;
@@ -163,10 +163,10 @@ define(function () {
             var h = 360 * huePercentage;
             var l = 50 + 50 * huePercentage;
 
-            console.log(h, s, l);
+
 
             var hexColor = ColorService.hslToHex(h, s, l);
-            console.log(hexColor);
+
             $scope.light.hexColor = hexColor;
         };
 
@@ -214,7 +214,7 @@ define(function () {
 
             css['background-image'] = linGradient;
 
-            console.log(css);
+
             return css;
         };
 
@@ -291,7 +291,7 @@ define(function () {
             var tryFindColor = function () {
                 DataService.getEnrichedLightInfo(lightId).then(function (data) {
                     //$scope.light = data;
-                    console.log(data.state.xy, attempts);
+
                     if (attempts === 0) {
                         xyFound = data.state.xy;
                         briFound = data.state.bri;
@@ -299,14 +299,14 @@ define(function () {
                     }
                     if (attempts == minSeks) {
                         returnColor();
-                        console.log("abbruch weil " + minSeks + " versuche");
+
                     }
                     if (attempts > 0 && (xyFound[0] !== data.state.xy[0] || xyFound[1] !== data.state.xy[1])) {
                         xyFound = data.state.xy;
                         briFound = data.state.bri;
                         hexFound = data.hexColor;
                         returnColor();
-                        console.log("abbruch weil gefunden");
+
                     }
                     attempts++;
                 });
@@ -362,9 +362,9 @@ define(function () {
 
                 getColorXy(lightId).then(function (data) {
                     DataService.addCustomColor(colorName, data.hexColor);
-                    //console.info(data);
+
                     //var calculatedHex = ColorService.CIE1931ToHex("C", data.xy[0], data.xy[1], 255);
-                    //console.info(data.hexColor, calculatedHex);
+
                 });
             }
         }

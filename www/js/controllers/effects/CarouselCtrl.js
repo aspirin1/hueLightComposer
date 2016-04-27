@@ -4,14 +4,14 @@ define(function () {
     'use strict';
 
     function ctrl($rootScope, $scope, $filter, DataService, EffectService, UtilityService, ColorService, ColorDataService) {
-        console.log("CarouselCtrl");
+
 
         var unregisterEvent;
 
         $scope.$on("$ionicView.beforeEnter", function () {
             getLightList();
             unregisterEvent = $rootScope.$on('ColorChanged', function (event, color) {
-                console.log(color);
+
                 $scope.selectedColor = ColorService.getGamutXyFromHex("C", color);
             });
         });
@@ -69,7 +69,7 @@ define(function () {
                 xyColors.push(xy);
             });
 
-            //console.log(xyColor);
+
 
             EffectService.startCarousel(orderedSelectedLights, timeInMs, xyColors);
 

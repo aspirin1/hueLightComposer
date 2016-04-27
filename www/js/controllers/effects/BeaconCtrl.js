@@ -4,14 +4,14 @@ define(function () {
     'use strict';
 
     function ctrl($rootScope, $scope, $filter, DataService, EffectService, UtilityService, ColorService) {
-        console.log("BeaconCtrl");
+
 
         var unregisterEvent;
 
         $scope.$on("$ionicView.beforeEnter", function () {
             getLightList();
             unregisterEvent = $rootScope.$on('ColorChanged', function (event, color) {
-                console.log(color);
+
                 $scope.selectedColor = ColorService.getGamutXyFromHex("C", color);
             });
         });
@@ -62,7 +62,7 @@ define(function () {
             var timeInMs = parseInt($scope.sliderOptions.start[0]) * 1000;
             var xyColor = $scope.selectedColor;
 
-            console.log(xyColor);
+
 
             EffectService.startBeacon(orderedSelectedLights, timeInMs, xyColor);
 

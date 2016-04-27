@@ -55,7 +55,7 @@ define(['angular'], function (angular) {
 
                 scope.pick = function (color) {
                     scope.selected.color = color;
-                    console.log(scope.selected);
+
                 };
 
                 scope.rows = [];

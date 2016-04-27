@@ -35,7 +35,7 @@ define(['app'], function (app) {
         $ionicConfigProvider.backButton.previousTitleText(false).text('');
         $ionicConfigProvider.platform.android.navBar.alignTitle('middle');
         //$ionicConfigProvider.views.forwardCache(false);
-        //$ionicConfigProvider.views.maxCache(0);
+        $ionicConfigProvider.views.maxCache(5);
         $ionicConfigProvider.tabs.position("bottom");
         $ionicConfigProvider.tabs.style("striped");
     }]);
@@ -266,7 +266,7 @@ define(['app'], function (app) {
             $urlRouterProvider.otherwise("main/home_tab/lightList");
 
             function authenticate($q, $state, $timeout, ConfigService) {
-                console.log('authenticate');
+
                 if (ConfigService.getBridgeUrl() !== null && ConfigService.getUserId() !== null) {
                     // Resolve the promise successfully
                     //return $q.when();

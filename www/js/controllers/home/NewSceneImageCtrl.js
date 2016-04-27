@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($q, $scope, $ionicHistory, DataService) {
-        console.info("NewSceneImageCtrl init");
+
 
         $scope.$on("$ionicView.beforeEnter", function () {
             refresh();
@@ -65,13 +65,13 @@ define(function () {
 
         var getImage = function () {
             var imageData = DataService.getSceneImage();
-            console.log(imageData);
+
             $scope.image.myImage = "data:image/jpeg;base64," + imageData;
         };
 
 
         var refresh = function () {
-            console.log("refresh");
+
             $scope.image = {};
             $scope.image.myCroppedImage = '';
             //$scope.image.myImage = "data:image/jpeg;base64," + DataService.getSceneImage();
@@ -79,7 +79,7 @@ define(function () {
             var image = document.getElementById('imageToCrop');
             image.setAttribute('crossOrigin', 'anonymous');
             image.onload = function () {
-                console.log("image loaded");
+
                 $scope.cropper = new Cropper(image, {
                     viewMode: 3,
                     dragMode: 'move',
@@ -103,7 +103,7 @@ define(function () {
                 width: 400,
                 height: 400
             }).toDataURL('image/jpeg');
-            console.log(jpgDataUrlSrc);
+
 
             DataService.setSceneImageCropped(jpgDataUrlSrc);
             $scope.back();

@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($scope, $filter, DataService, EffectService, UtilityService, ColorService) {
-        console.log("PulseMultiColorCtrl");
+
 
         $scope.effectName = $filter('translate')('Effect_PulseColorTransition');
 

@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($ionicLoading, $scope, $filter, $ionicModal, $ionicPopover, $ionicListDelegate, DataService, HueService, ColorService) {
-        console.info("ColorsCtrl init");
+
 
         $scope.$on("$ionicView.beforeEnter", function () {
             $ionicLoading.show({
@@ -60,7 +60,7 @@ define(function () {
                 orderCmd.push(cmd);
             });
 
-            console.log(orderCmd);
+
             var predicate = orderCmd;
             var reverse = false;
 
@@ -97,7 +97,7 @@ define(function () {
         var getAllColors = function () {
             DataService.getAllColors().then(function (colors) {
                 $scope.ownColors = colors.ownColors;
-                console.log(colors.ownColors);
+
                 $scope.colors = colors.shippedColors;
                 reloadSorting();
                 $ionicLoading.hide();
@@ -157,13 +157,13 @@ define(function () {
         };
 
         $scope.openCopyToModal = function (color) {
-            console.info(color);
+
             $scope.modalColor = color;
             $scope.copyToModal.show();
         };
 
         $scope.closeCopyToModal = function () {
-            console.log($scope.copySelection);
+
             $scope.copyToModal.hide();
         };
 

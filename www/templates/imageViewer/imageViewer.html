@@ -9,7 +9,7 @@
         <img src="{{myImage}}" id="imageSource" style="max-width: 100%;max-height: 100%;" />
         <canvas id="imageViewerCanvas" style="display:none;"></canvas>
         <div class="swatches" style="    z-index: 10;">
-            <div class="swatch" ng-repeat="colorItem in hexPalette" style="background-color:{{colorItem.hexColor}}">
+            <div class="swatch" ng-repeat="colorItem in hexPalette track by $index" style="background-color:{{colorItem.hexColor}}">
                 <span>{{colorItem.lightIdActive}}</span>
             </div>
         </div>
@@ -45,9 +45,6 @@
                 <div class="list">
                     <ion-checkbox ng-model="options.useRealBrightness">Real brightness</ion-checkbox>
                     <ion-checkbox ng-model="options.useAdaptiveBrightness">Adaptive brightness</ion-checkbox>
-                    <!--<ion-checkbox ng-model="options.a">A</ion-checkbox>
-                    <ion-checkbox ng-model="options.b">B</ion-checkbox>
-                    <ion-checkbox ng-model="options.c">C</ion-checkbox>-->
                 </div>
             </ion-content>
         </ion-popover-view>

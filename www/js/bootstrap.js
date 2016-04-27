@@ -15,9 +15,9 @@ define(['angular', 'ionic', 'app', 'routes'], function (angular, ionic, app) {
             //            });
 
             if (angular.isDefined(cordova.plugins) && angular.isDefined(cordova.plugins.backgroundMode)) {
-                console.log("device ready background mode", cordova.plugins.backgroundMode);
+
                 cordova.plugins.backgroundMode.onactivate = function () {
-                    console.info("activate background mode");
+
                 };
             }
 
@@ -32,7 +32,7 @@ define(['angular', 'ionic', 'app', 'routes'], function (angular, ionic, app) {
             try {
                 angular.bootstrap(document, [app.name]);
             } catch (e) {
-                console.error(e.stack || e.message || e);
+
             }
         });
     }

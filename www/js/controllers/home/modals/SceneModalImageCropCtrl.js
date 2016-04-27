@@ -4,11 +4,11 @@ define(function () {
     'use strict';
 
     function ctrl(HueService, $scope, DataService, $filter, PlaceholderDataUrl) {
-        console.info("SceneModalCtrl init");
+
 
         $scope.$on('modal.shown', function (event, modal) {
             if (modal.id === 'sceneModalImageCrop') {
-                console.log("image crop shown");
+
                 initImageCropping();
                 initPinchEvent();
             }

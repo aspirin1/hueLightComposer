@@ -23,7 +23,7 @@ define(['angular',
     function (angular) {
         'use strict';
 
-        console.log("loading app");
+
         var app = angular.module('app', [
             'LocalStorageModule',
             'pascalprecht.translate',
@@ -98,5 +98,5 @@ document.addEventListener("app.Ready", onAppReady, false);
 // standard Crordova deviceready event. Others will either not work or will
 // work poorly.
 
-// NOTE: change "dev.LOG" in "init-dev.js" to "true" to enable some console.log
+// NOTE: change "dev.LOG" in "init-dev.js" to "true" to enable some
 // messages that can help you debug Cordova app initialization issues.

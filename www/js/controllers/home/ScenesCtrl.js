@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($ionicModal, $scope, $ionicFilterBar, DataService, HueService, DbService, PlaceholderDataUrl, $q) {
-        console.info("ScenesCtrl init");
+
         var filterBarInstance;
         $scope.selectedTab = 1;
 
@@ -83,7 +83,7 @@ define(function () {
                 promises.push(promise);
             });
             $q.all(promises).then(function () {
-                console.info(sceneDetails);
+
                 $scope.sceneDetails = sceneDetails;
                 checkIfSceneIsActive();
             });
@@ -102,7 +102,7 @@ define(function () {
                     }
                     var currentLightState = $scope.lightsById[lightId];
 
-                    console.log(sceneDetail.name);
+
                     angular.forEach(lightstate, function (propertyValue, propertyName) {
                         var state = currentLightState.state[propertyName];
                         if (propertyName === "xy") {
@@ -110,22 +110,22 @@ define(function () {
                             state[1] = parseFloat(state[1]).toFixed(1).toString();
                             propertyValue[0] = parseFloat(propertyValue[0]).toFixed(1).toString();
                             propertyValue[1] = parseFloat(propertyValue[1]).toFixed(1).toString();
-                            console.log(propertyName, propertyValue, state);
+
                             isActive = isActive && (propertyValue[0] === state[0] && propertyValue[1] === state[1]);
                         } else if (propertyName === "ct") {
                             var ctState = parseInt(state);
                             var ctPropertyValue = propertyValue;
                             var diff = Math.abs(ctState - ctPropertyValue);
-                            console.log(propertyName, propertyValue, state, diff);
+
                             isActive = isActive && (diff <= 5);
                         } else {
-                            console.log(propertyName, propertyValue, state);
+
                             isActive = isActive && (propertyValue === state);
                         }
                     });
                 });
-                console.info(sceneDetail.name, isActive);
-                console.info("================================");
+
+
 
                 scene.isActive = isActive;
             });
@@ -155,7 +155,7 @@ define(function () {
                         tmp[image.imageId] = image.imageData;
                     });
                     $scope.allImages = tmp;
-                    console.log($scope.allImages);
+
                 })
                 .then(function () {
 

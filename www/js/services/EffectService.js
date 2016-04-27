@@ -147,7 +147,7 @@ define(['angular'], function (angular) {
                 maxZeitZwischenBlitzen = maxZeitZwischenBlitz;
                 effektDauer = maxZeitZwischenBlitz + 1000;
             }
-            console.info(maxZeitZwischenBlitzen);
+
 
             var interval = $interval(
                 LightCommandService.ausUndUnregelmaessigAufblitzen,
@@ -296,7 +296,7 @@ define(['angular'], function (angular) {
             };
 
             var dunklesFlackern = function () {
-                console.log('dunklesFlackern');
+
                 var tmp = function () {
                     HueService.changeLightState(lightId, {
                         bri: UtilityService.getRandomInt(34, 36),
@@ -309,7 +309,7 @@ define(['angular'], function (angular) {
             };
 
             var hellerAusreisser = function () {
-                console.log('hellerAusreisser');
+
                 var tmp = function () {
                     HueService.changeLightState(lightId, {
                         bri: UtilityService.getRandomInt(43, 46),
@@ -322,7 +322,7 @@ define(['angular'], function (angular) {
             };
 
             var doppeltesFlackern = function () {
-                console.log('doppeltesFlackern');
+
                 steilAbfallen(35, 35); //100ms
                 //+300ms warten
                 UtilityService.delayed(lightId, aufBriWechseln, 400, 40, 3); //300ms
@@ -333,7 +333,7 @@ define(['angular'], function (angular) {
             };
 
             var flimmern = function () {
-                console.log('flimmern');
+
                 UtilityService.delayed(lightId, aufBriWechseln, 0, 35, 0); //100ms
                 //+200ms warten
                 UtilityService.delayed(lightId, aufBriWechseln, 300, 38, 0); //100ms
@@ -346,7 +346,7 @@ define(['angular'], function (angular) {
             };
 
             var ganzSchnellesFlimmern = function () {
-                console.log('ganzSchnellesFlimmern');
+
                 var warten = 0;
 
                 UtilityService.delayed(lightId, aufBriWechseln, warten, 35, 0);
@@ -400,7 +400,7 @@ define(['angular'], function (angular) {
         this.auroraEffect = function (lightId, gamut) {
             UtilityService.resetTimeoutForId(lightId);
 
-            console.log("auroraEffect", lightId, gamut);
+
 
 
             var standard = function () {

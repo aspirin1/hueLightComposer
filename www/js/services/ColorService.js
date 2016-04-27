@@ -300,7 +300,7 @@ define(['angular'], function (angular) {
                 if (!checkPointInLampsReach(xyPoint)) {
                     // Calculate the closest point on the color gamut triangle
                     // and use that as xy value See step 6 of color to xy.
-                    console.log("xy nicht in dreieck, nutze näherung");
+
                     xyPoint = getClosestPointToPoint(xyPoint);
                 }
 
@@ -321,7 +321,7 @@ define(['angular'], function (angular) {
                 //                -X * 0.707196 + Y * 1.655397 + Z * 0.036152,
                 //                X * 0.051713 - Y * 0.121364 + Z * 1.011530
                 //            ];
-                //                console.log("rgb:", rgb);
+                //
                 //
                 //                // Apply reverse gamma correction.
                 //                rgb = rgb.map(function (x) {
@@ -340,7 +340,7 @@ define(['angular'], function (angular) {
                 //                        return x / max;
                 //                    });
                 //                }
-                //                console.log(rgb)
+                //
                 //
                 //                rgb = rgb.map(function (x) {
                 //                    return Math.floor(x * 255);

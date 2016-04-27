@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($scope, $filter, DataService, EffectService, UtilityService, ColorService) {
-        console.log("PulseCtrl");
+
 
         $scope.effectName = $filter('translate')('Effect_Pulse');
         $scope.selectedColor1 = {};

@@ -7,7 +7,7 @@ define(['angular'], function (angular) {
         var self = this;
 
         this.getBase64FromImageUrl = function (imageUrl) {
-            console.log(imageUrl, cordova.file.dataDirectory);
+
             var defer = $q.defer();
             window.resolveLocalFileSystemURL(cordova.file.dataDirectory + imageUrl, function (fileEntry) {
                     fileEntry.file(function (file) {
@@ -27,7 +27,7 @@ define(['angular'], function (angular) {
 
 
         this.writeBase64ImageToFilesSystem = function (imageUrl, image64) {
-            console.log(imageUrl, image64);
+
             var defer = $q.defer();
             window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dir) {
                 dir.getFile(imageUrl, {
@@ -50,7 +50,7 @@ define(['angular'], function (angular) {
                         var imageBin = _base64ToArrayBuffer(replaced);
 
                         writer.onwriteend = function (evt) {
-                            console.log("written", evt);
+
                             defer.resolve(evt);
                         };
                         writer.write(imageBin);
@@ -166,10 +166,10 @@ define(['angular'], function (angular) {
             if (angular.isDefined(options)) {
                 usedOptions = options;
             }
-            console.log(usedOptions);
+
 
             return self.getPicture(usedOptions).then(function (imageURI) {
-                console.log(imageURI);
+
                 var defered = $q.defer();
 
                 $timeout(createFileEntry, 0, false, imageURI);
@@ -183,9 +183,9 @@ define(['angular'], function (angular) {
                     var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
                     var newName = makeid() + ".jpg";
 
-                    console.log(newName, cordova.file.dataDirectory);
+
                     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
-                            console.log(fileEntry);
+
                             fileEntry.copyTo(
                                 fileSystem2,
                                 newName,
@@ -197,7 +197,7 @@ define(['angular'], function (angular) {
                 }
 
                 function onCopySuccess(entry) {
-                    console.log(entry);
+
                     defered.resolve(entry.name);
                     //                    $scope.$apply(function () {
                     //                        $scope.images.push(entry.nativeURL);
@@ -221,12 +221,12 @@ define(['angular'], function (angular) {
 
 
             }, function (err) {
-                console.err(err);
+
             });
         };
 
         function fail(error) {
-            console.error("fail: " + error.code, error);
+
         }
         this.getPicture = function (options) {
             var q = $q.defer();
@@ -244,7 +244,7 @@ define(['angular'], function (angular) {
             if (angular.isDefined(imageName) && imageName !== null) {
                 var name = imageName.substr(imageName.lastIndexOf('/') + 1);
                 var trueOrigin = cordova.file.dataDirectory + name;
-                //console.log("getUrlForImage", imageName, trueOrigin, cordova.file.dataDirectory);
+
                 return trueOrigin;
             }
             return undefined;

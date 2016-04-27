@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl(HueService, $scope, DataService, $filter, PlaceholderDataUrl, $ionicModal, UtilityService, $state) {
-        console.info("SceneModalCtrl init");
+
 
 
         DataService.getEnrichedLightInfos(true).then(function (data) {
@@ -18,14 +18,14 @@ define(function () {
 
         $scope.$on('modal.shown', function (event, modal) {
             if (modal.id === "sceneModal") {
-                console.log("sceneModal shown");
+
 
                 DataService.setSceneImageCropped(null);
                 DataService.setSceneImage(null);
 
                 $scope.isEditMode = (angular.isDefined($scope.scene) && $scope.scene !== null);
                 if ($scope.isEditMode) {
-                    console.log($scope.scene);
+
                 }
                 $scope.titleText = getTitleText();
                 $scope.saveText = getSaveText();
@@ -102,7 +102,7 @@ define(function () {
         };
 
         $scope.deleteScene = function (sceneId) {
-            console.log(sceneId);
+
 
             function onConfirm(buttonIndex) {
                 if (buttonIndex === 1) //delete
@@ -145,7 +145,7 @@ define(function () {
         };
 
         var afterModifyScene = function (tmp, data) {
-            console.log(data);
+
 
             if (isCroppedImageAvailable()) {
                 DataService.removeCustomScene($scope.scene.id);
@@ -182,7 +182,7 @@ define(function () {
                     });
                 } else {
                     HueService.createScene($scope.modalScene.name, tmp).then(function (data) {
-                        console.log(data);
+
                         DataService.addCustomScene(data[0].success.id, $scope.modalScene.name, tmp, DataService.getSceneImageCropped());
                         $scope.closeModal();
                         if (angular.isDefined($scope.refresh)) {

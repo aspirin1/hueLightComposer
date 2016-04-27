@@ -6,7 +6,7 @@ define(function () {
     function ctrl($ionicPopover, $ionicModal, $scope, HueService, ColorService, DataService, UtilityService) {
 
         DataService.getEnrichedLightInfos().then(function (allLights) {
-            console.log(allLights);
+
             $scope.allLights = allLights;
         });
 
@@ -96,9 +96,9 @@ define(function () {
 
 
 
-            console.log("Brightness of image:", lightnessPercentage1, " %");
-            console.log("Brightness2 of image:", lightnessPercentage2, " %");
-            console.log("Brightness:", bri);
+
+
+
             return {
                 bri: bri,
                 manipulatedBri: manipulatedBri
@@ -165,7 +165,7 @@ define(function () {
                     });
 
                     $scope.hexPalette = hexPalette;
-                    console.log(palette, hexPalette);
+
 
                     var lightsActivated = {};
 
@@ -174,7 +174,7 @@ define(function () {
 
                         for (var j = 0; j < hexPalette.length; j++) {
                             if (hexPalette[j].lightIdActive === null && hexPalette[j]["isReachableByGamut" + gamutLight] === true) {
-                                console.log($scope.activeLights[i]);
+
                                 hexPalette[j].lightIdActive = $scope.activeLights[i];
                                 lightsActivated[$scope.activeLights[i]] = true;
 
@@ -200,7 +200,7 @@ define(function () {
                         for (var k = 0; k < $scope.activeLights.length; k++) {
                             var id = $scope.activeLights[k];
                             if (!(id in lightsActivated)) {
-                                console.log($scope.activeLights[k]);
+
                                 if ($scope.options.useRealBrightness || $scope.options.useAdaptiveBrightness) {
                                     HueService.changeLightState($scope.activeLights[k], {
                                         on: true,
@@ -250,7 +250,7 @@ define(function () {
                 }
             });
             $scope.activeLights = selectedLights;
-            console.log($scope.activeLights);
+
             $scope.closeCopyToModal();
         };
 

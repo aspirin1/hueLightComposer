@@ -36,7 +36,7 @@ define(['angular'], function (angular) {
 
 
             for (var i = 0; i < orderedSelectedLights.length; i++) {
-                console.log(orderedSelectedLights[i] + " " + carouselColors[i][0] + " " + carouselColors[i][1]);
+
                 UtilityService.delayed(orderedSelectedLights[i], anschalten, 0, orderedSelectedLights[i], carouselColors[i]);
             }
             carouselColors.push(carouselColors.shift());
@@ -145,7 +145,7 @@ define(['angular'], function (angular) {
             if (angular.isDefined(maxBri)) {
                 usedMaxBri = maxBri;
             }
-            console.info(usedMaxBri);
+
 
             var hellAufblenden = function () {
                 HueService.changeLightState(id, {
@@ -486,7 +486,7 @@ define(['angular'], function (angular) {
                 if (angular.isDefined(zufallsfarbenVerwenden) && zufallsfarbenVerwenden === true) {
                     var hexColor = ColorDataService.getRandomHexColorForGamutC();
                     var xy = ColorService.getGamutXyFromHex("C", hexColor);
-                    console.log(hexColor);
+
                     HueService.changeLightState(id, {
                         on: true,
                         transitiontime: 0,
@@ -526,13 +526,13 @@ define(['angular'], function (angular) {
                 blitzWarten += 200;
             };
 
-            console.info("neue runde");
+
             UtilityService.delayed(id, aus, warten);
             warten += 100;
 
             while (warten < time) {
                 var randomWarten = UtilityService.getRandomInt(minWait, maxWait);
-                console.info("nächste blitz " + randomWarten + " warte: " + parseInt(warten + randomWarten));
+
                 warten += randomWarten;
                 if (warten <= time) {
                     UtilityService.delayed(id, blitz2, warten);

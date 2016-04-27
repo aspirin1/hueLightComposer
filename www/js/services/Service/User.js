@@ -10,7 +10,7 @@ define(['angular'], function (angular) {
 
 
         var getBase64FromImageUrl = function (imageUrl) {
-            console.log(imageUrl, cordova.file.dataDirectory);
+
             var defer = $q.defer();
             window.resolveLocalFileSystemURL(cordova.file.dataDirectory + imageUrl, function (fileEntry) {
                     fileEntry.file(function (file) {
@@ -30,7 +30,7 @@ define(['angular'], function (angular) {
 
 
         function fail(error) {
-            console.error("fail: " + error.code, error);
+
         }
 
 
@@ -195,7 +195,7 @@ define(['angular'], function (angular) {
 
             var counter = self.getUserChangeCounter();
             counter.$loaded().then(function () {
-                console.log(counter);
+
                 counter.$value++;
                 counter.$save();
             });

@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($scope, $ionicModal, DataService, HueService) {
-        console.info("GroupsCtrl init");
+
 
         $scope.allLightsOfGroupAreOn = {};
 
@@ -87,7 +87,7 @@ define(function () {
 
         var refreshLightList = function () {
             DataService.getEnrichedGroupInfos().then(function (data) {
-                console.log(data);
+
                 var tmp = [];
                 var lightGroups = [],
                     rooms = [];
@@ -100,7 +100,7 @@ define(function () {
                         rooms.push(value);
                 });
 
-                console.info("all groups", tmp);
+
                 $scope.allGroups = tmp;
                 $scope.lightGroups = lightGroups;
                 $scope.rooms = rooms;

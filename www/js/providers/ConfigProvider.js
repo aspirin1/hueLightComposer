@@ -10,7 +10,7 @@ define(['angular'], function (angular) {
             },
             //setGreeting: setGreeting,
             $get: function ($rootScope, localStorageService) {
-                //console.log($rootScope)
+
                 //return localStorageService.get('userId');
                 return ("test");
             }
@@ -22,7 +22,7 @@ define(['angular'], function (angular) {
                     type = value;
                 },
                 $get: ['localStorageService', function (localStorageService) {
-                    console.log(localStorageService);
+
                     // return the factory as a provider
                     // that is available during the configuration phase
                     return null;

@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     function ctrl($scope, $filter, DataService, EffectService, UtilityService, ColorService) {
-        console.log("PulseChangingColorsCtrl");
+
         $scope.effectName = $filter('translate')('Effect_PulseChangingColors');
 
         $scope.selectedColor1 = {};
@@ -40,7 +40,7 @@ define(function () {
             var color1 = $scope.selectedColor1.color;
             var color2 = $scope.selectedColor2.color;
 
-            console.log(color1, color2);
+
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {
                     var light = DataService.getLightById(key);
