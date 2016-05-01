@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1462094138553,
+      "lastModifiedDate": 1462101005994,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -73,7 +73,7 @@
         "selectedState": "Included",
         "checksum": "927290ca",
         "dependsOn": [],
-        "topLevel": false,
+        "topLevel": true,
         "permissions": {},
         "description": "Cordova Device Plugin",
         "data": {},
