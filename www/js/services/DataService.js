@@ -208,7 +208,7 @@ define(['angular'], function (angular) {
                 var tmp = {};
                 var renderPixel = function (xy) {
                     count++;
-                    var hexColor = "#" + ColorService.CIE1931ToHex("C", xy[0], xy[1], 1);
+                    var hexColor = ColorService.CIE1931ToHex("C", xy[0], xy[1], 1);
                     if (!(hexColor in tmp))
                         tmp[hexColor] = true;
                 };
@@ -419,6 +419,9 @@ define(['angular'], function (angular) {
             if (modelid === "LLC001") {
                 return "iris";
             }
+            if (modelid === "LCT003") {
+                return "gu10";
+            }
         };
 
         this.getGamutMode = function (modelid) {
@@ -454,7 +457,7 @@ define(['angular'], function (angular) {
         };
 
         this.getHexColor = function (gamut, xy, bri) {
-            return "#" + ColorService.CIE1931ToHex(gamut, xy[0], xy[1], 1);
+            return ColorService.CIE1931ToHex(gamut, xy[0], xy[1], 1);
         };
 
         this.getLightById = function (key) {
@@ -474,6 +477,7 @@ define(['angular'], function (angular) {
                     value.hexColor = self.getHexColor(value.gamut, value.state.xy, value.state.bri);
                 });
 
+                console.info(lightInfos);
                 deferred.resolve(lightInfos);
             });
             return deferred.promise;
