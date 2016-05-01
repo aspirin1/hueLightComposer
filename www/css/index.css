@@ -211,50 +211,7 @@ ion-popover-view.fit ion-content {
     margin-bottom: 0px;
 }
 
-.hueListIcon .lightNotReachable {
-    font-size: 27px;
-    bottom: 10px;
-    left: 11px;
-    color: #ABB331;
-    position: absolute;
-}
 
-.hueListIcon {
-    display: block;
-    float: left;
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-}
-
-.hueListContent {
-    float: left;
-}
-
-.hueListContentRight {
-    float: right;
-}
-
-.hueListContentRight2 {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    align-items: center;
-    position: absolute;
-    top: 8px;
-    right: 16px;
-    min-width: 34px;
-    min-height: 34px;
-    font-size: 18px;
-    line-height: 32px
-}
 
 .pressBridgeText {
     font-weight: bold;

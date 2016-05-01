@@ -27,8 +27,13 @@
 
                     <div class="hueListContent">
                         <h2>{{light.name}}</h2>
-                        <p>{{'SINGLE_Brightness '|translate}}: {{getBrightnessPercentage(light)}} </p>
-                        <p> {{'SINGLE_Saturation '|translate}}: {{getSaturationPercentage(light)}}</p>
+                        <p>
+                            <i class="ion-android-sunny"></i>
+                            {{getBrightnessPercentage(light)}}
+                            &ensp;
+                            <i class="ion-contrast"></i>
+                            {{getSaturationPercentage(light)}}
+                        </p>
                     </div>
                 </a>
                 <p ng-show="isEffectRunning(light.id)">
