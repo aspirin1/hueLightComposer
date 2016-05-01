@@ -3,7 +3,7 @@
 define(['angular'], function (angular) {
     "use strict";
 
-    var factory = function (User, HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService, DbService) {
+    var factory = function (User, HelperService, HueService, $q, $interval, $timeout, ColorService, ColorDataService, localStorageService, DbService, ColorsJson) {
         var self = this;
         var sceneImage = null;
         var sceneImageCropped = null;
@@ -268,8 +268,9 @@ define(['angular'], function (angular) {
                 };
 
             initGamutC();
-            return doCalc(0.02, Blue[0], Blue[1], Red[0], Red[1], Green[0], Green[1]);
+            return doCalc(0.03, Blue[0], Blue[1], Red[0], Red[1], Green[0], Green[1]);
         };
+
 
         this.getOwnColors = function () {
             var deferred = $q.defer();
@@ -294,8 +295,8 @@ define(['angular'], function (angular) {
             $timeout(function () {
                 var allColors = [];
                 //var baseColors = ColorDataService.getColors();
-                var baseColors = self.calc();
-
+                //var baseColors = self.calc();
+                var baseColors = JSON.parse(ColorsJson);
 
                 angular.forEach(baseColors, function (color) {
                     //color.isCustom = false;
@@ -686,6 +687,6 @@ define(['angular'], function (angular) {
         return this;
     };
 
-    factory.$inject = ['User', 'HelperService', 'HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService', 'DbService'];
+    factory.$inject = ['User', 'HelperService', 'HueService', '$q', '$interval', '$timeout', 'ColorService', 'ColorDataService', 'localStorageService', 'DbService', 'ColorsJson'];
     return factory;
 });

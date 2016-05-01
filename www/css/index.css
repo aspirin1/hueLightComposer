@@ -1,3 +1,8 @@
+.floatLeftWithPadding {
+    float: left;
+    padding-right: 5px;
+}
+
 .sceneIsActive {
     border: 1px solid;
 }
@@ -210,8 +215,6 @@ ion-popover-view.fit ion-content {
     margin-top: 0px;
     margin-bottom: 0px;
 }
-
-
 
 .pressBridgeText {
     font-weight: bold;

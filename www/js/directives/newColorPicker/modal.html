@@ -1,24 +1,93 @@
-<ion-modal-view>
+<ion-modal-view class="modalColorPicker">
+    <ion-header-bar class="bar-main bar-calm">
+        <h1 class="title">{{'Picker_Title' |translate}}</h1>
+    </ion-header-bar>
+
     <ion-content>
+
         <div class="list">
 
             <label class="item item-input item-select">
                 <div class="input-label">
-                    Picker selection
+                    {{'Picker_Selection_Label' |translate}}
                 </div>
                 <select ng-model="innerState.selectedPicker" ng-change="selectedPickerChanged()">
                     <option value="hueSat">{{'Picker_Hue_Sat' |translate}}</option>
                     <option value="favorites">{{'Picker_Favorites' |translate}}</option>
+                    <option value="ownColors">{{'Picker_OwnColors' |translate}}</option>
+                    <option value="predefinedColors">{{'Picker_PredefinedColors' |translate}}</option>
                 </select>
             </label>
+        </div>
 
+
+        <div ng-show="innerState.selectedPicker==='hueSat'">
+            <div class="row">
+                <div class="col">
+                    <span class="input-label cooler-input-label">{{'SINGLE_Saturation' | translate}}: {{getSaturationPercentage()}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div ya-no-ui-slider="saturationOptions" ya-no-ui-slider-events="saturationSliderEvents"></div>
+                </div>
+            </div>
+            <div class="row">
+                <span class="input-label cooler-input-label">{{'SINGLE_Hue' | translate}}</span>
+            </div>
+            <div class="row">
+                <div class="col colorGradient">
+                    <div ya-no-ui-slider="hueOptions" ya-no-ui-slider-events="hueSliderEvents"></div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="innerState.selectedPicker==='favorites'">
+            <div class="colorListContainer">
+                <div ng-repeat="hexColor in innerState.favoritesView.colors track by $index" class="col col-25 colorSquare" ng-style="getSingleColorBlockStyle(hexColor)">
+                    <div class="colorSquareContent">
+                        <div ng-click="colorSelectionChanged(hexColor)" class="colorSquareAction"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="innerState.selectedPicker==='ownColors'">
+            <div class="colorListContainer">
+                <div ng-repeat="color in innerState.ownColorsView.colors track by $index" class="col col-25 colorSquare" ng-style="getSingleColorBlockStyle(color.hexColor)">
+                    <div class="colorSquareContent">
+                        <div ng-click="colorSelectionChanged(color.hexColor)" class="colorSquareAction"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="innerState.selectedPicker==='predefinedColors'">
+            <div class="colorListContainer">
+                <div ng-repeat="hexColor in innerState.predefinedColorsView.colors track by $index" class="col col-25 colorSquare" ng-style="getSingleColorBlockStyle(hexColor)">
+                    <div class="colorSquareContent">
+                        <div ng-click="colorSelectionChanged(hexColor)" class="colorSquareAction"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </ion-content>
 
-    <ion-footer-bar>
-        <div class="button-bar">
-            <button class="button button-positive" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
-            <button class="button button-positive" ng-click="commitColor()">{{'SINGLE_Create' | translate}}</button>
+    <div class="bar bar-footer" style="height:110px;display: block;">
+        <div class="row">
+            <div class="col col-25">
+                {{'Picker_Selected_Label' | translate}}
+            </div>
+            <div class="col" class="modalColorPicker_selectedColor" ng-style="selectedColorStyle">
+
+            </div>
         </div>
-    </ion-footer-bar>
+
+        <div class="row">
+            <div class="button-bar" style="display: -webkit-box;     display: -webkit-flex;     display: -moz-box;    display: -moz-flex;    display: -ms-flexbox;     display: flex; ">
+                <button class="button button-positive" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
+                <button class="button button-positive" ng-click="commitColor()">{{'SINGLE_Confirm' | translate}}</button>
+            </div>
+        </div>
+    </div>
 </ion-modal-view>

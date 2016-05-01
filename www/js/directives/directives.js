@@ -16,6 +16,7 @@ define(function (require) {
     directives.directive('lightSelectionSortable', require('directives/lightSelectionSortable/LightSelectionSortableDirective'));
     directives.directive('effectButtons', require('directives/effectButtons/effectButtonsDirective'));
     directives.directive('newColorPicker', require('directives/newColorPicker/newColorPickerDirective'));
+    directives.directive('newMultiColorPicker', require('directives/newMultiColorPicker/newMultiColorPickerDirective'));
     //directives.directive('sortable', require('directives/sortableListDirective'));
 
 
