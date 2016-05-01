@@ -6,7 +6,7 @@ define(function () {
     function ctrl(HueService, $scope, DataService, $filter, PlaceholderDataUrl, $ionicModal, UtilityService, $state) {
 
 
-
+ var refreshLights=function(){
         DataService.getEnrichedLightInfos(true).then(function (data) {
             var tmp = [];
             angular.forEach(data, function (value, key) {
@@ -15,10 +15,11 @@ define(function () {
             });
             $scope.lights = tmp;
         });
+ };
 
         $scope.$on('modal.shown', function (event, modal) {
             if (modal.id === "sceneModal") {
-
+                refreshLights();
 
                 DataService.setSceneImageCropped(null);
                 DataService.setSceneImage(null);

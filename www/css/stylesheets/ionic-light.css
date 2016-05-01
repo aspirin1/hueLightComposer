@@ -12725,41 +12725,46 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
 }
 
 /* line 75, ../sass/_grid.scss */
+.col-offset-15 {
+  margin-left: 15%;
+}
+
+/* line 78, ../sass/_grid.scss */
 .col-offset-20 {
   margin-left: 20%;
 }
 
-/* line 78, ../sass/_grid.scss */
+/* line 81, ../sass/_grid.scss */
 .col-offset-25 {
   margin-left: 25%;
 }
 
-/* line 81, ../sass/_grid.scss */
+/* line 84, ../sass/_grid.scss */
 .col-offset-33, .col-offset-34 {
   margin-left: 33.3333%;
 }
 
-/* line 84, ../sass/_grid.scss */
+/* line 87, ../sass/_grid.scss */
 .col-offset-50 {
   margin-left: 50%;
 }
 
-/* line 87, ../sass/_grid.scss */
+/* line 90, ../sass/_grid.scss */
 .col-offset-66, .col-offset-67 {
   margin-left: 66.6666%;
 }
 
-/* line 90, ../sass/_grid.scss */
+/* line 93, ../sass/_grid.scss */
 .col-offset-75 {
   margin-left: 75%;
 }
 
-/* line 93, ../sass/_grid.scss */
+/* line 96, ../sass/_grid.scss */
 .col-offset-80 {
   margin-left: 80%;
 }
 
-/* line 96, ../sass/_grid.scss */
+/* line 99, ../sass/_grid.scss */
 .col-offset-90 {
   margin-left: 90%;
 }
@@ -12768,7 +12773,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
 /* By default each grid column will evenly distribute */
 /* across the grid. However, you can specify individual */
 /* columns to take up a certain size of the available area */
-/* line 105, ../sass/_grid.scss */
+/* line 108, ../sass/_grid.scss */
 .col-10 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 10%;
@@ -12779,7 +12784,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 10%;
 }
 
-/* line 109, ../sass/_grid.scss */
+/* line 112, ../sass/_grid.scss */
 .col-20 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 20%;
@@ -12790,7 +12795,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 20%;
 }
 
-/* line 113, ../sass/_grid.scss */
+/* line 116, ../sass/_grid.scss */
 .col-25 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 25%;
@@ -12801,7 +12806,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 25%;
 }
 
-/* line 117, ../sass/_grid.scss */
+/* line 120, ../sass/_grid.scss */
 .col-33, .col-34 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 33.3333%;
@@ -12812,7 +12817,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 33.3333%;
 }
 
-/* line 121, ../sass/_grid.scss */
+/* line 124, ../sass/_grid.scss */
 .col-40 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 40%;
@@ -12823,7 +12828,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 40%;
 }
 
-/* line 125, ../sass/_grid.scss */
+/* line 128, ../sass/_grid.scss */
 .col-50 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 50%;
@@ -12834,7 +12839,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 50%;
 }
 
-/* line 129, ../sass/_grid.scss */
+/* line 132, ../sass/_grid.scss */
 .col-60 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 60%;
@@ -12845,7 +12850,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 60%;
 }
 
-/* line 133, ../sass/_grid.scss */
+/* line 136, ../sass/_grid.scss */
 .col-66, .col-67 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 66.6666%;
@@ -12856,7 +12861,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 66.6666%;
 }
 
-/* line 137, ../sass/_grid.scss */
+/* line 140, ../sass/_grid.scss */
 .col-75 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 75%;
@@ -12867,7 +12872,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 75%;
 }
 
-/* line 141, ../sass/_grid.scss */
+/* line 144, ../sass/_grid.scss */
 .col-80 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 80%;
@@ -12878,7 +12883,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   max-width: 80%;
 }
 
-/* line 145, ../sass/_grid.scss */
+/* line 148, ../sass/_grid.scss */
 .col-90 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 90%;

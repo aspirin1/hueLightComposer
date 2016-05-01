@@ -114,12 +114,14 @@
     <script id="copyto-modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar>
+                <i class="button button-icon icon ion-paintbucket copyToColorSymbol" ng-style="getCopyToSelectedColorFontStyle()"></i>
                 <h1 class="title">{{'Home_LightList_Detail_CopyTo' | translate}}</h1>
-                <div class="copyColorModalColorPreview" ng-style="getCopyToSelectedColorStyle()"></div>
+               <!-- <div class="copyColorModalColorPreview" ng-style="getCopyToSelectedColorStyle()"></div>-->
             </ion-header-bar>
-
-            <light-selection lights="allLightsExceptCurrent" color-supported="{{modalColor.hexColor}}" selected-lights="copySelection" refresh="true" header-class="has-tabs-top">
-            </light-selection>
+            <ion-content has-header="true">
+                <light-selection lights="allLightsExceptCurrent" color-supported="{{modalColor.hexColor}}" selected-lights="copySelection" refresh="true" header-class="has-tabs-top">
+                </light-selection>
+            </ion-content>
             <ion-footer-bar>
                 <div class="button-bar">
                     <button class="button button-calm" ng-click="closeCopyToModal()">{{'SINGLE_Cancel' | translate}}</button>

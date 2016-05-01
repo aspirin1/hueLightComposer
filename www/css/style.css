@@ -26,6 +26,7 @@
 }
 .hueListContent {
   float: left;
+  max-width: 70%;
 }
 .hueListContentRight {
   float: right;
@@ -54,6 +55,9 @@
 .tabs .tab-item {
   padding-top: 5px;
   max-width: 100%;
+}
+.copyToColorSymbol {
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 }
 .app-dark {
   color: #aaaaaa;

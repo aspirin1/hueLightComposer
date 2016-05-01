@@ -241,13 +241,19 @@ define(function () {
                 'background-color': $scope.modalColor.hexColor
             };
         };
-
+        $scope.getCopyToSelectedColorFontStyle = function () {
+            if (!angular.isDefined($scope.modalColor))
+                return {};
+            return {
+                'color': $scope.modalColor.hexColor
+            };
+        };
 
         $scope.copySelection = {};
 
 
         $scope.openCopyToModal = function () {
-            getColorXy(5).then(function (data) {
+            getColorXy(10).then(function (data) {
                 $scope.modalColor = data;
 
                 $ionicModal.fromTemplateUrl('copyto-modal.html', {
