@@ -146,7 +146,7 @@ define(function () {
 
                         var item = {
                             lightIdActive: null,
-                            hexColor: "#" + hex,
+                            hexColor: hex,
                             hsl: hsl,
                             isReachableByGamutA: isPointInTriangle(rawxy, "A"),
                             isReachableByGamutB: isPointInTriangle(rawxy, "B"),

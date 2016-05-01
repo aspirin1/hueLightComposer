@@ -1,0 +1,24 @@
+<ion-modal-view>
+    <ion-content>
+        <div class="list">
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Picker selection
+                </div>
+                <select ng-model="innerState.selectedPicker" ng-change="selectedPickerChanged()">
+                    <option value="hueSat">{{'Picker_Hue_Sat' |translate}}</option>
+                    <option value="favorites">{{'Picker_Favorites' |translate}}</option>
+                </select>
+            </label>
+
+        </div>
+    </ion-content>
+
+    <ion-footer-bar>
+        <div class="button-bar">
+            <button class="button button-positive" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
+            <button class="button button-positive" ng-click="commitColor()">{{'SINGLE_Create' | translate}}</button>
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>

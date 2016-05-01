@@ -48,7 +48,7 @@ define(['angular'], function (angular) {
                 var tmp = {};
                 var renderPixel = function (xy) {
                     count++;
-                    var hexColor = "#" + ColorService.CIE1931ToHex(gamut, xy[0], xy[1], 1);
+                    var hexColor = ColorService.CIE1931ToHex(gamut, xy[0], xy[1], 1);
                     if (!(hexColor in tmp))
                         tmp[hexColor] = {
                             x: xy[0],
@@ -182,10 +182,6 @@ define(['angular'], function (angular) {
                 var id = parseInt(color.hex.replace("#", ""), 16);
                 self.insertColor(id, color.x, color.y, color.hex, color.isReachableByGamutA, color.isReachableByGamutB, color.isReachableByGamutC);
             });
-
-
-
-
 
         };
 

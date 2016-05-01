@@ -27,7 +27,12 @@ define(function () {
                     $scope.light = data;
                 } else {
                     $scope.light.state = data.state;
-                    $scope.light.hexColor = data.hexColor;
+
+                    var nowTimestamp = (new Date()).getTime();
+                    if (nowTimestamp - timestampForLastColorCalculation > 15000) //15s
+                    {
+                        $scope.light.hexColor = data.hexColor;
+                    }
                 }
                 $scope.brightnessOptions = {
                     start: [$scope.light.state.bri],
@@ -74,6 +79,7 @@ define(function () {
             change: function (values, handle, unencoded) {
                 var sat = parseInt(values[0][0]);
                 HueService.changeSaturation($scope.lightId, sat);
+                reCalcColor($scope.light.state.hue, sat);
             }
         };
 
@@ -81,6 +87,7 @@ define(function () {
             change: function (values, handle, unencoded) {
                 var hue = parseInt(values[0][0]);
                 HueService.changeHue($scope.lightId, hue);
+                reCalcColor(hue, $scope.light.state.sat);
             }
         };
 
@@ -152,44 +159,30 @@ define(function () {
             }
         };
 
+        var timestampForLastColorCalculation = (new Date()).getTime();
+
         var reCalcColor = function (hue, sat) {
-            //var sat = $scope.light.state.sat; //->l
-            //var hue = $scope.light.state.hue; //->h
-
-            var huePercentage = parseFloat(hue) / 65535.0;
-            var satPercentage = parseFloat(sat) / 254.0;
-
-            var s = 100;
-            var h = 360 * huePercentage;
-            var l = 50 + 50 * huePercentage;
-
-
-
-            var hexColor = ColorService.hslToHex(h, s, l);
-
-            $scope.light.hexColor = hexColor;
+            $scope.light.hexColor = ColorService.hueSatToHex(hue, sat);
+            timestampForLastColorCalculation = (new Date()).getTime();
         };
 
         $scope.saturationChanged = function () {
             if (typeof ($scope.light) !== "undefined") {
                 var val = $scope.light.state.sat;
-                HueService.changeSaturation($scope.lightId, val).then(function (data) {
-                    //reCalcColor();
-                });
-                //reCalcColor();
+                HueService.changeSaturation($scope.lightId, val).then(function (data) {});
             }
         };
 
         $scope.hueChanged = function () {
             if (typeof ($scope.light) !== "undefined") {
                 var val = $scope.light.state.hue;
-                HueService.changeHue($scope.lightId, val).then(function (data) {
-                    //reCalcColor();
-                });
-                //reCalcColor();
+                HueService.changeHue($scope.lightId, val).then(function (data) {});
             }
         };
 
+        $scope.test = function () {
+            reCalcColor($scope.light.state.hue, $scope.light.state.sat, $scope.light.state.bri);
+        };
 
 
         $scope.getColorGradient = function () {

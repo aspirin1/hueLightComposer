@@ -106,7 +106,7 @@ define(['angular'], function (angular) {
              * @returns {String} Hex color string (e.g. FF0000)
              */
             rgbToHex = function (r, g, b) {
-                return componentToHex(r) + componentToHex(g) + componentToHex(b);
+                return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
             },
 
             /**
@@ -403,14 +403,57 @@ define(['angular'], function (angular) {
          * Publicly accessible functions exposed as API.
          */
         return {
+            hueSatToHex: function (hue, sat) {
+                var self = this;
+                var bri = 140;
 
+                var huePercentage = parseFloat(hue) / 65535.0;
+                var satPercentage = parseFloat(sat) / 254.0;
+                var briPercentage = parseFloat(bri) / 254.0;
+
+                var h = 360 * huePercentage;
+                var s = 100 * satPercentage;
+                var l = 100 * briPercentage;
+
+                var hexColor = this.hslToHex(h, s, l);
+
+                var getRgb = function (hexColor) {
+                    var rgb = self.hexToRgb(hexColor);
+                    //Apply reverse gamma correction.
+                    rgb = rgb.map(function (x) {
+                        return (x <= 0.0031308) ? (12.92 * x) : ((1.0 + 0.055) * Math.pow(x, (1.0 / 2.4)) - 0.055);
+                    });
+
+                    // Bring all negative components to zero.
+                    rgb = rgb.map(function (x) {
+                        return Math.max(0, x);
+                    });
+
+                    // If one component is greater than 1, weight components by that value.
+                    var max = Math.max(rgb[0], rgb[1], rgb[2]);
+                    if (max > 1) {
+                        rgb = rgb.map(function (x) {
+                            return x / max;
+                        });
+                    }
+
+                    rgb = rgb.map(function (x) {
+                        return Math.floor(x * 255);
+                    });
+                    return rgb;
+                };
+                var rgb = getRgb(hexColor);
+                hexColor = rgbToHex(rgb[0], rgb[1], rgb[2]);
+
+                return hexColor;
+            },
             /**
              * Converts RGB color components to a valid hex color string.
              *
              * @param {Number} RGB red value, integer between 0 and 255.
              * @param {Number} RGB green value, integer between 0 and 255.
              * @param {Number} RGB blue value, integer between 0 and 255.
-             * @returns {String} Hex color string (e.g. FF0000)
+             * @returns {String} Hex color string (e.g. #FF0000)
              */
             rgbToHex: function (r, g, b) {
                 return rgbToHex(r, g, b);
@@ -421,7 +464,7 @@ define(['angular'], function (angular) {
             },
             hslToHex: function (hue, sat, lum) {
                 var rgb = this.hslToRgb(hue, sat, lum);
-                return "#" + rgbToHex(rgb[0], rgb[1], rgb[2]);
+                return rgbToHex(rgb[0], rgb[1], rgb[2]);
             },
 
             hslToRgb: function (hue, sat, lum) {
