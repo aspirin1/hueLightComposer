@@ -49,26 +49,26 @@ hue-image rect,
   max-width: 80vmin;
   width: 80vmin;
 }
-/* line 43, ../sass/_c_elements.scss */
+/* line 42, ../sass/_c_elements.scss */
 .lightDisplay .item:last-child {
   vertical-align: middle;
   line-height: 30px;
 }
-/* line 50, ../sass/_c_elements.scss */
+/* line 49, ../sass/_c_elements.scss */
 .lightDisplay .item:last-child .button {
   font-size: 30px;
   min-height: 30px;
   height: 30px;
   padding: 0px;
 }
-/* line 56, ../sass/_c_elements.scss */
+/* line 55, ../sass/_c_elements.scss */
 .lightDisplay .item:last-child .button .icon:before,
 .lightDisplay .item:last-child .button.icon:before,
 .lightDisplay .item:last-child .button.icon-left:before,
 .lightDisplay .item:last-child .button.icon-right:before {
   line-height: 30px;
 }
-/* line 62, ../sass/_c_elements.scss */
+/* line 61, ../sass/_c_elements.scss */
 .lightDisplay .item:last-child a.button .icon:before,
 .lightDisplay .item:last-child a.button.icon:before,
 .lightDisplay .item:last-child a.button.icon-left:before,
@@ -76,9 +76,60 @@ hue-image rect,
   margin-top: 0px;
 }
 
-/* line 72, ../sass/_c_elements.scss */
+/* line 71, ../sass/_c_elements.scss */
 .cooler-input-label {
   width: 100%;
+}
+
+/* line 81, ../sass/_c_elements.scss */
+.smaller-badge {
+  padding: 0 4px 0 3px;
+  border-radius: 5px;
+}
+/* line 84, ../sass/_c_elements.scss */
+.smaller-badge.badge-light {
+  background-color: #fff;
+  color: #444;
+}
+/* line 87, ../sass/_c_elements.scss */
+.smaller-badge.badge-stable {
+  background-color: #f8f8f8;
+  color: #444;
+}
+/* line 90, ../sass/_c_elements.scss */
+.smaller-badge.badge-positive {
+  background-color: #387ef5;
+  color: #fff;
+}
+/* line 93, ../sass/_c_elements.scss */
+.smaller-badge.badge-calm {
+  background-color: #11c1f3;
+  color: #fff;
+}
+/* line 96, ../sass/_c_elements.scss */
+.smaller-badge.badge-assertive {
+  background-color: #ef473a;
+  color: #fff;
+}
+/* line 99, ../sass/_c_elements.scss */
+.smaller-badge.badge-balanced {
+  background-color: #33cd5f;
+  color: #fff;
+}
+/* line 102, ../sass/_c_elements.scss */
+.smaller-badge.badge-energized {
+  background-color: #ffc900;
+  color: #fff;
+}
+/* line 105, ../sass/_c_elements.scss */
+.smaller-badge.badge-royal {
+  background-color: #886aea;
+  color: #fff;
+}
+/* line 108, ../sass/_c_elements.scss */
+.smaller-badge.badge-dark {
+  background-color: #444;
+  color: #fff;
 }
 
 /*EFFECT LIST*/

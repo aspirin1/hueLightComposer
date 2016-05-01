@@ -24,13 +24,13 @@
   overflow: visible;
   font-weight: bold;
 }
-.lightList .hueListContent {
+.hueListContent {
   float: left;
 }
-.lightList .hueListContentRight {
+.hueListContentRight {
   float: right;
 }
-.lightList .hueListContentRight2 {
+.hueListContentRight2 {
   height: 100%;
   min-height: 45px;
   min-width: 45px;

@@ -7,30 +7,53 @@
     </ion-header-bar>
 
     <ion-content has-header="true">
+
         <div class="row">
-            <div class="col col-50">
+            <div class="col col-60 col-offset-20">
                 <img class="full-image" ng-src="{{modalScene.previewImage}}" />
             </div>
-            <div class="col col-50">
-                <button class="button button-block button-calm" ng-click="scenePictureAlbum()">Album</button>
-                <button class="button button-block button-positive" ng-click="scenePictureCamera()">Camera</button>
-                <button class="button button-block button-positive  icon-right icon ion-crop" ng-show="showCropButton" ng-click="openSceneModalImageCrop()">Crop</button>
+
+            <div class="col col-20">
+                <p><button class="button button-positive icon ion-image" ng-click="scenePictureAlbum()"></button>
+                </p>
+                <p>
+                <button class="button button-positive icon ion-camera" ng-click="scenePictureCamera()"></button>
+                </p>
+                <p>
+                <button class="button button-positive icon ion-crop" ng-show="showCropButton" ng-click="openSceneModalImageCrop()"></button>
+                </p>
             </div>
         </div>
 
-        <label class="item item-input item-stacked-label">
-            <span class="input-label">{{'SINGLE_Name' | translate}}</span>
-            <input type="text" ng-model="modalScene.name" name='sceneName' />
-        </label>
 
         <div class="list">
-            <div class="item item-checkbox" ng-repeat="light in lights  track by light.id">
-                <hue-image class="hueImageInListRight" template="{{light.image}}" light='light '></hue-image>
+            <div class="item item-input-inset">
+                <input type="text" placeholder="{{'SINGLE_Name' | translate}}" ng-model="modalScene.name" name='sceneName' />
+            </div>
+
+            <div class="item item-checkbox lightList" ng-repeat="light in lights  track by light.id">
                 <label class="checkbox">
                     <input type="checkbox" ng-model="modalScene.selectedLights[light.id]">
                 </label>
-                <h2>{{light.name}}</h2>
-                <p>&nbsp;</p>
+                  <div class="hueListIcon">
+                        <hue-image template="{{light.image}}" light='light '></hue-image>
+                        <i class="ion-ios-bolt lightNotReachable" ng-hide="{{light.state.reachable}}"></i>
+                    </div>
+
+                    <div class="hueListContent">
+                        <h2>{{light.name}}
+                        <span class="smaller-badge badge-balanced" ng-show="light.state.on">{{'SINGLE_On' | translate}}</span>
+                        <span class="smaller-badge badge-royal" ng-show="!light.state.on">{{'SINGLE_Off' | translate}}</span>
+                            </h2>
+                        <p>
+                            <i class="ion-android-sunny"></i>
+                            {{getBrightnessPercentage(light)}}
+                            &ensp;
+                            <i class="ion-contrast"></i>
+                            {{getSaturationPercentage(light)}}
+                        </p>
+
+                    </div>
             </div>
         </div>
 

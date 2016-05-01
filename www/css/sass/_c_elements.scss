@@ -38,15 +38,14 @@ hue-image,
     max-width: 80vmin;
     width: 80vmin;
     .item {
-      //  margin: -15px 2px 21px 5px;
-
+        //  margin: -15px 2px 21px 5px;
         &:last-child {
-           // margin-bottom: 0px;
+            // margin-bottom: 0px;
             //padding-bottom: 0px;
             vertical-align: middle;
             line-height: 30px;
-          // margin-top: -22px;
-        //    padding-top: 8px;
+            // margin-top: -22px;
+            //    padding-top: 8px;
             .button {
                 font-size: 30px;
                 min-height: 30px;
@@ -71,4 +70,42 @@ hue-image,
 
 .cooler-input-label {
     width: 100%;
+}
+
+// BADGES
+@mixin badge-style($bg-color, $color) {
+    background-color: $bg-color;
+    color: $color;
+}
+
+.smaller-badge {
+    padding: 0 4px 0 3px;
+    border-radius: 5px;
+    &.badge-light {
+        @include badge-style($badge-light-bg, $badge-light-text);
+    }
+    &.badge-stable {
+        @include badge-style($badge-stable-bg, $badge-stable-text);
+    }
+    &.badge-positive {
+        @include badge-style($badge-positive-bg, $badge-positive-text);
+    }
+    &.badge-calm {
+        @include badge-style($badge-calm-bg, $badge-calm-text);
+    }
+    &.badge-assertive {
+        @include badge-style($badge-assertive-bg, $badge-assertive-text);
+    }
+    &.badge-balanced {
+        @include badge-style($badge-balanced-bg, $badge-balanced-text);
+    }
+    &.badge-energized {
+        @include badge-style($badge-energized-bg, $badge-energized-text);
+    }
+    &.badge-royal {
+        @include badge-style($badge-royal-bg, $badge-royal-text);
+    }
+    &.badge-dark {
+        @include badge-style($badge-dark-bg, $badge-dark-text);
+    }
 }
