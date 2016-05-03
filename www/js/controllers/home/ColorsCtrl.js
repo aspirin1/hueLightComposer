@@ -151,9 +151,19 @@ define(function () {
         };
 
         $scope.getBackgroundStyle = function (hexColor) {
+
+
             return {
                 'background-color': hexColor.toString()
             };
+        };
+
+
+        $scope.getFillerSquares=function(){
+            var ret=[];
+            for(var i=0;i<30;i++)
+                ret.push(i);
+            return ret;
         };
 
         $scope.openCopyToModal = function (color) {

@@ -168,48 +168,57 @@ hue-image rect,
 /* line 1, ../sass/_c_colors.scss */
 .colorListContainer {
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
-/* line 3, ../sass/_c_colors.scss */
+/* line 9, ../sass/_c_colors.scss */
 .colorListContainer .colorSquare {
   border: 1px solid #fff;
-  margin: 0px;
-  border-radius: 6px;
-  float: left;
-  width: 19.5vmin;
-  height: 0px;
-  padding: 0px 0px 20vmin 0px;
+  flex-basis: 18vmin;
+  flex-grow: 1;
+  flex-shrink: 0;
+  display: flex;
 }
-/* line 11, ../sass/_c_colors.scss */
+/* line 21, ../sass/_c_colors.scss */
 .colorListContainer .colorSquare .colorSquareContent {
-  padding-bottom: 100%;
-  width: 100%;
+  padding-bottom: 18vmin;
+  flex-basis: 18vmin;
+  flex-grow: 1;
+  flex-shrink: 0;
   position: relative;
 }
-/* line 15, ../sass/_c_colors.scss */
+/* line 27, ../sass/_c_colors.scss */
 .colorListContainer .colorSquare .colorSquareContent .colorSquareAction {
-  padding-bottom: 100%;
-  width: 100%;
+  padding-bottom: 18vmin;
+  width: 18vmin;
   position: absolute;
 }
-/* line 20, ../sass/_c_colors.scss */
+/* line 32, ../sass/_c_colors.scss */
 .colorListContainer .colorSquare .colorSquareContent .favColor {
   border: none;
   background: transparent;
   padding: 0;
   position: absolute;
-  height: 50%;
-  width: 50%;
+  height: 9vmin;
+  width: 9vmin;
   font-size: 5vmin;
-  line-height: 100%;
+  line-height: 9vmin;
 }
-/* line 29, ../sass/_c_colors.scss */
+/* line 41, ../sass/_c_colors.scss */
 .colorListContainer .colorSquare .colorSquareContent .favColor i {
   color: floralwhite;
   opacity: .5;
   text-shadow: 0px 0px 1px #000;
 }
-/* line 33, ../sass/_c_colors.scss */
+/* line 45, ../sass/_c_colors.scss */
 .colorListContainer .colorSquare .colorSquareContent .favColor i.fav {
   color: gold;
   text-shadow: 0px 0px 1px #000;
+}
+/* line 53, ../sass/_c_colors.scss */
+.colorListContainer .fillerSquare {
+  border: none;
 }

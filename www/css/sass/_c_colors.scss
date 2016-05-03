@@ -1,20 +1,32 @@
 .colorListContainer {
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+
     .colorSquare {
         border: 1px solid $colorSquareBoder;
-        margin: 0px;
-        border-radius: 6px;
-        float: left;
-        width: 19.5vmin;
-        height: 0px;
-        padding: 0px 0px 20vmin 0px;
+        //margin: auto;
+       // border-radius: 6px;
+        flex-basis: 18vmin;
+        flex-grow: 1;
+        flex-shrink: 0;
+        //height: 18vminx;
+       // padding: 0px 0px 18vmin 0px;
+        //max-width: 19vmin;
+        display: flex;
+
         .colorSquareContent {
-            padding-bottom: 100%;
-            width: 100%;
+            padding-bottom: 18vmin;
+            flex-basis: 18vmin;
+        flex-grow: 1;
+        flex-shrink: 0;
             position: relative;
             .colorSquareAction {
-                padding-bottom: 100%;
-                width: 100%;
+                padding-bottom: 18vmin;
+                width: 18vmin;
                 position: absolute;
             }
             .favColor {
@@ -22,10 +34,10 @@
                 background: transparent;
                 padding: 0;
                 position: absolute;
-                height: 50%;
-                width: 50%;
+                height: 9vmin;
+                width: 9vmin;
                 font-size: 5vmin;
-                line-height: 100%;
+                line-height: 9vmin;
                 i {
                     color: floralwhite;
                     opacity: .5;
@@ -37,5 +49,12 @@
                 }
             }
         }
+    }
+    .fillerSquare {
+        border: none;
+    }
+
+    :last-child {
+       //max-width: 19vmin;
     }
 }
