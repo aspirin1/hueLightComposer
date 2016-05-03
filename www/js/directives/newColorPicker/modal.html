@@ -16,6 +16,7 @@
                     <option value="favorites">{{'Picker_Favorites' |translate}}</option>
                     <option value="ownColors">{{'Picker_OwnColors' |translate}}</option>
                     <option value="predefinedColors">{{'Picker_PredefinedColors' |translate}}</option>
+                    <option value="photoPicker">{{'Picker_PhotoPicker' |translate}}</option>
                 </select>
             </label>
         </div>
@@ -71,6 +72,23 @@
                 </div>
             </div>
         </div>
+
+        <div ng-show="innerState.selectedPicker==='photoPicker'">
+            <img src="{{photoPickerImageSource}}" id="photoPickerImage" style="max-width: 100%;max-height: 100%;" />
+            <canvas id="imageViewerCanvas" style="display:none;"></canvas>
+            <div class="button-bar">
+                <button class="button button-calm" ng-click="photoPickerAlbum()">Album</button>
+                <button class="button button-positive" ng-click="photoPickerCamera()">Camera</button>
+            </div>
+
+            <ion-scroll direction="x">
+                <div class="photoPickerSwatchesContainer" style="width: -webkit-max-content;width: max-content;">
+                    <div class="photoPickerSwatch" ng-repeat="color in swatches track by $index" ng-style="getSwatchStyle(color)" ng-click="colorSelectionChanged(color.hexColor)" style="float:left;margin-right:5px">
+                    </div>
+                </div>
+            </ion-scroll>
+        </div>
+        <div style="height:110px;"></div>
     </ion-content>
 
     <div class="bar bar-footer" style="height:110px;display: block;">

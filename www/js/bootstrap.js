@@ -15,7 +15,7 @@ define(['angular', 'ionic', 'app', 'routes'], function (angular, ionic, app) {
             //            });
 
             if (angular.isDefined(cordova.plugins) && angular.isDefined(cordova.plugins.backgroundMode)) {
-
+                //cordova.plugins.backgroundMode.enable();
                 cordova.plugins.backgroundMode.onactivate = function () {
 
                 };

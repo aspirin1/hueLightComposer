@@ -1,8 +1,8 @@
-/*global define, document, console*/
+/*global define, document, console,ColorThief*/
 
 define(['angular'], function (angular) {
     "use strict";
-    var directive = function ($ionicModal, $ionicLoading, ColorService, DataService, ColorsJson) {
+    var directive = function ($ionicModal, $ionicLoading, ColorService, DataService, ColorsJson, UtilityService) {
 
         return {
             restrict: 'E',
@@ -183,11 +183,56 @@ define(['angular'], function (angular) {
                     }
                 };
 
+                function loadPhotoPickerImage(data) {
+                    $ionicLoading.show();
+                    var image = document.getElementById("photoPickerImage");
+                    image.onload = function () {
+                        var colorThief = new ColorThief();
+                        var palette = colorThief.getPalette(image, 20, 4);
+                        console.info(palette.length);
+                        var swatches = [];
+                        angular.forEach(palette, function (rgb) {
+                            var hex = ColorService.rgbToHex(rgb[0], rgb[1], rgb[2]);
+                            var hsl = ColorService.hexToHsl(hex);
+                            swatches.push({
+                                hexColor: hex,
+                                hsl: hsl
+                            });
+                        });
+                        scope.swatches = swatches;
+                        $ionicLoading.hide();
+                    };
+                    scope.photoPickerImageSource = "data:image/jpeg;base64," + data;
+                }
+
+                scope.getSwatchStyle = function (swatch) {
+                    return {
+                        'height': '50px',
+                        'width': '50px',
+                        'display': 'block',
+                        'border': '3px dashed',
+                        'border-color': '#ddd',
+                        'background-color': swatch.hexColor
+                    };
+                };
+
+                scope.photoPickerAlbum = function () {
+                    UtilityService.getPictureAlbumAsDataUrl().then(function (data) {
+                        loadPhotoPickerImage(data);
+                    });
+                };
+
+                scope.photoPickerCamera = function () {
+                    UtilityService.getPictureCameraAsDataUrl().then(function (data) {
+                        loadPhotoPickerImage(data);
+                    });
+                };
+
             },
             templateUrl: 'js/directives/newColorPicker/newColorPicker.html'
         };
     };
 
-    directive.$inject = ['$ionicModal', '$ionicLoading', 'ColorService', 'DataService', 'ColorsJson'];
+    directive.$inject = ['$ionicModal', '$ionicLoading', 'ColorService', 'DataService', 'ColorsJson', 'UtilityService'];
     return directive;
 });

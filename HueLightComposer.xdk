@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-project-lite/sample.zip",
       "projectGuid": "0c328497-c270-4a6a-8c6c-767e6bbeb4b7",
-      "lastModifiedDate": 1462101005994,
+      "lastModifiedDate": 1462307520729,
       "creationDate": 1452936594485
     },
     "XDK-app-designer": "false",
@@ -59,7 +59,8 @@
         "permissions": {},
         "description": "Cordova Notification Plugin",
         "data": {},
-        "dependedBy": []
+        "dependedBy": [],
+        "cordovaVersion": ">=3.0.0"
       },
       {
         "id": "cordova-plugin-device",
@@ -73,11 +74,14 @@
         "selectedState": "Included",
         "checksum": "927290ca",
         "dependsOn": [],
-        "topLevel": true,
+        "topLevel": false,
         "permissions": {},
         "description": "Cordova Device Plugin",
         "data": {},
-        "dependedBy": []
+        "dependedBy": [
+          "cordova-plugin-background-mode"
+        ],
+        "cordovaVersion": ">=3.0.0"
       },
       {
         "id": "cordova-plugin-camera",
@@ -99,7 +103,8 @@
         },
         "description": "Cordova Camera Plugin",
         "data": {},
-        "dependedBy": []
+        "dependedBy": [],
+        "cordovaVersion": ">=3.0.0"
       },
       {
         "id": "cordova-plugin-file",
@@ -121,7 +126,8 @@
         },
         "description": "Cordova File Plugin",
         "data": {},
-        "dependedBy": []
+        "dependedBy": [],
+        "cordovaVersion": ">=3.0.0"
       },
       {
         "id": "cordova-plugin-inappbrowser",
@@ -201,23 +207,28 @@
         "dependedBy": []
       },
       {
-        "id": "cordova-plugin-wkwebview-engine",
-        "name": "Cordova WKWebView Engine",
-        "version": "1.0.2",
-        "originType": "cordova.io",
-        "origin": "cordova-plugin-wkwebview-engine",
+        "id": "cordova-plugin-background-mode",
+        "name": "BackgroundMode",
+        "version": "0.6.5",
+        "originType": "repo",
+        "origin": "https://github.com/katzer/cordova-plugin-background-mode.git",
         "gitref": "",
+        "subdir": ".",
         "paramvals": {},
-        "sourceLocation": "plugins/cordova-plugin-wkwebview-engine",
+        "sourceLocation": "plugins/cordova-plugin-background-mode",
         "selectedState": "Included",
-        "checksum": "15650385",
-        "dependsOn": [],
+        "checksum": "41408898",
+        "dependsOn": [
+          "cordova-plugin-device"
+        ],
         "topLevel": true,
         "cordovaVersion": ">=3.0.0",
+        "author": "Sebastián Katzer",
         "permissions": {},
-        "description": "Cordova WKWebView Engine Plugin",
+        "description": "\r\n        Cordova plugin to prevent the app from going to sleep in background.\r\n    ",
         "data": {},
-        "dependedBy": []
+        "dependedBy": [],
+        "custom": "true"
       }
     ],
     "buildConfigurations": {
