@@ -13,7 +13,8 @@ define(['angular'], function (angular) {
                 colorSupported: "@", //display color supported
                 headerClass: "@", //class added in each tab content
                 tabsTop: "@", //css top in pixels for tab bar
-                effectsRunning: "@", //display effectsRunning
+                effectsRunning: "@", //display effectsRunning,
+                changed: "=" //changed event
             },
             link: function (scope, element, attrs) {
                 var getLightList = function () {
@@ -63,6 +64,11 @@ define(['angular'], function (angular) {
                 scope.tabsTop = scope.tabsTop || undefined;
                 scope.headerClass = scope.headerClass || "";
                 scope.selectedLights = scope.selectedLights || {};
+                scope.changed = scope.changed || function () {};
+
+                scope.selectionChanged = function () {
+                    scope.changed();
+                };
 
                 scope.showColorSupported = function (light) {
                     var showColor = angular.isDefined(scope.colorSupported);
@@ -93,6 +99,7 @@ define(['angular'], function (angular) {
                         scope.selectedLights[light.id] = true;
                     });
                     broadcastGroupSelected();
+                    scope.selectionChanged();
                 };
 
                 scope.groupSelected = function (group) {
@@ -103,7 +110,7 @@ define(['angular'], function (angular) {
                         scope.selectedLights[id] = true;
                     });
                     broadcastGroupSelected();
-
+                    scope.selectionChanged();
                 };
 
                 scope.getTabsTop = function () {

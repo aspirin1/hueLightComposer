@@ -5,16 +5,40 @@ define(function () {
 
     function ctrl($rootScope, $scope, $filter, DataService, EffectService, UtilityService, ColorService, ColorDataService) {
 
-
-        var unregisterEvent;
-
         $scope.$on("$ionicView.beforeEnter", function () {
             getLightList();
-            unregisterEvent = $rootScope.$on('ColorChanged', function (event, color) {
 
-                $scope.selectedColor = ColorService.getGamutXyFromHex("C", color);
-            });
         });
+
+        $scope.picker1 = {
+            colors: []
+        };
+
+        $scope.lightSelectionChanged = function () {
+            var pickerElementCount = $scope.picker1.colors.length;
+            var selectedLightsCount = 0;
+
+            angular.forEach($scope.lights, function (light) {
+                var id = parseInt(light.id);
+                if (id in $scope.copySelection && $scope.copySelection[id] === true) {
+                    selectedLightsCount++;
+                }
+            });
+
+            if (pickerElementCount < selectedLightsCount) {
+                var elementsToAdd = selectedLightsCount - pickerElementCount;
+                for (var i = 0; i < elementsToAdd; i++) {
+                    $scope.picker1.colors.push({
+                        color: '#ffffff'
+                    });
+                }
+            } else if (pickerElementCount > selectedLightsCount) {
+                var elementsToRemove = pickerElementCount - selectedLightsCount;
+                for (var j = 0; j < elementsToRemove; j++) {
+                    $scope.picker1.colors.pop();
+                }
+            }
+        };
 
         var getLightList = function () {
             DataService.getEnrichedLightInfos(true).then(function (data) {
@@ -39,7 +63,7 @@ define(function () {
         };
 
         $scope.$on("$destroy", function () {
-            unregisterEvent();
+
         });
 
         $scope.sliderOptions = {
@@ -60,15 +84,13 @@ define(function () {
         $scope.copyToSelection = function () {
             var orderedSelectedLights = getOrderedSelectedLights();
             var timeInMs = parseInt($scope.sliderOptions.start[0] * 1000);
-            //var xyColor = $scope.selectedColor;
 
             var xyColors = [];
-            angular.forEach(orderedSelectedLights, function (lightId) {
-                var hexColor = ColorDataService.getRandomHexColorForGamutC();
-                var xy = ColorService.getGamutXyFromHex("C", hexColor);
+            angular.forEach($scope.picker1.colors, function (color) {
+                //var hexColor = ColorDataService.getRandomHexColorForGamutC();
+                var xy = ColorService.getGamutXyFromHex("C", color.color);
                 xyColors.push(xy);
             });
-
 
 
             EffectService.startCarousel(orderedSelectedLights, timeInMs, xyColors);

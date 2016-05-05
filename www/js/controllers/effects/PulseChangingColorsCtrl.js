@@ -7,8 +7,16 @@ define(function () {
 
         $scope.effectName = $filter('translate')('Effect_PulseChangingColors');
 
-        $scope.selectedColor1 = ["#ffffff"];
-        $scope.selectedColor2 = ["#ffffff"];
+        $scope.picker1 = {
+            colors: [{
+                color: "#ffffff"
+            }]
+        };
+        $scope.picker2 = {
+            colors: [{
+                color: "#ffffff"
+            }]
+        };
 
         $scope.speedOptions = {
             start: [10],
@@ -37,27 +45,25 @@ define(function () {
             var timeInMs = parseInt($scope.speedOptions.start[0]) * 1000;
             var minBri = parseInt($scope.briOptions.start[0]);
             var maxBri = parseInt($scope.briOptions.start[1]);
-            var color1 = $scope.selectedColor1[0];
-            var color2 = $scope.selectedColor2[0];
-            console.log(color1, color2);
-            /*
-                        angular.forEach($scope.copySelection, function (value, key) {
-                            if (value === true) {
-                                var light = DataService.getLightById(key);
-                                var lightId = light.id;
-                                var color1xy;
-                                var color2xy;
-                                if (color1 != "#000000") {
-                                    color1xy = ColorService.getGamutXyFromHex(light.gamut, color1);
-                                }
-                                if (color2 != "#000000") {
-                                    color2xy = ColorService.getGamutXyFromHex(light.gamut, color2);
-                                }
+            var color1 = $scope.picker1.colors[0].color;
+            var color2 = $scope.picker2.colors[0].color;
 
-                                EffectService.startPulsierenMitFarbwechsel2(lightId, timeInMs, minBri, maxBri, color1xy, color2xy);
-                            }
-                        });
-                        */
+            angular.forEach($scope.copySelection, function (value, key) {
+                if (value === true) {
+                    var light = DataService.getLightById(key);
+                    var lightId = light.id;
+                    var color1xy;
+                    var color2xy;
+                    if (color1 != "#000000") {
+                        color1xy = ColorService.getGamutXyFromHex(light.gamut, color1);
+                    }
+                    if (color2 != "#000000") {
+                        color2xy = ColorService.getGamutXyFromHex(light.gamut, color2);
+                    }
+
+                    EffectService.startPulsierenMitFarbwechsel2(lightId, timeInMs, minBri, maxBri, color1xy, color2xy);
+                }
+            });
         };
 
     }

@@ -7,11 +7,13 @@ define(['angular'], function (angular) {
         return {
             restrict: 'E',
             scope: {
-                color: "="
+                config: "="
             },
             link: function (scope, element, attrs) {
-                console.log(scope.color);
-                scope.color = scope.color || '#ffffff';
+                console.log(scope.config);
+                scope.config = scope.config || {
+                    color: '#ffffff'
+                };
 
                 function initColors() {
                     loadFavoriteColors();
@@ -87,7 +89,7 @@ define(['angular'], function (angular) {
 
                 function resetInnerState() {
                     scope.innerState = {
-                        temporaryHexColor: scope.color,
+                        temporaryHexColor: scope.config.color,
                         selectedPicker: 'hueSat',
                         hueSatView: {
                             hue: 32500,
@@ -103,11 +105,11 @@ define(['angular'], function (angular) {
                             colors: []
                         }
                     };
-                    scope.selectedColorStyle['background-color'] = scope.color;
+                    scope.selectedColorStyle['background-color'] = scope.config.color;
                 }
 
                 scope.innerState = {
-                    temporaryHexColor: scope.color,
+                    temporaryHexColor: scope.config.color,
                     selectedPicker: 'hueSat',
                     hueSatView: {
                         hue: 32500,
@@ -130,7 +132,7 @@ define(['angular'], function (angular) {
                     'display': 'block',
                     'border': '3px dashed',
                     'border-color': '#ddd',
-                    'background-color': scope.color
+                    'background-color': scope.config.color
                 };
 
                 scope.selectedColorStyle = {
@@ -165,7 +167,7 @@ define(['angular'], function (angular) {
 
                 scope.commitColor = function () {
                     scope.blockStyle['background-color'] = scope.innerState.temporaryHexColor;
-                    scope.color = scope.innerState.temporaryHexColor;
+                    scope.config.color = scope.innerState.temporaryHexColor;
                     scope.closeModal();
                 };
 

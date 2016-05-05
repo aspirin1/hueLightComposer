@@ -5,16 +5,14 @@ define(function () {
 
     function ctrl($rootScope, $scope, $filter, DataService, EffectService, UtilityService, ColorService) {
 
-
-        var unregisterEvent;
-
         $scope.$on("$ionicView.beforeEnter", function () {
             getLightList();
-            unregisterEvent = $rootScope.$on('ColorChanged', function (event, color) {
-
-                $scope.selectedColor = ColorService.getGamutXyFromHex("C", color);
-            });
         });
+        $scope.picker1 = {
+            colors: [{
+                color: "#ffffff"
+            }]
+        };
 
         var getLightList = function () {
             DataService.getEnrichedLightInfos(true).then(function (data) {
@@ -39,7 +37,7 @@ define(function () {
         };
 
         $scope.$on("$destroy", function () {
-            unregisterEvent();
+
         });
 
         $scope.sliderOptions = {
@@ -60,12 +58,10 @@ define(function () {
         $scope.copyToSelection = function () {
             var orderedSelectedLights = getOrderedSelectedLights();
             var timeInMs = parseInt($scope.sliderOptions.start[0]) * 1000;
-            var xyColor = $scope.selectedColor;
-
-
+            var color1 = $scope.picker1.colors[0].color;
+            var xyColor = ColorService.getGamutXyFromHex("C", color1);
 
             EffectService.startBeacon(orderedSelectedLights, timeInMs, xyColor);
-
         };
 
 

@@ -8,8 +8,16 @@ define(function () {
 
         $scope.effectName = $filter('translate')('Effect_PulseColorTransition');
 
-        $scope.selectedColor1 = {};
-        $scope.selectedColor2 = {};
+        $scope.picker1 = {
+            colors: [{
+                color: "#ffffff"
+            }]
+        };
+        $scope.picker2 = {
+            colors: [{
+                color: "#ffffff"
+            }]
+        };
 
         $scope.speedOptions = {
             start: [10],
@@ -38,8 +46,8 @@ define(function () {
             var timeInMs = parseInt($scope.speedOptions.start[0]) * 1000;
             var minBri = parseInt($scope.briOptions.start[0]);
             var maxBri = parseInt($scope.briOptions.start[1]);
-            var color1 = $scope.selectedColor1.color;
-            var color2 = $scope.selectedColor2.color;
+            var color1 = $scope.picker1.colors[0].color;
+            var color2 = $scope.picker2.colors[0].color;
 
             angular.forEach($scope.copySelection, function (value, key) {
                 if (value === true) {

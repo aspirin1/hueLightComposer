@@ -7,16 +7,23 @@ define(['angular'], function (angular) {
         return {
             restrict: 'E',
             scope: {
-                colors: "="
+                pickerSettings: "="
             },
             link: function (scope, element, attrs) {
-                scope.colors = scope.colors || ["#ffffff", "#ddd"];
+                scope.pickerSettings = scope.pickerSettings || {
+                    colors: [{
+                        color: "#ffffff"
+                    }]
+                };
+
 
                 scope.fillRandom = function () {
-                    var cnt = scope.colors.length;
-                    scope.colors = [];
+                    var cnt = scope.pickerSettings.colors.length;
+                    scope.pickerSettings.colors = [];
                     for (var i = 0; i < cnt; i++) {
-                        scope.colors.push(ColorDataService.getRandomHexColorForGamutC());
+                        scope.pickerSettings.colors.push({
+                            color: ColorDataService.getRandomHexColorForGamutC()
+                        });
                     }
                 };
             },
