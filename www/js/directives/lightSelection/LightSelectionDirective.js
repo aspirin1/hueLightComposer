@@ -30,7 +30,7 @@ define(['angular'], function (angular) {
                 };
 
                 var getGroupList = function () {
-                    DataService.getEnrichedGroupInfos().then(function (data) {
+                    DataService.getEnrichedGroupInfos(false).then(function (data) {
 
                         var tmp = [];
                         var lightGroups = [],
@@ -56,7 +56,7 @@ define(['angular'], function (angular) {
 
                 getGroupList();
                 scope.selectedTab = 1;
-                scope.choice = undefined;
+                scope.selectedGroup = scope.selectedGroup;
                 scope.lights = scope.lights || getLightList();
                 scope.colorSupported = scope.colorSupported || undefined;
                 scope.effectsRunning = scope.effectsRunning || undefined;

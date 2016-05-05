@@ -7,6 +7,7 @@ define(function () {
         $scope.$on('modal.shown', function (event, modal) {
             if (modal.id === "copyToModal") {
                 $scope.copySelection = {};
+                $scope.selectedGroup = undefined;
             }
         });
 
@@ -29,7 +30,7 @@ define(function () {
 
 
         $scope.closeCopyToModal = function () {
-            $scope.copyToModal.hide();
+            $scope.copyToModal.remove();
         };
 
         function getLightById(key) {

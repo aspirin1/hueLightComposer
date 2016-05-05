@@ -11,6 +11,7 @@ define(['angular'], function (angular) {
         var isStoppingState = {};
         var groupEffectState = {};
         var enrichedLightInfos = null;
+        var enrichedGroupInfos = null;
         var favoriteColorsKey = "favoriteColors";
         var customColorsKey = "customColors";
         var customScenesKey = "customScenes";
@@ -112,7 +113,6 @@ define(['angular'], function (angular) {
             });
             return ret;
         };
-
 
         this.isColorFavorite = function (hexColor) {
             var searchText = hexColor;
@@ -516,12 +516,18 @@ define(['angular'], function (angular) {
 
         this.getEnrichedGroupInfos = function (refresh) {
             var deferred = $q.defer();
-            HueService.getAllGroups().then(function (groups) {
-                angular.forEach(groups, function (value, key) {
+            if (enrichedGroupInfos === null || (angular.isDefined(refresh) && refresh)) {
 
+                HueService.getAllGroups().then(function (groups) {
+                    enrichedGroupInfos = groups;
+                    deferred.resolve(groups);
                 });
-                deferred.resolve(groups);
-            });
+            } else {
+
+                deferred.resolve(enrichedGroupInfos);
+            }
+
+
             return deferred.promise;
         };
 

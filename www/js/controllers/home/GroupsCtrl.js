@@ -86,7 +86,7 @@ define(function () {
         };
 
         var refreshLightList = function () {
-            DataService.getEnrichedGroupInfos().then(function (data) {
+            DataService.getEnrichedGroupInfos(true).then(function (data) {
 
                 var tmp = [];
                 var lightGroups = [],

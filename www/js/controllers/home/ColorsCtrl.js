@@ -168,16 +168,16 @@ define(function () {
 
         $scope.openCopyToModal = function (color) {
             $scope.modalColor = color;
-            $scope.copyToModal.show();
-        };
 
-        $ionicModal.fromTemplateUrl('templates/home/modals/copyToModal.html', {
-            scope: $scope,
-            id: 'copyToModal',
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.copyToModal = modal;
-        });
+            $ionicModal.fromTemplateUrl('templates/home/modals/copyToModal.html', {
+                scope: $scope,
+                id: 'copyToModal',
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.copyToModal = modal;
+                $scope.copyToModal.show();
+            });
+        };
 
         $ionicPopover.fromTemplateUrl('filter-popover.html', {
             scope: $scope,

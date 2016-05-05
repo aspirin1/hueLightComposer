@@ -21,7 +21,7 @@ define(function () {
             $interval.cancel(refreshLightInBackground);
         });
 
-        $scope.$on('modal.hidden', function (event, modal) {
+        $scope.$on('modal.removed', function (event, modal) {
             if (modal.id === "copyToModal") {
                 $scope.popover.hide();
             }

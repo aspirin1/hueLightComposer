@@ -33,20 +33,20 @@
 </div>
 
 <div class="list" ng-show="selectedTab==2">
-    <ion-radio ng-model="choice" ng-value="'0'" class="item" ng-click='allSelected()'>
+    <ion-radio ng-model="selectedGroup" ng-value="'0'" class="item" ng-click='allSelected()'>
         {{'Home_Groups_AllLights' |translate}}
     </ion-radio>
     <div class="item item-divider">
         Rooms
     </div>
-    <ion-radio ng-model="choice" ng-value="group.id" ng-repeat="group in rooms track by $index" class="item item-button-right" ng-click='groupSelected(group)'>
+    <ion-radio ng-model="selectedGroup" ng-value="group.id" ng-repeat="group in rooms track by $index" class="item item-button-right" ng-click='groupSelected(group)'>
         {{group.name}}
     </ion-radio>
 
     <div class="item item-divider">
         Light Groups
     </div>
-    <ion-radio ng-model="choice" ng-value="group.id" ng-repeat="group in lightGroups track by $index" class="item item-button-right" ng-click='groupSelected(group)'>
+    <ion-radio ng-model="selectedGroup" ng-value="group.id" ng-repeat="group in lightGroups track by $index" class="item item-button-right" ng-click='groupSelected(group)'>
         {{group.name}}
     </ion-radio>
 </div>
