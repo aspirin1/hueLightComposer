@@ -1,0 +1,19 @@
+<ion-modal-view ng-controller="FileBrowserModalCtrl">
+    <ion-content>
+        <div class="list">
+            <div ng-repeat="file in files">
+                <a class="item item-icon-left" href="#" ng-click="getContents(file.nativeURL)">
+                    <i ng-show="file.isDirectory" class="icon ion-folder"></i>
+                    <i ng-show="file.isFile" class="icon ion-document"></i> {{file.name}}
+                </a>
+            </div>
+        </div>
+    </ion-content>
+
+    <ion-footer-bar>
+        <div class="button-bar">
+            <button class="button button-calm" ng-click="closeModal()">{{'SINGLE_Cancel' | translate}}</button>
+            <!--<button class="button button-positive" ng-click="copyToSelection()">{{'Home_LightList_Detail_CopyTo' | translate}}</button>-->
+        </div>
+    </ion-footer-bar>
+</ion-modal-view>

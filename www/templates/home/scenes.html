@@ -12,8 +12,23 @@
                 <span class="innerTextScene">{{scene.name}}</span>
                 <span class="sceneLampInfo">Lampen: {{scene.lights.length}}</span>
                 <div ng-click="openEditSceneModal(scene)" class="sceneInfoButton"><i class="icon ion-edit"></i></div>
+                <i class="icon" ng-class="getClassFromCategory(scene.category)"></i>
             </div>
         </div>
+
+        <div class="item item-divider" ng-show="showAlwaysList()">
+            Always
+        </div>
+
+        <div class="row" ng-repeat="row in alwaysScenesRows  track by $index" ng-show="showAlwaysList()">
+            <div ng-repeat="scene in row track by $index" class="col col-50" ng-click="activateScene(scene.id)" id="sceneId{{scene.id}}" ng-class="{sceneIsActive: scene.isActive}">
+                <img class="full-image" ng-src="{{getUrlSrc(scene.image)}}">
+                <span class="innerTextScene">{{scene.name}}</span>
+                <span class="sceneLampInfo">Lampen: {{scene.lights.length}}</span>
+                <div ng-click="openEditSceneModal(scene)" class="sceneInfoButton"><i class="icon ion-edit"></i></div>
+            </div>
+        </div>
+
     </ion-content>
 
 </ion-view>

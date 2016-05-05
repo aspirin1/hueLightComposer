@@ -237,6 +237,17 @@ define(function () {
             });
         };
 
+        $scope.openModalFileBrowser = function () {
+            $ionicModal.fromTemplateUrl('templates/imageViewer/fileBrowserModal.html', {
+                id: 'fileBrowserModal',
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.fileBrowserModal = modal;
+                $scope.fileBrowserModal.show();
+            });
+        };
+
 
         $scope.closeCopyToModal = function () {
             $scope.copyToModal.hide();
