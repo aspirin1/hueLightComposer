@@ -14,13 +14,14 @@
             </div>
 
             <div class="col col-20">
-                <p><button class="button button-positive icon ion-image" ng-click="scenePictureAlbum()"></button>
+                <p>
+                    <button class="button button-positive icon ion-image" ng-click="scenePictureAlbum()"></button>
                 </p>
                 <p>
-                <button class="button button-positive icon ion-camera" ng-click="scenePictureCamera()"></button>
+                    <button class="button button-positive icon ion-camera" ng-click="scenePictureCamera()"></button>
                 </p>
                 <p>
-                <button class="button button-positive icon ion-crop" ng-show="showCropButton" ng-click="openSceneModalImageCrop()"></button>
+                    <button class="button button-positive icon ion-crop" ng-show="showCropButton" ng-click="openSceneModalImageCrop()"></button>
                 </p>
             </div>
         </div>
@@ -30,30 +31,32 @@
             <div class="item item-input-inset">
                 <input type="text" placeholder="{{'SINGLE_Name' | translate}}" ng-model="modalScene.name" name='sceneName' />
             </div>
+            <ion-list>
+                <ion-radio ng-model="modalScene.category" ng-value="'always'">{{'Scene_Always' | translate}}</ion-radio>
+                <ion-radio ng-model="modalScene.category" ng-value="'day'">{{'Scene_Day' | translate}}</ion-radio>
+                <ion-radio ng-model="modalScene.category" ng-value="'night'">{{'Scene_Night' | translate}}</ion-radio>
+            </ion-list>
 
             <div class="item item-checkbox lightList" ng-repeat="light in lights  track by light.id">
                 <label class="checkbox">
                     <input type="checkbox" ng-model="modalScene.selectedLights[light.id]">
                 </label>
-                  <div class="hueListIcon">
-                        <hue-image template="{{light.image}}" light='light '></hue-image>
-                        <i class="ion-ios-bolt lightNotReachable" ng-hide="{{light.state.reachable}}"></i>
-                    </div>
+                <div class="hueListIcon">
+                    <hue-image template="{{light.image}}" light='light '></hue-image>
+                    <i class="ion-ios-bolt lightNotReachable" ng-hide="{{light.state.reachable}}"></i>
+                </div>
 
-                    <div class="hueListContent">
-                        <h2>{{light.name}}
+                <div class="hueListContent">
+                    <h2>{{light.name}}
                         <span class="smaller-badge badge-balanced" ng-show="light.state.on">{{'SINGLE_On' | translate}}</span>
                         <span class="smaller-badge badge-royal" ng-show="!light.state.on">{{'SINGLE_Off' | translate}}</span>
                             </h2>
-                        <p>
-                            <i class="ion-android-sunny"></i>
-                            {{getBrightnessPercentage(light)}}
-                            &ensp;
-                            <i class="ion-contrast"></i>
-                            {{getSaturationPercentage(light)}}
-                        </p>
+                    <p>
+                        <i class="ion-android-sunny"></i> {{getBrightnessPercentage(light)}} &ensp;
+                        <i class="ion-contrast"></i> {{getSaturationPercentage(light)}}
+                    </p>
 
-                    </div>
+                </div>
             </div>
         </div>
 

@@ -5,7 +5,21 @@ define(function () {
 
     function ctrl($scope, $translate, ConfigService, User, DataService, localStorageService, $q, Synchronization, DbService) {
 
-        $scope.selectedLanguage = $translate.use();
+        $scope.$on("$ionicView.beforeEnter", function () {
+            $scope.beginNight = {
+                value: ConfigService.getBeginNight()
+            };
+            $scope.selectedLanguage = $translate.use();
+            $scope.selectedDesign = $scope.theme();
+            $scope.isLoggedIn = function () {
+                return DataService.isUserLoggedIn();
+            };
+        });
+
+        $scope.beginNightChanged = function () {
+            ConfigService.setBeginNight($scope.beginNight.value);
+        }
+
         $scope.languageChanged = function (key) {
             ConfigService.setLanguage(key);
             $translate.use(key);
@@ -19,7 +33,6 @@ define(function () {
             }
         };
 
-        $scope.selectedDesign = $scope.theme();
         $scope.designChanged = function (key) {
             ConfigService.setDesign(key);
 
@@ -30,10 +43,6 @@ define(function () {
                     user.$save();
                 });
             }
-        };
-
-        $scope.isLoggedIn = function () {
-            return DataService.isUserLoggedIn();
         };
 
         $scope.saveToCloud = function () {
@@ -105,6 +114,10 @@ define(function () {
         $scope.sync = function () {
             Synchronization.doSync();
         };
+
+        $scope.test = function () {
+            console.log($scope.beginNight);
+        }
     }
 
     ctrl.$inject = ['$scope', '$translate', 'ConfigService', 'User', 'DataService', 'localStorageService', '$q', 'Synchronization', 'DbService'];

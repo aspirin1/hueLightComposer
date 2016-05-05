@@ -1,7 +1,7 @@
 <ion-view title="{{'Home_Scenes_Title' |translate}}">
     <ion-nav-buttons side="secondary">
         <div class="buttons">
-            <button class="button button-icon ion-android-search" ng-click="showFilterBar()"></button>
+            <button ng-class="getCategoryClass()" class="button button-icon" ng-click="changeSceneFilteringByCategory()"></button>
         </div>
     </ion-nav-buttons>
 

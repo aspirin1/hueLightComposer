@@ -20,6 +20,13 @@
                     <option value="light">{{'Settings_Light' |translate}}</option>
                 </select>
             </label>
+            <label class="item item-input">
+                <div class="input-label">
+                    {{'Settings_BeginNightTime' |translate}}
+                </div>
+                <i class="icon ion-clock placeholder-icon"></i>
+                <input type="time" placeholder="Night time" ng-model="beginNight.value" ng-change="beginNightChanged()">
+            </label>
             <div class="item">
                 <button ng-click="reset()">Reset</button>
             </div>
@@ -32,6 +39,7 @@
             <div class="item" ng-click="sync()" ng-show="isLoggedIn()">
                 Synchronize
             </div>
+
         </div>
     </ion-content>
 </ion-view>

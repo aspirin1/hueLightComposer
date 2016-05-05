@@ -3,15 +3,25 @@
 define(function () {
     'use strict';
 
-    function ctrl($ionicModal, $scope, $ionicFilterBar, DataService, HueService, DbService, PlaceholderDataUrl, $q) {
+    function ctrl($filter, $ionicModal, $scope, $ionicFilterBar, DataService, HueService, DbService, PlaceholderDataUrl, $q, ConfigService) {
 
         var filterBarInstance;
         $scope.selectedTab = 1;
+        $scope.activeCategory = "always";
 
         $scope.$on("$ionicView.beforeEnter", function () {
             $scope.refresh();
         });
 
+        function refreshActiveCategory() {
+            var beginNightTimeDateObj = ConfigService.getBeginNight();
+            var now = new Date();
+            if (beginNightTimeDateObj > now) {
+                $scope.activeCategory = "day";
+            } else {
+                $scope.activeCategory = "night";
+            }
+        }
 
         var animateCss = function (selector, animationName) {
             var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
@@ -20,6 +30,27 @@ define(function () {
                 angular.element(selector).find("span,div").show();
                 angular.element(selector).removeClass('animated ' + animationName);
             });
+        };
+
+        $scope.changeSceneFilteringByCategory = function () {
+            if ($scope.activeCategory === "always") {
+                $scope.activeCategory = "day";
+            } else if ($scope.activeCategory === "day") {
+                $scope.activeCategory = "night";
+            } else if ($scope.activeCategory === "night") {
+                $scope.activeCategory = "always";
+            }
+            refreshGridView($scope.allScenes);
+        };
+
+        $scope.getCategoryClass = function () {
+            if ($scope.activeCategory === "always") {
+                return "ion-ios-infinite";
+            } else if ($scope.activeCategory === "day") {
+                return "ion-ios-partlysunny-outline";
+            } else if ($scope.activeCategory === "night") {
+                return "ion-ios-cloudy-night-outline";
+            }
         };
 
         $scope.getUrlSrc = function (imageId) {
@@ -55,13 +86,25 @@ define(function () {
             var customScenesRows = [];
 
             var rowList = [];
+
             angular.forEach(customScenes, function (scene) {
                 angular.forEach(ownCustomScenes, function (ownScene) {
-                    if (ownScene.id === scene.id && angular.isDefined(ownScene.image)) {
-                        scene.image = ownScene.image;
+                    if (ownScene.id === scene.id) {
+                        if (angular.isDefined(ownScene.image)) {
+                            scene.image = ownScene.image;
+                        }
+                        if (angular.isDefined(ownScene.category)) {
+                            scene.category = ownScene.category;
+                        }
                     }
                 });
+            });
 
+            customScenes = $filter('filter')(customScenes, {
+                category: $scope.activeCategory
+            }, true);
+
+            angular.forEach(customScenes, function (scene) {
                 if (rowList.length === rowSize) {
                     customScenesRows.push(rowList);
                     rowList = [];
@@ -146,6 +189,7 @@ define(function () {
         };
 
         $scope.refresh = function () {
+            refreshActiveCategory();
             refreshLights();
 
             DbService.getAllImages()
@@ -164,11 +208,15 @@ define(function () {
                         angular.forEach(data, function (value, key) {
                             value.id = key;
                             value.isActive = false;
+                            value.category = "always";
                             if (!value.name.match(/\soff\s\d+/g)) {
                                 value.name = value.name.replace(/\son\s\d+/, '').replace(/\sfon\s\d+/, '');
                                 customScenes.push(value);
                             }
                         });
+
+                        customScenes = $filter('orderBy')(customScenes, "name");
+
                         $scope.allScenes = customScenes;
                         refreshGridView(customScenes);
                         findActiveScenes();
@@ -193,7 +241,7 @@ define(function () {
 
     }
 
-    ctrl.$inject = ['$ionicModal', '$scope', '$ionicFilterBar', 'DataService', 'HueService', 'DbService', 'PlaceholderDataUrl', '$q'];
+    ctrl.$inject = ['$filter', '$ionicModal', '$scope', '$ionicFilterBar', 'DataService', 'HueService', 'DbService', 'PlaceholderDataUrl', '$q', 'ConfigService'];
     return ctrl;
 
 });

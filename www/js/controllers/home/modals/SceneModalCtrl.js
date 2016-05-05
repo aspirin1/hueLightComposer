@@ -6,16 +6,16 @@ define(function () {
     function ctrl(HueService, $scope, DataService, $filter, PlaceholderDataUrl, $ionicModal, UtilityService, $state) {
 
 
- var refreshLights=function(){
-        DataService.getEnrichedLightInfos(true).then(function (data) {
-            var tmp = [];
-            angular.forEach(data, function (value, key) {
-                value.id = key;
-                tmp.push(value);
+        var refreshLights = function () {
+            DataService.getEnrichedLightInfos(true).then(function (data) {
+                var tmp = [];
+                angular.forEach(data, function (value, key) {
+                    value.id = key;
+                    tmp.push(value);
+                });
+                $scope.lights = tmp;
             });
-            $scope.lights = tmp;
-        });
- };
+        };
 
         $scope.$on('modal.shown', function (event, modal) {
             if (modal.id === "sceneModal") {
@@ -34,6 +34,7 @@ define(function () {
                 $scope.modalScene = {};
                 $scope.modalScene.previewImage = getScenePreviewImage();
                 $scope.modalScene.name = getName();
+                $scope.modalScene.category = getCategory();
                 $scope.modalScene.selectedLights = getSelectedLights();
             }
         });
@@ -61,6 +62,13 @@ define(function () {
                 tmp[lightId] = true;
             });
             return tmp;
+        };
+
+        var getCategory = function () {
+            if ($scope.isEditMode) {
+                return $scope.scene.category;
+            }
+            return "always";
         };
 
         var getName = function () {
@@ -146,11 +154,11 @@ define(function () {
         };
 
         var afterModifyScene = function (tmp, data) {
-
-
             if (isCroppedImageAvailable()) {
                 DataService.removeCustomScene($scope.scene.id);
-                DataService.addCustomScene($scope.scene.id, $scope.modalScene.name, tmp, DataService.getSceneImageCropped());
+                DataService.addCustomScene($scope.scene.id, $scope.modalScene.name, tmp, $scope.modalScene.category, DataService.getSceneImageCropped());
+            } else {
+                DataService.updateCustomSceneWithoutImage($scope.scene.id, $scope.modalScene.name, tmp, $scope.modalScene.category);
             }
             $scope.closeModal();
             if (angular.isDefined($scope.refresh)) {
@@ -183,8 +191,7 @@ define(function () {
                     });
                 } else {
                     HueService.createScene($scope.modalScene.name, tmp).then(function (data) {
-
-                        DataService.addCustomScene(data[0].success.id, $scope.modalScene.name, tmp, DataService.getSceneImageCropped());
+                        DataService.addCustomScene(data[0].success.id, $scope.modalScene.name, tmp, $scope.modalScene.category, DataService.getSceneImageCropped());
                         $scope.closeModal();
                         if (angular.isDefined($scope.refresh)) {
                             $scope.refresh();

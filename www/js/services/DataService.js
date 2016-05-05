@@ -57,7 +57,7 @@ define(['angular'], function (angular) {
             localStorageService.set(lastClientChangeKey, newEntry.time);
         };
 
-        this.addCustomScene = function (id, name, lights, imageData) {
+        this.addCustomScene = function (id, name, lights, category, imageData) {
             var tmp = localStorageService.get(customScenesKey);
             if (tmp === null)
                 tmp = {};
@@ -74,6 +74,7 @@ define(['angular'], function (angular) {
                 'id': id,
                 'name': name,
                 'lights': lights,
+                'category': category,
                 'image': image
             };
 
@@ -82,6 +83,36 @@ define(['angular'], function (angular) {
 
             localStorageService.set(customScenesKey, tmp);
             User.triggerUserChange();
+        };
+
+        this.updateCustomSceneWithoutImage = function (id, name, lights, category) {
+            var tmp = localStorageService.get(customScenesKey);
+            if (tmp === null)
+                tmp = {};
+
+            var existingScene = null;
+            var existingSceneUid = null;
+            angular.forEach(tmp, function (value, key) {
+                if (value.id === id) {
+                    existingSceneUid = key;
+                    existingScene = value;
+                }
+            });
+
+            if (existingScene === null) {
+                self.addCustomScene(id, name, lights, category, null);
+            } else {
+                existingScene.changedAt = HelperService.getTime();
+                existingScene.name = name;
+                existingScene.lights = lights;
+                existingScene.category = category;
+
+                //tmp[existingSceneUid]=existingScene;
+                self.addToLocalHistory('scene', 'update', existingSceneUid.uid);
+
+                localStorageService.set(customScenesKey, tmp);
+                User.triggerUserChange();
+            }
         };
 
         this.removeCustomScene = function (id) {
