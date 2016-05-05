@@ -21,6 +21,12 @@ define(function () {
             $interval.cancel(refreshLightInBackground);
         });
 
+        $scope.$on('modal.hidden', function (event, modal) {
+            if (modal.id === "copyToModal") {
+                $scope.popover.hide();
+            }
+        });
+
         var refreshLightInfo = function () {
             DataService.getEnrichedLightInfo($scope.lightId).then(function (data) {
                 if (angular.isUndefined($scope.light)) {
@@ -99,7 +105,7 @@ define(function () {
                     tmp.push(value);
                 }
             });
-            $scope.allLightsExceptCurrent = tmp;
+            $scope.copyToLightsInSelection = tmp;
         });
 
         $scope.isEffectRunning = function () {
@@ -231,33 +237,13 @@ define(function () {
             );
         };
 
-
-
-
-        $scope.getCopyToSelectedColorStyle = function () {
-            if (!angular.isDefined($scope.modalColor))
-                return {};
-            return {
-                'background-color': $scope.modalColor.hexColor
-            };
-        };
-        $scope.getCopyToSelectedColorFontStyle = function () {
-            if (!angular.isDefined($scope.modalColor))
-                return {};
-            return {
-                'color': $scope.modalColor.hexColor
-            };
-        };
-
-        $scope.copySelection = {};
-
-
         $scope.openCopyToModal = function () {
             getColorXy(10).then(function (data) {
                 $scope.modalColor = data;
 
-                $ionicModal.fromTemplateUrl('copyto-modal.html', {
+                $ionicModal.fromTemplateUrl('templates/home/modals/copyToModal.html', {
                     scope: $scope,
+                    id: 'copyToModal',
                     animation: 'slide-in-up'
                 }).then(function (modal) {
                     $scope.copyToModal = modal;
@@ -315,25 +301,6 @@ define(function () {
             return deferred.promise;
         };
 
-        $scope.closeCopyToModal = function () {
-            $scope.copyToModal.hide();
-        };
-
-        $scope.copyToSelection = function () {
-            angular.forEach($scope.copySelection, function (value, key) {
-                if (value === true) {
-                    var mc = $scope.modalColor;
-                    var light = $scope.light;
-
-                    var gamutXy = ColorService.getGamutXyFromHex(light.gamut, mc.hexColor); //mc["gamut" + light.gamut];
-                    HueService.changeLightState(key, {
-                        on: true,
-                        xy: gamutXy
-                    });
-                }
-            });
-            $scope.closeCopyToModal();
-        };
 
 
         $scope.saveColor = function () {
@@ -343,13 +310,6 @@ define(function () {
                 DataService.addCustomColor(data.hexColor);
                 navigator.notification.alert($filter('translate')('COLOR_SAVED'), null, $filter('translate')('COLOR_SAVED_TITLE'));
             });
-
-            //            navigator.notification.prompt(
-            //                $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Text'), // message
-            //                onPrompt, // callback to invoke
-            //                $filter('translate')('Home_LightList_Detail_SaveColor_Prompt_Title'), // title
-            //                [$filter('translate')('SINGLE_Ok'), $filter('translate')('SINGLE_Cancel')] // buttonLabels
-            //            );
         };
 
         function onPrompt(results) {
@@ -361,9 +321,6 @@ define(function () {
 
                 getColorXy(lightId).then(function (data) {
                     DataService.addCustomColor(colorName, data.hexColor);
-
-                    //var calculatedHex = ColorService.CIE1931ToHex("C", data.xy[0], data.xy[1], 255);
-
                 });
             }
         }

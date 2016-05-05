@@ -3,7 +3,7 @@
 define(function () {
     'use strict';
 
-    function ctrl($ionicLoading, $scope, $filter, $ionicModal, $ionicPopover, $ionicListDelegate, DataService, HueService, ColorService) {
+    function ctrl($ionicLoading, $scope, $filter, $ionicModal, $ionicPopover, $ionicListDelegate, DataService) {
 
 
         $scope.$on("$ionicView.beforeEnter", function () {
@@ -111,6 +111,7 @@ define(function () {
                 tmp.push(value);
             });
             $scope.allLights = tmp;
+            $scope.copyToLightsInSelection = tmp;
         });
 
         $scope.listFilter = function (color) {
@@ -158,61 +159,22 @@ define(function () {
             };
         };
 
-
-        $scope.getFillerSquares=function(){
-            var ret=[];
-            for(var i=0;i<30;i++)
+        $scope.getFillerSquares = function () {
+            var ret = [];
+            for (var i = 0; i < 30; i++)
                 ret.push(i);
             return ret;
         };
 
         $scope.openCopyToModal = function (color) {
-
             $scope.modalColor = color;
             $scope.copyToModal.show();
         };
 
-        $scope.closeCopyToModal = function () {
-
-            $scope.copyToModal.hide();
-        };
-
-        function getLightById(key) {
-            for (var i = 0; i < $scope.allLights.length; i++) {
-                if ($scope.allLights[i].id === key) {
-                    return $scope.allLights[i];
-                }
-            }
-        }
-
-        $scope.getCopyToSelectedColorStyle = function () {
-            if (!angular.isDefined($scope.modalColor))
-                return {};
-            return {
-                'background-color': $scope.modalColor.hexColor
-            };
-        };
-
-        $scope.copySelection = {};
-        $scope.copyToSelection = function () {
-            angular.forEach($scope.copySelection, function (value, key) {
-                if (value === true) {
-                    var mc = $scope.modalColor;
-                    var light = getLightById(key);
-
-                    var gamutXy = ColorService.getGamutXyFromHex(light.gamut, mc.hexColor); //mc["gamut" + light.gamut];
-                    HueService.changeLightState(key, {
-                        on: true,
-                        xy: gamutXy
-                    });
-                }
-            });
-            $scope.closeCopyToModal();
-        };
-
-        $ionicModal.fromTemplateUrl('copyto-modal.html', {
+        $ionicModal.fromTemplateUrl('templates/home/modals/copyToModal.html', {
             scope: $scope,
-            //animation: 'slide-in-up'
+            id: 'copyToModal',
+            animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.copyToModal = modal;
         });
@@ -232,7 +194,7 @@ define(function () {
         });
     }
 
-    ctrl.$inject = ['$ionicLoading', '$scope', '$filter', '$ionicModal', '$ionicPopover', '$ionicListDelegate', 'DataService', 'HueService', 'ColorService'];
+    ctrl.$inject = ['$ionicLoading', '$scope', '$filter', '$ionicModal', '$ionicPopover', '$ionicListDelegate', 'DataService'];
     return ctrl;
 
 });

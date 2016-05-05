@@ -19,9 +19,11 @@ define(function (require) {
     controllers.controller('GroupsCtrl', require('controllers/home/GroupsCtrl'));
     controllers.controller('GroupCommandCtrl', require('controllers/home/GroupCommandCtrl'));
 
-    controllers.controller('ScenesCtrl', require('controllers/home/ScenesCtrl'));
     controllers.controller('SceneModalCtrl', require('controllers/home/modals/SceneModalCtrl'));
     controllers.controller('SceneModalImageCropCtrl', require('controllers/home/modals/SceneModalImageCropCtrl'));
+    controllers.controller('CopyToModalCtrl', require('controllers/home/modals/CopyToModalCtrl'));
+
+    controllers.controller('ScenesCtrl', require('controllers/home/ScenesCtrl'));
     controllers.controller('NewSceneCtrl', require('controllers/home/NewSceneCtrl'));
     controllers.controller('NewSceneImageCtrl', require('controllers/home/NewSceneImageCtrl'));
     controllers.controller('ColorsCtrl', require('controllers/home/ColorsCtrl'));
